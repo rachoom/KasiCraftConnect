@@ -53,6 +53,8 @@ export default function ArtisanRegistration() {
       yearsExperience: 1,
       profileImage: "",
       portfolio: [],
+      idDocument: "",
+      qualificationDocuments: [],
     },
   });
 
@@ -287,6 +289,83 @@ export default function ArtisanRegistration() {
                       </FormItem>
                     )}
                   />
+                </div>
+
+                {/* Verification Documents */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-black-soft">Verification Documents</h3>
+                  <p className="text-sm text-gray-600">
+                    Upload verification documents to become eligible for premium tier listings. 
+                    These documents will be reviewed by our team for verification.
+                  </p>
+                  
+                  <FormField
+                    control={form.control}
+                    name="idDocument"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>ID Document (Optional)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="file" 
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            placeholder="Upload your South African ID document"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                // In a real app, this would upload to cloud storage
+                                field.onChange(`uploaded_${file.name}`);
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <p className="text-xs text-gray-500">
+                          Upload your South African ID document for identity verification
+                        </p>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="qualificationDocuments"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Qualification Documents (Optional)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="file" 
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            multiple
+                            placeholder="Upload certificates, trade licenses, etc."
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files || []);
+                              if (files.length > 0) {
+                                // In a real app, this would upload to cloud storage
+                                const fileNames = files.map(file => `uploaded_${file.name}`);
+                                field.onChange(fileNames);
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <p className="text-xs text-gray-500">
+                          Upload trade certificates, licenses, or relevant qualifications
+                        </p>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="font-medium text-blue-900 mb-2">Verification Benefits</h4>
+                    <ul className="text-sm text-blue-800 space-y-1">
+                      <li>• Access to premium tier listings (R99 per search)</li>
+                      <li>• Higher visibility in search results</li>
+                      <li>• Verified badge on your profile</li>
+                      <li>• Access to enterprise clients</li>
+                    </ul>
+                  </div>
                 </div>
 
                 <Button 

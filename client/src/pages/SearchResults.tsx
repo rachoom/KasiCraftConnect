@@ -93,11 +93,9 @@ export default function SearchResults() {
               </h1>
               <p className="text-gray-600">
                 Found {count} {count === 1 ? 'artisan' : 'artisans'} 
-                {resultTier !== 'basic' && (
-                  <Badge variant="secondary" className="ml-2">
-                    {resultTier.toUpperCase()} TIER
-                  </Badge>
-                )}
+                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-gray-400 text-gray-600' : 'bg-gold text-black'}`}>
+                  {resultTier.toUpperCase()} TIER - {resultTier === 'basic' ? 'UNVERIFIED' : 'VERIFIED'} ARTISANS
+                </Badge>
               </p>
             </div>
           </div>

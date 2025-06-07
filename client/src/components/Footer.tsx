@@ -44,8 +44,8 @@ export default function Footer() {
             <h6 className="font-semibold text-lg mb-4">For Artisans</h6>
             <ul className="space-y-3 text-gray-300">
               <li>
-                <Link href="/register-artisan">
-                  <a className="hover:text-gold transition-colors">Join Kasi Connect</a>
+                <Link href="/register-artisan" className="hover:text-gold transition-colors">
+                  Join Kasi Connect
                 </Link>
               </li>
               <li><a href="#" className="hover:text-gold transition-colors">Artisan Resources</a></li>

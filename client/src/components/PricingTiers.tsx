@@ -6,12 +6,13 @@ const tiers = [
   {
     name: "Basic",
     price: "FREE",
-    description: "Perfect for simple projects",
+    description: "Access to unverified artisans",
     features: [
-      "Up to 3 artisan contacts",
+      "Up to 3 unverified artisan contacts",
       "Basic profile information",
       "Location-based matching",
-      "Email support"
+      "Email support",
+      "No verification guarantee"
     ],
     buttonText: "Get Started Free",
     buttonVariant: "outline" as const,
@@ -21,9 +22,10 @@ const tiers = [
     name: "Premium",
     price: "R99",
     period: "per search",
-    description: "For important projects",
+    description: "Verified professionals only",
     features: [
       "Up to 5 verified artisans",
+      "ID & qualification verified",
       "Detailed profiles & portfolios",
       "Customer reviews & ratings",
       "Priority matching algorithm",
@@ -39,7 +41,8 @@ const tiers = [
     period: "per month",
     description: "For businesses & contractors",
     features: [
-      "Unlimited artisan contacts",
+      "Unlimited verified artisans",
+      "Background checks included",
       "Advanced filtering options",
       "Project management tools",
       "Bulk hiring discounts",

@@ -23,6 +23,12 @@ export const artisans = pgTable("artisans", {
   verified: boolean("verified").default(false),
   profileImage: text("profile_image"),
   portfolio: text("portfolio").array().default([]),
+  // Verification documents
+  idDocument: text("id_document"), // Path to uploaded ID document
+  qualificationDocuments: text("qualification_documents").array().default([]), // Paths to qualification certificates
+  verificationStatus: text("verification_status").default("pending"), // pending, approved, rejected
+  verificationNotes: text("verification_notes"), // Admin notes about verification
+  verifiedAt: text("verified_at"), // When verification was completed
 });
 
 export const searchRequests = pgTable("search_requests", {
@@ -43,6 +49,9 @@ export const insertArtisanSchema = createInsertSchema(artisans).omit({
   rating: true,
   reviewCount: true,
   verified: true,
+  verificationStatus: true,
+  verificationNotes: true,
+  verifiedAt: true,
 });
 
 export const insertSearchRequestSchema = createInsertSchema(searchRequests).omit({

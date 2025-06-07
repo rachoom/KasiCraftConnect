@@ -139,7 +139,12 @@ export class MemStorage implements IStorage {
         reviewCount: Math.floor(Math.random() * 30) + 10,
         verified: isVerified,
         profileImage: artisan.profileImage || null,
-        portfolio: artisan.portfolio || []
+        portfolio: artisan.portfolio || [],
+        idDocument: null,
+        qualificationDocuments: [],
+        verificationStatus: isVerified ? "approved" : "pending",
+        verificationNotes: null,
+        verifiedAt: isVerified ? new Date().toISOString() : null
       };
       this.artisans.set(id, artisanWithRating);
     });
@@ -227,7 +232,12 @@ export class MemStorage implements IStorage {
       reviewCount: 0,
       verified: false,
       profileImage: insertArtisan.profileImage || null,
-      portfolio: insertArtisan.portfolio || []
+      portfolio: insertArtisan.portfolio || [],
+      idDocument: insertArtisan.idDocument || null,
+      qualificationDocuments: insertArtisan.qualificationDocuments || [],
+      verificationStatus: "pending",
+      verificationNotes: null,
+      verifiedAt: null
     };
     this.artisans.set(id, artisan);
     return artisan;
