@@ -1,4 +1,6 @@
 import { users, artisans, searchRequests, type User, type InsertUser, type Artisan, type InsertArtisan, type SearchRequest, type InsertSearchRequest } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // User methods
@@ -270,4 +272,118 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async getArtisan(id: number): Promise<Artisan | undefined> {
+    const [artisan] = await db.select().from(artisans).where(eq(artisans.id, id));
+    return artisan || undefined;
+  }
+
+  async getAllArtisans(): Promise<Artisan[]> {
+    return await db.select().from(artisans);
+  }
+
+  async getArtisansByService(service: string): Promise<Artisan[]> {
+    const allArtisans = await db.select().from(artisans);
+    return allArtisans.filter(artisan => 
+      artisan.services.includes(service.toLowerCase())
+    );
+  }
+
+  async getArtisansByLocation(location: string): Promise<Artisan[]> {
+    const allArtisans = await db.select().from(artisans);
+    return allArtisans.filter(artisan => 
+      artisan.location.toLowerCase().includes(location.toLowerCase())
+    );
+  }
+
+  async searchArtisans(service: string, location: string, limit: number = 3, tier: string = "basic"): Promise<Artisan[]> {
+    let allArtisans = await db.select().from(artisans);
+
+    // Filter by verification status based on tier
+    if (tier === "basic") {
+      // Basic tier gets unverified artisans
+      allArtisans = allArtisans.filter(artisan => !artisan.verified);
+    } else {
+      // Premium and enterprise tiers get verified artisans
+      allArtisans = allArtisans.filter(artisan => artisan.verified);
+    }
+
+    // Filter by service if provided
+    if (service && service !== "all") {
+      allArtisans = allArtisans.filter(artisan => 
+        artisan.services.some(s => s.toLowerCase().includes(service.toLowerCase()))
+      );
+    }
+
+    // Filter by location if provided
+    if (location) {
+      allArtisans = allArtisans.filter(artisan => 
+        artisan.location.toLowerCase().includes(location.toLowerCase())
+      );
+    }
+
+    // Sort by rating and review count
+    allArtisans.sort((a, b) => {
+      const ratingDiff = parseFloat(b.rating || "0") - parseFloat(a.rating || "0");
+      if (ratingDiff !== 0) return ratingDiff;
+      return (b.reviewCount || 0) - (a.reviewCount || 0);
+    });
+
+    return allArtisans.slice(0, limit);
+  }
+
+  async createArtisan(insertArtisan: InsertArtisan): Promise<Artisan> {
+    const [artisan] = await db
+      .insert(artisans)
+      .values(insertArtisan)
+      .returning();
+    return artisan;
+  }
+
+  async updateArtisan(id: number, updates: Partial<Artisan>): Promise<Artisan | undefined> {
+    const [artisan] = await db
+      .update(artisans)
+      .set(updates)
+      .where(eq(artisans.id, id))
+      .returning();
+    return artisan || undefined;
+  }
+
+  async createSearchRequest(insertRequest: InsertSearchRequest): Promise<SearchRequest> {
+    const requestData = {
+      ...insertRequest,
+      timestamp: new Date().toISOString(),
+      tier: insertRequest.tier || "basic"
+    };
+    
+    const [request] = await db
+      .insert(searchRequests)
+      .values(requestData)
+      .returning();
+    return request;
+  }
+
+  async getSearchRequests(): Promise<SearchRequest[]> {
+    return await db.select().from(searchRequests);
+  }
+}
+
+export const storage = new DatabaseStorage();
