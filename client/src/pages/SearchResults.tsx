@@ -11,13 +11,18 @@ import { MapPin, Star, Phone, Mail, ArrowLeft } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function SearchResults() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const searchParams = new URLSearchParams(location.split("?")[1] || "");
   const service = searchParams.get("service") || "";
   const searchLocation = searchParams.get("location") || "";
   const tier = searchParams.get("tier") || "basic";
 
-  const { data: searchResults, isLoading, error } = useQuery({
+  const { data: searchResults, isLoading, error } = useQuery<{
+    artisans: Artisan[];
+    tier: string;
+    limit: number;
+    count: number;
+  }>({
     queryKey: [`/api/search?service=${service}&location=${searchLocation}&tier=${tier}`],
     enabled: !!(service && searchLocation),
   });
@@ -70,7 +75,9 @@ export default function SearchResults() {
     );
   }
 
-  const { artisans, tier: resultTier, count } = searchResults;
+  const artisans = searchResults?.artisans || [];
+  const resultTier = searchResults?.tier || 'basic';
+  const count = searchResults?.count || 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -191,18 +198,66 @@ export default function SearchResults() {
         )}
         
         {/* Upgrade prompt for basic tier */}
-        {resultTier === 'basic' && count >= 3 && (
+        {resultTier === 'basic' && (
           <Card className="mt-8 bg-gradient-to-r from-gold/10 to-gold-dark/10 border-gold/30">
             <CardContent className="p-6 text-center">
               <h3 className="text-lg font-semibold text-black-soft mb-2">
-                Want to see more artisans?
+                Want verified artisans?
               </h3>
               <p className="text-gray-600 mb-4">
-                Upgrade to Premium to see up to 5 verified artisans with detailed profiles and reviews.
+                Upgrade to Premium to see up to 5 ID & qualification verified artisans with detailed profiles and reviews.
               </p>
-              <Button className="bg-gold hover:bg-gold-dark text-black">
-                Upgrade to Premium - R99
-              </Button>
+              <div className="flex gap-4 justify-center">
+                <Button 
+                  className="bg-gold hover:bg-gold-dark text-black"
+                  onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
+                >
+                  Premium - R99
+                </Button>
+                <Button 
+                  variant="outline"
+                  className="border-gold text-gold hover:bg-gold hover:text-black"
+                  onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=enterprise`)}
+                >
+                  Enterprise - R299
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Tier selection for other tiers */}
+        {resultTier !== 'basic' && (
+          <Card className="mt-8 bg-gray-50 border-gray-200">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-lg font-semibold text-black-soft mb-2">
+                Try different search tiers
+              </h3>
+              <div className="flex gap-4 justify-center">
+                <Button 
+                  variant="outline"
+                  onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=basic`)}
+                >
+                  Basic (Free)
+                </Button>
+                {resultTier !== 'premium' && (
+                  <Button 
+                    className="bg-gold hover:bg-gold-dark text-black"
+                    onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
+                  >
+                    Premium - R99
+                  </Button>
+                )}
+                {resultTier !== 'enterprise' && (
+                  <Button 
+                    variant="outline"
+                    className="border-gold text-gold hover:bg-gold hover:text-black"
+                    onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=enterprise`)}
+                  >
+                    Enterprise - R299
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         )}
