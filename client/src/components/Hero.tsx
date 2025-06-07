@@ -24,7 +24,7 @@ export default function Hero() {
   return (
     <section className="relative bg-hero-overlay text-white overflow-hidden">
       {/* Background overlay with subtle pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-20">
         <div 
           className="absolute top-0 left-0 w-1/3 h-full bg-cover bg-center"
           style={{

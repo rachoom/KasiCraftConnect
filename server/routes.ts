@@ -54,7 +54,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const results = await storage.searchArtisans(
         service as string,
         location as string,
-        limit
+        limit,
+        tier as string
       );
 
       // Log the search request

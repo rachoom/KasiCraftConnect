@@ -11,7 +11,7 @@ export interface IStorage {
   getAllArtisans(): Promise<Artisan[]>;
   getArtisansByService(service: string): Promise<Artisan[]>;
   getArtisansByLocation(location: string): Promise<Artisan[]>;
-  searchArtisans(service: string, location: string, limit?: number): Promise<Artisan[]>;
+  searchArtisans(service: string, location: string, limit?: number, tier?: string): Promise<Artisan[]>;
   createArtisan(artisan: InsertArtisan): Promise<Artisan>;
   updateArtisan(id: number, updates: Partial<Artisan>): Promise<Artisan | undefined>;
 
@@ -51,7 +51,6 @@ export class MemStorage implements IStorage {
         services: ["builders"],
         description: "15+ years of experience in residential and commercial construction. Specialized in home renovations and extensions.",
         yearsExperience: 15,
-        verified: true,
         profileImage: "TM",
         portfolio: []
       },
@@ -64,7 +63,6 @@ export class MemStorage implements IStorage {
         services: ["electricians"],
         description: "Certified electrician with expertise in smart home installations, electrical repairs, and energy-efficient solutions.",
         yearsExperience: 8,
-        verified: true,
         profileImage: "SK",
         portfolio: []
       },
@@ -77,7 +75,6 @@ export class MemStorage implements IStorage {
         services: ["plumbers"],
         description: "Professional plumber specializing in bathroom renovations, leak repairs, and hot water system installations.",
         yearsExperience: 12,
-        verified: true,
         profileImage: "MN",
         portfolio: []
       },
@@ -90,7 +87,6 @@ export class MemStorage implements IStorage {
         services: ["cleaners"],
         description: "Professional cleaning service with eco-friendly products. Specializing in deep cleaning and maintenance.",
         yearsExperience: 6,
-        verified: true,
         profileImage: "ND",
         portfolio: []
       },
@@ -103,7 +99,6 @@ export class MemStorage implements IStorage {
         services: ["carpenters"],
         description: "Custom furniture maker and carpenter with expertise in kitchen cabinets and built-in storage solutions.",
         yearsExperience: 20,
-        verified: true,
         profileImage: "DV",
         portfolio: []
       },
@@ -116,7 +111,6 @@ export class MemStorage implements IStorage {
         services: ["landscapers"],
         description: "Landscape designer creating beautiful outdoor spaces with indigenous plants and sustainable design principles.",
         yearsExperience: 10,
-        verified: true,
         profileImage: "ZM",
         portfolio: []
       },
@@ -129,19 +123,23 @@ export class MemStorage implements IStorage {
         services: ["tilers"],
         description: "Specialist in ceramic, porcelain, and natural stone tiling for bathrooms, kitchens, and commercial spaces.",
         yearsExperience: 14,
-        verified: true,
         profileImage: "AH",
         portfolio: []
       }
     ];
 
-    sampleArtisans.forEach(artisan => {
+    sampleArtisans.forEach((artisan, index) => {
       const id = this.currentArtisanId++;
+      // First 4 artisans are verified (for premium/enterprise tiers), rest are unverified (basic tier)
+      const isVerified = index < 4;
       const artisanWithRating: Artisan = {
         ...artisan,
         id,
         rating: (4.5 + Math.random() * 0.5).toFixed(1),
         reviewCount: Math.floor(Math.random() * 30) + 10,
+        verified: isVerified,
+        profileImage: artisan.profileImage || null,
+        portfolio: artisan.portfolio || []
       };
       this.artisans.set(id, artisanWithRating);
     });
@@ -184,8 +182,17 @@ export class MemStorage implements IStorage {
     );
   }
 
-  async searchArtisans(service: string, location: string, limit: number = 3): Promise<Artisan[]> {
+  async searchArtisans(service: string, location: string, limit: number = 3, tier: string = "basic"): Promise<Artisan[]> {
     let results = Array.from(this.artisans.values());
+
+    // Filter by verification status based on tier
+    if (tier === "basic") {
+      // Basic tier gets unverified artisans
+      results = results.filter(artisan => !artisan.verified);
+    } else {
+      // Premium and enterprise tiers get verified artisans
+      results = results.filter(artisan => artisan.verified);
+    }
 
     // Filter by service if provided
     if (service && service !== "all") {
@@ -219,6 +226,8 @@ export class MemStorage implements IStorage {
       rating: "0.00",
       reviewCount: 0,
       verified: false,
+      profileImage: insertArtisan.profileImage || null,
+      portfolio: insertArtisan.portfolio || []
     };
     this.artisans.set(id, artisan);
     return artisan;
@@ -240,6 +249,7 @@ export class MemStorage implements IStorage {
       ...insertRequest,
       id,
       timestamp: new Date().toISOString(),
+      tier: insertRequest.tier || "basic"
     };
     this.searchRequests.set(id, request);
     return request;
