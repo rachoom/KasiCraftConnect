@@ -8,14 +8,21 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/">
+            <Link href="/" className="flex items-center space-x-3">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="18" fill="#D4A574" stroke="#1a1a1a" strokeWidth="2"/>
+                <path d="M12 28 L20 16 L28 28 Z" fill="#1a1a1a"/>
+                <circle cx="20" cy="22" r="3" fill="#D4A574"/>
+                <path d="M16 12 L20 8 L24 12 L20 16 Z" fill="#1a1a1a"/>
+                <circle cx="20" cy="12" r="1.5" fill="#D4A574"/>
+              </svg>
               <h1 className="text-2xl font-bold text-black-soft cursor-pointer">
                 Kasi <span className="text-gold">Connect</span>
               </h1>
             </Link>
           </div>
           
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden lg:flex space-x-8">
             <a href="#services" className="text-gray-600 hover:text-gold transition-colors">
               Services
             </a>
@@ -38,7 +45,7 @@ export default function Header() {
             </Link>
           </div>
           
-          <button className="md:hidden text-gray-600">
+          <button className="lg:hidden text-gray-600">
             <Menu className="w-6 h-6" />
           </button>
         </div>

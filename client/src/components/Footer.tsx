@@ -7,9 +7,18 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2">
-            <h5 className="text-2xl font-bold mb-4">
-              Kasi <span className="text-gold">Connect</span>
-            </h5>
+            <div className="flex items-center space-x-3 mb-4">
+              <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="18" fill="#D4A574" stroke="#ffffff" strokeWidth="2"/>
+                <path d="M12 28 L20 16 L28 28 Z" fill="#ffffff"/>
+                <circle cx="20" cy="22" r="3" fill="#D4A574"/>
+                <path d="M16 12 L20 8 L24 12 L20 16 Z" fill="#ffffff"/>
+                <circle cx="20" cy="12" r="1.5" fill="#D4A574"/>
+              </svg>
+              <h5 className="text-2xl font-bold">
+                Kasi <span className="text-gold">Connect</span>
+              </h5>
+            </div>
             <p className="text-gray-300 mb-6 max-w-md">
               Connecting communities with trusted local artisans across South Africa. 
               Find skilled professionals for all your home and business needs.
