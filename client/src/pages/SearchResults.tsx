@@ -20,6 +20,7 @@ export default function SearchResults() {
   // Debug logging
   console.log("Search params:", { service, searchLocation, tier });
   console.log("Query enabled:", !!(service && searchLocation));
+  console.log("Query key:", [`/api/search?service=${service}&location=${searchLocation}&tier=${tier}`]);
 
   const { data: searchResults, isLoading, error } = useQuery<{
     artisans: Artisan[];

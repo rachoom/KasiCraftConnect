@@ -48,11 +48,23 @@ export default function Hero() {
   }, []);
 
   const handleSearch = () => {
-    if (service && location) {
-      console.log("Navigating to search with:", { service, location });
-      navigate(`/search?service=${encodeURIComponent(service)}&location=${encodeURIComponent(location)}&tier=basic`);
+    console.log("Search button clicked");
+    console.log("Current form values:", { service, location });
+    console.log("Service length:", service.length);
+    console.log("Location length:", location.length);
+    
+    if (service.trim() && location.trim()) {
+      const searchUrl = `/search?service=${encodeURIComponent(service.trim())}&location=${encodeURIComponent(location.trim())}&tier=basic`;
+      console.log("Navigating to:", searchUrl);
+      navigate(searchUrl);
     } else {
-      console.log("Missing search parameters:", { service, location });
+      console.log("Missing search parameters:", { 
+        service: service || 'empty', 
+        location: location || 'empty',
+        serviceLength: service.length,
+        locationLength: location.length
+      });
+      alert("Please enter both a service and location to search");
     }
   };
 
@@ -260,6 +272,7 @@ export default function Hero() {
               </div>
             </div>
             <Button 
+              type="button"
               className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 px-8 rounded-xl text-lg cosmic-glow-static"
               onClick={handleSearch}
             >
