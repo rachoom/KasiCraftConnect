@@ -11,12 +11,12 @@ import { MapPin, Star, Phone, Mail, ArrowLeft } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function SearchResults() {
-  const [location] = useLocation();
-  console.log("Full location:", location);
+  const [location, navigate] = useLocation();
   
-  const searchParams = new URLSearchParams(location.split('?')[1] || '');
-  console.log("Search params string:", location.split('?')[1]);
-  console.log("URLSearchParams object:", searchParams);
+  // Use window.location.search to get the actual URL parameters
+  const searchParams = new URLSearchParams(window.location.search);
+  console.log("Full window location:", window.location.href);
+  console.log("Window search:", window.location.search);
   console.log("All params:", Array.from(searchParams.entries()));
   
   const service = searchParams.get("service") || "";
@@ -275,14 +275,14 @@ export default function SearchResults() {
               <div className="flex gap-4 justify-center">
                 <Button 
                   className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static"
-                  onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
+                  onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
                 >
                   Premium - R99
                 </Button>
                 <Button 
                   variant="outline"
                   className="border-gold text-gold hover:bg-gold hover:text-black cosmic-selection"
-                  onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=enterprise`)}
+                  onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=enterprise`)}
                 >
                   Enterprise - R299
                 </Button>
@@ -301,14 +301,14 @@ export default function SearchResults() {
               <div className="flex gap-4 justify-center">
                 <Button 
                   variant="outline"
-                  onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=basic`)}
+                  onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=basic`)}
                 >
                   Basic (Free)
                 </Button>
                 {resultTier !== 'premium' && (
                   <Button 
                     className="bg-gold hover:bg-gold-dark text-black"
-                    onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
+                    onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
                   >
                     Premium - R99
                   </Button>
@@ -317,7 +317,7 @@ export default function SearchResults() {
                   <Button 
                     variant="outline"
                     className="border-gold text-gold hover:bg-gold hover:text-black"
-                    onClick={() => setLocation(`/search?service=${service}&location=${searchLocation}&tier=enterprise`)}
+                    onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=enterprise`)}
                   >
                     Enterprise - R299
                   </Button>
