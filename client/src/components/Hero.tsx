@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin } from "lucide-react";
+import { Search, MapPin, Locate } from "lucide-react";
 
 export default function Hero() {
   const [, setLocation] = useLocation();
   const [service, setService] = useState("");
   const [location, setLocationValue] = useState("");
+  const [isGeolocating, setIsGeolocating] = useState(false);
 
   const handleSearch = () => {
     if (service && location) {
@@ -19,6 +20,62 @@ export default function Hero() {
     if (e.key === "Enter") {
       handleSearch();
     }
+  };
+
+  const handleGeolocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+      return;
+    }
+
+    setIsGeolocating(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          
+          // Use reverse geocoding to get location name
+          const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=YOUR_API_KEY&countrycode=za&limit=1`
+          );
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data.results && data.results.length > 0) {
+              const result = data.results[0];
+              const locationName = `${result.components.suburb || result.components.neighbourhood || result.components.city_district || result.components.city || result.components.town}, ${result.components.state}`;
+              setLocationValue(locationName);
+            } else {
+              // Fallback to Gauteng areas based on coordinates
+              if (latitude >= -26.5 && latitude <= -25.5 && longitude >= 27.5 && longitude <= 28.5) {
+                setLocationValue("Johannesburg, Gauteng");
+              } else if (latitude >= -26.3 && latitude <= -26.0 && longitude >= 28.0 && longitude <= 28.5) {
+                setLocationValue("Ekurhuleni, Gauteng");
+              } else {
+                setLocationValue("Gauteng, South Africa");
+              }
+            }
+          } else {
+            // Fallback location for Gauteng
+            setLocationValue("Gauteng, South Africa");
+          }
+        } catch (error) {
+          // Fallback location
+          setLocationValue("Gauteng, South Africa");
+        }
+        setIsGeolocating(false);
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        setLocationValue("Gauteng, South Africa");
+        setIsGeolocating(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    );
   };
 
   return (
@@ -74,15 +131,25 @@ export default function Hero() {
                 <Input
                   type="text"
                   placeholder="Your location"
-                  className="pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900"
+                  className="pl-12 pr-12 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900"
                   value={location}
                   onChange={(e) => setLocationValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                 />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gold/10"
+                  onClick={handleGeolocation}
+                  disabled={isGeolocating}
+                >
+                  <Locate className={`w-4 h-4 text-gold ${isGeolocating ? 'animate-pulse' : ''}`} />
+                </Button>
               </div>
             </div>
             <Button 
-              className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 px-8 rounded-xl text-lg cosmic-glow"
+              className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 px-8 rounded-xl text-lg cosmic-glow-static"
               onClick={handleSearch}
             >
               Find Artisans Near Me

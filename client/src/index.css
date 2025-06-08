@@ -153,4 +153,22 @@
   .cosmic-glow {
     animation: cosmicGlow 3s ease-in-out infinite;
   }
+  
+  .cosmic-glow-static {
+    box-shadow: 0 0 15px rgba(218, 165, 32, 0.6), 0 0 25px rgba(184, 134, 11, 0.3);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .cosmic-glow-static:hover {
+    box-shadow: 0 0 25px rgba(218, 165, 32, 0.8), 0 0 35px rgba(184, 134, 11, 0.5);
+  }
+  
+  .cosmic-selection {
+    transition: all 0.3s ease;
+  }
+  
+  .cosmic-selection:hover {
+    box-shadow: 0 0 20px rgba(218, 165, 32, 0.7), 0 0 30px rgba(184, 134, 11, 0.4);
+    transform: translateY(-2px);
+  }
 }

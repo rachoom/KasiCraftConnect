@@ -70,7 +70,7 @@ export default function ServiceCategories() {
               className="group cursor-pointer"
               onClick={() => selectService(service.id)}
             >
-              <div className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <div className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cosmic-selection">
                 <div className="absolute inset-0 opacity-45 group-hover:opacity-60 transition-opacity">
                   <img 
                     src={service.image}

@@ -66,13 +66,9 @@ export default function Header() {
                 Contact
               </Button>
             </Link>
-            <Link href="/bulk-import">
-              <Button variant="ghost" className="text-gray-600 hover:text-gold text-xs">
-                Bulk Import
-              </Button>
-            </Link>
+
             <Link href="/register-artisan">
-              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Join as Artisan
               </Button>
             </Link>
