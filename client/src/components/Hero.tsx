@@ -22,7 +22,7 @@ const locations = [
 ];
 
 export default function Hero() {
-  const [, setLocation] = useLocation();
+  const [, navigate] = useLocation();
   const [service, setService] = useState("");
   const [location, setLocationValue] = useState("");
   const [isGeolocating, setIsGeolocating] = useState(false);
@@ -49,7 +49,10 @@ export default function Hero() {
 
   const handleSearch = () => {
     if (service && location) {
-      setLocation(`/search?service=${encodeURIComponent(service)}&location=${encodeURIComponent(location)}&tier=basic`);
+      console.log("Navigating to search with:", { service, location });
+      navigate(`/search?service=${encodeURIComponent(service)}&location=${encodeURIComponent(location)}&tier=basic`);
+    } else {
+      console.log("Missing search parameters:", { service, location });
     }
   };
 

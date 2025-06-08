@@ -17,6 +17,10 @@ export default function SearchResults() {
   const searchLocation = searchParams.get("location") || "";
   const tier = searchParams.get("tier") || "basic";
 
+  // Debug logging
+  console.log("Search params:", { service, searchLocation, tier });
+  console.log("Query enabled:", !!(service && searchLocation));
+
   const { data: searchResults, isLoading, error } = useQuery<{
     artisans: Artisan[];
     tier: string;
@@ -28,6 +32,11 @@ export default function SearchResults() {
     retry: 3,
     retryDelay: 1000,
   });
+
+  // Debug search results
+  console.log("Search results:", searchResults);
+  console.log("Is loading:", isLoading);
+  console.log("Error:", error);
 
   if (isLoading) {
     return (
@@ -79,14 +88,15 @@ export default function SearchResults() {
     );
   }
 
-  if (!searchResults) {
+  if (!searchResults && !isLoading && !error) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-black-soft mb-4">No Results</h1>
-            <p className="text-gray-600 mb-6">No search results found. Please try a different search.</p>
+            <p className="text-gray-600 mb-4">No search results found for "{service}" in "{searchLocation}".</p>
+            <p className="text-sm text-gray-500 mb-6">Try adjusting your search terms or location.</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -103,6 +113,29 @@ export default function SearchResults() {
   const artisans = searchResults?.artisans || [];
   const resultTier = searchResults?.tier || 'basic';
   const count = searchResults?.count || 0;
+
+  // If we have search results but no artisans, show appropriate message
+  if (searchResults && artisans.length === 0) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-black-soft mb-4">No Artisans Found</h1>
+            <p className="text-gray-600 mb-4">No {service} found in {searchLocation}.</p>
+            <p className="text-sm text-gray-500 mb-6">Try searching in nearby areas or different services.</p>
+            <Link href="/">
+              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
