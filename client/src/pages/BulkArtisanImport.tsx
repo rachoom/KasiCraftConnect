@@ -20,7 +20,7 @@ export default function BulkArtisanImport() {
       
       for (let i = 0; i < artisans.length; i++) {
         try {
-          await apiRequest(`/api/artisans`, "POST", artisans[i]);
+          await apiRequest("POST", `/api/artisans`, artisans[i]);
           results.success++;
         } catch (error) {
           results.errors.push(`Row ${i + 2}: ${error instanceof Error ? error.message : 'Unknown error'}`);
