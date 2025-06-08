@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm border-b border-orange-200/40">
+    <header className="shadow-sm border-b border-orange-200/40" style={{background: 'linear-gradient(135deg, #DAA520 0%, #B8860B 50%, #8B6914 100%)'}}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -42,33 +42,33 @@ export default function Header() {
                 <circle cx="12" cy="28" r="1" fill="#DAA520" opacity="0.6"/>
                 <circle cx="28" cy="28" r="1" fill="#B8860B" opacity="0.6"/>
               </svg>
-              <h1 className="text-2xl font-bold text-black-soft cursor-pointer">
-                Kasi <span className="text-gold">Connect</span>
+              <h1 className="text-2xl font-bold text-black cursor-pointer">
+                Kasi <span className="text-black">Connect</span>
               </h1>
             </Link>
           </div>
           
           <nav className="hidden lg:flex space-x-8">
-            <a href="#services" className="text-gray-900 hover:text-gold transition-all duration-300 font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#services" className="text-black hover:text-white transition-all duration-300 font-semibold hover:bg-black/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Services
             </a>
-            <a href="#how-it-works" className="text-gray-900 hover:text-gold transition-all duration-300 font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#how-it-works" className="text-black hover:text-white transition-all duration-300 font-semibold hover:bg-black/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               How It Works
             </a>
-            <a href="#pricing" className="text-gray-900 hover:text-gold transition-all duration-300 font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#pricing" className="text-black hover:text-white transition-all duration-300 font-semibold hover:bg-black/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Pricing
             </a>
           </nav>
           
           <div className="flex items-center space-x-4">
             <Link href="/contact">
-              <Button variant="ghost" className="text-gray-900 hover:text-gold font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md">
+              <Button variant="ghost" className="text-black hover:text-white font-semibold hover:bg-black/20 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md">
                 Contact
               </Button>
             </Link>
 
             <Link href="/register-artisan">
-              <Button className="bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 hover:from-orange-600 hover:via-red-600 hover:to-yellow-600 text-white cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+              <Button className="bg-black hover:bg-gray-800 text-gold hover:text-yellow-300 cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Join as Artisan
               </Button>
             </Link>
