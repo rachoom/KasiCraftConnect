@@ -11,8 +11,14 @@ import { MapPin, Star, Phone, Mail, ArrowLeft } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function SearchResults() {
-  const [location, setLocation] = useLocation();
-  const searchParams = new URLSearchParams(location.split("?")[1] || "");
+  const [location] = useLocation();
+  console.log("Full location:", location);
+  
+  const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  console.log("Search params string:", location.split('?')[1]);
+  console.log("URLSearchParams object:", searchParams);
+  console.log("All params:", Array.from(searchParams.entries()));
+  
   const service = searchParams.get("service") || "";
   const searchLocation = searchParams.get("location") || "";
   const tier = searchParams.get("tier") || "basic";
