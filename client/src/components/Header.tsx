@@ -35,9 +35,16 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" className="text-gray-600 hover:text-gold">
-              Sign In
-            </Button>
+            <Link href="/contact">
+              <Button variant="ghost" className="text-gray-600 hover:text-gold">
+                Contact
+              </Button>
+            </Link>
+            <Link href="/bulk-import">
+              <Button variant="ghost" className="text-gray-600 hover:text-gold text-xs">
+                Bulk Import
+              </Button>
+            </Link>
             <Link href="/register-artisan">
               <Button className="bg-gold hover:bg-gold-dark text-black">
                 Join as Artisan
