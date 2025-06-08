@@ -9,7 +9,7 @@ import SearchResults from "@/pages/SearchResults";
 import ArtisanProfile from "@/pages/ArtisanProfile";
 import ArtisanRegistration from "@/pages/ArtisanRegistration";
 import ContactUs from "@/pages/ContactUs";
-import BulkArtisanImport from "@/pages/BulkArtisanImport";
+import AdminBulkImport from "@/pages/AdminBulkImport";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,7 +20,7 @@ function Router() {
       <Route path="/artisan/:id" component={ArtisanProfile} />
       <Route path="/register-artisan" component={ArtisanRegistration} />
       <Route path="/contact" component={ContactUs} />
-      <Route path="/bulk-import" component={BulkArtisanImport} />
+      <Route path="/admin/bulk-import" component={AdminBulkImport} />
       <Route component={NotFound} />
     </Switch>
   );
