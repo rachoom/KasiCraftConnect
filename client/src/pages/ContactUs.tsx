@@ -156,7 +156,7 @@ export default function ContactUs() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-gold hover:bg-gold-dark text-black"
+                    className="w-full bg-gold hover:bg-gold-dark text-black cosmic-glow-static"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Sending..." : "Send Message"}
