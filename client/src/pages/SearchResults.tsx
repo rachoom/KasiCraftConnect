@@ -56,16 +56,39 @@ export default function SearchResults() {
     );
   }
 
-  if (error || !searchResults) {
+  if (error) {
+    console.error("Search error:", error);
     return (
       <div className="min-h-screen bg-white">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-black-soft mb-4">Search Error</h1>
-            <p className="text-gray-600 mb-6">Unable to perform search. Please try again.</p>
+            <p className="text-gray-600 mb-4">Unable to perform search. Please try again.</p>
+            <p className="text-sm text-red-600 mb-6">Error: {error?.message || "Unknown error"}</p>
             <Link href="/">
-              <Button className="bg-gold hover:bg-gold-dark text-black">
+              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!searchResults) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-black-soft mb-4">No Results</h1>
+            <p className="text-gray-600 mb-6">No search results found. Please try a different search.</p>
+            <Link href="/">
+              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>
