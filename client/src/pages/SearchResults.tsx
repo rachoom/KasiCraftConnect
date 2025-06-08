@@ -25,6 +25,8 @@ export default function SearchResults() {
   }>({
     queryKey: [`/api/search?service=${service}&location=${searchLocation}&tier=${tier}`],
     enabled: !!(service && searchLocation),
+    retry: 3,
+    retryDelay: 1000,
   });
 
   if (isLoading) {

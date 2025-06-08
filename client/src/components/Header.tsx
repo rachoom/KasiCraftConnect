@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100">
+    <header className="bg-white shadow-sm border-b border-orange-200/40" style={{background: 'linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,248,240,1) 50%, rgba(254,243,199,1) 100%)'}}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -49,26 +49,26 @@ export default function Header() {
           </div>
           
           <nav className="hidden lg:flex space-x-8">
-            <a href="#services" className="text-gray-700 hover:text-gold transition-colors font-medium">
+            <a href="#services" className="text-gray-800 hover:text-gold transition-colors font-medium hover:bg-amber-50 px-3 py-2 rounded-lg">
               Services
             </a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-gold transition-colors font-medium">
+            <a href="#how-it-works" className="text-gray-800 hover:text-gold transition-colors font-medium hover:bg-amber-50 px-3 py-2 rounded-lg">
               How It Works
             </a>
-            <a href="#pricing" className="text-gray-700 hover:text-gold transition-colors font-medium">
+            <a href="#pricing" className="text-gray-800 hover:text-gold transition-colors font-medium hover:bg-amber-50 px-3 py-2 rounded-lg">
               Pricing
             </a>
           </nav>
           
           <div className="flex items-center space-x-4">
             <Link href="/contact">
-              <Button variant="ghost" className="text-gray-700 hover:text-gold font-medium">
+              <Button variant="ghost" className="text-gray-800 hover:text-gold font-medium hover:bg-amber-50">
                 Contact
               </Button>
             </Link>
 
             <Link href="/register-artisan">
-              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+              <Button className="bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 hover:from-orange-600 hover:via-red-600 hover:to-yellow-600 text-white cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Join as Artisan
               </Button>
             </Link>
