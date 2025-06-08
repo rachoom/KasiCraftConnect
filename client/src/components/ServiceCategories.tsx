@@ -71,7 +71,7 @@ export default function ServiceCategories() {
               onClick={() => selectService(service.id)}
             >
               <div className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
-                <div className="absolute inset-0 opacity-15 group-hover:opacity-25 transition-opacity">
+                <div className="absolute inset-0 opacity-45 group-hover:opacity-60 transition-opacity">
                   <img 
                     src={service.image}
                     alt={service.name}

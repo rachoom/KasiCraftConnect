@@ -10,11 +10,29 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" fill="#D4A574" stroke="#1a1a1a" strokeWidth="2"/>
-                <path d="M12 28 L20 16 L28 28 Z" fill="#1a1a1a"/>
-                <circle cx="20" cy="22" r="3" fill="#D4A574"/>
-                <path d="M16 12 L20 8 L24 12 L20 16 Z" fill="#1a1a1a"/>
-                <circle cx="20" cy="12" r="1.5" fill="#D4A574"/>
+                <defs>
+                  <radialGradient id="cosmicGold" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#FFD700"/>
+                    <stop offset="50%" stopColor="#D4A574"/>
+                    <stop offset="100%" stopColor="#B8860B"/>
+                  </radialGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                <circle cx="20" cy="20" r="18" fill="url(#cosmicGold)" stroke="#1a1a1a" strokeWidth="1.5" filter="url(#glow)"/>
+                <circle cx="20" cy="20" r="12" fill="none" stroke="#1a1a1a" strokeWidth="1" opacity="0.6"/>
+                <circle cx="20" cy="20" r="6" fill="none" stroke="#1a1a1a" strokeWidth="0.8" opacity="0.4"/>
+                <path d="M20 8 L22 14 L28 12 L22 16 L24 22 L20 18 L16 22 L18 16 L12 12 L18 14 Z" fill="#1a1a1a" opacity="0.8"/>
+                <circle cx="20" cy="20" r="2" fill="#FFD700"/>
+                <circle cx="15" cy="12" r="1" fill="#FFD700" opacity="0.7"/>
+                <circle cx="28" cy="15" r="0.8" fill="#D4A574" opacity="0.6"/>
+                <circle cx="12" cy="25" r="0.6" fill="#FFD700" opacity="0.5"/>
+                <circle cx="30" cy="28" r="0.5" fill="#D4A574" opacity="0.4"/>
               </svg>
               <h1 className="text-2xl font-bold text-black-soft cursor-pointer">
                 Kasi <span className="text-gold">Connect</span>
