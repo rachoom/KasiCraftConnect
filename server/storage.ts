@@ -192,14 +192,8 @@ export class MemStorage implements IStorage {
   async searchArtisans(service: string, location: string, limit: number = 3, tier: string = "basic"): Promise<Artisan[]> {
     let results = Array.from(this.artisans.values());
 
-    // Filter by verification status based on tier
-    if (tier === "basic") {
-      // Basic tier gets unverified artisans
-      results = results.filter(artisan => !artisan.verified);
-    } else {
-      // Premium and enterprise tiers get verified artisans
-      results = results.filter(artisan => artisan.verified);
-    }
+    // All tiers get verified artisans for better user experience
+    results = results.filter(artisan => artisan.verified);
 
     // Filter by service if provided
     if (service && service !== "all") {
@@ -210,8 +204,15 @@ export class MemStorage implements IStorage {
 
     // Filter by location if provided
     if (location) {
+      const locationTerms = location.toLowerCase().split(/[,\s]+/).filter(Boolean);
       results = results.filter(artisan => 
-        artisan.location.toLowerCase().includes(location.toLowerCase())
+        locationTerms.some(term => 
+          artisan.location.toLowerCase().includes(term) ||
+          (term === "joburg" && artisan.location.toLowerCase().includes("johannesburg")) ||
+          (term === "jhb" && artisan.location.toLowerCase().includes("johannesburg")) ||
+          (term === "pta" && artisan.location.toLowerCase().includes("pretoria")) ||
+          (term === "cpt" && artisan.location.toLowerCase().includes("cape town"))
+        )
       );
     }
 
