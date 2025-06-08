@@ -11,28 +11,36 @@ export default function Header() {
             <Link href="/" className="flex items-center space-x-3">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <radialGradient id="cosmicGold" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#FFD700"/>
-                    <stop offset="50%" stopColor="#D4A574"/>
-                    <stop offset="100%" stopColor="#B8860B"/>
+                  <radialGradient id="royalGold" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#DAA520"/>
+                    <stop offset="50%" stopColor="#B8860B"/>
+                    <stop offset="100%" stopColor="#8B6914"/>
                   </radialGradient>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <filter id="elegantGlow">
+                    <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
                     <feMerge>
                       <feMergeNode in="coloredBlur"/>
                       <feMergeNode in="SourceGraphic"/>
                     </feMerge>
                   </filter>
                 </defs>
-                <circle cx="20" cy="20" r="18" fill="url(#cosmicGold)" stroke="#1a1a1a" strokeWidth="1.5" filter="url(#glow)"/>
-                <circle cx="20" cy="20" r="12" fill="none" stroke="#1a1a1a" strokeWidth="1" opacity="0.6"/>
-                <circle cx="20" cy="20" r="6" fill="none" stroke="#1a1a1a" strokeWidth="0.8" opacity="0.4"/>
-                <path d="M20 8 L22 14 L28 12 L22 16 L24 22 L20 18 L16 22 L18 16 L12 12 L18 14 Z" fill="#1a1a1a" opacity="0.8"/>
-                <circle cx="20" cy="20" r="2" fill="#FFD700"/>
-                <circle cx="15" cy="12" r="1" fill="#FFD700" opacity="0.7"/>
-                <circle cx="28" cy="15" r="0.8" fill="#D4A574" opacity="0.6"/>
-                <circle cx="12" cy="25" r="0.6" fill="#FFD700" opacity="0.5"/>
-                <circle cx="30" cy="28" r="0.5" fill="#D4A574" opacity="0.4"/>
+                {/* Basotho Hat Background */}
+                <ellipse cx="20" cy="32" rx="16" ry="6" fill="url(#royalGold)" opacity="0.3"/>
+                <path d="M8 28 Q20 25 32 28 Q32 30 20 32 Q8 30 8 28 Z" fill="url(#royalGold)" opacity="0.5"/>
+                <circle cx="20" cy="20" r="18" fill="none" stroke="url(#royalGold)" strokeWidth="1.5" opacity="0.6"/>
+                
+                {/* Central Star */}
+                <path d="M20 4 L23 13 L32 13 L25.5 18.5 L28 27 L20 22 L12 27 L14.5 18.5 L8 13 L17 13 Z" 
+                      fill="url(#royalGold)" filter="url(#elegantGlow)"/>
+                <path d="M20 8 L22 15 L28 15 L23.5 19 L25 26 L20 22 L15 26 L16.5 19 L12 15 L18 15 Z" 
+                      fill="#1a1a1a" opacity="0.7"/>
+                <circle cx="20" cy="20" r="3" fill="#DAA520"/>
+                
+                {/* Decorative elements */}
+                <circle cx="12" cy="12" r="1.5" fill="#DAA520" opacity="0.8"/>
+                <circle cx="28" cy="12" r="1.5" fill="#B8860B" opacity="0.7"/>
+                <circle cx="12" cy="28" r="1" fill="#DAA520" opacity="0.6"/>
+                <circle cx="28" cy="28" r="1" fill="#B8860B" opacity="0.6"/>
               </svg>
               <h1 className="text-2xl font-bold text-black-soft cursor-pointer">
                 Kasi <span className="text-gold">Connect</span>
@@ -64,7 +72,7 @@ export default function Header() {
               </Button>
             </Link>
             <Link href="/register-artisan">
-              <Button className="bg-gold hover:bg-gold-dark text-black">
+              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Join as Artisan
               </Button>
             </Link>

@@ -93,7 +93,7 @@ export default function ServiceCategories() {
             className="group cursor-pointer"
             onClick={() => selectService("all")}
           >
-            <div className="relative bg-gradient-to-br from-gold to-gold-dark rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 text-white">
+            <div className="relative bg-gradient-to-br from-amber-600 to-amber-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 text-white cosmic-glow">
               <div className="text-center">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <i className="fas fa-plus text-2xl text-white" />

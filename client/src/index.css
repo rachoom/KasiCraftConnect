@@ -24,9 +24,10 @@
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
 
-  /* Custom Kasi Connect colors */
-  --gold: hsl(45, 100%, 50%);
-  --gold-dark: hsl(45, 100%, 35%);
+  /* Custom Kasi Connect colors - Royal Gold Theme */
+  --gold: hsl(45, 85%, 45%);
+  --gold-dark: hsl(43, 90%, 35%);
+  --gold-royal: hsl(45, 95%, 40%);
   --black-soft: hsl(0, 0%, 10%);
   --gray-soft: hsl(0, 0%, 97%);
 }
@@ -142,10 +143,10 @@
   
   @keyframes cosmicGlow {
     0%, 100% {
-      box-shadow: 0 0 5px rgba(212, 165, 116, 0.3);
+      box-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
     }
     50% {
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(212, 165, 116, 0.4);
+      box-shadow: 0 0 25px rgba(218, 165, 32, 0.8), 0 0 35px rgba(184, 134, 11, 0.5);
     }
   }
   

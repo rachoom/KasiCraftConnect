@@ -10,12 +10,12 @@ export default function Footer() {
             <div className="flex items-center space-x-3 mb-4">
               <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <radialGradient id="cosmicGoldFooter" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#FFD700"/>
-                    <stop offset="50%" stopColor="#D4A574"/>
-                    <stop offset="100%" stopColor="#B8860B"/>
+                  <radialGradient id="royalGoldFooter" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#DAA520"/>
+                    <stop offset="50%" stopColor="#B8860B"/>
+                    <stop offset="100%" stopColor="#8B6914"/>
                   </radialGradient>
-                  <filter id="glowFooter">
+                  <filter id="elegantGlowFooter">
                     <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
                     <feMerge>
                       <feMergeNode in="coloredBlur"/>
@@ -23,15 +23,23 @@ export default function Footer() {
                     </feMerge>
                   </filter>
                 </defs>
-                <circle cx="20" cy="20" r="18" fill="url(#cosmicGoldFooter)" stroke="#ffffff" strokeWidth="1.5" filter="url(#glowFooter)"/>
-                <circle cx="20" cy="20" r="12" fill="none" stroke="#ffffff" strokeWidth="1" opacity="0.6"/>
-                <circle cx="20" cy="20" r="6" fill="none" stroke="#ffffff" strokeWidth="0.8" opacity="0.4"/>
-                <path d="M20 8 L22 14 L28 12 L22 16 L24 22 L20 18 L16 22 L18 16 L12 12 L18 14 Z" fill="#ffffff" opacity="0.8"/>
-                <circle cx="20" cy="20" r="2" fill="#FFD700"/>
-                <circle cx="15" cy="12" r="1" fill="#FFD700" opacity="0.7"/>
-                <circle cx="28" cy="15" r="0.8" fill="#ffffff" opacity="0.6"/>
-                <circle cx="12" cy="25" r="0.6" fill="#FFD700" opacity="0.5"/>
-                <circle cx="30" cy="28" r="0.5" fill="#ffffff" opacity="0.4"/>
+                {/* Basotho Hat Background */}
+                <ellipse cx="20" cy="32" rx="16" ry="6" fill="url(#royalGoldFooter)" opacity="0.3"/>
+                <path d="M8 28 Q20 25 32 28 Q32 30 20 32 Q8 30 8 28 Z" fill="url(#royalGoldFooter)" opacity="0.5"/>
+                <circle cx="20" cy="20" r="18" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.6"/>
+                
+                {/* Central Star */}
+                <path d="M20 4 L23 13 L32 13 L25.5 18.5 L28 27 L20 22 L12 27 L14.5 18.5 L8 13 L17 13 Z" 
+                      fill="url(#royalGoldFooter)" filter="url(#elegantGlowFooter)"/>
+                <path d="M20 8 L22 15 L28 15 L23.5 19 L25 26 L20 22 L15 26 L16.5 19 L12 15 L18 15 Z" 
+                      fill="#ffffff" opacity="0.7"/>
+                <circle cx="20" cy="20" r="3" fill="#DAA520"/>
+                
+                {/* Decorative elements */}
+                <circle cx="12" cy="12" r="1.5" fill="#DAA520" opacity="0.8"/>
+                <circle cx="28" cy="12" r="1.5" fill="#ffffff" opacity="0.7"/>
+                <circle cx="12" cy="28" r="1" fill="#DAA520" opacity="0.6"/>
+                <circle cx="28" cy="28" r="1" fill="#ffffff" opacity="0.6"/>
               </svg>
               <h5 className="text-2xl font-bold">
                 Kasi <span className="text-gold">Connect</span>

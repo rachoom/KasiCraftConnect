@@ -82,7 +82,7 @@ export default function Hero() {
               </div>
             </div>
             <Button 
-              className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 px-8 rounded-xl text-lg"
+              className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 px-8 rounded-xl text-lg cosmic-glow"
               onClick={handleSearch}
             >
               Find Artisans Near Me
