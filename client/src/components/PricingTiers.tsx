@@ -113,10 +113,10 @@ export default function PricingTiers() {
                 variant={tier.popular ? "secondary" : tier.buttonVariant}
                 className={`w-full ${
                   tier.popular 
-                    ? "bg-white text-gold-dark hover:bg-gray-100" 
+                    ? "bg-white text-gold-dark hover:bg-gray-100 cosmic-selection" 
                     : tier.buttonVariant === "outline" 
-                    ? "border-2 border-gold text-gold hover:bg-gold hover:text-white"
-                    : "bg-gold hover:bg-gold-dark text-black"
+                    ? "border-2 border-gold text-gold hover:bg-gold hover:text-white cosmic-selection"
+                    : "bg-gold hover:bg-gold-dark text-black cosmic-glow-static"
                 }`}
               >
                 {tier.buttonText}
