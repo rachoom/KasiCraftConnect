@@ -11,12 +11,12 @@ export default function Header() {
             <Link href="/" className="flex items-center space-x-3 transition-all duration-300 transform hover:scale-105">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <radialGradient id="royalGold" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#DAA520"/>
-                    <stop offset="50%" stopColor="#B8860B"/>
-                    <stop offset="100%" stopColor="#8B6914"/>
+                  <radialGradient id="blackGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#000000"/>
+                    <stop offset="50%" stopColor="#1a1a1a"/>
+                    <stop offset="100%" stopColor="#2a2a2a"/>
                   </radialGradient>
-                  <filter id="elegantGlow">
+                  <filter id="blackGlow">
                     <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
                     <feMerge>
                       <feMergeNode in="coloredBlur"/>
@@ -25,22 +25,22 @@ export default function Header() {
                   </filter>
                 </defs>
                 {/* Basotho Hat Background */}
-                <ellipse cx="20" cy="32" rx="16" ry="6" fill="url(#royalGold)" opacity="0.3"/>
-                <path d="M8 28 Q20 25 32 28 Q32 30 20 32 Q8 30 8 28 Z" fill="url(#royalGold)" opacity="0.5"/>
-                <circle cx="20" cy="20" r="18" fill="none" stroke="url(#royalGold)" strokeWidth="1.5" opacity="0.6"/>
+                <ellipse cx="20" cy="32" rx="16" ry="6" fill="url(#blackGradient)" opacity="0.4"/>
+                <path d="M8 28 Q20 25 32 28 Q32 30 20 32 Q8 30 8 28 Z" fill="url(#blackGradient)" opacity="0.6"/>
+                <circle cx="20" cy="20" r="18" fill="none" stroke="url(#blackGradient)" strokeWidth="1.5" opacity="0.7"/>
                 
                 {/* Central Star */}
                 <path d="M20 4 L23 13 L32 13 L25.5 18.5 L28 27 L20 22 L12 27 L14.5 18.5 L8 13 L17 13 Z" 
-                      fill="url(#royalGold)" filter="url(#elegantGlow)"/>
+                      fill="url(#blackGradient)" filter="url(#blackGlow)"/>
                 <path d="M20 8 L22 15 L28 15 L23.5 19 L25 26 L20 22 L15 26 L16.5 19 L12 15 L18 15 Z" 
-                      fill="#1a1a1a" opacity="0.7"/>
-                <circle cx="20" cy="20" r="3" fill="#DAA520"/>
+                      fill="#000000" opacity="0.8"/>
+                <circle cx="20" cy="20" r="3" fill="#000000"/>
                 
                 {/* Decorative elements */}
-                <circle cx="12" cy="12" r="1.5" fill="#DAA520" opacity="0.8"/>
-                <circle cx="28" cy="12" r="1.5" fill="#B8860B" opacity="0.7"/>
-                <circle cx="12" cy="28" r="1" fill="#DAA520" opacity="0.6"/>
-                <circle cx="28" cy="28" r="1" fill="#B8860B" opacity="0.6"/>
+                <circle cx="12" cy="12" r="1.5" fill="#000000" opacity="0.9"/>
+                <circle cx="28" cy="12" r="1.5" fill="#1a1a1a" opacity="0.8"/>
+                <circle cx="12" cy="28" r="1" fill="#000000" opacity="0.7"/>
+                <circle cx="28" cy="28" r="1" fill="#1a1a1a" opacity="0.7"/>
               </svg>
               <h1 className="text-2xl font-bold text-black cursor-pointer">
                 Kasi <span className="text-black">Connect</span>
