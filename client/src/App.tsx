@@ -3,7 +3,9 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AnimatePresence } from "framer-motion";
 import CosmicBackground from "@/components/CosmicBackground";
+import PageTransition from "@/components/PageTransition";
 import Home from "@/pages/Home";
 import SearchResults from "@/pages/SearchResults";
 import ArtisanProfile from "@/pages/ArtisanProfile";
@@ -14,15 +16,17 @@ import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/search" component={SearchResults} />
-      <Route path="/artisan/:id" component={ArtisanProfile} />
-      <Route path="/register-artisan" component={ArtisanRegistration} />
-      <Route path="/contact" component={ContactUs} />
-      <Route path="/admin/bulk-import" component={AdminBulkImport} />
-      <Route component={NotFound} />
-    </Switch>
+    <AnimatePresence mode="wait">
+      <Switch>
+        <Route path="/" component={() => <PageTransition><Home /></PageTransition>} />
+        <Route path="/search" component={() => <PageTransition><SearchResults /></PageTransition>} />
+        <Route path="/artisan/:id" component={() => <PageTransition><ArtisanProfile /></PageTransition>} />
+        <Route path="/register-artisan" component={() => <PageTransition><ArtisanRegistration /></PageTransition>} />
+        <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />
+        <Route path="/admin/bulk-import" component={() => <PageTransition><AdminBulkImport /></PageTransition>} />
+        <Route component={() => <PageTransition><NotFound /></PageTransition>} />
+      </Switch>
+    </AnimatePresence>
   );
 }
 
