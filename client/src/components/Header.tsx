@@ -49,20 +49,20 @@ export default function Header() {
           </div>
           
           <nav className="hidden lg:flex space-x-8">
-            <a href="#services" className="text-gray-800 hover:text-gold transition-all duration-300 font-medium hover:bg-amber-50 px-3 py-2 rounded-lg transform hover:scale-105">
+            <a href="#services" className="text-gray-900 hover:text-gold transition-all duration-300 font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Services
             </a>
-            <a href="#how-it-works" className="text-gray-800 hover:text-gold transition-all duration-300 font-medium hover:bg-amber-50 px-3 py-2 rounded-lg transform hover:scale-105">
+            <a href="#how-it-works" className="text-gray-900 hover:text-gold transition-all duration-300 font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               How It Works
             </a>
-            <a href="#pricing" className="text-gray-800 hover:text-gold transition-all duration-300 font-medium hover:bg-amber-50 px-3 py-2 rounded-lg transform hover:scale-105">
+            <a href="#pricing" className="text-gray-900 hover:text-gold transition-all duration-300 font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Pricing
             </a>
           </nav>
           
           <div className="flex items-center space-x-4">
             <Link href="/contact">
-              <Button variant="ghost" className="text-gray-800 hover:text-gold font-medium hover:bg-amber-50 transition-all duration-300 transform hover:scale-105">
+              <Button variant="ghost" className="text-gray-900 hover:text-gold font-semibold hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md">
                 Contact
               </Button>
             </Link>
