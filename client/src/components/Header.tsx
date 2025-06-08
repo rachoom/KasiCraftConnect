@@ -49,20 +49,20 @@ export default function Header() {
           </div>
           
           <nav className="hidden lg:flex space-x-8">
-            <a href="#services" className="text-gray-600 hover:text-gold transition-colors">
+            <a href="#services" className="text-gray-700 hover:text-gold transition-colors font-medium">
               Services
             </a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-gold transition-colors">
+            <a href="#how-it-works" className="text-gray-700 hover:text-gold transition-colors font-medium">
               How It Works
             </a>
-            <a href="#pricing" className="text-gray-600 hover:text-gold transition-colors">
+            <a href="#pricing" className="text-gray-700 hover:text-gold transition-colors font-medium">
               Pricing
             </a>
           </nav>
           
           <div className="flex items-center space-x-4">
             <Link href="/contact">
-              <Button variant="ghost" className="text-gray-600 hover:text-gold">
+              <Button variant="ghost" className="text-gray-700 hover:text-gold font-medium">
                 Contact
               </Button>
             </Link>

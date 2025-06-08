@@ -1,19 +1,92 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Locate } from "lucide-react";
+import { Search, MapPin, Locate, ChevronDown } from "lucide-react";
+
+const services = [
+  "builders", "electricians", "plumbers", "carpenters", "painters", "tilers", "roofers", 
+  "landscapers", "cleaners", "mechanics", "welders", "security", "catering", "photography"
+];
+
+const locations = [
+  "Johannesburg, Gauteng", "Cape Town, Western Cape", "Durban, KwaZulu-Natal", "Pretoria, Gauteng",
+  "Sandton, Johannesburg", "Rosebank, Johannesburg", "Soweto, Johannesburg", "Alexandra, Johannesburg",
+  "Melville, Johannesburg", "Randburg, Johannesburg", "Midrand, Johannesburg", "Fourways, Johannesburg",
+  "Roodepoort, Johannesburg", "Germiston, Johannesburg", "Benoni, Johannesburg", "Edenvale, Johannesburg",
+  "Kempton Park, Johannesburg", "Boksburg, Johannesburg", "Johannesburg CBD, Johannesburg",
+  "Springs, Ekurhuleni", "Alberton, Ekurhuleni", "Benoni, Ekurhuleni", "Daveyton, Ekurhuleni",
+  "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", "Edenvale, Ekurhuleni",
+  "Brakpan, Ekurhuleni", "Nigel, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni",
+  "Thokoza, Ekurhuleni", "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
+];
 
 export default function Hero() {
   const [, setLocation] = useLocation();
   const [service, setService] = useState("");
   const [location, setLocationValue] = useState("");
   const [isGeolocating, setIsGeolocating] = useState(false);
+  const [servicesuggestions, setServiceSuggestions] = useState<string[]>([]);
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+  const [showServiceSuggestions, setShowServiceSuggestions] = useState(false);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+  const serviceInputRef = useRef<HTMLInputElement>(null);
+  const locationInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (serviceInputRef.current && !serviceInputRef.current.contains(event.target as Node)) {
+        setShowServiceSuggestions(false);
+      }
+      if (locationInputRef.current && !locationInputRef.current.contains(event.target as Node)) {
+        setShowLocationSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSearch = () => {
     if (service && location) {
       setLocation(`/search?service=${encodeURIComponent(service)}&location=${encodeURIComponent(location)}&tier=basic`);
     }
+  };
+
+  const handleServiceChange = (value: string) => {
+    setService(value);
+    if (value.length > 0) {
+      const filtered = services.filter(s => 
+        s.toLowerCase().includes(value.toLowerCase())
+      );
+      setServiceSuggestions(filtered);
+      setShowServiceSuggestions(true);
+    } else {
+      setShowServiceSuggestions(false);
+    }
+  };
+
+  const handleLocationChange = (value: string) => {
+    setLocationValue(value);
+    if (value.length > 0) {
+      const filtered = locations.filter(l => 
+        l.toLowerCase().includes(value.toLowerCase())
+      );
+      setLocationSuggestions(filtered);
+      setShowLocationSuggestions(true);
+    } else {
+      setShowLocationSuggestions(false);
+    }
+  };
+
+  const selectService = (selectedService: string) => {
+    setService(selectedService);
+    setShowServiceSuggestions(false);
+  };
+
+  const selectLocation = (selectedLocation: string) => {
+    setLocationValue(selectedLocation);
+    setShowLocationSuggestions(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -115,37 +188,72 @@ export default function Hero() {
           
           <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto">
             <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <div className="relative" ref={serviceInputRef}>
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <Input
                   type="text"
                   placeholder="What service do you need?"
-                  className="pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900"
+                  className="pl-12 pr-10 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900 cosmic-selection"
                   value={service}
-                  onChange={(e) => setService(e.target.value)}
+                  onChange={(e) => handleServiceChange(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  onFocus={() => setShowServiceSuggestions(service.length > 0)}
                 />
+                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                
+                {showServiceSuggestions && servicesuggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                    {servicesuggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg cosmic-selection"
+                        onClick={() => selectService(suggestion)}
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              
+              <div className="relative" ref={locationInputRef}>
+                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                 <Input
                   type="text"
                   placeholder="Your location"
-                  className="pl-12 pr-12 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900"
+                  className="pl-12 pr-16 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900 cosmic-selection"
                   value={location}
-                  onChange={(e) => setLocationValue(e.target.value)}
+                  onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  onFocus={() => setShowLocationSuggestions(location.length > 0)}
                 />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gold/10"
-                  onClick={handleGeolocation}
-                  disabled={isGeolocating}
-                >
-                  <Locate className={`w-4 h-4 text-gold ${isGeolocating ? 'animate-pulse' : ''}`} />
-                </Button>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="p-2 hover:bg-gold/10 cosmic-glow-static"
+                    onClick={handleGeolocation}
+                    disabled={isGeolocating}
+                  >
+                    <Locate className={`w-4 h-4 text-gold ${isGeolocating ? 'animate-pulse' : ''}`} />
+                  </Button>
+                  <ChevronDown className="text-gray-400 w-4 h-4" />
+                </div>
+                
+                {showLocationSuggestions && locationSuggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                    {locationSuggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg cosmic-selection"
+                        onClick={() => selectLocation(suggestion)}
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
             <Button 
