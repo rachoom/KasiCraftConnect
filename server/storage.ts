@@ -151,7 +151,11 @@ export class MemStorage implements IStorage {
         qualificationDocuments: [],
         verificationStatus: isVerified ? "approved" : "pending",
         verificationNotes: null,
-        verifiedAt: isVerified ? new Date().toISOString() : null
+        verifiedAt: isVerified ? new Date().toISOString() : null,
+        approvalStatus: isVerified ? "approved" : "pending",
+        approvedBy: isVerified ? "System Admin" : null,
+        approvedAt: isVerified ? new Date().toISOString() : null,
+        rejectionReason: null
       };
       this.artisans.set(id, artisanWithRating);
     });
@@ -246,10 +250,6 @@ export class MemStorage implements IStorage {
       verificationStatus: "pending",
       verificationNotes: null,
       verifiedAt: null,
-      approvalStatus: "pending",
-      approvedBy: null,
-      approvedAt: null,
-      rejectionReason: null,
       approvalStatus: "pending",
       approvedBy: null,
       approvedAt: null,
