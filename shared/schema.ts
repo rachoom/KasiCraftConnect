@@ -63,8 +63,16 @@ export const insertSearchRequestSchema = createInsertSchema(searchRequests).omit
   timestamp: true,
 });
 
+export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
+export type AdminUser = typeof adminUsers.$inferSelect;
 export type InsertArtisan = z.infer<typeof insertArtisanSchema>;
 export type Artisan = typeof artisans.$inferSelect;
 export type InsertSearchRequest = z.infer<typeof insertSearchRequestSchema>;

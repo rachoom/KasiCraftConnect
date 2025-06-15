@@ -95,6 +95,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Admin routes for artisan approval
   app.get("/api/admin/pending-artisans", async (req, res) => {
+    // Add auth check
+    const { requireAdminAuth } = await import("./adminAuth");
+    await new Promise((resolve, reject) => {
+      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+    }).catch(() => {
+      return res.status(401).json({ message: "Unauthorized" });
+    });
     try {
       const pendingArtisans = await storage.getPendingArtisans();
       res.json(pendingArtisans);
@@ -145,6 +152,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error rejecting artisan:", error);
       res.status(500).json({ message: "Failed to reject artisan" });
+    }
+  });
+
+  // Admin authentication routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const { adminAuthService } = await import("./adminAuth");
+      
+      const result = await adminAuthService.verifyEmail(email, password);
+      res.json(result);
+    } catch (error) {
+      console.error("Admin login error:", error);
+      res.status(401).json({ message: error.message || "Login failed" });
+    }
+  });
+
+  app.post("/api/admin/resend-verification", async (req, res) => {
+    try {
+      const { email } = req.body;
+      const { adminAuthService } = await import("./adminAuth");
+      
+      const verificationToken = adminAuthService.generateVerificationToken();
+      await adminAuthService.sendVerificationEmail(email, verificationToken);
+      
+      res.json({ message: "Verification email sent" });
+    } catch (error) {
+      console.error("Resend verification error:", error);
+      res.status(500).json({ message: "Failed to send verification email" });
+    }
+  });
+
+  app.get("/api/admin/verify-email", async (req, res) => {
+    try {
+      const { token } = req.query;
+      const { adminAuthService } = await import("./adminAuth");
+      
+      const admin = await adminAuthService.verifyEmailToken(token as string);
+      
+      if (!admin) {
+        return res.status(400).send(`
+          <html>
+            <head><title>Verification Failed</title></head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+              <h1 style="color: #e74c3c;">Verification Failed</h1>
+              <p>The verification link is invalid or has expired.</p>
+              <a href="/admin/login" style="color: #DAA520; text-decoration: none;">Return to Login</a>
+            </body>
+          </html>
+        `);
+      }
+
+      res.send(`
+        <html>
+          <head><title>Email Verified</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #27ae60;">Email Verified Successfully!</h1>
+            <p>Your admin account has been verified. You can now log in.</p>
+            <a href="/admin/login" style="background: #DAA520; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Login</a>
+          </body>
+        </html>
+      `);
+    } catch (error) {
+      console.error("Email verification error:", error);
+      res.status(500).send("Verification failed");
+    }
+  });
+
+  app.get("/api/admin/verify-token", async (req, res) => {
+    try {
+      const { requireAdminAuth } = await import("./adminAuth");
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+      res.json({ valid: true, admin: (req as any).admin });
+    } catch (error) {
+      res.status(401).json({ valid: false });
     }
   });
 

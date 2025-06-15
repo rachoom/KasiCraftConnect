@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,8 +21,38 @@ export default function AdminReview() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Check admin authentication
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
+    if (!token) {
+      window.location.href = "/admin/login";
+      return;
+    }
+    
+    // Verify token is valid
+    fetch("/api/admin/verify-token", {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(response => {
+      if (!response.ok) {
+        localStorage.removeItem("adminToken");
+        window.location.href = "/admin/login";
+      }
+    }).catch(() => {
+      localStorage.removeItem("adminToken");
+      window.location.href = "/admin/login";
+    });
+  }, []);
+
   const { data: pendingArtisans, isLoading } = useQuery<Artisan[]>({
     queryKey: ["/api/admin/pending-artisans"],
+    queryFn: async () => {
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch("/api/admin/pending-artisans", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error("Failed to fetch pending artisans");
+      return response.json();
+    },
   });
 
   const approveMutation = useMutation({
