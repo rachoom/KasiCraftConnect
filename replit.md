@@ -49,9 +49,14 @@ The application uses three main entities:
 - **Search Requests**: Tracking of search queries and pricing tiers
 
 ### Authentication System
-- Simple username/password authentication
+- Simple username/password authentication for regular users
 - Session-based authentication with PostgreSQL session store
-- Admin authentication for bulk operations and artisan approval
+- **Secure admin authentication system** with:
+  - Email/password login with verification
+  - JWT-based session management
+  - Email verification for new admin accounts
+  - Google OAuth integration support
+  - Protected admin routes with token validation
 
 ### Pricing Tiers
 - **Basic (Free)**: Up to 3 unverified artisan contacts
@@ -110,6 +115,9 @@ The application uses three main entities:
 ```
 Changelog:
 - June 15, 2025. Initial setup
+- June 15, 2025. Added comprehensive admin authentication system with email verification
+- June 15, 2025. Implemented secure admin review and approval workflow for artisan applications
+- June 15, 2025. Hidden admin access from public menu, now requires login at /admin/login
 ```
 
 ## User Preferences

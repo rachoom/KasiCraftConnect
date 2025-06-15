@@ -2,7 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
-import { adminUsers, type AdminUser, type InsertAdminUser } from "@shared/schema";
+import { adminUsers } from "@shared/schema";
+import type { AdminUser, InsertAdminUser } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import type { Request, Response, NextFunction } from "express";
@@ -11,7 +12,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-jwt-secret-key";
 const EMAIL_FROM = process.env.EMAIL_FROM || "noreply@kasiconnect.com";
 
 // Email transporter configuration
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || "smtp.gmail.com",
   port: 587,
   secure: false,

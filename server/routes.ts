@@ -112,6 +112,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/admin/approve-artisan/:id", async (req, res) => {
+    // Add auth check
+    const { requireAdminAuth } = await import("./adminAuth");
+    await new Promise((resolve, reject) => {
+      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+    }).catch(() => {
+      return res.status(401).json({ message: "Unauthorized" });
+    });
+    
     try {
       const artisanId = parseInt(req.params.id);
       const { approvedBy } = req.body;
@@ -134,6 +142,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/admin/reject-artisan/:id", async (req, res) => {
+    // Add auth check
+    const { requireAdminAuth } = await import("./adminAuth");
+    await new Promise((resolve, reject) => {
+      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+    }).catch(() => {
+      return res.status(401).json({ message: "Unauthorized" });
+    });
+    
     try {
       const artisanId = parseInt(req.params.id);
       const { rejectionReason, rejectedBy } = req.body;
@@ -163,7 +179,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const result = await adminAuthService.verifyEmail(email, password);
       res.json(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Admin login error:", error);
       res.status(401).json({ message: error.message || "Login failed" });
     }
@@ -178,7 +194,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await adminAuthService.sendVerificationEmail(email, verificationToken);
       
       res.json({ message: "Verification email sent" });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Resend verification error:", error);
       res.status(500).json({ message: "Failed to send verification email" });
     }

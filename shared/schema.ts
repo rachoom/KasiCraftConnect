@@ -8,6 +8,22 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
 });
 
+export const adminUsers = pgTable("admin_users", {
+  id: serial("id").primaryKey(),
+  email: text("email").unique().notNull(),
+  password: text("password"),
+  googleId: text("google_id").unique(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  profileImage: text("profile_image"),
+  isVerified: boolean("is_verified").default(false),
+  verificationToken: text("verification_token"),
+  verificationExpires: text("verification_expires"),
+  lastLogin: text("last_login"),
+  createdAt: text("created_at").default(new Date().toISOString()),
+  updatedAt: text("updated_at").default(new Date().toISOString()),
+});
+
 export const artisans = pgTable("artisans", {
   id: serial("id").primaryKey(),
   firstName: text("first_name").notNull(),

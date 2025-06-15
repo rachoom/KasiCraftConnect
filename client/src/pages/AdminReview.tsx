@@ -57,7 +57,17 @@ export default function AdminReview() {
 
   const approveMutation = useMutation({
     mutationFn: async ({ id, approvedBy }: { id: number; approvedBy: string }) => {
-      await apiRequest("POST", `/api/admin/approve-artisan/${id}`, { approvedBy });
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch(`/api/admin/approve-artisan/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ approvedBy }),
+      });
+      if (!response.ok) throw new Error("Failed to approve artisan");
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -78,7 +88,17 @@ export default function AdminReview() {
 
   const rejectMutation = useMutation({
     mutationFn: async ({ id, rejectionReason, rejectedBy }: { id: number; rejectionReason: string; rejectedBy: string }) => {
-      await apiRequest("POST", `/api/admin/reject-artisan/${id}`, { rejectionReason, rejectedBy });
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch(`/api/admin/reject-artisan/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ rejectionReason, rejectedBy }),
+      });
+      if (!response.ok) throw new Error("Failed to reject artisan");
+      return response.json();
     },
     onSuccess: () => {
       toast({

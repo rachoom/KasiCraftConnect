@@ -249,6 +249,10 @@ export class MemStorage implements IStorage {
       approvalStatus: "pending",
       approvedBy: null,
       approvedAt: null,
+      rejectionReason: null,
+      approvalStatus: "pending",
+      approvedBy: null,
+      approvedAt: null,
       rejectionReason: null
     };
     this.artisans.set(id, artisan);
