@@ -245,7 +245,11 @@ export class MemStorage implements IStorage {
       qualificationDocuments: insertArtisan.qualificationDocuments || [],
       verificationStatus: "pending",
       verificationNotes: null,
-      verifiedAt: null
+      verifiedAt: null,
+      approvalStatus: "pending",
+      approvedBy: null,
+      approvedAt: null,
+      rejectionReason: null
     };
     this.artisans.set(id, artisan);
     return artisan;
@@ -289,7 +293,7 @@ export class MemStorage implements IStorage {
       ...artisan,
       approvalStatus: 'approved',
       approvedBy,
-      approvedAt: new Date(),
+      approvedAt: new Date().toISOString(),
       verified: true,
       verificationStatus: 'approved'
     };
@@ -307,7 +311,7 @@ export class MemStorage implements IStorage {
       approvalStatus: 'rejected',
       rejectionReason,
       approvedBy: rejectedBy,
-      approvedAt: new Date()
+      approvedAt: new Date().toISOString()
     };
 
     this.artisans.set(id, updatedArtisan);

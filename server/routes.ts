@@ -93,6 +93,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin routes for artisan approval
+  app.get("/api/admin/pending-artisans", async (req, res) => {
+    try {
+      const pendingArtisans = await storage.getPendingArtisans();
+      res.json(pendingArtisans);
+    } catch (error) {
+      console.error("Error fetching pending artisans:", error);
+      res.status(500).json({ message: "Failed to fetch pending artisans" });
+    }
+  });
+
+  app.post("/api/admin/approve-artisan/:id", async (req, res) => {
+    try {
+      const artisanId = parseInt(req.params.id);
+      const { approvedBy } = req.body;
+
+      if (!approvedBy) {
+        return res.status(400).json({ message: "Approved by field is required" });
+      }
+
+      const approvedArtisan = await storage.approveArtisan(artisanId, approvedBy);
+      
+      if (!approvedArtisan) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+
+      res.json({ message: "Artisan approved successfully", artisan: approvedArtisan });
+    } catch (error) {
+      console.error("Error approving artisan:", error);
+      res.status(500).json({ message: "Failed to approve artisan" });
+    }
+  });
+
+  app.post("/api/admin/reject-artisan/:id", async (req, res) => {
+    try {
+      const artisanId = parseInt(req.params.id);
+      const { rejectionReason, rejectedBy } = req.body;
+
+      if (!rejectionReason || !rejectedBy) {
+        return res.status(400).json({ message: "Rejection reason and rejected by fields are required" });
+      }
+
+      const rejectedArtisan = await storage.rejectArtisan(artisanId, rejectionReason, rejectedBy);
+      
+      if (!rejectedArtisan) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+
+      res.json({ message: "Artisan rejected successfully", artisan: rejectedArtisan });
+    } catch (error) {
+      console.error("Error rejecting artisan:", error);
+      res.status(500).json({ message: "Failed to reject artisan" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

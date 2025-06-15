@@ -72,6 +72,12 @@ export default function Header() {
                 Join as Artisan
               </Button>
             </Link>
+            
+            <Link href="/admin/review">
+              <Button variant="outline" className="border-black text-black hover:bg-black hover:text-gold transition-all duration-300 transform hover:scale-105">
+                Admin
+              </Button>
+            </Link>
           </div>
           
           <button className="lg:hidden text-gray-600">
