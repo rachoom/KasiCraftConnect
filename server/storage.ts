@@ -16,6 +16,11 @@ export interface IStorage {
   searchArtisans(service: string, location: string, limit?: number, tier?: string): Promise<Artisan[]>;
   createArtisan(artisan: InsertArtisan): Promise<Artisan>;
   updateArtisan(id: number, updates: Partial<Artisan>): Promise<Artisan | undefined>;
+  
+  // Admin methods
+  getPendingArtisans(): Promise<Artisan[]>;
+  approveArtisan(id: number, approvedBy: string): Promise<Artisan | undefined>;
+  rejectArtisan(id: number, rejectionReason: string, rejectedBy: string): Promise<Artisan | undefined>;
 
   // Search request methods
   createSearchRequest(request: InsertSearchRequest): Promise<SearchRequest>;
@@ -271,6 +276,43 @@ export class MemStorage implements IStorage {
   async getSearchRequests(): Promise<SearchRequest[]> {
     return Array.from(this.searchRequests.values());
   }
+
+  async getPendingArtisans(): Promise<Artisan[]> {
+    return Array.from(this.artisans.values()).filter(artisan => artisan.approvalStatus === 'pending');
+  }
+
+  async approveArtisan(id: number, approvedBy: string): Promise<Artisan | undefined> {
+    const artisan = this.artisans.get(id);
+    if (!artisan) return undefined;
+
+    const updatedArtisan: Artisan = {
+      ...artisan,
+      approvalStatus: 'approved',
+      approvedBy,
+      approvedAt: new Date(),
+      verified: true,
+      verificationStatus: 'approved'
+    };
+
+    this.artisans.set(id, updatedArtisan);
+    return updatedArtisan;
+  }
+
+  async rejectArtisan(id: number, rejectionReason: string, rejectedBy: string): Promise<Artisan | undefined> {
+    const artisan = this.artisans.get(id);
+    if (!artisan) return undefined;
+
+    const updatedArtisan: Artisan = {
+      ...artisan,
+      approvalStatus: 'rejected',
+      rejectionReason,
+      approvedBy: rejectedBy,
+      approvedAt: new Date()
+    };
+
+    this.artisans.set(id, updatedArtisan);
+    return updatedArtisan;
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -385,6 +427,42 @@ export class DatabaseStorage implements IStorage {
 
   async getSearchRequests(): Promise<SearchRequest[]> {
     return await db.select().from(searchRequests);
+  }
+
+  async getPendingArtisans(): Promise<Artisan[]> {
+    const pending = await db.select().from(artisans).where(eq(artisans.approvalStatus, 'pending'));
+    return pending;
+  }
+
+  async approveArtisan(id: number, approvedBy: string): Promise<Artisan | undefined> {
+    const [updatedArtisan] = await db
+      .update(artisans)
+      .set({
+        approvalStatus: 'approved',
+        approvedBy,
+        approvedAt: new Date().toISOString(),
+        verified: true,
+        verificationStatus: 'approved'
+      })
+      .where(eq(artisans.id, id))
+      .returning();
+    
+    return updatedArtisan;
+  }
+
+  async rejectArtisan(id: number, rejectionReason: string, rejectedBy: string): Promise<Artisan | undefined> {
+    const [updatedArtisan] = await db
+      .update(artisans)
+      .set({
+        approvalStatus: 'rejected',
+        rejectionReason,
+        approvedBy: rejectedBy,
+        approvedAt: new Date().toISOString()
+      })
+      .where(eq(artisans.id, id))
+      .returning();
+    
+    return updatedArtisan;
   }
 }
 

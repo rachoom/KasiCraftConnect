@@ -29,6 +29,10 @@ export const artisans = pgTable("artisans", {
   verificationStatus: text("verification_status").default("pending"), // pending, approved, rejected
   verificationNotes: text("verification_notes"), // Admin notes about verification
   verifiedAt: text("verified_at"), // When verification was completed
+  approvalStatus: text("approval_status").default("pending"), // pending, approved, rejected
+  approvedBy: text("approved_by"), // Admin who approved/rejected
+  approvedAt: text("approved_at"), // When approval decision was made
+  rejectionReason: text("rejection_reason") // Reason for rejection
 });
 
 export const searchRequests = pgTable("search_requests", {
