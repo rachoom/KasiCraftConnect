@@ -203,72 +203,84 @@ export default function Hero() {
           
           <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto">
             <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="relative" ref={serviceInputRef}>
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
-                <Input
-                  type="text"
-                  placeholder="What service do you need?"
-                  className="pl-12 pr-10 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900 cosmic-selection"
-                  value={service}
-                  onChange={(e) => handleServiceChange(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  onFocus={() => setShowServiceSuggestions(service.length > 0)}
-                />
-                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                
-                {showServiceSuggestions && servicesuggestions.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
-                    {servicesuggestions.map((suggestion, index) => (
-                      <button
-                        key={index}
-                        className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg cosmic-selection"
-                        onClick={() => selectService(suggestion)}
-                      >
-                        {suggestion}
-                      </button>
-                    ))}
-                  </div>
-                )}
+              <div className="space-y-2">
+                <label htmlFor="service-input" className="block text-sm font-semibold text-gray-700 text-left">
+                  Service Needed *
+                </label>
+                <div className="relative" ref={serviceInputRef}>
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                  <Input
+                    id="service-input"
+                    type="text"
+                    placeholder="What service do you need?"
+                    className="pl-12 pr-10 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900 cosmic-selection"
+                    value={service}
+                    onChange={(e) => handleServiceChange(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    onFocus={() => setShowServiceSuggestions(service.length > 0)}
+                  />
+                  <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  
+                  {showServiceSuggestions && servicesuggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                      {servicesuggestions.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg cosmic-selection"
+                          onClick={() => selectService(suggestion)}
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               
-              <div className="relative" ref={locationInputRef}>
-                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
-                <Input
-                  type="text"
-                  placeholder="Your location"
-                  className="pl-12 pr-16 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900 cosmic-selection"
-                  value={location}
-                  onChange={(e) => handleLocationChange(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  onFocus={() => setShowLocationSuggestions(location.length > 0)}
-                />
-                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="p-2 hover:bg-gold/10 cosmic-glow-static"
-                    onClick={handleGeolocation}
-                    disabled={isGeolocating}
-                  >
-                    <Locate className={`w-4 h-4 text-gold ${isGeolocating ? 'animate-pulse' : ''}`} />
-                  </Button>
-                  <ChevronDown className="text-gray-400 w-4 h-4" />
-                </div>
-                
-                {showLocationSuggestions && locationSuggestions.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
-                    {locationSuggestions.map((suggestion, index) => (
-                      <button
-                        key={index}
-                        className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg cosmic-selection"
-                        onClick={() => selectLocation(suggestion)}
-                      >
-                        {suggestion}
-                      </button>
-                    ))}
+              <div className="space-y-2">
+                <label htmlFor="location-input" className="block text-sm font-semibold text-gray-700 text-left">
+                  Your Location *
+                </label>
+                <div className="relative" ref={locationInputRef}>
+                  <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                  <Input
+                    id="location-input"
+                    type="text"
+                    placeholder="Your location"
+                    className="pl-12 pr-16 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold focus:border-transparent text-gray-900 cosmic-selection"
+                    value={location}
+                    onChange={(e) => handleLocationChange(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    onFocus={() => setShowLocationSuggestions(location.length > 0)}
+                  />
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="p-2 hover:bg-gold/10 cosmic-glow-static"
+                      onClick={handleGeolocation}
+                      disabled={isGeolocating}
+                    >
+                      <Locate className={`w-4 h-4 text-gold ${isGeolocating ? 'animate-pulse' : ''}`} />
+                    </Button>
+                    <ChevronDown className="text-gray-400 w-4 h-4" />
                   </div>
-                )}
+                  
+                  {showLocationSuggestions && locationSuggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                      {locationSuggestions.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg cosmic-selection"
+                          onClick={() => selectLocation(suggestion)}
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <Button 
