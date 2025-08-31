@@ -204,7 +204,7 @@ export default function Hero() {
           <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto">
             <div className="grid md:grid-cols-2 gap-4 mb-6">
               <div className="space-y-2">
-                <label htmlFor="service-input" className="block text-sm font-semibold text-gray-700 text-left">
+                <label htmlFor="service-input" className="block text-sm font-semibold text-gray-700 text-center">
                   Service Needed *
                 </label>
                 <div className="relative" ref={serviceInputRef}>
@@ -238,7 +238,7 @@ export default function Hero() {
               </div>
               
               <div className="space-y-2">
-                <label htmlFor="location-input" className="block text-sm font-semibold text-gray-700 text-left">
+                <label htmlFor="location-input" className="block text-sm font-semibold text-gray-700 text-center">
                   Your Location *
                 </label>
                 <div className="relative" ref={locationInputRef}>
