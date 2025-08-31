@@ -171,6 +171,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Artisan subscription routes
+  app.post("/api/artisan-subscription", async (req, res) => {
+    try {
+      const subscriptionData = req.body;
+      const subscription = await storage.createArtisanSubscription(subscriptionData);
+      res.status(201).json(subscription);
+    } catch (error) {
+      console.error("Error creating artisan subscription:", error);
+      res.status(500).json({ message: "Failed to create subscription" });
+    }
+  });
+
+  app.post("/api/objects/upload", async (req, res) => {
+    try {
+      // Simple implementation - in production, you'd use proper cloud storage
+      const uploadURL = `${req.protocol}://${req.hostname}/uploads/${Date.now()}-${Math.random().toString(36).substring(7)}`;
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error generating upload URL:", error);
+      res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
+
   // Admin authentication routes
   app.post("/api/admin/login", async (req, res) => {
     try {

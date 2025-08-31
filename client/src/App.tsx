@@ -10,6 +10,7 @@ import Home from "@/pages/Home";
 import SearchResults from "@/pages/SearchResults";
 import ArtisanProfile from "@/pages/ArtisanProfile";
 import ArtisanRegistration from "@/pages/ArtisanRegistration";
+import ArtisanSubscription from "@/pages/ArtisanSubscription";
 import ContactUs from "@/pages/ContactUs";
 import AdminBulkImport from "@/pages/AdminBulkImport";
 import AdminReview from "@/pages/AdminReview";
@@ -24,6 +25,7 @@ function Router() {
         <Route path="/search" component={() => <PageTransition><SearchResults /></PageTransition>} />
         <Route path="/artisan/:id" component={() => <PageTransition><ArtisanProfile /></PageTransition>} />
         <Route path="/register-artisan" component={() => <PageTransition><ArtisanRegistration /></PageTransition>} />
+        <Route path="/subscription" component={() => <PageTransition><ArtisanSubscription /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />
         <Route path="/admin/login" component={() => <PageTransition><AdminLogin /></PageTransition>} />
         <Route path="/admin/bulk-import" component={() => <PageTransition><AdminBulkImport /></PageTransition>} />

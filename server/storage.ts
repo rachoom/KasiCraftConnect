@@ -1,4 +1,4 @@
-import { users, artisans, searchRequests, type User, type InsertUser, type Artisan, type InsertArtisan, type SearchRequest, type InsertSearchRequest } from "@shared/schema";
+import { users, artisans, searchRequests, artisanSubscriptions, type User, type InsertUser, type Artisan, type InsertArtisan, type SearchRequest, type InsertSearchRequest, type ArtisanSubscription, type InsertArtisanSubscription } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -25,6 +25,12 @@ export interface IStorage {
   // Search request methods
   createSearchRequest(request: InsertSearchRequest): Promise<SearchRequest>;
   getSearchRequests(): Promise<SearchRequest[]>;
+
+  // Artisan subscription methods
+  createArtisanSubscription(insertSubscription: InsertArtisanSubscription): Promise<ArtisanSubscription>;
+  getArtisanSubscriptions(): Promise<ArtisanSubscription[]>;
+  getPendingSubscriptions(): Promise<ArtisanSubscription[]>;
+  updateSubscriptionStatus(id: number, status: "approved" | "rejected", reviewedBy: string, rejectionReason?: string): Promise<ArtisanSubscription | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -283,6 +289,57 @@ export class MemStorage implements IStorage {
 
   async getSearchRequests(): Promise<SearchRequest[]> {
     return Array.from(this.searchRequests.values());
+  }
+
+  // Artisan subscription methods
+  private artisanSubscriptions: Map<number, ArtisanSubscription> = new Map();
+  private currentSubscriptionId = 1;
+
+  async createArtisanSubscription(insertSubscription: InsertArtisanSubscription): Promise<ArtisanSubscription> {
+    const subscription: ArtisanSubscription = {
+      ...insertSubscription,
+      id: this.currentSubscriptionId++,
+      applicationStatus: "pending",
+      reviewedBy: null,
+      reviewedAt: null,
+      rejectionReason: null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    this.artisanSubscriptions.set(subscription.id, subscription);
+    return subscription;
+  }
+
+  async getArtisanSubscriptions(): Promise<ArtisanSubscription[]> {
+    return Array.from(this.artisanSubscriptions.values());
+  }
+
+  async getPendingSubscriptions(): Promise<ArtisanSubscription[]> {
+    return Array.from(this.artisanSubscriptions.values()).filter(
+      sub => sub.applicationStatus === "pending"
+    );
+  }
+
+  async updateSubscriptionStatus(
+    id: number, 
+    status: "approved" | "rejected", 
+    reviewedBy: string, 
+    rejectionReason?: string
+  ): Promise<ArtisanSubscription | undefined> {
+    const subscription = this.artisanSubscriptions.get(id);
+    if (!subscription) return undefined;
+
+    const updated: ArtisanSubscription = {
+      ...subscription,
+      applicationStatus: status,
+      reviewedBy,
+      reviewedAt: new Date().toISOString(),
+      rejectionReason: rejectionReason || null,
+      updatedAt: new Date().toISOString(),
+    };
+
+    this.artisanSubscriptions.set(id, updated);
+    return updated;
   }
 
   async getPendingArtisans(): Promise<Artisan[]> {

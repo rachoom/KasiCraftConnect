@@ -59,6 +59,28 @@ export const searchRequests = pgTable("search_requests", {
   timestamp: text("timestamp").notNull(),
 });
 
+export const artisanSubscriptions = pgTable("artisan_subscriptions", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  services: text("services").array().notNull(), // Array of services offered
+  location: text("location").notNull(),
+  description: text("description").notNull(),
+  yearsExperience: integer("years_experience").notNull(),
+  companyRegNumber: text("company_reg_number"),
+  artisanRegNumber: text("artisan_reg_number"),
+  subscriptionTier: text("subscription_tier").notNull(), // premium, enterprise
+  documents: text("documents").array().default([]), // Array of document URLs
+  applicationStatus: text("application_status").default("pending"), // pending, approved, rejected
+  reviewedBy: text("reviewed_by"), // Admin who reviewed
+  reviewedAt: text("reviewed_at"), // When reviewed
+  rejectionReason: text("rejection_reason"), // If rejected
+  createdAt: text("created_at").default(new Date().toISOString()),
+  updatedAt: text("updated_at").default(new Date().toISOString()),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -85,6 +107,16 @@ export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
   updatedAt: true,
 });
 
+export const insertArtisanSubscriptionSchema = createInsertSchema(artisanSubscriptions).omit({
+  id: true,
+  applicationStatus: true,
+  reviewedBy: true,
+  reviewedAt: true,
+  rejectionReason: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
@@ -93,3 +125,5 @@ export type InsertArtisan = z.infer<typeof insertArtisanSchema>;
 export type Artisan = typeof artisans.$inferSelect;
 export type InsertSearchRequest = z.infer<typeof insertSearchRequestSchema>;
 export type SearchRequest = typeof searchRequests.$inferSelect;
+export type InsertArtisanSubscription = z.infer<typeof insertArtisanSubscriptionSchema>;
+export type ArtisanSubscription = typeof artisanSubscriptions.$inferSelect;
