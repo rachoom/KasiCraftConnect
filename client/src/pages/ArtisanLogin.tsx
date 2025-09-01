@@ -13,6 +13,7 @@ import FadeInSection from "@/components/FadeInSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import {
   Form,
   FormControl,
@@ -22,6 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ArrowLeft, Mail, Lock, CheckCircle, AlertCircle } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -104,7 +106,7 @@ export default function ArtisanLogin() {
       <Header />
       
       <main className="py-12">
-        <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="mb-8">
               <Link href="/artisan">
@@ -116,16 +118,43 @@ export default function ArtisanLogin() {
             </div>
 
             <Card className="shadow-lg border-0">
-              <CardHeader className="text-center pb-2">
-                <CardTitle className="text-2xl font-bold text-black-soft mb-2">
-                  Artisan Login
+              <CardHeader className="text-center pb-4">
+                <CardTitle className="text-3xl font-bold text-black-soft mb-2">
+                  Welcome Back
                 </CardTitle>
                 <p className="text-gray-600">
-                  Sign in to manage your Skills Connect profile
+                  Sign in to your Skills Connect artisan account
                 </p>
               </CardHeader>
               
-              <CardContent className="pt-6">
+              <CardContent className="pt-2">
+                {/* Google Sign In */}
+                <div className="mb-6">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full py-3 text-lg font-medium border-2 hover:bg-gray-50 transition-colors"
+                    onClick={() => {
+                      // TODO: Implement Google OAuth
+                      toast({
+                        title: "Google Sign-In",
+                        description: "Google authentication will be available soon. Please use email login for now.",
+                      });
+                    }}
+                  >
+                    <FcGoogle className="w-5 h-5 mr-3" />
+                    Continue with Google
+                  </Button>
+                </div>
+
+                <div className="relative my-6">
+                  <Separator />
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-500">
+                    or continue with email
+                  </span>
+                </div>
+
+                {/* Email/Password Sign In */}
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
@@ -139,7 +168,7 @@ export default function ArtisanLogin() {
                               <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                               <Input
                                 placeholder="Enter your email"
-                                className="pl-10"
+                                className="pl-10 py-3 text-lg"
                                 {...field}
                               />
                             </div>
@@ -154,14 +183,28 @@ export default function ArtisanLogin() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-black-soft">Password</FormLabel>
+                          <div className="flex items-center justify-between">
+                            <FormLabel className="text-black-soft">Password</FormLabel>
+                            <button
+                              type="button"
+                              className="text-sm text-gold hover:text-gold-dark font-medium"
+                              onClick={() => {
+                                toast({
+                                  title: "Password Reset",
+                                  description: "Password reset functionality will be available soon. Please contact support if you need help.",
+                                });
+                              }}
+                            >
+                              Forgot password?
+                            </button>
+                          </div>
                           <FormControl>
                             <div className="relative">
                               <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                               <Input
                                 type="password"
                                 placeholder="Enter your password"
-                                className="pl-10"
+                                className="pl-10 py-3 text-lg"
                                 {...field}
                               />
                             </div>
@@ -173,24 +216,26 @@ export default function ArtisanLogin() {
 
                     <Button
                       type="submit"
-                      className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-3 text-lg"
+                      className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 text-lg rounded-lg shadow-md hover:shadow-lg transition-all"
                       disabled={loginMutation.isPending}
                     >
-                      {loginMutation.isPending ? "Signing In..." : "Sign In"}
+                      {loginMutation.isPending ? "Signing In..." : "Sign In with Email"}
                     </Button>
                   </form>
                 </Form>
 
-                <div className="mt-6 text-center">
-                  <p className="text-gray-600">
-                    Don't have an account?{" "}
-                    <Link href="/register-artisan" className="text-gold hover:text-gold-dark font-medium">
-                      Register as an Artisan
-                    </Link>
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <p className="text-center text-gray-600 mb-4">
+                    Don't have an artisan account yet?
                   </p>
+                  <Link href="/register-artisan">
+                    <Button variant="outline" className="w-full py-3 text-lg font-medium border-2 border-blue-600 text-blue-600 hover:bg-blue-50">
+                      Create Your Artisan Profile
+                    </Button>
+                  </Link>
                 </div>
 
-                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div className="flex items-start">
                     <AlertCircle className="w-5 h-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
                     <div className="text-sm text-blue-700">
