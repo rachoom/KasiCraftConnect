@@ -1,13 +1,24 @@
+import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="shadow-sm border-b border-gold/20 bg-black">
+    <motion.header 
+      className="shadow-sm border-b border-gold/20 bg-black"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+          <motion.div 
+            className="flex items-center"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <Link href="/" className="flex items-center space-x-3 transition-all duration-300 transform hover:scale-105">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -46,9 +57,14 @@ export default function Header() {
                 Skills <span className="text-gold font-extralight">Connect</span>
               </h1>
             </Link>
-          </div>
+          </motion.div>
           
-          <nav className="hidden lg:flex space-x-8">
+          <motion.nav 
+            className="hidden lg:flex space-x-8"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <a href="#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Services
             </a>
@@ -58,9 +74,14 @@ export default function Header() {
             <a href="#pricing" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Pricing
             </a>
-          </nav>
+          </motion.nav>
           
-          <div className="flex items-center space-x-4">
+          <motion.div 
+            className="flex items-center space-x-4"
+            initial={{ x: 30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
             <Link href="/contact">
               <Button variant="ghost" className="text-gold hover:text-yellow-300 font-semibold hover:bg-gold/20 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md">
                 Contact
@@ -72,13 +93,18 @@ export default function Header() {
                 Join as Artisan
               </Button>
             </Link>
-          </div>
+          </motion.div>
           
-          <button className="lg:hidden text-gold">
+          <motion.button 
+            className="lg:hidden text-gold"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             <Menu className="w-6 h-6" />
-          </button>
+          </motion.button>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

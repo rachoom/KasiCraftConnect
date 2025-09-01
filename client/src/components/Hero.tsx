@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -170,38 +171,107 @@ export default function Hero() {
     <section className="relative bg-hero-overlay text-white overflow-hidden">
       {/* Background overlay with subtle pattern */}
       <div className="absolute inset-0 opacity-15 bg-black/70">
-        <div 
+        <motion.div 
           className="absolute top-0 left-0 w-1/3 h-full bg-cover bg-center"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600')"
           }}
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
         />
-        <div 
+        <motion.div 
           className="absolute top-0 right-0 w-1/3 h-full bg-cover bg-center"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600')"
           }}
+          animate={{ 
+            scale: [1.1, 1, 1.1],
+            opacity: [0.5, 0.3, 0.5]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
         />
-        <div 
+        <motion.div 
           className="absolute bottom-0 left-1/3 w-1/3 h-1/2 bg-cover bg-center"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600')"
+          }}
+          animate={{ 
+            scale: [1, 1.05, 1],
+            opacity: [0.4, 0.6, 0.4]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4
           }}
         />
       </div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-        <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            Find Trusted <span className="text-gold">Skills</span><br />
+        <motion.div 
+          className="text-center max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Find Trusted <motion.span 
+              className="text-gold"
+              animate={{ 
+                textShadow: [
+                  "0 0 10px rgba(218, 165, 32, 0.5)",
+                  "0 0 20px rgba(218, 165, 32, 0.8)",
+                  "0 0 10px rgba(218, 165, 32, 0.5)"
+                ]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              Skills
+            </motion.span><br />
             In Your Area
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
+          </motion.h2>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             Connect with verified skilled professionals for all your home and business needs.
             From builders to cleaners, we've got you covered.
-          </p>
+          </motion.p>
           
-          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto">
+          <motion.div 
+            className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 40, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+            }}
+          >
             <div className="grid md:grid-cols-2 gap-4 mb-6">
               <div className="space-y-2">
                 <label htmlFor="service-input" className="block text-sm font-semibold text-gray-700 text-center">
@@ -290,8 +360,8 @@ export default function Hero() {
             >
               Find Artisans Near Me
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

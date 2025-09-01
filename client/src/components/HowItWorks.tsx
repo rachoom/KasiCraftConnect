@@ -1,45 +1,191 @@
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.3
+    }
+  }
+};
+
+const stepVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 60,
+    scale: 0.8
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
+
 export default function HowItWorks() {
   return (
     <section id="how-it-works" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-4xl font-bold text-black-soft mb-4">How Skills Connect Works</h3>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <motion.h3 
+            className="text-3xl md:text-4xl font-bold text-black-soft mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            How Skills Connect Works
+          </motion.h3>
+          <motion.p 
+            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             Get connected with trusted artisans in just three simple steps.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-          <div className="text-center">
-            <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-2xl font-bold text-gold-dark">1</span>
-            </div>
+        <motion.div 
+          className="grid md:grid-cols-3 gap-8 lg:gap-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div 
+            className="text-center"
+            variants={stepVariants}
+            whileHover={{ 
+              y: -10,
+              transition: { duration: 0.3 }
+            }}
+          >
+            <motion.div 
+              className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
+              whileHover={{ 
+                scale: 1.1,
+                backgroundColor: "rgba(218, 165, 32, 0.2)",
+                transition: { duration: 0.2 }
+              }}
+            >
+              <motion.span 
+                className="text-2xl font-bold text-gold-dark"
+                animate={{ 
+                  textShadow: [
+                    "0 0 5px rgba(218, 165, 32, 0.3)",
+                    "0 0 15px rgba(218, 165, 32, 0.6)",
+                    "0 0 5px rgba(218, 165, 32, 0.3)"
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                1
+              </motion.span>
+            </motion.div>
             <h4 className="text-xl font-semibold text-black-soft mb-4">Search & Describe</h4>
             <p className="text-gray-600 leading-relaxed">
               Tell us what service you need and your location. No account required - just search and find.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="text-center">
-            <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-2xl font-bold text-gold-dark">2</span>
-            </div>
+          <motion.div 
+            className="text-center"
+            variants={stepVariants}
+            whileHover={{ 
+              y: -10,
+              transition: { duration: 0.3 }
+            }}
+          >
+            <motion.div 
+              className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
+              whileHover={{ 
+                scale: 1.1,
+                backgroundColor: "rgba(218, 165, 32, 0.2)",
+                transition: { duration: 0.2 }
+              }}
+            >
+              <motion.span 
+                className="text-2xl font-bold text-gold-dark"
+                animate={{ 
+                  textShadow: [
+                    "0 0 5px rgba(218, 165, 32, 0.3)",
+                    "0 0 15px rgba(218, 165, 32, 0.6)",
+                    "0 0 5px rgba(218, 165, 32, 0.3)"
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+              >
+                2
+              </motion.span>
+            </motion.div>
             <h4 className="text-xl font-semibold text-black-soft mb-4">Get Top Matches</h4>
             <p className="text-gray-600 leading-relaxed">
               We'll show you the top 3 verified artisans in your area with their ratings and contact details.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="text-center">
-            <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-2xl font-bold text-gold-dark">3</span>
-            </div>
+          <motion.div 
+            className="text-center"
+            variants={stepVariants}
+            whileHover={{ 
+              y: -10,
+              transition: { duration: 0.3 }
+            }}
+          >
+            <motion.div 
+              className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
+              whileHover={{ 
+                scale: 1.1,
+                backgroundColor: "rgba(218, 165, 32, 0.2)",
+                transition: { duration: 0.2 }
+              }}
+            >
+              <motion.span 
+                className="text-2xl font-bold text-gold-dark"
+                animate={{ 
+                  textShadow: [
+                    "0 0 5px rgba(218, 165, 32, 0.3)",
+                    "0 0 15px rgba(218, 165, 32, 0.6)",
+                    "0 0 5px rgba(218, 165, 32, 0.3)"
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+              >
+                3
+              </motion.span>
+            </motion.div>
             <h4 className="text-xl font-semibold text-black-soft mb-4">Connect & Hire</h4>
             <p className="text-gray-600 leading-relaxed">
               Contact your chosen artisan directly and get your project started with confidence.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
