@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle, MapPin, Locate } from "lucide-react";
 
 const serviceOptions = [
   { id: "builders", label: "Builder" },
@@ -34,11 +34,109 @@ const serviceOptions = [
   { id: "landscapers", label: "Landscaper" },
 ];
 
+const locations = [
+  "Johannesburg, Gauteng", "Cape Town, Western Cape", "Durban, KwaZulu-Natal", "Pretoria, Gauteng",
+  "Sandton, Johannesburg", "Rosebank, Johannesburg", "Soweto, Johannesburg", "Alexandra, Johannesburg",
+  "Melville, Johannesburg", "Randburg, Johannesburg", "Midrand, Johannesburg", "Fourways, Johannesburg",
+  "Roodepoort, Johannesburg", "Germiston, Johannesburg", "Benoni, Johannesburg", "Edenvale, Johannesburg",
+  "Kempton Park, Johannesburg", "Boksburg, Johannesburg", "Johannesburg CBD, Johannesburg",
+  "Springs, Ekurhuleni", "Alberton, Ekurhuleni", "Benoni, Ekurhuleni", "Daveyton, Ekurhuleni",
+  "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", "Edenvale, Ekurhuleni",
+  "Brakpan, Ekurhuleni", "Nigel, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni",
+  "Thokoza, Ekurhuleni", "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
+];
+
 export default function ArtisanRegistration() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+  const [isGeolocating, setIsGeolocating] = useState(false);
+  const locationInputRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (locationInputRef.current && !locationInputRef.current.contains(event.target as Node)) {
+        setShowLocationSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLocationChange = (value: string) => {
+    if (value.length > 0) {
+      const filtered = locations.filter(l => 
+        l.toLowerCase().includes(value.toLowerCase())
+      );
+      setLocationSuggestions(filtered);
+      setShowLocationSuggestions(true);
+    } else {
+      setShowLocationSuggestions(false);
+    }
+  };
+
+  const selectLocation = (selectedLocation: string) => {
+    form.setValue("location", selectedLocation);
+    setShowLocationSuggestions(false);
+  };
+
+  const handleGeolocation = () => {
+    if (!navigator.geolocation) {
+      toast({
+        title: "Location Error",
+        description: "Geolocation is not supported by your browser",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGeolocating(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          
+          // Fallback to Gauteng areas based on coordinates (no API key needed)
+          if (latitude >= -26.5 && latitude <= -25.5 && longitude >= 27.5 && longitude <= 28.5) {
+            form.setValue("location", "Johannesburg, Gauteng");
+          } else if (latitude >= -26.3 && latitude <= -26.0 && longitude >= 28.0 && longitude <= 28.5) {
+            form.setValue("location", "Ekurhuleni, Gauteng");
+          } else if (latitude >= -25.9 && latitude <= -25.6 && longitude >= 28.1 && longitude <= 28.4) {
+            form.setValue("location", "Pretoria, Gauteng");
+          } else {
+            form.setValue("location", "Gauteng, South Africa");
+          }
+          
+          toast({
+            title: "Location Set",
+            description: "Your location has been automatically detected",
+          });
+        } catch (error) {
+          console.error("Error getting location:", error);
+          toast({
+            title: "Location Error",
+            description: "Could not detect your location",
+            variant: "destructive",
+          });
+        } finally {
+          setIsGeolocating(false);
+        }
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        setIsGeolocating(false);
+        toast({
+          title: "Location Error",
+          description: "Could not access your location",
+          variant: "destructive",
+        });
+      }
+    );
+  };
 
   const form = useForm<InsertArtisan>({
     resolver: zodResolver(insertArtisanSchema),
@@ -207,7 +305,46 @@ export default function ArtisanRegistration() {
                       <FormItem>
                         <FormLabel>Location</FormLabel>
                         <FormControl>
-                          <Input placeholder="City, Province" {...field} />
+                          <div className="relative" ref={locationInputRef}>
+                            <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                            <Input 
+                              placeholder="City, Province" 
+                              className="pl-12 pr-16"
+                              {...field}
+                              onChange={(e) => {
+                                field.onChange(e);
+                                handleLocationChange(e.target.value);
+                              }}
+                              onFocus={() => setShowLocationSuggestions(field.value.length > 0)}
+                            />
+                            <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="p-2 hover:bg-gold/10"
+                                onClick={handleGeolocation}
+                                disabled={isGeolocating}
+                              >
+                                <Locate className={`w-4 h-4 text-gold ${isGeolocating ? 'animate-pulse' : ''}`} />
+                              </Button>
+                            </div>
+                            
+                            {showLocationSuggestions && locationSuggestions.length > 0 && (
+                              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                                {locationSuggestions.map((suggestion, index) => (
+                                  <button
+                                    key={index}
+                                    type="button"
+                                    className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg text-gray-900"
+                                    onClick={() => selectLocation(suggestion)}
+                                  >
+                                    {suggestion}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
