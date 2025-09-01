@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertArtisanSchema, insertSearchRequestSchema } from "@shared/schema";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
+import { emailService } from "./emailService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Artisan routes
@@ -30,7 +31,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/artisans", async (req, res) => {
     try {
+      // First validate the input data
       const validatedData = insertArtisanSchema.parse(req.body);
+      
+      // Check for existing artisan with same email
+      const existingArtisan = await storage.getArtisanByEmail(validatedData.email);
+      if (existingArtisan) {
+        return res.status(409).json({ 
+          message: "Profile already exists", 
+          error: "An artisan profile with this email address already exists. Please use a different email or contact support if you believe this is an error." 
+        });
+      }
+
+      // Check for existing artisan with same phone number
+      const existingPhone = await storage.getArtisanByPhone(validatedData.phone);
+      if (existingPhone) {
+        return res.status(409).json({ 
+          message: "Phone number already registered", 
+          error: "An artisan profile with this phone number already exists. Please use a different phone number or contact support if you believe this is an error." 
+        });
+      }
       
       // Normalize document paths if they are URLs
       const objectStorageService = new ObjectStorageService();
@@ -44,9 +64,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const artisan = await storage.createArtisan(validatedData);
+      
+      // Send email notification
+      await emailService.sendArtisanRegistrationNotification({
+        firstName: artisan.firstName,
+        lastName: artisan.lastName,
+        email: artisan.email,
+        phone: artisan.phone,
+        location: artisan.location,
+        services: artisan.services,
+        description: artisan.description,
+        yearsExperience: artisan.yearsExperience,
+      });
+      
       res.status(201).json(artisan);
-    } catch (error) {
-      res.status(400).json({ message: "Invalid artisan data", error });
+    } catch (error: any) {
+      console.error("Artisan registration error:", error);
+      
+      // Handle Zod validation errors
+      if (error.name === 'ZodError') {
+        const firstError = error.errors[0];
+        let errorMessage = "Invalid information provided";
+        
+        if (firstError.path.includes('email')) {
+          errorMessage = "Please provide a valid email address";
+        } else if (firstError.path.includes('phone')) {
+          errorMessage = "Please provide a valid phone number";
+        } else if (firstError.path.includes('firstName')) {
+          errorMessage = "First name is required and must be at least 2 characters";
+        } else if (firstError.path.includes('lastName')) {
+          errorMessage = "Last name is required and must be at least 2 characters";
+        } else if (firstError.path.includes('location')) {
+          errorMessage = "Please provide your location";
+        } else if (firstError.path.includes('services')) {
+          errorMessage = "Please select at least one service you offer";
+        } else if (firstError.path.includes('description')) {
+          errorMessage = "Please provide a description of your services (at least 20 characters)";
+        } else if (firstError.path.includes('yearsExperience')) {
+          errorMessage = "Please provide your years of experience (must be between 1 and 50)";
+        }
+        
+        return res.status(400).json({ 
+          message: "Validation failed", 
+          error: errorMessage,
+          details: firstError.message
+        });
+      }
+      
+      // Handle database constraint errors
+      if (error.code === '23505') { // PostgreSQL unique constraint violation
+        if (error.constraint?.includes('email')) {
+          return res.status(409).json({ 
+            message: "Email already registered", 
+            error: "This email address is already registered. Please use a different email or contact support." 
+          });
+        }
+        if (error.constraint?.includes('phone')) {
+          return res.status(409).json({ 
+            message: "Phone number already registered", 
+            error: "This phone number is already registered. Please use a different phone number or contact support." 
+          });
+        }
+        return res.status(409).json({ 
+          message: "Duplicate information", 
+          error: "Some of the information you provided is already registered in our system. Please check your details and try again." 
+        });
+      }
+      
+      // Generic error
+      res.status(500).json({ 
+        message: "Registration failed", 
+        error: "An unexpected error occurred while creating your profile. Please try again or contact support if the problem persists." 
+      });
     }
   });
 

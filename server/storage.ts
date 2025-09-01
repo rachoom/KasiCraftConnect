@@ -10,6 +10,8 @@ export interface IStorage {
 
   // Artisan methods
   getArtisan(id: number): Promise<Artisan | undefined>;
+  getArtisanByEmail(email: string): Promise<Artisan | undefined>;
+  getArtisanByPhone(phone: string): Promise<Artisan | undefined>;
   getAllArtisans(): Promise<Artisan[]>;
   getArtisansByService(service: string): Promise<Artisan[]>;
   getArtisansByLocation(location: string): Promise<Artisan[]>;
@@ -188,6 +190,14 @@ export class MemStorage implements IStorage {
     return this.artisans.get(id);
   }
 
+  async getArtisanByEmail(email: string): Promise<Artisan | undefined> {
+    return Array.from(this.artisans.values()).find(artisan => artisan.email === email);
+  }
+
+  async getArtisanByPhone(phone: string): Promise<Artisan | undefined> {
+    return Array.from(this.artisans.values()).find(artisan => artisan.phone === phone);
+  }
+
   async getAllArtisans(): Promise<Artisan[]> {
     return Array.from(this.artisans.values());
   }
@@ -305,6 +315,8 @@ export class MemStorage implements IStorage {
       rejectionReason: null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      companyRegNumber: insertSubscription.companyRegNumber || null,
+      artisanRegNumber: insertSubscription.artisanRegNumber || null,
     };
     this.artisanSubscriptions.set(subscription.id, subscription);
     return subscription;
@@ -401,6 +413,16 @@ export class DatabaseStorage implements IStorage {
 
   async getArtisan(id: number): Promise<Artisan | undefined> {
     const [artisan] = await db.select().from(artisans).where(eq(artisans.id, id));
+    return artisan || undefined;
+  }
+
+  async getArtisanByEmail(email: string): Promise<Artisan | undefined> {
+    const [artisan] = await db.select().from(artisans).where(eq(artisans.email, email));
+    return artisan || undefined;
+  }
+
+  async getArtisanByPhone(phone: string): Promise<Artisan | undefined> {
+    const [artisan] = await db.select().from(artisans).where(eq(artisans.phone, phone));
     return artisan || undefined;
   }
 
@@ -528,6 +550,42 @@ export class DatabaseStorage implements IStorage {
       .returning();
     
     return updatedArtisan;
+  }
+
+  async createArtisanSubscription(insertSubscription: InsertArtisanSubscription): Promise<ArtisanSubscription> {
+    const [subscription] = await db
+      .insert(artisanSubscriptions)
+      .values(insertSubscription)
+      .returning();
+    return subscription;
+  }
+
+  async getArtisanSubscriptions(): Promise<ArtisanSubscription[]> {
+    return await db.select().from(artisanSubscriptions);
+  }
+
+  async getPendingSubscriptions(): Promise<ArtisanSubscription[]> {
+    return await db.select().from(artisanSubscriptions).where(eq(artisanSubscriptions.applicationStatus, "pending"));
+  }
+
+  async updateSubscriptionStatus(
+    id: number, 
+    status: "approved" | "rejected", 
+    reviewedBy: string, 
+    rejectionReason?: string
+  ): Promise<ArtisanSubscription | undefined> {
+    const [subscription] = await db
+      .update(artisanSubscriptions)
+      .set({
+        applicationStatus: status,
+        reviewedBy,
+        reviewedAt: new Date().toISOString(),
+        rejectionReason: rejectionReason || null,
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(artisanSubscriptions.id, id))
+      .returning();
+    return subscription;
   }
 }
 

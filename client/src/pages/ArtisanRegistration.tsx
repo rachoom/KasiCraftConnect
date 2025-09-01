@@ -199,12 +199,29 @@ export default function ArtisanRegistration() {
         description: "Your artisan profile has been created. You'll be contacted once verified.",
       });
     },
-    onError: (error) => {
+    onError: (error: any) => {
+      let errorMessage = "There was an error creating your profile. Please try again.";
+      
+      // Parse error message from API response
+      if (error.message) {
+        try {
+          const match = error.message.match(/^\d+:\s*(.+)/);
+          if (match) {
+            const responseText = match[1];
+            const errorData = JSON.parse(responseText);
+            errorMessage = errorData.error || errorData.message || errorMessage;
+          }
+        } catch (parseError) {
+          console.error("Error parsing error message:", parseError);
+        }
+      }
+      
       toast({
         title: "Registration Failed",
-        description: "There was an error creating your profile. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
+      console.error("Registration error:", error);
     },
   });
 
