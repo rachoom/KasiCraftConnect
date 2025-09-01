@@ -135,11 +135,7 @@ export default function ArtisanLogin() {
                     variant="outline"
                     className="w-full py-3 text-lg font-medium border-2 hover:bg-gray-50 transition-colors"
                     onClick={() => {
-                      // TODO: Implement Google OAuth
-                      toast({
-                        title: "Google Sign-In",
-                        description: "Google authentication will be available soon. Please use email login for now.",
-                      });
+                      window.location.href = "/api/auth/google";
                     }}
                   >
                     <FcGoogle className="w-5 h-5 mr-3" />

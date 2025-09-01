@@ -213,7 +213,161 @@ class ArtisanAuthService {
       return null;
     }
   }
+
+  // Verify email
+  async verifyEmail(token: string): Promise<AuthResult> {
+    try {
+      // Find artisan by verification token
+      const [artisan] = await db
+        .select()
+        .from(artisans)
+        .where(eq(artisans.emailVerificationToken, token))
+        .limit(1);
+
+      if (!artisan) {
+        return {
+          success: false,
+          message: "Invalid verification token"
+        };
+      }
+
+      // Check if token has expired
+      if (artisan.emailVerificationExpires && new Date(artisan.emailVerificationExpires) < new Date()) {
+        return {
+          success: false,
+          message: "Verification token has expired. Please request a new verification email."
+        };
+      }
+
+      // Update artisan as verified
+      const [updatedArtisan] = await db
+        .update(artisans)
+        .set({
+          isEmailVerified: true,
+          emailVerificationToken: null,
+          emailVerificationExpires: null
+        })
+        .where(eq(artisans.id, artisan.id))
+        .returning();
+
+      return {
+        success: true,
+        artisan: updatedArtisan,
+        message: "Email verified successfully"
+      };
+    } catch (error) {
+      console.error("Email verification error:", error);
+      return {
+        success: false,
+        message: "Email verification failed. Please try again."
+      };
+    }
+  }
+
+  // Handle Google OAuth
+  async handleGoogleOAuth(code: string): Promise<AuthResult> {
+    try {
+      // Exchange code for tokens
+      const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          client_id: process.env.GOOGLE_CLIENT_ID || '',
+          client_secret: process.env.GOOGLE_CLIENT_SECRET || '',
+          code,
+          grant_type: 'authorization_code',
+          redirect_uri: process.env.GOOGLE_REDIRECT_URI || 'http://localhost:5000/api/auth/google/callback'
+        })
+      });
+
+      if (!tokenResponse.ok) {
+        throw new Error('Failed to exchange code for tokens');
+      }
+
+      const tokens = await tokenResponse.json();
+
+      // Get user info from Google
+      const userResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: {
+          Authorization: `Bearer ${tokens.access_token}`
+        }
+      });
+
+      if (!userResponse.ok) {
+        throw new Error('Failed to fetch user info from Google');
+      }
+
+      const googleUser = await userResponse.json();
+
+      // Check if artisan already exists
+      const [existingArtisan] = await db
+        .select()
+        .from(artisans)
+        .where(eq(artisans.email, googleUser.email))
+        .limit(1);
+
+      let artisan;
+      if (existingArtisan) {
+        // Update Google ID if not set
+        if (!existingArtisan.googleId) {
+          [artisan] = await db
+            .update(artisans)
+            .set({
+              googleId: googleUser.id,
+              isEmailVerified: true // Google emails are pre-verified
+            })
+            .where(eq(artisans.id, existingArtisan.id))
+            .returning();
+        } else {
+          artisan = existingArtisan;
+        }
+      } else {
+        // Create new artisan profile
+        [artisan] = await db
+          .insert(artisans)
+          .values({
+            firstName: googleUser.given_name || googleUser.name?.split(' ')[0] || 'Google',
+            lastName: googleUser.family_name || googleUser.name?.split(' ').slice(1).join(' ') || 'User',
+            email: googleUser.email,
+            phone: '', // Will be filled in profile completion
+            location: '', // Will be filled in profile completion  
+            services: [], // Will be filled in profile completion
+            experience: 0, // Will be filled in profile completion
+            hourlyRate: 0, // Will be filled in profile completion
+            description: '', // Will be filled in profile completion
+            googleId: googleUser.id,
+            isEmailVerified: true,
+            profileComplete: false // Mark as incomplete to trigger completion flow
+          })
+          .returning();
+      }
+
+      // Generate JWT token
+      const token = this.generateJWTToken(artisan.id, artisan.email);
+
+      // Remove sensitive information
+      const { password, emailVerificationToken, emailVerificationExpires, ...safeArtisan } = artisan;
+
+      return {
+        success: true,
+        token,
+        artisan: safeArtisan,
+        message: "Google authentication successful"
+      };
+    } catch (error) {
+      console.error("Google OAuth error:", error);
+      return {
+        success: false,
+        message: "Google authentication failed. Please try again."
+      };
+    }
+  }
 }
+
+// Create service instance
+export const artisanAuthService = new ArtisanAuthService();
 
 // Middleware to require artisan authentication
 export const requireArtisanAuth = async (req: Request, res: Response, next: NextFunction) => {
@@ -237,5 +391,3 @@ export const requireArtisanAuth = async (req: Request, res: Response, next: Next
     res.status(401).json({ message: "Authentication failed" });
   }
 };
-
-export const artisanAuthService = new ArtisanAuthService();

@@ -30,6 +30,7 @@ export const artisans = pgTable("artisans", {
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
   password: text("password"), // Password for email login
+  googleId: text("google_id").unique(), // Google OAuth ID
   phone: text("phone").notNull(),
   location: text("location").notNull(),
   services: text("services").array().notNull(),
@@ -40,6 +41,7 @@ export const artisans = pgTable("artisans", {
   verified: boolean("verified").default(false),
   profileImage: text("profile_image"),
   portfolio: text("portfolio").array().default([]),
+  profileComplete: boolean("profile_complete").default(true), // For Google OAuth users
   // Authentication and verification
   isEmailVerified: boolean("is_email_verified").default(false),
   emailVerificationToken: text("email_verification_token"),

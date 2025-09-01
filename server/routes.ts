@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertArtisanSchema, insertSearchRequestSchema } from "@shared/schema";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { emailService } from "./emailService";
+import { artisanAuthService } from "./artisanAuth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Artisan routes
@@ -136,6 +137,124 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: "Registration failed", 
         error: "An unexpected error occurred while creating your profile. Please try again or contact support if the problem persists." 
       });
+    }
+  });
+
+  // Artisan Authentication Routes
+  app.post("/api/artisans/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ 
+          message: "Email and password are required" 
+        });
+      }
+
+      const result = await artisanAuthService.loginArtisan(email, password);
+      
+      if (!result.success) {
+        return res.status(401).json({ 
+          message: result.message || "Login failed" 
+        });
+      }
+
+      res.json({
+        token: result.token,
+        artisan: result.artisan,
+        message: "Login successful"
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ message: "Login failed" });
+    }
+  });
+
+  app.post("/api/artisans/register", async (req, res) => {
+    try {
+      const { password, ...artisanData } = req.body;
+      
+      if (!password) {
+        return res.status(400).json({ 
+          message: "Password is required" 
+        });
+      }
+
+      // Validate the artisan data
+      const validatedData = insertArtisanSchema.parse(artisanData);
+      
+      const result = await artisanAuthService.registerArtisan(validatedData, password);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          message: result.message || "Registration failed" 
+        });
+      }
+
+      res.status(201).json({
+        message: "Registration successful. Please check your email to verify your account.",
+        artisan: result.artisan
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      res.status(500).json({ message: "Registration failed" });
+    }
+  });
+
+  app.get("/api/artisans/verify/:token", async (req, res) => {
+    try {
+      const { token } = req.params;
+      const result = await artisanAuthService.verifyEmail(token);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          message: result.message || "Email verification failed" 
+        });
+      }
+
+      res.json({
+        message: "Email verified successfully. You can now log in.",
+        artisan: result.artisan
+      });
+    } catch (error) {
+      console.error("Email verification error:", error);
+      res.status(500).json({ message: "Email verification failed" });
+    }
+  });
+
+  // Google OAuth Routes
+  app.get("/api/auth/google", (req, res) => {
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+      `client_id=${process.env.GOOGLE_CLIENT_ID}&` +
+      `redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&` +
+      `response_type=code&` +
+      `scope=openid email profile&` +
+      `state=artisan`;
+    
+    res.redirect(googleAuthUrl);
+  });
+
+  app.get("/api/auth/google/callback", async (req, res) => {
+    try {
+      const { code, state } = req.query;
+      
+      if (!code || state !== 'artisan') {
+        return res.status(400).json({ message: "Invalid OAuth callback" });
+      }
+
+      const result = await artisanAuthService.handleGoogleOAuth(code as string);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          message: result.message || "Google authentication failed" 
+        });
+      }
+
+      // Redirect to frontend with token
+      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5000'}/artisan/login?token=${result.token}`);
+    } catch (error) {
+      console.error("Google OAuth error:", error);
+      res.status(500).json({ message: "Google authentication failed" });
     }
   });
 
