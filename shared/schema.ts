@@ -29,6 +29,7 @@ export const artisans = pgTable("artisans", {
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
+  password: text("password"), // Password for email login
   phone: text("phone").notNull(),
   location: text("location").notNull(),
   services: text("services").array().notNull(),
@@ -39,6 +40,11 @@ export const artisans = pgTable("artisans", {
   verified: boolean("verified").default(false),
   profileImage: text("profile_image"),
   portfolio: text("portfolio").array().default([]),
+  // Authentication and verification
+  isEmailVerified: boolean("is_email_verified").default(false),
+  emailVerificationToken: text("email_verification_token"),
+  emailVerificationExpires: text("email_verification_expires"),
+  lastLogin: text("last_login"),
   // Verification documents
   idDocument: text("id_document"), // Path to uploaded ID document
   qualificationDocuments: text("qualification_documents").array().default([]), // Paths to qualification certificates
@@ -48,7 +54,9 @@ export const artisans = pgTable("artisans", {
   approvalStatus: text("approval_status").default("pending"), // pending, approved, rejected
   approvedBy: text("approved_by"), // Admin who approved/rejected
   approvedAt: text("approved_at"), // When approval decision was made
-  rejectionReason: text("rejection_reason") // Reason for rejection
+  rejectionReason: text("rejection_reason"), // Reason for rejection
+  createdAt: text("created_at").default(new Date().toISOString()),
+  updatedAt: text("updated_at").default(new Date().toISOString())
 });
 
 export const searchRequests = pgTable("search_requests", {

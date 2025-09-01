@@ -58,6 +58,8 @@ export default function ArtisanRegistration() {
   const [isGeolocating, setIsGeolocating] = useState(false);
   const [uploadedIdDocument, setUploadedIdDocument] = useState<string>("");
   const [uploadedQualificationDocs, setUploadedQualificationDocs] = useState<string[]>([]);
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const locationInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -189,16 +191,15 @@ export default function ArtisanRegistration() {
   };
 
   const registerMutation = useMutation({
-    mutationFn: async (data: InsertArtisan) => {
-      const response = await apiRequest("POST", "/api/artisans", data);
-      return response.json();
+    mutationFn: async (data: InsertArtisan & { password: string }) => {
+      return await apiRequest("/api/artisan/register", data);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       setIsSuccess(true);
       queryClient.invalidateQueries({ queryKey: ["/api/artisans"] });
       toast({
         title: "Registration Successful!",
-        description: "Your artisan profile has been created. You'll be contacted once verified.",
+        description: data.message || "Please check your email to verify your account before logging in.",
       });
     },
     onError: (error: any) => {
@@ -228,7 +229,35 @@ export default function ArtisanRegistration() {
   });
 
   const onSubmit = (data: InsertArtisan) => {
-    registerMutation.mutate(data);
+    // Validate password fields
+    if (!password) {
+      toast({
+        title: "Password Required",
+        description: "Please enter a password to create your account.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match. Please check and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({
+        title: "Password Too Short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    registerMutation.mutate({ ...data, password });
   };
 
   if (isSuccess) {
@@ -399,6 +428,40 @@ export default function ArtisanRegistration() {
                       </FormItem>
                     )}
                   />
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="font-medium text-blue-900 mb-3">Account Security</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="password" className="text-sm font-medium text-blue-900">Password</Label>
+                        <Input
+                          id="password"
+                          type="password"
+                          placeholder="Create a secure password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className="mt-1"
+                          required
+                        />
+                        <p className="text-xs text-blue-700 mt-1">Must be at least 6 characters</p>
+                      </div>
+                      <div>
+                        <Label htmlFor="confirmPassword" className="text-sm font-medium text-blue-900">Confirm Password</Label>
+                        <Input
+                          id="confirmPassword"
+                          type="password"
+                          placeholder="Confirm your password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          className="mt-1"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <p className="text-xs text-blue-700 mt-2">
+                      You'll use this password to log in and manage your artisan profile.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Professional Information */}

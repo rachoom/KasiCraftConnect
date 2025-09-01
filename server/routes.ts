@@ -373,6 +373,156 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Artisan authentication routes
+  app.post("/api/artisan/register", async (req, res) => {
+    try {
+      const { password, ...artisanData } = req.body;
+      
+      if (!password) {
+        return res.status(400).json({ message: "Password is required" });
+      }
+
+      // Validate the artisan data (excluding password)
+      const validatedData = insertArtisanSchema.parse(artisanData);
+      
+      // Check for existing artisan with same email
+      const existingArtisan = await storage.getArtisanByEmail(validatedData.email);
+      if (existingArtisan) {
+        return res.status(409).json({ 
+          message: "Profile already exists", 
+          error: "An artisan profile with this email address already exists. Please use a different email or try logging in instead." 
+        });
+      }
+
+      // Check for existing artisan with same phone number
+      const existingPhone = await storage.getArtisanByPhone(validatedData.phone);
+      if (existingPhone) {
+        return res.status(409).json({ 
+          message: "Phone number already registered", 
+          error: "An artisan profile with this phone number already exists. Please use a different phone number or contact support if you believe this is an error." 
+        });
+      }
+
+      const { artisanAuthService } = await import("./artisanAuth");
+      const result = await artisanAuthService.registerArtisan(validatedData, password);
+      
+      if (result.success) {
+        res.json({ message: result.message });
+      } else {
+        res.status(400).json({ message: result.message });
+      }
+    } catch (error: any) {
+      console.error("Artisan registration error:", error);
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          message: "Validation failed", 
+          error: "Please check all required fields are completed correctly.",
+          details: error.errors 
+        });
+      }
+      res.status(500).json({ message: "Registration failed" });
+    }
+  });
+
+  app.post("/api/artisan/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+      }
+
+      const { artisanAuthService } = await import("./artisanAuth");
+      const result = await artisanAuthService.loginArtisan(email, password);
+      
+      if (result.success) {
+        res.json(result);
+      } else {
+        res.status(401).json({ message: result.message });
+      }
+    } catch (error: any) {
+      console.error("Artisan login error:", error);
+      res.status(500).json({ message: "Login failed" });
+    }
+  });
+
+  app.get("/api/artisan/verify-email", async (req, res) => {
+    try {
+      const { token } = req.query;
+      
+      if (!token) {
+        return res.status(400).send(`
+          <html>
+            <head><title>Verification Failed</title></head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+              <h1 style="color: #e74c3c;">Verification Failed</h1>
+              <p>No verification token provided.</p>
+              <a href="/register-artisan" style="color: #DAA520; text-decoration: none;">Return to Registration</a>
+            </body>
+          </html>
+        `);
+      }
+
+      const { artisanAuthService } = await import("./artisanAuth");
+      const artisan = await artisanAuthService.verifyEmailToken(token as string);
+      
+      if (!artisan) {
+        return res.status(400).send(`
+          <html>
+            <head><title>Verification Failed</title></head>
+            <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+              <h1 style="color: #e74c3c;">Verification Failed</h1>
+              <p>The verification link is invalid or has expired.</p>
+              <a href="/register-artisan" style="color: #DAA520; text-decoration: none;">Return to Registration</a>
+            </body>
+          </html>
+        `);
+      }
+
+      res.send(`
+        <html>
+          <head><title>Email Verified</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #27ae60;">Email Verified Successfully!</h1>
+            <p>Welcome to Skills Connect, ${artisan.firstName}! Your email has been verified and you can now log in to manage your artisan profile.</p>
+            <a href="/artisan/login" style="background: #DAA520; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Login</a>
+          </body>
+        </html>
+      `);
+    } catch (error) {
+      console.error("Email verification error:", error);
+      res.status(500).send("Verification failed");
+    }
+  });
+
+  app.get("/api/artisan/profile", async (req, res) => {
+    try {
+      const { requireArtisanAuth } = await import("./artisanAuth");
+      await new Promise((resolve, reject) => {
+        requireArtisanAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+      
+      const artisan = (req as any).artisan;
+      res.json({
+        id: artisan.id,
+        firstName: artisan.firstName,
+        lastName: artisan.lastName,
+        email: artisan.email,
+        phone: artisan.phone,
+        location: artisan.location,
+        services: artisan.services,
+        description: artisan.description,
+        yearsExperience: artisan.yearsExperience,
+        verified: artisan.verified,
+        approvalStatus: artisan.approvalStatus,
+        profileImage: artisan.profileImage
+      });
+    } catch (error) {
+      console.error("Get artisan profile error:", error);
+      res.status(401).json({ message: "Authentication required" });
+    }
+  });
+
   // Document upload routes
   app.post("/api/documents/upload", async (req, res) => {
     try {

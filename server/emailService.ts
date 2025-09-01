@@ -102,6 +102,69 @@ Skills Connect Admin Team
       return false;
     }
   }
+
+  // Send email verification to artisan
+  async sendArtisanEmailVerification(data: {
+    email: string;
+    firstName: string;
+    verificationUrl: string;
+  }): Promise<boolean> {
+    if (!process.env.SENDGRID_API_KEY) {
+      console.log(`Email service not configured - would send verification email to ${data.email}`);
+      return false;
+    }
+
+    try {
+      const subject = "Verify Your Skills Connect Account";
+      const html = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
+          <div style="background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 28px;">Skills Connect</h1>
+            <p style="margin: 10px 0 0; font-size: 16px;">Artisan Marketplace</p>
+          </div>
+          
+          <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h2 style="color: #333; margin-bottom: 20px;">Welcome ${data.firstName}!</h2>
+            
+            <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+              Thank you for joining Skills Connect as an artisan! To complete your registration and start receiving customer inquiries, please verify your email address.
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${data.verificationUrl}" 
+                 style="background: #DAA520; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                Verify Email Address
+              </a>
+            </div>
+            
+            <p style="color: #666; line-height: 1.6; font-size: 14px;">
+              This verification link will expire in 24 hours. If you didn't create this account, please ignore this email.
+            </p>
+            
+            <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+            
+            <p style="color: #999; font-size: 12px; text-align: center;">
+              Skills Connect - Connecting you with trusted local artisans<br>
+              South Africa's Premier Artisan Marketplace
+            </p>
+          </div>
+        </div>
+      `;
+
+      await this.mailService.send({
+        to: data.email,
+        from: 'noreply@skillsconnect.co.za',
+        subject: subject,
+        html: html
+      });
+
+      console.log(`Verification email sent successfully to: ${data.email}`);
+      return true;
+    } catch (error) {
+      console.error('Error sending verification email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();
