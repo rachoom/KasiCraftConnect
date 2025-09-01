@@ -58,8 +58,6 @@ export default function ArtisanRegistration() {
   const [isGeolocating, setIsGeolocating] = useState(false);
   const [uploadedIdDocument, setUploadedIdDocument] = useState<string>("");
   const [uploadedQualificationDocs, setUploadedQualificationDocs] = useState<string[]>([]);
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const locationInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -191,15 +189,21 @@ export default function ArtisanRegistration() {
   };
 
   const registerMutation = useMutation({
-    mutationFn: async (data: InsertArtisan & { password: string }) => {
-      return await apiRequest("/api/artisan/register", data);
+    mutationFn: async (data: InsertArtisan) => {
+      return await apiRequest("/api/artisans", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
     onSuccess: (data) => {
       setIsSuccess(true);
       queryClient.invalidateQueries({ queryKey: ["/api/artisans"] });
       toast({
         title: "Registration Successful!",
-        description: data.message || "Please check your email to verify your account before logging in.",
+        description: "Your profile has been submitted and we'll contact you with login details via email.",
       });
     },
     onError: (error: any) => {
@@ -229,35 +233,7 @@ export default function ArtisanRegistration() {
   });
 
   const onSubmit = (data: InsertArtisan) => {
-    // Validate password fields
-    if (!password) {
-      toast({
-        title: "Password Required",
-        description: "Please enter a password to create your account.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast({
-        title: "Password Mismatch",
-        description: "Passwords do not match. Please check and try again.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (password.length < 6) {
-      toast({
-        title: "Password Too Short",
-        description: "Password must be at least 6 characters long.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    registerMutation.mutate({ ...data, password });
+    registerMutation.mutate(data);
   };
 
   if (isSuccess) {
@@ -431,36 +407,20 @@ export default function ArtisanRegistration() {
 
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h4 className="font-medium text-blue-900 mb-3">Account Security</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="password" className="text-sm font-medium text-blue-900">Password</Label>
-                        <Input
-                          id="password"
-                          type="password"
-                          placeholder="Create a secure password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          className="mt-1"
-                          required
-                        />
-                        <p className="text-xs text-blue-700 mt-1">Must be at least 6 characters</p>
-                      </div>
-                      <div>
-                        <Label htmlFor="confirmPassword" className="text-sm font-medium text-blue-900">Confirm Password</Label>
-                        <Input
-                          id="confirmPassword"
-                          type="password"
-                          placeholder="Confirm your password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          className="mt-1"
-                          required
-                        />
-                      </div>
+                    <div>
+                      <Label htmlFor="account-email" className="text-sm font-medium text-blue-900">Email Address</Label>
+                      <Input
+                        id="account-email"
+                        type="email"
+                        placeholder="Enter your email address"
+                        value={form.watch("email") || ""}
+                        disabled
+                        className="mt-1 bg-gray-100"
+                      />
+                      <p className="text-xs text-blue-700 mt-2">
+                        Your profile will be created and we'll send you login instructions via email.
+                      </p>
                     </div>
-                    <p className="text-xs text-blue-700 mt-2">
-                      You'll use this password to log in and manage your artisan profile.
-                    </p>
                   </div>
                 </div>
 
