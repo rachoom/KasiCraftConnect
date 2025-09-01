@@ -334,9 +334,8 @@ class ArtisanAuthService {
             phone: '', // Will be filled in profile completion
             location: '', // Will be filled in profile completion  
             services: [], // Will be filled in profile completion
-            experience: 0, // Will be filled in profile completion
-            hourlyRate: 0, // Will be filled in profile completion
             description: '', // Will be filled in profile completion
+            yearsExperience: 0, // Will be filled in profile completion
             googleId: googleUser.id,
             isEmailVerified: true,
             profileComplete: false // Mark as incomplete to trigger completion flow
