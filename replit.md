@@ -118,6 +118,9 @@ Changelog:
 - June 15, 2025. Added comprehensive admin authentication system with email verification
 - June 15, 2025. Implemented secure admin review and approval workflow for artisan applications
 - June 15, 2025. Hidden admin access from public menu, now requires login at /admin/login
+- September 1, 2025. Created artisan subscription system with database tables and document upload functionality
+- September 1, 2025. Updated header styling to black background with gold text and elegant typography
+- September 1, 2025. Implemented full artisan subscription workflow with premium/enterprise tiers
 ```
 
 ## User Preferences
