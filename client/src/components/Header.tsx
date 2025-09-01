@@ -60,7 +60,7 @@ export default function Header() {
           </motion.div>
           
           <motion.nav 
-            className="hidden md:flex space-x-6"
+            className="flex space-x-6"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -101,7 +101,7 @@ export default function Header() {
           </motion.div>
           
           <motion.button 
-            className="md:hidden text-gold"
+            className="text-gold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
