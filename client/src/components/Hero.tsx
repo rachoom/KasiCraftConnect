@@ -193,8 +193,8 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            Find Trusted <span className="text-gold">Artisans</span><br />
-            In Your Neighborhood
+            Find Trusted <span className="text-gold">Skills</span><br />
+            In Your Area
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
             Connect with verified skilled professionals for all your home and business needs.

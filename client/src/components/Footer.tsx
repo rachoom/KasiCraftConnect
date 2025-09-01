@@ -42,7 +42,7 @@ export default function Footer() {
                 <circle cx="28" cy="28" r="1" fill="#ffffff" opacity="0.6"/>
               </svg>
               <h5 className="text-2xl font-bold">
-                Kasi <span className="text-gold">Connect</span>
+                Skills <span className="text-gold">Connect</span>
               </h5>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">

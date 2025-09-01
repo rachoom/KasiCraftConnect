@@ -64,7 +64,7 @@ export default function ContactUs() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-black-soft mb-4">Contact Us</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Have questions about Kasi Connect? We're here to help you find the perfect artisan for your needs.
+            Have questions about Skills Connect? We're here to help you find the perfect artisan for your needs.
           </p>
         </div>
 

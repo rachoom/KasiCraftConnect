@@ -1,8 +1,8 @@
-# Kasi Connect - Artisan Marketplace Platform
+# Skills Connect - Artisan Marketplace Platform
 
 ## Overview
 
-Kasi Connect is a full-stack web application that connects customers with trusted local artisans across South Africa. The platform serves as a marketplace where users can search for verified professionals in various trades like builders, plumbers, electricians, and more. The application features a modern React frontend with a Node.js/Express backend, utilizing PostgreSQL for data persistence.
+Skills Connect is a full-stack web application that connects customers with trusted local artisans across South Africa. The platform serves as a marketplace where users can search for verified professionals in various trades like builders, plumbers, electricians, and more. The application features a modern React frontend with a Node.js/Express backend, utilizing PostgreSQL for data persistence.
 
 ## System Architecture
 
@@ -121,6 +121,7 @@ Changelog:
 - September 1, 2025. Created artisan subscription system with database tables and document upload functionality
 - September 1, 2025. Updated header styling to black background with gold text and elegant typography
 - September 1, 2025. Implemented full artisan subscription workflow with premium/enterprise tiers
+- September 1, 2025. Rebranded from "Kasi Connect" to "Skills Connect" with updated headline "Find Trusted Skills in your area"
 ```
 
 ## User Preferences

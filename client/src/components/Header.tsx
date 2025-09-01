@@ -43,7 +43,7 @@ export default function Header() {
                 <circle cx="28" cy="28" r="1" fill="#B8860B" opacity="0.7"/>
               </svg>
               <h1 className="text-2xl font-light text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
-                Kasi <span className="text-gold font-extralight">Connect</span>
+                Skills <span className="text-gold font-extralight">Connect</span>
               </h1>
             </Link>
           </div>

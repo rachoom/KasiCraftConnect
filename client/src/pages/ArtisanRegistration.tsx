@@ -129,7 +129,7 @@ export default function ArtisanRegistration() {
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl text-black-soft">
-              Join Kasi Connect as an Artisan
+              Join Skills Connect as an Artisan
             </CardTitle>
             <p className="text-gray-600">
               Fill out this form to create your artisan profile and start connecting with customers.
