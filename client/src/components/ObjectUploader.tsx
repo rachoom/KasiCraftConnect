@@ -1,156 +1,109 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
+import Uppy from "@uppy/core";
+import { DashboardModal } from "@uppy/react";
+import AwsS3 from "@uppy/aws-s3";
+import type { UploadResult } from "@uppy/core";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Upload, File, X } from "lucide-react";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
   maxFileSize?: number;
+  allowedFileTypes?: string[];
   onGetUploadParameters: () => Promise<{
     method: "PUT";
     url: string;
   }>;
-  onComplete?: (result: { successful: Array<{ uploadURL: string; name: string }> }) => void;
+  onComplete?: (
+    result: UploadResult<Record<string, unknown>, Record<string, unknown>>
+  ) => void;
   buttonClassName?: string;
   children: ReactNode;
+  disabled?: boolean;
 }
 
+/**
+ * A file upload component that renders as a button and provides a modal interface for
+ * file management.
+ * 
+ * Features:
+ * - Renders as a customizable button that opens a file upload modal
+ * - Provides a modal interface for:
+ *   - File selection
+ *   - File preview
+ *   - Upload progress tracking
+ *   - Upload status display
+ * 
+ * The component uses Uppy under the hood to handle all file upload functionality.
+ * All file management features are automatically handled by the Uppy dashboard modal.
+ * 
+ * @param props - Component props
+ * @param props.maxNumberOfFiles - Maximum number of files allowed to be uploaded
+ *   (default: 1)
+ * @param props.maxFileSize - Maximum file size in bytes (default: 10MB)
+ * @param props.allowedFileTypes - Array of allowed MIME types
+ * @param props.onGetUploadParameters - Function to get upload parameters (method and URL).
+ *   Typically used to fetch a presigned URL from the backend server for direct-to-S3
+ *   uploads.
+ * @param props.onComplete - Callback function called when upload is complete. Typically
+ *   used to make post-upload API calls to update server state and set object ACL
+ *   policies.
+ * @param props.buttonClassName - Optional CSS class name for the button
+ * @param props.children - Content to be rendered inside the button
+ * @param props.disabled - Whether the upload button is disabled
+ */
 export function ObjectUploader({
   maxNumberOfFiles = 1,
   maxFileSize = 10485760, // 10MB default
+  allowedFileTypes,
   onGetUploadParameters,
   onComplete,
   buttonClassName,
   children,
+  disabled = false,
 }: ObjectUploaderProps) {
-  const [isUploading, setIsUploading] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [uppy] = useState(() => {
+    const restrictions: any = {
+      maxNumberOfFiles,
+      maxFileSize,
+    };
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files || []);
-    
-    // Validate file count
-    if (files.length > maxNumberOfFiles) {
-      alert(`You can only upload up to ${maxNumberOfFiles} files`);
-      return;
+    if (allowedFileTypes && allowedFileTypes.length > 0) {
+      restrictions.allowedFileTypes = allowedFileTypes;
     }
-    
-    // Validate file sizes
-    const oversizedFiles = files.filter(file => file.size > maxFileSize);
-    if (oversizedFiles.length > 0) {
-      alert(`Some files are too large. Maximum size is ${Math.round(maxFileSize / 1024 / 1024)}MB`);
-      return;
-    }
-    
-    setSelectedFiles(files);
-  };
 
-  const removeFile = (index: number) => {
-    setSelectedFiles(files => files.filter((_, i) => i !== index));
-  };
-
-  const uploadFiles = async () => {
-    if (selectedFiles.length === 0) return;
-
-    setIsUploading(true);
-    try {
-      const successful: Array<{ uploadURL: string; name: string }> = [];
-
-      for (const file of selectedFiles) {
-        try {
-          // Get upload parameters
-          const { url } = await onGetUploadParameters();
-          
-          // Upload file
-          const response = await fetch(url, {
-            method: "PUT",
-            body: file,
-            headers: {
-              "Content-Type": file.type,
-            },
-          });
-
-          if (response.ok) {
-            successful.push({
-              uploadURL: url.split('?')[0], // Remove query parameters
-              name: file.name,
-            });
-          }
-        } catch (error) {
-          console.error(`Failed to upload ${file.name}:`, error);
-        }
-      }
-
-      onComplete?.({ successful });
-      setSelectedFiles([]);
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("Upload failed. Please try again.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
+    return new Uppy({
+      restrictions,
+      autoProceed: false,
+    })
+      .use(AwsS3, {
+        shouldUseMultipart: false,
+        getUploadParameters: onGetUploadParameters,
+      })
+      .on("complete", (result) => {
+        onComplete?.(result);
+        setShowModal(false);
+      });
+  });
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-4">
-        <Button
-          type="button"
-          variant="outline"
-          className={buttonClassName}
-          onClick={() => document.getElementById('file-input')?.click()}
-          disabled={isUploading}
-        >
-          {children}
-        </Button>
-        
-        <Input
-          id="file-input"
-          type="file"
-          multiple={maxNumberOfFiles > 1}
-          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt"
-          onChange={handleFileSelect}
-          className="hidden"
-        />
+    <div>
+      <Button 
+        onClick={() => setShowModal(true)} 
+        className={buttonClassName}
+        disabled={disabled}
+        type="button"
+      >
+        {children}
+      </Button>
 
-        {selectedFiles.length > 0 && (
-          <Button
-            type="button"
-            onClick={uploadFiles}
-            disabled={isUploading}
-            className="bg-green-600 hover:bg-green-700 text-white"
-          >
-            {isUploading ? "Uploading..." : `Upload ${selectedFiles.length} file(s)`}
-          </Button>
-        )}
-      </div>
-
-      {selectedFiles.length > 0 && (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">Selected files:</p>
-          {selectedFiles.map((file, index) => (
-            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-2">
-                <File className="w-4 h-4 text-gray-500" />
-                <span className="text-sm">{file.name}</span>
-                <span className="text-xs text-gray-500">
-                  ({Math.round(file.size / 1024)}KB)
-                </span>
-              </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => removeFile(index)}
-                disabled={isUploading}
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
-          ))}
-        </div>
-      )}
+      <DashboardModal
+        uppy={uppy}
+        open={showModal}
+        onRequestClose={() => setShowModal(false)}
+        proudlyDisplayPoweredByUppy={false}
+      />
     </div>
   );
 }

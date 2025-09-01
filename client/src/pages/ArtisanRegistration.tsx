@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ArrowLeft, CheckCircle, MapPin, Locate } from "lucide-react";
+import { ArrowLeft, CheckCircle, MapPin, Locate, Upload, FileText } from "lucide-react";
 
 const serviceOptions = [
   { id: "builders", label: "Builder" },
@@ -54,6 +54,8 @@ export default function ArtisanRegistration() {
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const [isGeolocating, setIsGeolocating] = useState(false);
+  const [uploadedIdDocument, setUploadedIdDocument] = useState<string>("");
+  const [uploadedQualificationDocs, setUploadedQualificationDocs] = useState<string[]>([]);
   const locationInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -155,6 +157,34 @@ export default function ArtisanRegistration() {
       qualificationDocuments: [],
     },
   });
+
+  // Document upload handlers (for now, just simulate upload)
+  const handleIdDocumentUpload = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      const file = files[0];
+      const fileName = `id_${Date.now()}_${file.name}`;
+      setUploadedIdDocument(fileName);
+      form.setValue("idDocument", fileName);
+      toast({
+        title: "ID Document Selected",
+        description: "Your ID document is ready for upload. It will be processed when you submit the form.",
+      });
+    }
+  };
+
+  const handleQualificationDocUpload = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      const fileList = Array.from(files);
+      const fileNames = fileList.map(file => `qualification_${Date.now()}_${file.name}`);
+      const newDocs = [...uploadedQualificationDocs, ...fileNames];
+      setUploadedQualificationDocs(newDocs);
+      form.setValue("qualificationDocuments", newDocs);
+      toast({
+        title: "Qualification Documents Selected",
+        description: `${fileList.length} document(s) selected and ready for upload.`,
+      });
+    }
+  };
 
   const registerMutation = useMutation({
     mutationFn: async (data: InsertArtisan) => {
@@ -436,63 +466,86 @@ export default function ArtisanRegistration() {
                     These documents will be reviewed by our team for verification.
                   </p>
                   
-                  <FormField
-                    control={form.control}
-                    name="idDocument"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>ID Document (Optional)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="file" 
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            placeholder="Upload your South African ID document"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                // In a real app, this would upload to cloud storage
-                                field.onChange(`uploaded_${file.name}`);
-                              }
-                            }}
-                          />
-                        </FormControl>
-                        <p className="text-xs text-gray-500">
-                          Upload your South African ID document for identity verification
-                        </p>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-sm font-medium">ID Document (Optional)</Label>
+                      <div className="mt-2">
+                        <div className="flex items-center justify-center w-full">
+                          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              <Upload className="w-8 h-8 mb-4 text-gray-500" />
+                              <p className="mb-2 text-sm text-gray-500">
+                                <span className="font-semibold">Click to upload</span> your ID document
+                              </p>
+                              <p className="text-xs text-gray-500">JPG, PNG or PDF (max 5MB)</p>
+                            </div>
+                            <input 
+                              type="file" 
+                              className="hidden" 
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              onChange={(e) => handleIdDocumentUpload(e.target.files)}
+                              disabled={registerMutation.isPending}
+                            />
+                          </label>
+                        </div>
+                        {uploadedIdDocument && (
+                          <div className="mt-2 flex items-center gap-2 text-sm text-green-600">
+                            <CheckCircle className="w-4 h-4" />
+                            <span>ID document selected: {uploadedIdDocument.split('_').pop()}</span>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Upload your South African ID document for identity verification. Accepted formats: JPG, PNG, PDF (max 5MB).
+                      </p>
+                    </div>
 
-                  <FormField
-                    control={form.control}
-                    name="qualificationDocuments"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Qualification Documents (Optional)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="file" 
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            multiple
-                            placeholder="Upload certificates, trade licenses, etc."
-                            onChange={(e) => {
-                              const files = Array.from(e.target.files || []);
-                              if (files.length > 0) {
-                                // In a real app, this would upload to cloud storage
-                                const fileNames = files.map(file => `uploaded_${file.name}`);
-                                field.onChange(fileNames);
-                              }
-                            }}
-                          />
-                        </FormControl>
-                        <p className="text-xs text-gray-500">
-                          Upload trade certificates, licenses, or relevant qualifications
-                        </p>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <div>
+                      <Label className="text-sm font-medium">Qualification Documents (Optional)</Label>
+                      <div className="mt-2">
+                        <div className="flex items-center justify-center w-full">
+                          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              <FileText className="w-8 h-8 mb-4 text-gray-500" />
+                              <p className="mb-2 text-sm text-gray-500">
+                                <span className="font-semibold">Click to upload</span> qualification documents
+                              </p>
+                              <p className="text-xs text-gray-500">JPG, PNG or PDF (max 5MB each, up to 5 files)</p>
+                            </div>
+                            <input 
+                              type="file" 
+                              className="hidden" 
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              multiple
+                              onChange={(e) => handleQualificationDocUpload(e.target.files)}
+                              disabled={registerMutation.isPending}
+                            />
+                          </label>
+                        </div>
+                        {uploadedQualificationDocs.length > 0 && (
+                          <div className="mt-2 space-y-1">
+                            <div className="flex items-center gap-2 text-sm text-green-600 mb-2">
+                              <CheckCircle className="w-4 h-4" />
+                              <span>{uploadedQualificationDocs.length} document(s) selected</span>
+                            </div>
+                            {uploadedQualificationDocs.slice(0, 3).map((doc, index) => (
+                              <p key={index} className="text-xs text-gray-600">
+                                • {doc.split('_').pop()}
+                              </p>
+                            ))}
+                            {uploadedQualificationDocs.length > 3 && (
+                              <p className="text-xs text-gray-600">
+                                • And {uploadedQualificationDocs.length - 3} more...
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Upload trade certificates, licenses, or relevant qualifications. Accepted formats: JPG, PNG, PDF (max 5MB each, up to 5 files).
+                      </p>
+                    </div>
+                  </div>
 
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h4 className="font-medium text-blue-900 mb-2">Verification Benefits</h4>

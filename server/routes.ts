@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertArtisanSchema, insertSearchRequestSchema } from "@shared/schema";
+import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Artisan routes
@@ -30,6 +31,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/artisans", async (req, res) => {
     try {
       const validatedData = insertArtisanSchema.parse(req.body);
+      
+      // Normalize document paths if they are URLs
+      const objectStorageService = new ObjectStorageService();
+      if (validatedData.idDocument) {
+        validatedData.idDocument = objectStorageService.normalizeDocumentPath(validatedData.idDocument);
+      }
+      if (validatedData.qualificationDocuments && validatedData.qualificationDocuments.length > 0) {
+        validatedData.qualificationDocuments = validatedData.qualificationDocuments.map(doc => 
+          objectStorageService.normalizeDocumentPath(doc)
+        );
+      }
+      
       const artisan = await storage.createArtisan(validatedData);
       res.status(201).json(artisan);
     } catch (error) {
@@ -268,6 +281,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ valid: true, admin: (req as any).admin });
     } catch (error) {
       res.status(401).json({ valid: false });
+    }
+  });
+
+  // Document upload routes
+  app.post("/api/documents/upload", async (req, res) => {
+    try {
+      const { documentType } = req.body;
+      
+      if (!documentType || !['id', 'qualification'].includes(documentType)) {
+        return res.status(400).json({ error: "Invalid document type. Must be 'id' or 'qualification'" });
+      }
+      
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getDocumentUploadURL(documentType);
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ error: "Failed to get upload URL" });
+    }
+  });
+
+  // Document download route
+  app.get("/documents/:documentType/:date/:documentId", async (req, res) => {
+    try {
+      const { documentType, date, documentId } = req.params;
+      const documentPath = `/documents/${documentType}/${date}/${documentId}`;
+      
+      const objectStorageService = new ObjectStorageService();
+      const documentFile = await objectStorageService.getDocumentFile(documentPath);
+      
+      await objectStorageService.downloadObject(documentFile, res);
+    } catch (error) {
+      console.error("Error downloading document:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
     }
   });
 
