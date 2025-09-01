@@ -107,10 +107,10 @@ export default function ArtisanLogin() {
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="mb-8">
-              <Link href="/register-artisan">
+              <Link href="/artisan">
                 <Button variant="ghost" className="text-gold hover:text-gold-dark mb-4">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Registration
+                  Back to Artisan Options
                 </Button>
               </Link>
             </div>

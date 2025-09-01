@@ -88,7 +88,7 @@ export default function Header() {
               </Button>
             </Link>
 
-            <Link href="/register-artisan">
+            <Link href="/artisan">
               <Button className="bg-gold hover:bg-yellow-600 text-black hover:text-gray-800 cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Join as Artisan
               </Button>

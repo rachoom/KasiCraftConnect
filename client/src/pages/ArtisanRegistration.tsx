@@ -295,10 +295,10 @@ export default function ArtisanRegistration() {
       <Header />
       
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/">
+        <Link href="/artisan">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+            Back to Artisan Options
           </Button>
         </Link>
 
