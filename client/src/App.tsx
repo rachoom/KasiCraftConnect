@@ -12,6 +12,7 @@ import ArtisanProfile from "@/pages/ArtisanProfile";
 import ArtisanAuth from "@/pages/ArtisanAuth";
 import ArtisanRegistration from "@/pages/ArtisanRegistration";
 import ArtisanDashboard from "@/pages/ArtisanDashboard";
+import ViewProfiles from "@/pages/ViewProfiles";
 import ArtisanLogin from "@/pages/ArtisanLogin";
 import ArtisanSubscription from "@/pages/ArtisanSubscription";
 import ContactUs from "@/pages/ContactUs";
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/register-artisan" component={() => <PageTransition><ArtisanRegistration /></PageTransition>} />
         <Route path="/artisan/login" component={() => <PageTransition><ArtisanLogin /></PageTransition>} />
         <Route path="/artisan/dashboard" component={() => <PageTransition><ArtisanDashboard /></PageTransition>} />
+        <Route path="/profiles" component={() => <PageTransition><ViewProfiles /></PageTransition>} />
         <Route path="/subscription" component={() => <PageTransition><ArtisanSubscription /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />
         <Route path="/admin/login" component={() => <PageTransition><AdminLogin /></PageTransition>} />
