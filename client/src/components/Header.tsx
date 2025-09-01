@@ -60,22 +60,22 @@ export default function Header() {
           </motion.div>
           
           <motion.nav 
-            className="hidden lg:flex space-x-8"
+            className="hidden md:flex space-x-6"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <a href="#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Services
             </a>
-            <a href="#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               How It Works
             </a>
-            <a href="#pricing" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#pricing" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
               Pricing
             </a>
             <Link href="/profiles">
-              <span className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-4 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer">
+              <span className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer">
                 View Profiles
               </span>
             </Link>
@@ -101,7 +101,7 @@ export default function Header() {
           </motion.div>
           
           <motion.button 
-            className="lg:hidden text-gold"
+            className="md:hidden text-gold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
