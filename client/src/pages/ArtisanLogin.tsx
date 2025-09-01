@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,6 +37,27 @@ export default function ArtisanLogin() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Check for token in URL parameters (from Google OAuth callback)
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      // Store the token and redirect
+      localStorage.setItem('artisan_token', token);
+      toast({
+        title: "Google Sign-In Successful!",
+        description: "You have been logged in successfully.",
+      });
+      
+      // Clear the token from URL and redirect
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setTimeout(() => {
+        setLocation('/artisan/dashboard');
+      }, 1500);
+    }
+  }, [toast, setLocation]);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),

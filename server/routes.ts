@@ -250,8 +250,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Redirect to frontend with token
-      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5000'}/artisan/login?token=${result.token}`);
+      // Redirect to frontend with token - but let's redirect to a success page instead
+      res.redirect(`/artisan/login?token=${result.token}`);
     } catch (error) {
       console.error("Google OAuth error:", error);
       res.status(500).json({ message: "Google authentication failed" });
