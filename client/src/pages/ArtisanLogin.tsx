@@ -69,13 +69,8 @@ export default function ArtisanLogin() {
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
-      return await apiRequest("/api/artisans/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await apiRequest("POST", "/api/artisans/login", data);
+      return await response.json();
     },
     onSuccess: (data: any) => {
       if (data && data.token) {
