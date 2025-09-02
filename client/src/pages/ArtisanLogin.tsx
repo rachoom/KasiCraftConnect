@@ -69,7 +69,7 @@ export default function ArtisanLogin() {
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
-      const response = await apiRequest("POST", "/api/artisans/login", data);
+      const response = await apiRequest("POST", "/api/artisan/login", data);
       return await response.json();
     },
     onSuccess: (data: any) => {

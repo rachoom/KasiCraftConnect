@@ -141,34 +141,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Artisan Authentication Routes
-  app.post("/api/artisans/login", async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      
-      if (!email || !password) {
-        return res.status(400).json({ 
-          message: "Email and password are required" 
-        });
-      }
-
-      const result = await artisanAuthService.loginArtisan(email, password);
-      
-      if (!result.success) {
-        return res.status(401).json({ 
-          message: result.message || "Login failed" 
-        });
-      }
-
-      res.json({
-        token: result.token,
-        artisan: result.artisan,
-        message: "Login successful"
-      });
-    } catch (error) {
-      console.error("Login error:", error);
-      res.status(500).json({ message: "Login failed" });
-    }
-  });
+  // Removed duplicate endpoint - using /api/artisan/login instead
 
   app.post("/api/artisans/register", async (req, res) => {
     try {
