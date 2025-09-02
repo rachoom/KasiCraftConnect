@@ -17,9 +17,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Handle the login route specifically to avoid collision with :id route
+  app.get("/api/artisans/login", (req, res) => {
+    res.status(404).json({ message: "Login endpoint should use POST method" });
+  });
+
   app.get("/api/artisans/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      
+      // Prevent non-numeric IDs from being processed
+      if (isNaN(id)) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+      
       const artisan = await storage.getArtisan(id);
       if (!artisan) {
         return res.status(404).json({ message: "Artisan not found" });
