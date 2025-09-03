@@ -115,11 +115,11 @@ export default function ServiceLanding() {
       <Header />
       
       <main className="py-8">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-black-soft via-gray-800 to-black py-16">
+        {/* Hero Section with Integrated Search */}
+        <section className="bg-gradient-to-br from-black-soft via-gray-800 to-black py-12">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
-              <div className="text-center text-white">
+              <div className="text-center text-white mb-12">
                 <div className="text-6xl mb-6">{service.icon}</div>
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
                   {service.title}
@@ -142,20 +142,15 @@ export default function ServiceLanding() {
                   </div>
                 </div>
               </div>
-            </FadeInSection>
-          </div>
-        </section>
 
-        {/* Search Section */}
-        <section className="py-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeInSection>
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-center text-black-soft">
-                    Find {service.title} in Your Area
-                  </CardTitle>
-                </CardHeader>
+              {/* Search Form Integrated in Hero */}
+              <div className="max-w-4xl mx-auto">
+                <Card className="shadow-xl bg-white/95 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-center text-black-soft">
+                      Find {service.title} in Your Area
+                    </CardTitle>
+                  </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Location Input */}
                   <div className="space-y-2">
@@ -240,6 +235,7 @@ export default function ServiceLanding() {
                   </Button>
                 </CardContent>
               </Card>
+              </div>
             </FadeInSection>
           </div>
         </section>
