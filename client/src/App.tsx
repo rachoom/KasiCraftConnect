@@ -27,11 +27,11 @@ function Router() {
       <Switch>
         <Route path="/" component={() => <PageTransition><Home /></PageTransition>} />
         <Route path="/search" component={() => <PageTransition><SearchResults /></PageTransition>} />
-        <Route path="/artisan/:id" component={() => <PageTransition><ArtisanProfile /></PageTransition>} />
         <Route path="/artisan" component={() => <PageTransition><ArtisanAuth /></PageTransition>} />
         <Route path="/register-artisan" component={() => <PageTransition><ArtisanRegistration /></PageTransition>} />
         <Route path="/artisan/login" component={() => <PageTransition><ArtisanLogin /></PageTransition>} />
         <Route path="/artisan/dashboard" component={() => <PageTransition><ArtisanDashboard /></PageTransition>} />
+        <Route path="/artisan/:id" component={() => <PageTransition><ArtisanProfile /></PageTransition>} />
         <Route path="/profiles" component={() => <PageTransition><ViewProfiles /></PageTransition>} />
         <Route path="/subscription" component={() => <PageTransition><ArtisanSubscription /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />
