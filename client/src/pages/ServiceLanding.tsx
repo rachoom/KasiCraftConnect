@@ -200,34 +200,7 @@ export default function ServiceLanding() {
                     </Popover>
                   </div>
 
-                  {/* Tier Selection - Compact */}
-                  <div className="space-y-4">
-                    <Label className="text-xl font-semibold text-black-soft">Choose your service tier:</Label>
-                    <div className="grid gap-3 md:grid-cols-3">
-                      {tiers.map((tier) => (
-                        <Card 
-                          key={tier.id}
-                          className={`cursor-pointer transition-all border-2 ${
-                            selectedTier === tier.id 
-                              ? 'border-gold bg-gold/10 shadow-lg' 
-                              : 'border-gray-200 hover:border-gold/50 hover:shadow-md'
-                          }`}
-                          onClick={() => setSelectedTier(tier.id)}
-                        >
-                          <CardContent className="p-5 text-center">
-                            <h3 className="font-bold text-lg text-black-soft">{tier.name}</h3>
-                            <p className="text-2xl font-bold text-gold mb-2">{tier.price}</p>
-                            <p className="text-sm text-gray-600 mb-3">{tier.description}</p>
-                            <ul className="text-xs text-gray-500 space-y-1">
-                              {tier.features.slice(0, 2).map((feature, index) => (
-                                <li key={index}>• {feature}</li>
-                              ))}
-                            </ul>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
+
 
                   {/* Search Button - Prominent */}
                   <Button 
