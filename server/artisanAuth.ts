@@ -278,7 +278,9 @@ class ArtisanAuthService {
           client_secret: process.env.GOOGLE_CLIENT_SECRET || '',
           code,
           grant_type: 'authorization_code',
-          redirect_uri: process.env.GOOGLE_REDIRECT_URI || 'http://localhost:5000/api/auth/google/callback'
+          redirect_uri: process.env.REPLIT_DOMAINS 
+            ? `https://${process.env.REPLIT_DOMAINS}/api/auth/google/callback`
+            : process.env.GOOGLE_REDIRECT_URI || 'http://localhost:5000/api/auth/google/callback'
         })
       });
 
