@@ -97,7 +97,7 @@ export default function ServiceCategories() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Popular Services
+            Verified Artisans
           </motion.h3>
           <motion.p 
             className="text-xl text-gray-600 max-w-2xl mx-auto"
