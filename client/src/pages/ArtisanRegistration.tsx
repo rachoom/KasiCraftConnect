@@ -24,7 +24,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ArrowLeft, CheckCircle, MapPin, Locate, Upload, FileText } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ArrowLeft, CheckCircle, MapPin, Locate, Upload, FileText, AlertCircle } from "lucide-react";
 
 const serviceOptions = [
   { id: "builders", label: "Builder" },
@@ -58,6 +59,7 @@ export default function ArtisanRegistration() {
   const [isGeolocating, setIsGeolocating] = useState(false);
   const [uploadedIdDocument, setUploadedIdDocument] = useState<string>("");
   const [uploadedQualificationDocs, setUploadedQualificationDocs] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const locationInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -200,6 +202,7 @@ export default function ArtisanRegistration() {
     },
     onSuccess: (data) => {
       setIsSuccess(true);
+      setErrorMessage(""); // Clear any previous errors
       queryClient.invalidateQueries({ queryKey: ["/api/artisans"] });
       toast({
         title: "Registration Successful!",
@@ -207,7 +210,7 @@ export default function ArtisanRegistration() {
       });
     },
     onError: (error: any) => {
-      let errorMessage = "There was an error creating your profile. Please try again.";
+      let parsedErrorMessage = "There was an error creating your profile. Please try again.";
       
       // Parse error message from API response
       if (error.message) {
@@ -216,16 +219,20 @@ export default function ArtisanRegistration() {
           if (match) {
             const responseText = match[1];
             const errorData = JSON.parse(responseText);
-            errorMessage = errorData.error || errorData.message || errorMessage;
+            parsedErrorMessage = errorData.error || errorData.message || parsedErrorMessage;
           }
         } catch (parseError) {
           console.error("Error parsing error message:", parseError);
         }
       }
       
+      // Set error message for display in the form
+      setErrorMessage(parsedErrorMessage);
+      
+      // Also show toast notification
       toast({
         title: "Registration Failed",
-        description: errorMessage,
+        description: parsedErrorMessage,
         variant: "destructive",
       });
       console.error("Registration error:", error);
@@ -233,6 +240,8 @@ export default function ArtisanRegistration() {
   });
 
   const onSubmit = (data: InsertArtisan) => {
+    // Clear any existing error messages when submitting
+    setErrorMessage("");
     registerMutation.mutate(data);
   };
 
@@ -290,6 +299,19 @@ export default function ArtisanRegistration() {
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* Error Message Display */}
+                {errorMessage && (
+                  <Alert className="border-red-200 bg-red-50">
+                    <AlertCircle className="h-4 w-4 text-red-600" />
+                    <AlertDescription className="text-red-800 font-medium" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
+                      <strong className="font-semibold">Registration Failed:</strong>
+                      <div className="mt-1 text-sm leading-relaxed">
+                        {errorMessage}
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+                )}
+                
                 {/* Personal Information */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-black-soft">Personal Information</h3>
