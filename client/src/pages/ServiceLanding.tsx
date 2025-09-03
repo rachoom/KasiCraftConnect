@@ -125,76 +125,76 @@ export default function ServiceLanding() {
       <Header />
       
       <main>
-        {/* Main Landing Section - Search Focused */}
-        <section className="py-16 min-h-[80vh] bg-gradient-to-br from-gray-50 to-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Single Page Layout - Compact */}
+        <section className="py-8 min-h-screen bg-gradient-to-br from-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
-              {/* Service Header */}
-              <div className="text-center mb-12">
-                <div className="text-8xl mb-8">{service.icon}</div>
-                <h1 className="text-4xl md:text-6xl font-bold text-black-soft mb-6">
+              {/* Compact Header */}
+              <div className="text-center mb-8">
+                <div className="text-6xl mb-4">{service.icon}</div>
+                <h1 className="text-3xl md:text-4xl font-bold text-black-soft mb-3">
                   Find {service.title} in Your Area
                 </h1>
-                <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-8">
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
                   {service.description}
                 </p>
-                <div className="flex flex-wrap justify-center items-center gap-6 text-gold mb-12">
+                <div className="flex flex-wrap justify-center items-center gap-4 text-gold mb-8">
                   <div className="flex items-center gap-2">
-                    <Shield className="w-6 h-6" />
-                    <span className="font-semibold">Verified Professionals</span>
+                    <Shield className="w-5 h-5" />
+                    <span className="font-semibold text-sm">Verified</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Star className="w-6 h-6" />
-                    <span className="font-semibold">Rated & Reviewed</span>
+                    <Star className="w-5 h-5" />
+                    <span className="font-semibold text-sm">Rated</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Users className="w-6 h-6" />
-                    <span className="font-semibold">Trusted by Thousands</span>
+                    <Users className="w-5 h-5" />
+                    <span className="font-semibold text-sm">Trusted</span>
                   </div>
                 </div>
               </div>
 
-              {/* Main Get Started Form */}
-              <div className="max-w-4xl mx-auto">
-                <Card className="shadow-2xl border-2 border-gold/20">
-                  <CardHeader className="pb-6">
-                    <CardTitle className="text-3xl text-center text-black-soft font-bold">
+              {/* Compact Get Started Form */}
+              <div className="max-w-5xl mx-auto">
+                <Card className="shadow-xl border-2 border-gold/20">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-2xl text-center text-black-soft font-bold">
                       Get Started
                     </CardTitle>
                   </CardHeader>
-                <CardContent className="space-y-8 p-8">
+                <CardContent className="space-y-6 p-6">
                   {/* Location and Date Side by Side */}
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-4 md:grid-cols-2">
                     {/* Location Input */}
-                    <div className="space-y-4">
-                      <Label htmlFor="location" className="text-xl font-semibold text-black-soft">
+                    <div className="space-y-2">
+                      <Label htmlFor="location" className="text-lg font-semibold text-black-soft">
                         Where do you need the service?
                       </Label>
                       <div className="relative">
-                        <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold w-6 h-6" />
+                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-5 h-5" />
                         <Input
                           id="location"
                           value={searchLocation}
                           onChange={(e) => setSearchLocation(e.target.value)}
                           placeholder="Enter your location"
-                          className="pl-14 py-4 text-lg border-2 border-gray-200 focus:border-gold rounded-lg"
+                          className="pl-10 py-3 text-base border-2 border-gray-200 focus:border-gold rounded-lg"
                         />
                       </div>
                     </div>
 
                     {/* Date Picker */}
-                    <div className="space-y-4">
-                      <Label className="text-xl font-semibold text-black-soft">
+                    <div className="space-y-2">
+                      <Label className="text-lg font-semibold text-black-soft">
                         When do you need the service?
                       </Label>
                       <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
-                            className="w-full justify-start text-left font-normal py-4 text-lg border-2 border-gray-200 hover:border-gold rounded-lg"
+                            className="w-full justify-start text-left font-normal py-3 text-base border-2 border-gray-200 hover:border-gold rounded-lg"
                           >
-                            <CalendarIcon className="mr-3 h-6 w-6 text-gold" />
-                            {selectedDate ? format(selectedDate, "PPP") : "Select a date (optional)"}
+                            <CalendarIcon className="mr-2 h-5 w-5 text-gold" />
+                            {selectedDate ? format(selectedDate, "PPP") : "Select date (optional)"}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -213,24 +213,24 @@ export default function ServiceLanding() {
                     </div>
                   </div>
 
-                  {/* Services Selection with Checkboxes */}
-                  <div className="space-y-4">
-                    <Label className="text-xl font-semibold text-black-soft">
+                  {/* Services Selection with Checkboxes - Compact */}
+                  <div className="space-y-3">
+                    <Label className="text-lg font-semibold text-black-soft">
                       Common {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Services
                     </Label>
-                    <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                       {service.services.map((serviceItem, index) => (
-                        <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div key={index} className="flex items-center space-x-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                           <input
                             type="checkbox"
                             id={`service-${index}`}
                             checked={selectedServices.includes(serviceItem)}
                             onChange={() => handleServiceToggle(serviceItem)}
-                            className="w-5 h-5 text-gold bg-gray-100 border-gray-300 rounded focus:ring-gold focus:ring-2"
+                            className="w-4 h-4 text-gold bg-gray-100 border-gray-300 rounded focus:ring-gold focus:ring-2"
                           />
                           <label 
                             htmlFor={`service-${index}`} 
-                            className="text-black-soft font-medium cursor-pointer flex-1"
+                            className="text-black-soft font-medium cursor-pointer flex-1 text-sm"
                           >
                             {serviceItem}
                           </label>
@@ -238,37 +238,33 @@ export default function ServiceLanding() {
                       ))}
                     </div>
                     {selectedServices.length > 0 && (
-                      <p className="text-sm text-gray-600 mt-2">
+                      <p className="text-xs text-gray-600 mt-1">
                         Selected: {selectedServices.length} service{selectedServices.length > 1 ? 's' : ''}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Search Button - Integrated */}
+                  <div className="pt-4">
+                    <Button 
+                      onClick={handleSearch}
+                      className="w-full bg-gold hover:bg-gold/90 text-black font-bold py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all"
+                      size="lg"
+                    >
+                      <Search className="w-5 h-5 mr-2" />
+                      Find Verified {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}
+                    </Button>
+                    
+                    {searchLocation && (
+                      <p className="mt-2 text-sm text-gray-600 text-center">
+                        Searching for {serviceType} in {searchLocation}
+                        {selectedServices.length > 0 && ` specializing in ${selectedServices.slice(0, 2).join(', ')}${selectedServices.length > 2 ? '...' : ''}`}
                       </p>
                     )}
                   </div>
                 </CardContent>
               </Card>
               </div>
-            </FadeInSection>
-          </div>
-        </section>
-
-        {/* Search Button Section */}
-        <section className="py-12 bg-white">
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <FadeInSection>
-              <Button 
-                onClick={handleSearch}
-                className="w-full bg-gold hover:bg-gold/90 text-black font-bold py-6 text-xl rounded-lg shadow-lg hover:shadow-xl transition-all max-w-md mx-auto"
-                size="lg"
-              >
-                <Search className="w-6 h-6 mr-3" />
-                Find Verified {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}
-              </Button>
-              
-              {searchLocation && (
-                <p className="mt-4 text-gray-600">
-                  Searching for {serviceType} in {searchLocation}
-                  {selectedServices.length > 0 && ` specializing in ${selectedServices.join(', ')}`}
-                </p>
-              )}
             </FadeInSection>
           </div>
         </section>
