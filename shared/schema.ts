@@ -101,9 +101,20 @@ export const insertArtisanSchema = createInsertSchema(artisans).omit({
   rating: true,
   reviewCount: true,
   verified: true,
+  profileComplete: true,
+  isEmailVerified: true,
+  emailVerificationToken: true,
+  emailVerificationExpires: true,
+  lastLogin: true,
   verificationStatus: true,
   verificationNotes: true,
   verifiedAt: true,
+  approvalStatus: true,
+  approvedBy: true,
+  approvedAt: true,
+  rejectionReason: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
 export const insertSearchRequestSchema = createInsertSchema(searchRequests).omit({

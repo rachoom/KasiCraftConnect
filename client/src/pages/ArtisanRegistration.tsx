@@ -192,13 +192,20 @@ export default function ArtisanRegistration() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: InsertArtisan) => {
-      return await apiRequest("/api/artisans", {
+      const response = await fetch("/api/artisans", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
         },
       });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`${response.status}: ${JSON.stringify(errorData)}`);
+      }
+      
+      return await response.json();
     },
     onSuccess: (data) => {
       setIsSuccess(true);
