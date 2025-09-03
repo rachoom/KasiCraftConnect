@@ -88,11 +88,20 @@ export default function ServiceLanding() {
   const [selectedTier, setSelectedTier] = useState("basic");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
   // Extract service type from current URL
   const currentPath = window.location.pathname;
   const serviceType = currentPath.split('/').pop() || 'builders';
   const service = serviceInfo[serviceType as keyof typeof serviceInfo] || serviceInfo.builders;
+
+  const handleServiceToggle = (serviceName: string) => {
+    setSelectedServices(prev => 
+      prev.includes(serviceName) 
+        ? prev.filter(s => s !== serviceName)
+        : [...prev, serviceName]
+    );
+  };
 
   const handleSearch = () => {
     if (!searchLocation.trim()) {
@@ -104,7 +113,8 @@ export default function ServiceLanding() {
       service: serviceType,
       location: searchLocation,
       tier: selectedTier,
-      ...(selectedDate && { date: selectedDate.toISOString() })
+      ...(selectedDate && { date: selectedDate.toISOString() }),
+      ...(selectedServices.length > 0 && { services: selectedServices.join(',') })
     });
 
     setLocation(`/search?${searchParams.toString()}`);
@@ -144,8 +154,8 @@ export default function ServiceLanding() {
                 </div>
               </div>
 
-              {/* Main Search Form */}
-              <div className="max-w-3xl mx-auto">
+              {/* Main Get Started Form */}
+              <div className="max-w-4xl mx-auto">
                 <Card className="shadow-2xl border-2 border-gold/20">
                   <CardHeader className="pb-6">
                     <CardTitle className="text-3xl text-center text-black-soft font-bold">
@@ -200,17 +210,36 @@ export default function ServiceLanding() {
                     </Popover>
                   </div>
 
-
-
-                  {/* Search Button - Prominent */}
-                  <Button 
-                    onClick={handleSearch}
-                    className="w-full bg-gold hover:bg-gold/90 text-black font-bold py-6 text-xl rounded-lg shadow-lg hover:shadow-xl transition-all"
-                    size="lg"
-                  >
-                    <Search className="w-6 h-6 mr-3" />
-                    Find {service.title}
-                  </Button>
+                  {/* Services Selection with Checkboxes */}
+                  <div className="space-y-4">
+                    <Label className="text-xl font-semibold text-black-soft">
+                      Common {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Services
+                    </Label>
+                    <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                      {service.services.map((serviceItem, index) => (
+                        <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                          <input
+                            type="checkbox"
+                            id={`service-${index}`}
+                            checked={selectedServices.includes(serviceItem)}
+                            onChange={() => handleServiceToggle(serviceItem)}
+                            className="w-5 h-5 text-gold bg-gray-100 border-gray-300 rounded focus:ring-gold focus:ring-2"
+                          />
+                          <label 
+                            htmlFor={`service-${index}`} 
+                            className="text-black-soft font-medium cursor-pointer flex-1"
+                          >
+                            {serviceItem}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    {selectedServices.length > 0 && (
+                      <p className="text-sm text-gray-600 mt-2">
+                        Selected: {selectedServices.length} service{selectedServices.length > 1 ? 's' : ''}
+                      </p>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
               </div>
@@ -218,20 +247,25 @@ export default function ServiceLanding() {
           </div>
         </section>
 
-        {/* Quick Service Overview - Minimal */}
-        <section className="py-12 bg-gray-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Search Button Section */}
+        <section className="py-12 bg-white">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <FadeInSection>
-              <h2 className="text-2xl font-bold text-black-soft mb-8">
-                Common {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Services
-              </h2>
-              <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {service.services.map((serviceItem, index) => (
-                  <div key={index} className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                    <p className="font-medium text-black-soft text-sm">{serviceItem}</p>
-                  </div>
-                ))}
-              </div>
+              <Button 
+                onClick={handleSearch}
+                className="w-full bg-gold hover:bg-gold/90 text-black font-bold py-6 text-xl rounded-lg shadow-lg hover:shadow-xl transition-all max-w-md mx-auto"
+                size="lg"
+              >
+                <Search className="w-6 h-6 mr-3" />
+                Find Verified {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}
+              </Button>
+              
+              {searchLocation && (
+                <p className="mt-4 text-gray-600">
+                  Searching for {serviceType} in {searchLocation}
+                  {selectedServices.length > 0 && ` specializing in ${selectedServices.join(', ')}`}
+                </p>
+              )}
             </FadeInSection>
           </div>
         </section>
