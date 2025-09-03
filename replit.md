@@ -122,6 +122,9 @@ Changelog:
 - September 1, 2025. Updated header styling to black background with gold text and elegant typography
 - September 1, 2025. Implemented full artisan subscription workflow with premium/enterprise tiers
 - September 1, 2025. Rebranded from "Kasi Connect" to "Skills Connect" with updated headline "Find Trusted Skills in your area"
+- September 3, 2025. Fixed critical artisan authentication routing issue - specific routes now come before wildcard routes
+- September 3, 2025. Resolved login endpoint conflicts and ensured proper API routing for artisan authentication
+- September 3, 2025. Fixed header navigation visibility issues and made all navigation links accessible on all screen sizes
 ```
 
 ## User Preferences
