@@ -240,6 +240,8 @@ export default function ArtisanRegistration() {
   });
 
   const onSubmit = (data: InsertArtisan) => {
+    console.log("Form submitted with data:", data);
+    console.log("Form errors:", form.formState.errors);
     // Clear any existing error messages when submitting
     setErrorMessage("");
     registerMutation.mutate(data);
@@ -626,6 +628,12 @@ export default function ArtisanRegistration() {
                   type="submit" 
                   className="w-full bg-gold hover:bg-gold-dark text-black"
                   disabled={registerMutation.isPending}
+                  onClick={(e) => {
+                    console.log("Button clicked");
+                    console.log("Form valid:", form.formState.isValid);
+                    console.log("Form errors:", form.formState.errors);
+                    // Don't prevent default - let the form handle submission
+                  }}
                 >
                   {registerMutation.isPending ? "Creating Profile..." : "Create Artisan Profile"}
                 </Button>
