@@ -163,51 +163,54 @@ export default function ServiceLanding() {
                     </CardTitle>
                   </CardHeader>
                 <CardContent className="space-y-8 p-8">
-                  {/* Location Input - Primary Focus */}
-                  <div className="space-y-4">
-                    <Label htmlFor="location" className="text-xl font-semibold text-black-soft">
-                      Where do you need the service?
-                    </Label>
-                    <div className="relative">
-                      <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold w-6 h-6" />
-                      <Input
-                        id="location"
-                        value={searchLocation}
-                        onChange={(e) => setSearchLocation(e.target.value)}
-                        placeholder="Enter your location (e.g., Johannesburg, Cape Town, Pretoria)"
-                        className="pl-14 py-4 text-lg border-2 border-gray-200 focus:border-gold rounded-lg"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Date Picker - Secondary Focus */}
-                  <div className="space-y-4">
-                    <Label className="text-xl font-semibold text-black-soft">
-                      When do you need the service?
-                    </Label>
-                    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full justify-start text-left font-normal py-4 text-lg border-2 border-gray-200 hover:border-gold rounded-lg"
-                        >
-                          <CalendarIcon className="mr-3 h-6 w-6 text-gold" />
-                          {selectedDate ? format(selectedDate, "PPP") : "Select a date (optional)"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={selectedDate}
-                          onSelect={(date) => {
-                            setSelectedDate(date);
-                            setIsCalendarOpen(false);
-                          }}
-                          disabled={(date) => date < new Date()}
-                          initialFocus
+                  {/* Location and Date Side by Side */}
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {/* Location Input */}
+                    <div className="space-y-4">
+                      <Label htmlFor="location" className="text-xl font-semibold text-black-soft">
+                        Where do you need the service?
+                      </Label>
+                      <div className="relative">
+                        <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold w-6 h-6" />
+                        <Input
+                          id="location"
+                          value={searchLocation}
+                          onChange={(e) => setSearchLocation(e.target.value)}
+                          placeholder="Enter your location"
+                          className="pl-14 py-4 text-lg border-2 border-gray-200 focus:border-gold rounded-lg"
                         />
-                      </PopoverContent>
-                    </Popover>
+                      </div>
+                    </div>
+
+                    {/* Date Picker */}
+                    <div className="space-y-4">
+                      <Label className="text-xl font-semibold text-black-soft">
+                        When do you need the service?
+                      </Label>
+                      <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full justify-start text-left font-normal py-4 text-lg border-2 border-gray-200 hover:border-gold rounded-lg"
+                          >
+                            <CalendarIcon className="mr-3 h-6 w-6 text-gold" />
+                            {selectedDate ? format(selectedDate, "PPP") : "Select a date (optional)"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={(date) => {
+                              setSelectedDate(date);
+                              setIsCalendarOpen(false);
+                            }}
+                            disabled={(date) => date < new Date()}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </div>
 
                   {/* Services Selection with Checkboxes */}
