@@ -77,7 +77,7 @@ export default function ServiceCategories() {
   const [, setLocation] = useLocation();
 
   const selectService = (serviceId: string) => {
-    setLocation(`/search?service=${serviceId}&location=&tier=basic`);
+    setLocation(`/service/${serviceId}`);
   };
 
   return (

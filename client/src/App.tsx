@@ -15,6 +15,7 @@ import ArtisanDashboard from "@/pages/ArtisanDashboard";
 import ViewProfiles from "@/pages/ViewProfiles";
 import ArtisanLogin from "@/pages/ArtisanLogin";
 import ArtisanSubscription from "@/pages/ArtisanSubscription";
+import ServiceLanding from "@/pages/ServiceLanding";
 import ContactUs from "@/pages/ContactUs";
 import AdminBulkImport from "@/pages/AdminBulkImport";
 import AdminReview from "@/pages/AdminReview";
@@ -32,6 +33,13 @@ function Router() {
         <Route path="/artisan/login" component={() => <PageTransition><ArtisanLogin /></PageTransition>} />
         <Route path="/artisan/dashboard" component={() => <PageTransition><ArtisanDashboard /></PageTransition>} />
         <Route path="/artisan/:id" component={() => <PageTransition><ArtisanProfile /></PageTransition>} />
+        <Route path="/service/builders" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/plumbers" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/electricians" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/carpenters" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/tilers" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/cleaners" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/landscapers" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/profiles" component={() => <PageTransition><ViewProfiles /></PageTransition>} />
         <Route path="/subscription" component={() => <PageTransition><ArtisanSubscription /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />
