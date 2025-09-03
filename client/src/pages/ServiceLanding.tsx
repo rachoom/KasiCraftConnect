@@ -125,42 +125,37 @@ export default function ServiceLanding() {
       <Header />
       
       <main>
-        {/* Single Page Layout - Compact */}
-        <section className="py-8 min-h-screen bg-gradient-to-br from-gray-50 to-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Direct Landing on Get Started Form */}
+        <section className="py-4 min-h-screen bg-gradient-to-br from-gray-50 to-white">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
-              {/* Compact Header */}
-              <div className="text-center mb-8">
-                <div className="text-6xl mb-4">{service.icon}</div>
-                <h1 className="text-3xl md:text-4xl font-bold text-black-soft mb-3">
-                  Find {service.title} in Your Area
-                </h1>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
-                  {service.description}
-                </p>
-                <div className="flex flex-wrap justify-center items-center gap-4 text-gold mb-8">
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-5 h-5" />
-                    <span className="font-semibold text-sm">Verified</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Star className="w-5 h-5" />
-                    <span className="font-semibold text-sm">Rated</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="w-5 h-5" />
-                    <span className="font-semibold text-sm">Trusted</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Compact Get Started Form */}
+              {/* Get Started Form - Primary Focus */}
               <div className="max-w-5xl mx-auto">
                 <Card className="shadow-xl border-2 border-gold/20">
-                  <CardHeader className="pb-4">
-                    <CardTitle className="text-2xl text-center text-black-soft font-bold">
-                      Get Started
-                    </CardTitle>
+                  <CardHeader className="pb-4 bg-gradient-to-r from-black-soft to-gray-800 text-white rounded-t-lg">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">{service.icon}</div>
+                      <CardTitle className="text-2xl font-bold mb-2">
+                        Get Started - Find {service.title}
+                      </CardTitle>
+                      <p className="text-sm text-gray-200 mb-2">
+                        {service.description}
+                      </p>
+                      <div className="flex flex-wrap justify-center items-center gap-3 text-gold">
+                        <div className="flex items-center gap-1">
+                          <Shield className="w-4 h-4" />
+                          <span className="font-medium text-xs">Verified</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4" />
+                          <span className="font-medium text-xs">Rated</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="w-4 h-4" />
+                          <span className="font-medium text-xs">Trusted</span>
+                        </div>
+                      </div>
+                    </div>
                   </CardHeader>
                 <CardContent className="space-y-6 p-6">
                   {/* Location and Date Side by Side */}
