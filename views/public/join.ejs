@@ -1,0 +1,78 @@
+<% layout('layout') %>
+
+<div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
+  <h2 class="text-xl font-bold mb-4">Join as Artisan</h2>
+
+  <!-- Tabs -->
+  <div class="flex mb-6 border-b">
+    <button onclick="showTab('unverified')" id="tab-unverified"
+      class="flex-1 py-2 text-center font-semibold border-b-2 border-blue-600 text-blue-600">
+      Unverified (Free)
+    </button>
+    <button onclick="showTab('verified')" id="tab-verified"
+      class="flex-1 py-2 text-center font-semibold border-b-2 border-transparent">
+      Verified Application
+    </button>
+  </div>
+
+  <!-- Unverified Form -->
+  <form id="form-unverified" action="/api/join/unverified" method="POST" enctype="multipart/form-data">
+    <label>Name</label>
+    <input type="text" name="name" required>
+
+    <label>Phone / WhatsApp</label>
+    <input type="text" name="contact" required>
+
+    <label>City / Town</label>
+    <input type="text" name="city" required>
+
+    <label>Skills (comma separated)</label>
+    <input type="text" name="skills" required>
+
+    <label>Short Bio</label>
+    <textarea name="bio"></textarea>
+
+    <label>Profile Photo (optional)</label>
+    <input type="file" name="photo">
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Verified Form -->
+  <form id="form-verified" action="/api/join/verified" method="POST" enctype="multipart/form-data" style="display:none;">
+    <label>Name</label>
+    <input type="text" name="name" required>
+
+    <label>Phone / WhatsApp</label>
+    <input type="text" name="contact" required>
+
+    <label>City / Town</label>
+    <input type="text" name="city" required>
+
+    <label>Skills (comma separated)</label>
+    <input type="text" name="skills" required>
+
+    <label>Short Bio</label>
+    <textarea name="bio"></textarea>
+
+    <label>Years of Experience</label>
+    <input type="text" name="experience">
+
+    <label>Upload Documents / Portfolio</label>
+    <input type="file" name="documents" multiple>
+
+    <button type="submit">Apply</button>
+  </form>
+</div>
+
+<script>
+function showTab(tab) {
+  document.getElementById("form-unverified").style.display = tab === "unverified" ? "block" : "none";
+  document.getElementById("form-verified").style.display = tab === "verified" ? "block" : "none";
+
+  document.getElementById("tab-unverified").classList.toggle("text-blue-600", tab === "unverified");
+  document.getElementById("tab-unverified").classList.toggle("border-blue-600", tab === "unverified");
+  document.getElementById("tab-verified").classList.toggle("text-blue-600", tab === "verified");
+  document.getElementById("tab-verified").classList.toggle("border-blue-600", tab === "verified");
+}
+</script>

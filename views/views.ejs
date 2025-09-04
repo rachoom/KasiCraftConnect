@@ -1,0 +1,97 @@
+<% layout('layout') %>
+
+<div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg mt-10">
+  <h2 class="text-3xl font-bold text-center text-blue-700 mb-6">Join as an Artisan</h2>
+  <p class="text-center text-gray-600 mb-8">
+    Kasi Craft Connect is free for everyone. Choose how you want to join:
+  </p>
+
+  <!-- Tab Buttons -->
+  <div class="flex justify-center mb-6 space-x-4">
+    <button onclick="showTab('unverified')" id="tab-unverified"
+      class="px-4 py-2 bg-blue-600 text-white rounded shadow">
+      Unverified (Free)
+    </button>
+    <button onclick="showTab('verified')" id="tab-verified"
+      class="px-4 py-2 bg-gray-200 text-gray-700 rounded shadow">
+      Verified (Paid)
+    </button>
+  </div>
+
+  <!-- Unverified Form -->
+  <div id="form-unverified" class="tab-content">
+    <form action="/api/join/unverified" method="POST" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Full Name</label>
+        <input type="text" name="name" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Skill / Trade</label>
+        <input type="text" name="skill" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Location</label>
+        <input type="text" name="location" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Phone Number</label>
+        <input type="text" name="phone" required class="w-full border p-2 rounded">
+      </div>
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded shadow">
+        Join (Unverified)
+      </button>
+    </form>
+  </div>
+
+  <!-- Verified Form -->
+  <div id="form-verified" class="tab-content hidden">
+    <form action="/api/join/verified" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Full Name</label>
+        <input type="text" name="name" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Skill / Trade</label>
+        <input type="text" name="skill" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Location</label>
+        <input type="text" name="location" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Phone Number</label>
+        <input type="text" name="phone" required class="w-full border p-2 rounded">
+      </div>
+      <div>
+        <label class="block font-semibold">Qualifications / Experience</label>
+        <textarea name="experience" rows="3" class="w-full border p-2 rounded"></textarea>
+      </div>
+      <div>
+        <label class="block font-semibold">Upload Supporting Documents</label>
+        <input type="file" name="documents" class="w-full border p-2 rounded">
+      </div>
+      <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded shadow">
+        Apply for Verification
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function showTab(tab) {
+    document.getElementById('form-unverified').classList.add('hidden');
+    document.getElementById('form-verified').classList.add('hidden');
+    document.getElementById('tab-unverified').classList.remove('bg-blue-600', 'text-white');
+    document.getElementById('tab-unverified').classList.add('bg-gray-200', 'text-gray-700');
+    document.getElementById('tab-verified').classList.remove('bg-blue-600', 'text-white');
+    document.getElementById('tab-verified').classList.add('bg-gray-200', 'text-gray-700');
+
+    if (tab === 'unverified') {
+      document.getElementById('form-unverified').classList.remove('hidden');
+      document.getElementById('tab-unverified').classList.add('bg-blue-600', 'text-white');
+    } else {
+      document.getElementById('form-verified').classList.remove('hidden');
+      document.getElementById('tab-verified').classList.add('bg-blue-600', 'text-white');
+    }
+  }
+</script>

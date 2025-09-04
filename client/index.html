@@ -1,13 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
-    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join as Artisan - Kasi Craft Connect</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Join Our Network of Artisans</h1>
+            <p>Choose the path that's right for you and start connecting with clients today.</p>
+        </header>
+
+        <main class="options-container">
+            <div class="option-card" id="card-unverified">
+                <h2>Standard Listing</h2>
+                <p class="price">Free</p>
+                <ul>
+                    <li>✓ Get listed on our platform</li>
+                    <li>✓ Appear in general search results</li>
+                    <li>✓ A quick and easy way to get noticed</li>
+                </ul>
+                <button class="btn btn-secondary" data-form="unverified-form">Start Now</button>
+            </div>
+
+            <div class="option-card" id="card-verified">
+                <div class="badge">Recommended</div>
+                <h2>Verified Artisan</h2>
+                <p class="price">Paid Plan</p>
+                <ul>
+                    <li>✓ <strong>Higher preference</strong> in searches</li>
+                    <li>✓ Get a 'Verified' badge on your listing</li>
+                    <li>✓ Build more trust with clients</li>
+                    <li>✓ Unlock your full profile page (Plus Plan)</li>
+                </ul>
+                <button class="btn btn-primary" data-form="verified-form">Get Verified</button>
+            </div>
+        </main>
+
+        <section class="form-section">
+            <div id="unverified-form" class="form-wrapper hidden">
+                <h3>Complete Your Standard Listing (Free)</h3>
+                <form id="free-signup-form">
+                    <div class="form-group">
+                        <label for="free-name">Full Name*</label>
+                        <input type="text" id="free-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="free-skill">Primary Skill/Trade*</label>
+                        <select id="free-skill" name="skill" required>
+                            <option value="">Select your skill...</option>
+                            <option value="plumber">Plumber</option>
+                            <option value="electrician">Electrician</option>
+                            <option value="carpenter">Carpenter</option>
+                            <option value="painter">Painter</option>
+                            <option value="builder">Builder</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="free-location">City/Town*</label>
+                        <input type="text" id="free-location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="free-phone">Phone Number*</label>
+                        <input type="tel" id="free-phone" name="phone" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Listing</button>
+                </form>
+            </div>
+
+            <div id="verified-form" class="form-wrapper hidden">
+                <h3>Application for Verified Artisan</h3>
+                <p class="form-intro">Fill out your details below. Our team will review your application and contact you with the next steps for payment and verification.</p>
+                <form id="verified-signup-form">
+                    <div class="form-group">
+                        <label for="verified-name">Full Name*</label>
+                        <input type="text" id="verified-name" name="name" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="verified-email">Email Address*</label>
+                        <input type="email" id="verified-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="verified-phone">Phone Number*</label>
+                        <input type="tel" id="verified-phone" name="phone" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="verified-skill">Primary Skill/Trade*</label>
+                         <select id="verified-skill" name="skill" required>
+                            <option value="">Select your skill...</option>
+                            <option value="plumber">Plumber</option>
+                            <option value="electrician">Electrician</option>
+                            <option value="carpenter">Carpenter</option>
+                            <option value="painter">Painter</option>
+                            <option value="builder">Builder</option>
+                             </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="verified-location">City/Town*</label>
+                        <input type="text" id="verified-location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="verified-experience">Years of Experience*</label>
+                        <input type="number" id="verified-experience" name="experience" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="verified-bio">Brief Bio / Introduction</label>
+                        <textarea id="verified-bio" name="bio" rows="4" placeholder="Tell clients a bit about yourself and your work..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="verified-docs">Upload Supporting Documents</label>
+                        <p class="upload-info">e.g., ID, qualifications, proof of past work. Max file size 5MB.</p>
+                        <input type="file" id="verified-docs" name="documents">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </form>
+            </div>
+        </section>
+        <p id="form-error" class="error-message hidden">Please fill out all required fields.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
