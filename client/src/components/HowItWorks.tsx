@@ -65,7 +65,7 @@ export default function HowItWorks() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div 
-            className="text-center"
+            className="text-center p-6 border-2 border-green-500 rounded-lg"
             variants={stepVariants}
             whileHover={{ 
               y: -10,
@@ -105,7 +105,7 @@ export default function HowItWorks() {
           </motion.div>
 
           <motion.div 
-            className="text-center"
+            className="text-center p-6 border-2 border-green-500 rounded-lg"
             variants={stepVariants}
             whileHover={{ 
               y: -10,
@@ -146,7 +146,7 @@ export default function HowItWorks() {
           </motion.div>
 
           <motion.div 
-            className="text-center"
+            className="text-center p-6 border-2 border-green-500 rounded-lg"
             variants={stepVariants}
             whileHover={{ 
               y: -10,
