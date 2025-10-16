@@ -39,6 +39,7 @@ export const artisans = pgTable("artisans", {
   rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
   reviewCount: integer("review_count").default(0),
   verified: boolean("verified").default(false),
+  subscriptionTier: text("subscription_tier").default("unverified"), // unverified, verified, premium
   profileImage: text("profile_image"),
   portfolio: text("portfolio").array().default([]),
   profileComplete: boolean("profile_complete").default(true), // For Google OAuth users
