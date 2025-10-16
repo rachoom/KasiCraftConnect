@@ -149,7 +149,7 @@ export default function SearchResults() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
         {/* Header */}
         <div className="mb-8">
           <Link href="/">
@@ -340,6 +340,24 @@ export default function SearchResults() {
             </CardContent>
           </Card>
         )}
+      </div>
+      
+      {/* Sticky CTA Banner for Artisans */}
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-gold to-gold-dark shadow-lg border-t-2 border-gold-dark z-40">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex-1">
+              <p className="text-black font-semibold text-sm sm:text-base">
+                Are you a skilled artisan? Get listed for free!
+              </p>
+            </div>
+            <Link href="/artisan">
+              <Button className="bg-black hover:bg-gray-800 text-gold font-bold shadow-md hover:shadow-lg transition-all">
+                Join as Artisan
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
       
       <Footer />
