@@ -192,7 +192,7 @@ export default function SearchResults() {
         ) : (
           <div className="grid gap-6">
             {artisans.map((artisan: Artisan) => (
-              <Card key={artisan.id} className={`hover:shadow-lg transition-all cosmic-glow-static ${artisan.verified ? 'border-2 border-green-500/30' : ''}`}>
+              <Card key={artisan.id} className={`hover:shadow-lg transition-all cosmic-glow-static ${artisan.verified ? 'border-2 border-green-500/50' : ''}`}>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">

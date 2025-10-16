@@ -164,6 +164,10 @@ Changelog:
 - October 16, 2025. Fixed critical database issue: added approvalStatus='approved' to all artisans so they appear in search results
 - October 16, 2025. Updated seed.ts to include approvalStatus and subscriptionTier fields for all new artisan records
 - October 16, 2025. Fixed React nesting warning by removing nested <a> tags in header navigation Link component
+- October 16, 2025. Enhanced verified badge prominence: larger size with checkmark (✓ Verified) and green styling
+- October 16, 2025. Added subtle green borders (border-green-500/50) to verified artisan cards for increased visual distinction
+- October 16, 2025. Implemented unverified badge with info icon and tooltip explaining self-reported status
+- October 16, 2025. Added sticky CTA banner at bottom of search results to convert artisans: "Are you a skilled artisan? Get listed for free!"
 ```
 
 ## User Preferences
