@@ -191,7 +191,7 @@ export default function SearchResults() {
         ) : (
           <div className="grid gap-6">
             {artisans.map((artisan: Artisan) => (
-              <Card key={artisan.id} className="hover:shadow-lg transition-shadow">
+              <Card key={artisan.id} className="hover:shadow-lg transition-all cosmic-glow-static">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
@@ -207,7 +207,7 @@ export default function SearchResults() {
                             {artisan.firstName} {artisan.lastName}
                           </h3>
                           {artisan.verified && (
-                            <Badge variant="outline" className="text-gold border-gold">
+                            <Badge variant="outline" className="text-green-600 border-green-500 bg-green-50">
                               Verified
                             </Badge>
                           )}
