@@ -53,28 +53,33 @@ export default function Header() {
                 <circle cx="12" cy="28" r="1" fill="#DAA520" opacity="0.7"/>
                 <circle cx="28" cy="28" r="1" fill="#B8860B" opacity="0.7"/>
               </svg>
-              <h1 className="text-2xl font-light text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
-                Skills <span className="text-gold font-extralight">Connect</span>
-              </h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-light text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
+                  Skills <span className="text-gold font-extralight">Connect</span>
+                </h1>
+                <span className="bg-gold/20 border border-gold/40 text-gold text-xs font-semibold px-2 py-0.5 rounded-full">
+                  Ekurhuleni
+                </span>
+              </div>
             </Link>
           </motion.div>
           
           <motion.nav 
-            className="flex space-x-6"
+            className="flex items-center space-x-6"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <a href="#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
               Services
             </a>
-            <a href="#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md">
+            <a href="#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
               How It Works
             </a>
             <Link href="/profiles">
-              <span className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer">
+              <a className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer inline-flex items-center">
                 View Profiles
-              </span>
+              </a>
             </Link>
           </motion.nav>
           
