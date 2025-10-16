@@ -447,8 +447,8 @@ export class DatabaseStorage implements IStorage {
   async searchArtisans(service: string, location: string, limit: number = 3, tier: string = "basic"): Promise<Artisan[]> {
     let allArtisans = await db.select().from(artisans);
 
-    // All tiers get verified artisans for better user experience
-    allArtisans = allArtisans.filter(artisan => artisan.verified);
+    // Only show approved artisans
+    allArtisans = allArtisans.filter(artisan => artisan.approvalStatus === "approved");
 
     // Filter by service if provided
     if (service && service !== "all") {
@@ -471,10 +471,28 @@ export class DatabaseStorage implements IStorage {
       );
     }
 
-    // Sort by rating and review count
+    // Sort by subscription tier first (premium > verified > unverified), then by rating
     allArtisans.sort((a, b) => {
+      // Tier priority: premium (3) > verified (2) > unverified (1)
+      const tierPriority: Record<string, number> = {
+        'premium': 3,
+        'verified': 2,
+        'unverified': 1
+      };
+      
+      const aTierPriority = tierPriority[a.subscriptionTier || 'unverified'] || 1;
+      const bTierPriority = tierPriority[b.subscriptionTier || 'unverified'] || 1;
+      
+      // Sort by tier priority first
+      if (aTierPriority !== bTierPriority) {
+        return bTierPriority - aTierPriority;
+      }
+      
+      // Within same tier, sort by rating
       const ratingDiff = parseFloat(b.rating || "0") - parseFloat(a.rating || "0");
       if (ratingDiff !== 0) return ratingDiff;
+      
+      // Finally, sort by review count
       return (b.reviewCount || 0) - (a.reviewCount || 0);
     });
 
