@@ -112,14 +112,30 @@ export default function ArtisanProfile() {
                   </div>
                   
                   <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
+                    <div className="flex items-center flex-wrap gap-3 mb-2">
                       <h1 className="text-2xl font-bold text-black-soft">
                         {artisan.firstName} {artisan.lastName}
                       </h1>
-                      {artisan.verified && (
-                        <Badge variant="outline" className="text-gold border-gold">
+                      
+                      {/* Tier Badges */}
+                      {artisan.subscriptionTier === 'unverified' && (
+                        <Badge variant="outline" className="text-gray-500 border-gray-400 bg-gray-50">
+                          <User className="w-3 h-3 mr-1" />
+                          Unverified
+                        </Badge>
+                      )}
+                      
+                      {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') && (
+                        <Badge variant="outline" className="text-gold border-gold bg-gold/10">
                           <Shield className="w-3 h-3 mr-1" />
                           Verified
+                        </Badge>
+                      )}
+                      
+                      {artisan.subscriptionTier === 'premium' && (
+                        <Badge variant="outline" className="text-purple-600 border-purple-500 bg-purple-50">
+                          <Star className="w-3 h-3 mr-1" />
+                          Premium Marketing
                         </Badge>
                       )}
                     </div>
@@ -182,18 +198,30 @@ export default function ArtisanProfile() {
               </CardContent>
             </Card>
 
-            {/* Reviews Section Placeholder */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Customer Reviews</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-gray-500">
-                  <Star className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                  <p>Reviews feature coming soon</p>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Reviews Section - Only for Verified and Premium tiers */}
+            {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Customer Reviews</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-8 text-gray-500">
+                    <Star className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                    <p>No reviews yet. Be the first to review!</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="border-gold/30 bg-gold/5">
+                <CardContent className="p-6 text-center">
+                  <Shield className="w-12 h-12 mx-auto mb-4 text-gold/50" />
+                  <h3 className="font-semibold text-gray-700 mb-2">Reviews Available for Verified Artisans</h3>
+                  <p className="text-sm text-gray-600">
+                    This artisan needs to upgrade to a verified tier to access the customer review system.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Sidebar */}

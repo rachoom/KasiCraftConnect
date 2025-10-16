@@ -185,6 +185,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Unverified Artisan Registration (Free, Instant)
+  app.post("/api/artisans/unverified", async (req, res) => {
+    try {
+      const artisanData = insertArtisanSchema.parse({
+        ...req.body,
+        verified: false,
+        subscriptionTier: "unverified",
+        approvalStatus: "approved", // Auto-approved for unverified
+        profileImage: null,
+        portfolio: [],
+        password: null,
+        googleId: null,
+        idDocument: null,
+        qualificationDocuments: [],
+      });
+
+      // Check for existing email
+      const existingEmail = await storage.getArtisanByEmail(artisanData.email);
+      if (existingEmail) {
+        return res.status(409).json({
+          message: "Email already registered",
+          error: "This email is already in use. Please use a different email."
+        });
+      }
+
+      // Check for existing phone
+      const existingPhone = await storage.getArtisanByPhone(artisanData.phone);
+      if (existingPhone) {
+        return res.status(409).json({
+          message: "Phone already registered", 
+          error: "This phone number is already in use. Please use a different phone number."
+        });
+      }
+
+      const newArtisan = await storage.createArtisan(artisanData);
+      
+      res.status(201).json({
+        message: "Unverified profile created successfully!",
+        artisan: newArtisan
+      });
+    } catch (error: any) {
+      console.error("Unverified registration error:", error);
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({
+          message: "Validation failed",
+          error: error.errors[0]?.message || "Invalid data provided"
+        });
+      }
+      
+      res.status(500).json({
+        message: "Registration failed",
+        error: "An error occurred while creating your profile. Please try again."
+      });
+    }
+  });
+
+  // Verified Artisan Application (Requires Admin Approval)
+  app.post("/api/artisans/verified", async (req, res) => {
+    try {
+      const artisanData = insertArtisanSchema.parse({
+        ...req.body,
+        verified: false, // Will be set to true upon approval
+        approvalStatus: "pending",
+        verificationStatus: "pending",
+        profileImage: null,
+        portfolio: [],
+        password: null,
+        googleId: null,
+      });
+
+      // Check for existing email
+      const existingEmail = await storage.getArtisanByEmail(artisanData.email);
+      if (existingEmail) {
+        return res.status(409).json({
+          message: "Email already registered",
+          error: "This email is already in use. Please use a different email."
+        });
+      }
+
+      // Check for existing phone
+      const existingPhone = await storage.getArtisanByPhone(artisanData.phone);
+      if (existingPhone) {
+        return res.status(409).json({
+          message: "Phone already registered",
+          error: "This phone number is already in use. Please use a different phone number."
+        });
+      }
+
+      const newArtisan = await storage.createArtisan(artisanData);
+      
+      // TODO: Send email notification to admin about new application
+      
+      res.status(201).json({
+        message: "Application submitted successfully! We'll review it within 2-3 business days.",
+        artisan: newArtisan
+      });
+    } catch (error: any) {
+      console.error("Verified application error:", error);
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({
+          message: "Validation failed",
+          error: error.errors[0]?.message || "Invalid data provided"
+        });
+      }
+      
+      res.status(500).json({
+        message: "Application failed",
+        error: "An error occurred while submitting your application. Please try again."
+      });
+    }
+  });
+
   app.get("/api/artisans/verify/:token", async (req, res) => {
     try {
       const { token } = req.params;
