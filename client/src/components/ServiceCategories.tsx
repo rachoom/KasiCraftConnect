@@ -165,8 +165,8 @@ export default function ServiceCategories() {
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <i className="fas fa-plus text-2xl text-white" />
                 </div>
-                <h4 className="font-semibold text-lg mb-2">View All</h4>
-                <p className="text-white/80 text-sm">Browse all available services</p>
+                <h4 className="font-semibold text-lg mb-2">More Services Coming</h4>
+                <p className="text-white/80 text-sm">We're expanding our service categories</p>
               </div>
             </div>
           </motion.div>
