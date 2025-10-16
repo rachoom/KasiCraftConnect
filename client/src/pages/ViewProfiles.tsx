@@ -40,12 +40,12 @@ export default function ViewProfiles() {
       `${artisan.firstName} ${artisan.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
       artisan.email.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesService = !filterService || (artisan.services && artisan.services.includes(filterService));
+    const matchesService = !filterService || filterService === 'all' || (artisan.services && artisan.services.includes(filterService));
     
     const matchesLocation = !filterLocation || 
       (artisan.location && artisan.location.toLowerCase().includes(filterLocation.toLowerCase()));
     
-    const matchesStatus = !filterStatus || artisan.approvalStatus === filterStatus;
+    const matchesStatus = !filterStatus || filterStatus === 'all' || artisan.approvalStatus === filterStatus;
     
     return matchesSearch && matchesService && matchesLocation && matchesStatus;
   });
@@ -104,7 +104,7 @@ export default function ViewProfiles() {
                         <SelectValue placeholder="Filter by service" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Services</SelectItem>
+                        <SelectItem value="all">All Services</SelectItem>
                         {serviceOptions.map((service) => (
                           <SelectItem key={service.id} value={service.id}>
                             {service.label}
@@ -129,7 +129,7 @@ export default function ViewProfiles() {
                         <SelectValue placeholder="Filter by status" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Statuses</SelectItem>
+                        <SelectItem value="all">All Statuses</SelectItem>
                         <SelectItem value="pending">Pending</SelectItem>
                         <SelectItem value="approved">Approved</SelectItem>
                         <SelectItem value="rejected">Rejected</SelectItem>

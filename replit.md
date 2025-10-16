@@ -58,16 +58,39 @@ The application uses three main entities:
   - Google OAuth integration support
   - Protected admin routes with token validation
 
-### Pricing Tiers
-- **Basic (Free)**: Up to 3 unverified artisan contacts
-- **Premium (R99)**: Up to 5 verified artisans with full profiles
-- **Enterprise (R299/month)**: Unlimited access with advanced features
+### Artisan Subscription Tiers
+Skills Connect implements a three-tier artisan system with offline payment handling:
 
-### Verification System
-- Multi-stage artisan verification process
-- Document upload for ID and qualifications
-- Admin review and approval workflow
-- Verification status tracking
+- **Unverified (Free)**: 
+  - Instant registration with basic information
+  - Profiles clearly marked as "Unverified"
+  - Lower priority in search results
+  - No access to reviews or photo gallery
+  - Ideal for artisans starting out
+
+- **Verified (R100/month)**: 
+  - Requires admin approval with document verification
+  - ID document and qualification uploads required
+  - Priority placement in search results
+  - Verified badge on profile
+  - Access to customer review system
+  - Photo gallery for showcasing work
+
+- **Verified + Marketing (R299/month)**: 
+  - All verified tier benefits
+  - Highest priority in search results
+  - Premium Marketing badge
+  - Enhanced visibility and marketing features
+
+### Registration & Verification System
+- **Unverified Registration**: Simple form with instant profile creation
+- **Verified Application**: Detailed form with document uploads
+  - ID document verification
+  - Qualification certificate uploads
+  - Company registration number (optional)
+  - Admin review and approval workflow
+- **Offline Payment**: Artisans pay subscription fees offline before/after approval
+- **Approval Status**: pending → approved/rejected workflow with admin notes
 
 ## Data Flow
 
@@ -125,6 +148,13 @@ Changelog:
 - September 3, 2025. Fixed critical artisan authentication routing issue - specific routes now come before wildcard routes
 - September 3, 2025. Resolved login endpoint conflicts and ensured proper API routing for artisan authentication
 - September 3, 2025. Fixed header navigation visibility issues and made all navigation links accessible on all screen sizes
+- October 16, 2025. Implemented three-tier artisan system: Unverified (Free), Verified (R100/month), Verified+Marketing (R299/month)
+- October 16, 2025. Added subscriptionTier field to database and updated search prioritization to favor premium/verified artisans
+- October 16, 2025. Created dual registration paths: instant for unverified, admin approval for verified tiers
+- October 16, 2025. Built UnverifiedRegistrationForm and VerifiedApplicationForm with document upload support
+- October 16, 2025. Updated artisan profiles to display tier-specific badges and restrict features by tier
+- October 16, 2025. Removed "Pricing" navigation link and added backend routes for new registration flows
+- October 16, 2025. Implemented search result prioritization: Premium > Verified > Unverified, then by rating
 ```
 
 ## User Preferences
