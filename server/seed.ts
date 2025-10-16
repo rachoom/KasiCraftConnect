@@ -21,7 +21,9 @@ const gautengArtisans = [
     qualificationDocuments: ["nhbrc_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "All documents verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Nomsa",
@@ -41,7 +43,9 @@ const gautengArtisans = [
     qualificationDocuments: ["cleaning_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Excellent credentials",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Thabo",
@@ -61,7 +65,9 @@ const gautengArtisans = [
     qualificationDocuments: ["electrical_license.pdf", "solar_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Solar specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Zanele",
@@ -81,7 +87,9 @@ const gautengArtisans = [
     qualificationDocuments: ["horticulture_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Landscape expertise confirmed",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Johannes",
@@ -101,7 +109,9 @@ const gautengArtisans = [
     qualificationDocuments: ["carpentry_cert.pdf", "furniture_design.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Master craftsman verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Lerato",
@@ -121,7 +131,9 @@ const gautengArtisans = [
     qualificationDocuments: ["plumbing_license.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Licensed professional",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Mandla",
@@ -141,7 +153,9 @@ const gautengArtisans = [
     qualificationDocuments: ["tiling_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Stone specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Precious",
@@ -161,7 +175,9 @@ const gautengArtisans = [
     qualificationDocuments: ["cleaning_cert.pdf", "eco_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Eco-certified professional",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Sizani",
@@ -181,7 +197,9 @@ const gautengArtisans = [
     qualificationDocuments: ["building_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Renovation expert verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Themba",
@@ -201,7 +219,9 @@ const gautengArtisans = [
     qualificationDocuments: ["electrical_license.pdf", "hv_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "High voltage certified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Beauty",
@@ -221,7 +241,9 @@ const gautengArtisans = [
     qualificationDocuments: ["landscaping_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Water-wise specialist",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Mpho",
@@ -241,7 +263,9 @@ const gautengArtisans = [
     qualificationDocuments: ["carpentry_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Cabinet specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Nthabiseng",
@@ -261,7 +285,9 @@ const gautengArtisans = [
     qualificationDocuments: ["plumbing_license.pdf", "emergency_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Emergency service certified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Sello",
@@ -281,7 +307,9 @@ const gautengArtisans = [
     qualificationDocuments: ["tiling_cert.pdf", "commercial_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Commercial specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Palesa",
@@ -301,7 +329,9 @@ const gautengArtisans = [
     qualificationDocuments: ["cleaning_cert.pdf", "safety_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Safety certified professional",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
 
   // Ekurhuleni Artisans
@@ -323,7 +353,9 @@ const gautengArtisans = [
     qualificationDocuments: ["building_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Modern design specialist",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Nosipho",
@@ -343,7 +375,9 @@ const gautengArtisans = [
     qualificationDocuments: ["electrical_license.pdf", "smart_home_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Smart home certified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Bongani",
@@ -363,7 +397,9 @@ const gautengArtisans = [
     qualificationDocuments: ["plumbing_license.pdf", "pool_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Pool specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Dineo",
@@ -383,7 +419,9 @@ const gautengArtisans = [
     qualificationDocuments: ["landscaping_cert.pdf", "urban_design.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Urban specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Thembi",
@@ -403,7 +441,9 @@ const gautengArtisans = [
     qualificationDocuments: ["carpentry_cert.pdf", "restoration_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Restoration expert verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Kenneth",
@@ -423,7 +463,9 @@ const gautengArtisans = [
     qualificationDocuments: ["tiling_cert.pdf", "industrial_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Industrial specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Refilwe",
@@ -443,7 +485,9 @@ const gautengArtisans = [
     qualificationDocuments: ["cleaning_cert.pdf", "biohazard_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Medical facility certified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Vusi",
@@ -463,7 +507,9 @@ const gautengArtisans = [
     qualificationDocuments: ["building_cert.pdf", "commercial_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Commercial construction verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Nomthandazo",
@@ -483,7 +529,9 @@ const gautengArtisans = [
     qualificationDocuments: ["electrical_license.pdf", "mining_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Mining specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Siphiwe",
@@ -503,7 +551,9 @@ const gautengArtisans = [
     qualificationDocuments: ["landscaping_cert.pdf", "sports_turf_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Sports turf specialist",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Given",
@@ -523,7 +573,9 @@ const gautengArtisans = [
     qualificationDocuments: ["carpentry_cert.pdf", "education_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Educational specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Thandiwe",
@@ -543,7 +595,9 @@ const gautengArtisans = [
     qualificationDocuments: ["plumbing_license.pdf", "green_plumbing.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Green systems specialist",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Bheki",
@@ -563,7 +617,9 @@ const gautengArtisans = [
     qualificationDocuments: ["tiling_cert.pdf", "heritage_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Heritage specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Nkosana",
@@ -583,7 +639,9 @@ const gautengArtisans = [
     qualificationDocuments: ["cleaning_cert.pdf", "event_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Event specialist verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Busisiwe",
@@ -603,7 +661,9 @@ const gautengArtisans = [
     qualificationDocuments: ["building_cert.pdf", "rdp_cert.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Community development verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   }
 ];
 
@@ -626,7 +686,9 @@ const sampleArtisans = [
     qualificationDocuments: ["nhbrc_certificate.pdf", "construction_diploma.pdf"],
     verificationStatus: "approved",
     verificationNotes: "All documents verified successfully",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Sarah",
@@ -646,7 +708,9 @@ const sampleArtisans = [
     qualificationDocuments: ["electrical_trade_cert.pdf", "coc_certificate.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Electrical trade certificate verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Mike",
@@ -666,7 +730,9 @@ const sampleArtisans = [
     qualificationDocuments: ["plumbing_certificate.pdf", "iopsa_membership.pdf"],
     verificationStatus: "approved",
     verificationNotes: "IOPSA membership confirmed",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "Nomsa",
@@ -686,7 +752,9 @@ const sampleArtisans = [
     qualificationDocuments: ["cleaning_certification.pdf"],
     verificationStatus: "approved",
     verificationNotes: "Professional cleaning certification verified",
-    verifiedAt: new Date().toISOString()
+    verifiedAt: new Date().toISOString(),
+    approvalStatus: "approved",
+    subscriptionTier: "verified"
   },
   {
     firstName: "David",
@@ -706,7 +774,9 @@ const sampleArtisans = [
     qualificationDocuments: [],
     verificationStatus: "pending",
     verificationNotes: null,
-    verifiedAt: null
+    verifiedAt: null,
+    approvalStatus: "approved",
+    subscriptionTier: "unverified"
   },
   {
     firstName: "Zanele",
@@ -726,7 +796,9 @@ const sampleArtisans = [
     qualificationDocuments: [],
     verificationStatus: "pending",
     verificationNotes: null,
-    verifiedAt: null
+    verifiedAt: null,
+    approvalStatus: "approved",
+    subscriptionTier: "unverified"
   },
   {
     firstName: "Ahmed",
@@ -746,7 +818,9 @@ const sampleArtisans = [
     qualificationDocuments: [],
     verificationStatus: "pending",
     verificationNotes: null,
-    verifiedAt: null
+    verifiedAt: null,
+    approvalStatus: "approved",
+    subscriptionTier: "unverified"
   }
 ];
 
