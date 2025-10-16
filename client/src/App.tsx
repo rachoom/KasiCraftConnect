@@ -9,7 +9,7 @@ import PageTransition from "@/components/PageTransition";
 import Home from "@/pages/Home";
 import SearchResults from "@/pages/SearchResults";
 import ArtisanProfile from "@/pages/ArtisanProfile";
-import ArtisanAuth from "@/pages/ArtisanAuth";
+import JoinArtisan from "@/pages/JoinArtisan";
 import ArtisanRegistration from "@/pages/ArtisanRegistration";
 import ArtisanDashboard from "@/pages/ArtisanDashboard";
 import ViewProfiles from "@/pages/ViewProfiles";
@@ -28,7 +28,7 @@ function Router() {
       <Switch>
         <Route path="/" component={() => <PageTransition><Home /></PageTransition>} />
         <Route path="/search" component={() => <PageTransition><SearchResults /></PageTransition>} />
-        <Route path="/artisan" component={() => <PageTransition><ArtisanAuth /></PageTransition>} />
+        <Route path="/artisan" component={() => <PageTransition><JoinArtisan /></PageTransition>} />
         <Route path="/register-artisan" component={() => <PageTransition><ArtisanRegistration /></PageTransition>} />
         <Route path="/artisan/login" component={() => <PageTransition><ArtisanLogin /></PageTransition>} />
         <Route path="/artisan/dashboard" component={() => <PageTransition><ArtisanDashboard /></PageTransition>} />
