@@ -126,7 +126,7 @@ export default function ArtisanProfile() {
                       )}
                       
                       {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') && (
-                        <Badge variant="outline" className="text-gold border-gold bg-gold/10">
+                        <Badge variant="outline" className="text-green-600 border-green-500 bg-green-50">
                           <Shield className="w-3 h-3 mr-1" />
                           Verified
                         </Badge>
