@@ -155,6 +155,15 @@ Changelog:
 - October 16, 2025. Updated artisan profiles to display tier-specific badges and restrict features by tier
 - October 16, 2025. Removed "Pricing" navigation link and added backend routes for new registration flows
 - October 16, 2025. Implemented search result prioritization: Premium > Verified > Unverified, then by rating
+- October 16, 2025. Added Ekurhuleni pilot badge next to Skills Connect logo in header navigation
+- October 16, 2025. Added "Quick Search" heading above home page search form for better UX
+- October 16, 2025. Changed "View All" service card to "More Services Coming" with updated description
+- October 16, 2025. Added green borders (border-green-500) around all three steps in "How It Works" section
+- October 16, 2025. Applied golden glow hover effect (cosmic-glow-static class) to artisan profile cards in search results
+- October 16, 2025. Changed verified badge color from gold to green (text-green-600 border-green-500) across the site
+- October 16, 2025. Fixed critical database issue: added approvalStatus='approved' to all artisans so they appear in search results
+- October 16, 2025. Updated seed.ts to include approvalStatus and subscriptionTier fields for all new artisan records
+- October 16, 2025. Fixed React nesting warning by removing nested <a> tags in header navigation Link component
 ```
 
 ## User Preferences
