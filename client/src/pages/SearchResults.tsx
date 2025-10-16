@@ -6,8 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { getInitials, formatRating } from "@/lib/utils";
-import { MapPin, Star, Phone, Mail, ArrowLeft } from "lucide-react";
+import { MapPin, Star, Phone, Mail, ArrowLeft, Info } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function SearchResults() {
@@ -191,7 +192,7 @@ export default function SearchResults() {
         ) : (
           <div className="grid gap-6">
             {artisans.map((artisan: Artisan) => (
-              <Card key={artisan.id} className="hover:shadow-lg transition-all cosmic-glow-static">
+              <Card key={artisan.id} className={`hover:shadow-lg transition-all cosmic-glow-static ${artisan.verified ? 'border-2 border-green-500/30' : ''}`}>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
@@ -206,10 +207,23 @@ export default function SearchResults() {
                           <h3 className="text-xl font-semibold text-black-soft">
                             {artisan.firstName} {artisan.lastName}
                           </h3>
-                          {artisan.verified && (
-                            <Badge variant="outline" className="text-green-600 border-green-500 bg-green-50">
-                              Verified
+                          {artisan.verified ? (
+                            <Badge variant="outline" className="text-green-600 border-green-500 bg-green-50 text-sm px-3 py-1">
+                              ✓ Verified
                             </Badge>
+                          ) : (
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Badge variant="outline" className="text-gray-600 border-gray-400 bg-gray-50 text-sm px-3 py-1 flex items-center gap-1">
+                                    Unverified <Info className="w-3 h-3" />
+                                  </Badge>
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-xs">
+                                  <p>This artisan's profile is self-reported and has not been manually verified by Skills Connect.</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                           )}
                         </div>
                         
