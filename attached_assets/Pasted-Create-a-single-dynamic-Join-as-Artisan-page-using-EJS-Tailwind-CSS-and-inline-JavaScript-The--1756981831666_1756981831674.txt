@@ -1,0 +1,49 @@
+Create a single, dynamic "Join as Artisan" page using EJS, Tailwind CSS, and inline JavaScript. The page should provide users with two clear, distinct options for joining the platform: a free "Standard Listing" and a paid "Verified Artisan" application.
+
+Key Requirements:
+
+Technology Stack:
+
+The entire page must be a single EJS file.
+
+All styling must be implemented using Tailwind CSS utility classes directly in the HTML structure. Do not use a separate CSS file or <style> tags.
+
+All functionality must be handled by an inline <script> tag at the bottom of the EJS file using vanilla JavaScript.
+
+Layout & Structure:
+
+The page should have a clean, modern, two-column layout for the main choices, which collapses to a single column on smaller screens (mobile-first design).
+
+Implement two distinct "choice cards": one for the "Standard Listing (Free)" and one for the "Verified Artisan (Paid)".
+
+Below these cards, create two corresponding forms. The forms should be hidden by default and only appear when the user clicks the button on the corresponding card.
+
+Styling & Aesthetics (Tailwind CSS):
+
+The overall aesthetic must be elegant and modern, using a black and gold color palette.
+
+Use a dark background (e.g., bg-gray-900 or bg-black).
+
+Use gold shades for primary buttons, borders, headings, and accents (e.g., bg-yellow-500, border-yellow-500, text-yellow-500).
+
+The "Verified Artisan" card must be visually emphasized to make it more appealing (e.g., with a glowing border, a "Recommended" badge, or a slightly larger size).
+
+Content & Forms:
+
+Standard Listing (Free) Card: Should clearly state it's free and list simple benefits (e.g., "Get listed quickly," "Appear in search results").
+
+Verified Artisan (Paid) Card: Should list premium benefits (e.g., "Higher search preference," "Verified badge," "Build client trust").
+
+Standard Form: A simple form with fields for Full Name, Skill/Trade, Location, and Phone Number. The form should POST to /api/join/unverified.
+
+Verified Form: A more comprehensive form with fields for Full Name, Email, Phone Number, Skill/Trade, Location, Years of Experience, a textarea for a brief bio, and a file input for document uploads. This form must have enctype="multipart/form-data" and POST to /api/join/verified.
+
+Functionality (JavaScript):
+
+Implement a tab-like system. When a user clicks the button on either the "Free" or "Verified" card, the corresponding form below should become visible, and the other form should be hidden.
+
+The active choice card's button should change its style to indicate it is selected.
+
+The experience should be seamless, with no page reloads.
+
+(Optional but preferred) Add basic client-side validation to check that required fields are not empty before form submission.
