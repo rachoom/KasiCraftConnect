@@ -67,7 +67,7 @@ export default function ViewProfiles() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-soft">
+    <div className="min-h-screen bg-black">
       <Header />
       
       <main className="py-12">

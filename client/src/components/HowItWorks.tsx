@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Search, Star, Handshake } from "lucide-react";
 
 const containerVariants = {
   hidden: {},
@@ -28,7 +29,7 @@ const stepVariants = {
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 lg:py-24 bg-white">
+    <section id="how-it-works" className="py-16 lg:py-24 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -38,7 +39,7 @@ export default function HowItWorks() {
           viewport={{ once: true }}
         >
           <motion.h3 
-            className="text-3xl md:text-4xl font-bold text-black-soft mb-4"
+            className="text-3xl md:text-4xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -47,7 +48,7 @@ export default function HowItWorks() {
             How Skills Connect Works
           </motion.h3>
           <motion.p 
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-xl text-gray-300 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -80,26 +81,10 @@ export default function HowItWorks() {
                 transition: { duration: 0.2 }
               }}
             >
-              <motion.span 
-                className="text-2xl font-bold text-gold-dark"
-                animate={{ 
-                  textShadow: [
-                    "0 0 5px rgba(218, 165, 32, 0.3)",
-                    "0 0 15px rgba(218, 165, 32, 0.6)",
-                    "0 0 5px rgba(218, 165, 32, 0.3)"
-                  ]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                1
-              </motion.span>
+              <Search className="w-10 h-10 text-gold" />
             </motion.div>
-            <h4 className="text-xl font-semibold text-black-soft mb-4">Search & Describe</h4>
-            <p className="text-gray-600 leading-relaxed">
+            <h4 className="text-xl font-semibold text-white mb-4">Search & Describe</h4>
+            <p className="text-gray-300 leading-relaxed">
               Tell us what service you need and your location. No account required - just search and find.
             </p>
           </motion.div>
@@ -120,27 +105,10 @@ export default function HowItWorks() {
                 transition: { duration: 0.2 }
               }}
             >
-              <motion.span 
-                className="text-2xl font-bold text-gold-dark"
-                animate={{ 
-                  textShadow: [
-                    "0 0 5px rgba(218, 165, 32, 0.3)",
-                    "0 0 15px rgba(218, 165, 32, 0.6)",
-                    "0 0 5px rgba(218, 165, 32, 0.3)"
-                  ]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5
-                }}
-              >
-                2
-              </motion.span>
+              <Star className="w-10 h-10 text-gold" />
             </motion.div>
-            <h4 className="text-xl font-semibold text-black-soft mb-4">Get Top Matches</h4>
-            <p className="text-gray-600 leading-relaxed">
+            <h4 className="text-xl font-semibold text-white mb-4">Get Top Matches</h4>
+            <p className="text-gray-300 leading-relaxed">
               We'll show you the top 3 verified artisans in your area with their ratings and contact details.
             </p>
           </motion.div>
@@ -161,27 +129,10 @@ export default function HowItWorks() {
                 transition: { duration: 0.2 }
               }}
             >
-              <motion.span 
-                className="text-2xl font-bold text-gold-dark"
-                animate={{ 
-                  textShadow: [
-                    "0 0 5px rgba(218, 165, 32, 0.3)",
-                    "0 0 15px rgba(218, 165, 32, 0.6)",
-                    "0 0 5px rgba(218, 165, 32, 0.3)"
-                  ]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1
-                }}
-              >
-                3
-              </motion.span>
+              <Handshake className="w-10 h-10 text-gold" />
             </motion.div>
-            <h4 className="text-xl font-semibold text-black-soft mb-4">Connect & Hire</h4>
-            <p className="text-gray-600 leading-relaxed">
+            <h4 className="text-xl font-semibold text-white mb-4">Connect & Hire</h4>
+            <p className="text-gray-300 leading-relaxed">
               Contact your chosen artisan directly and get your project started with confidence.
             </p>
           </motion.div>

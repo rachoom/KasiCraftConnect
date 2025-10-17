@@ -171,7 +171,7 @@ export default function AdminBulkImport() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+      <div className="min-h-screen bg-black py-12 flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="mx-auto w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center mb-4">
@@ -221,7 +221,7 @@ Jane,Smith,jane.smith@email.com,+27 83 456 7890,"Johannesburg, Gauteng",electric
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-black py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-black-soft mb-4">Admin - Bulk Artisan Import</h1>

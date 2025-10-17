@@ -59,11 +59,11 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-black py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-black-soft mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Have questions about Skills Connect? We're here to help you find the perfect artisan for your needs.
           </p>
         </div>

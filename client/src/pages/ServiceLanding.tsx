@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -82,6 +82,18 @@ const tiers = [
   }
 ];
 
+const locations = [
+  "Johannesburg, Gauteng", "Cape Town, Western Cape", "Durban, KwaZulu-Natal", "Pretoria, Gauteng",
+  "Sandton, Johannesburg", "Rosebank, Johannesburg", "Soweto, Johannesburg", "Alexandra, Johannesburg",
+  "Melville, Johannesburg", "Randburg, Johannesburg", "Midrand, Johannesburg", "Fourways, Johannesburg",
+  "Roodepoort, Johannesburg", "Germiston, Johannesburg", "Benoni, Johannesburg", "Edenvale, Johannesburg",
+  "Kempton Park, Johannesburg", "Boksburg, Johannesburg", "Johannesburg CBD, Johannesburg",
+  "Springs, Ekurhuleni", "Alberton, Ekurhuleni", "Benoni, Ekurhuleni", "Daveyton, Ekurhuleni",
+  "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", "Edenvale, Ekurhuleni",
+  "Brakpan, Ekurhuleni", "Nigel, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni",
+  "Thokoza, Ekurhuleni", "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
+];
+
 export default function ServiceLanding() {
   const [, setLocation] = useLocation();
   const [searchLocation, setSearchLocation] = useState("");
@@ -89,6 +101,20 @@ export default function ServiceLanding() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+  const locationInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (locationInputRef.current && !locationInputRef.current.contains(event.target as Node)) {
+        setShowLocationSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Extract service type from current URL
   const currentPath = window.location.pathname;
@@ -101,6 +127,24 @@ export default function ServiceLanding() {
         ? prev.filter(s => s !== serviceName)
         : [...prev, serviceName]
     );
+  };
+
+  const handleLocationChange = (value: string) => {
+    setSearchLocation(value);
+    if (value.length > 0) {
+      const filtered = locations.filter(l => 
+        l.toLowerCase().includes(value.toLowerCase())
+      );
+      setLocationSuggestions(filtered);
+      setShowLocationSuggestions(true);
+    } else {
+      setShowLocationSuggestions(false);
+    }
+  };
+
+  const selectLocation = (selectedLocation: string) => {
+    setSearchLocation(selectedLocation);
+    setShowLocationSuggestions(false);
   };
 
   const handleSearch = () => {
@@ -121,12 +165,12 @@ export default function ServiceLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Header />
       
       <main>
         {/* Direct Landing on Get Started Form */}
-        <section className="pt-2 pb-4 min-h-screen bg-gradient-to-br from-gray-50 to-white">
+        <section className="pt-2 pb-4 min-h-screen bg-black">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
               {/* Get Started Form - Primary Focus */}
@@ -164,15 +208,30 @@ export default function ServiceLanding() {
                       <Label htmlFor="location" className="text-base font-semibold text-black-soft">
                         Where do you need the service?
                       </Label>
-                      <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-4 h-4" />
+                      <div className="relative" ref={locationInputRef}>
+                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-4 h-4 z-10" />
                         <Input
                           id="location"
                           value={searchLocation}
-                          onChange={(e) => setSearchLocation(e.target.value)}
+                          onChange={(e) => handleLocationChange(e.target.value)}
+                          onFocus={() => setShowLocationSuggestions(searchLocation.length > 0)}
                           placeholder="Enter your location"
                           className="pl-9 py-2 text-sm border-2 border-gray-200 focus:border-gold rounded-lg"
+                          data-testid="input-location"
                         />
+                        {showLocationSuggestions && locationSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                            {locationSuggestions.map((suggestion, index) => (
+                              <button
+                                key={index}
+                                className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                                onClick={() => selectLocation(suggestion)}
+                              >
+                                {suggestion}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
 

@@ -25,7 +25,7 @@ const staggerContainer = {
 export default function Home() {
   return (
     <motion.div 
-      className="min-h-screen bg-white"
+      className="min-h-screen bg-black"
       variants={staggerContainer}
       initial="initial"
       animate="animate"

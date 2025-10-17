@@ -105,7 +105,7 @@ export default function ArtisanLogin() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gray-soft">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
           <motion.div
@@ -125,7 +125,7 @@ export default function ArtisanLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-soft">
+    <div className="min-h-screen bg-black">
       <Header />
       
       <main className="py-12">

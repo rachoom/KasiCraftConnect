@@ -95,7 +95,7 @@ export default function AdminLogin() {
   if (isEmailSent) {
     return (
       <PageTransition>
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-black">
           <Header />
           <div className="max-w-md mx-auto px-4 py-20">
             <Card className="border-2 border-gold/20">
@@ -140,7 +140,7 @@ export default function AdminLogin() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         
         <div className="max-w-md mx-auto px-4 py-20">

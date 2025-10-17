@@ -48,7 +48,7 @@ export default function SearchResults() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="space-y-6">
@@ -76,12 +76,12 @@ export default function SearchResults() {
   if (error) {
     console.error("Search error:", error);
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-black-soft mb-4">Search Error</h1>
-            <p className="text-gray-600 mb-4">Unable to perform search. Please try again.</p>
+            <h1 className="text-2xl font-bold text-white mb-4">Search Error</h1>
+            <p className="text-gray-300 mb-4">Unable to perform search. Please try again.</p>
             <p className="text-sm text-red-600 mb-6">Error: {error?.message || "Unknown error"}</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
@@ -98,13 +98,13 @@ export default function SearchResults() {
 
   if (!searchResults && !isLoading && !error) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-black-soft mb-4">No Results</h1>
-            <p className="text-gray-600 mb-4">No search results found for "{service}" in "{searchLocation}".</p>
-            <p className="text-sm text-gray-500 mb-6">Try adjusting your search terms or location.</p>
+            <h1 className="text-2xl font-bold text-white mb-4">No Results</h1>
+            <p className="text-gray-300 mb-4">No search results found for "{service}" in "{searchLocation}".</p>
+            <p className="text-sm text-gray-400 mb-6">Try adjusting your search terms or location.</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -125,13 +125,13 @@ export default function SearchResults() {
   // If we have search results but no artisans, show appropriate message
   if (searchResults && artisans.length === 0) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-black-soft mb-4">No Artisans Found</h1>
-            <p className="text-gray-600 mb-4">No {service} found in {searchLocation}.</p>
-            <p className="text-sm text-gray-500 mb-6">Try searching in nearby areas or different services.</p>
+            <h1 className="text-2xl font-bold text-white mb-4">No Artisans Found</h1>
+            <p className="text-gray-300 mb-4">No {service} found in {searchLocation}.</p>
+            <p className="text-sm text-gray-400 mb-6">Try searching in nearby areas or different services.</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -146,7 +146,7 @@ export default function SearchResults() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Header />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">

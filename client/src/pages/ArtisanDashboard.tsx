@@ -71,7 +71,7 @@ export default function ArtisanDashboard() {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         <main className="py-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,7 +103,7 @@ export default function ArtisanDashboard() {
 
   if (error || !artisanData) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black">
         <Header />
         <main className="py-12">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,7 +142,7 @@ export default function ArtisanDashboard() {
   const ApprovalIcon = approvalInfo.icon;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Header />
       
       <main className="py-8">

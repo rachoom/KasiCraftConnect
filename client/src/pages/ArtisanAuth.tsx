@@ -9,7 +9,7 @@ import { User, UserPlus, ArrowLeft, CheckCircle, Star, Shield } from "lucide-rea
 
 export default function ArtisanAuth() {
   return (
-    <div className="min-h-screen bg-gray-soft">
+    <div className="min-h-screen bg-black">
       <Header />
       
       <main className="py-12">

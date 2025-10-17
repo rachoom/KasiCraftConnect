@@ -166,7 +166,7 @@ Jane,Smith,jane.smith@email.com,+27 83 456 7890,"Johannesburg, Gauteng",electric
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-black py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-black-soft mb-4">Bulk Artisan Import</h1>
