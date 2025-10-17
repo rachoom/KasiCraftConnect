@@ -168,11 +168,13 @@ Changelog:
 - October 16, 2025. Added subtle green borders (border-green-500/50) to verified artisan cards for increased visual distinction
 - October 16, 2025. Implemented unverified badge with info icon and tooltip explaining self-reported status
 - October 16, 2025. Added sticky CTA banner at bottom of search results to convert artisans: "Are you a skilled artisan? Get listed for free!"
-- October 17, 2025. Implemented global dark theme - changed all page backgrounds from white/light to black (bg-black)
-- October 17, 2025. Added visual icons to "How It Works" section - Search (magnifying glass), Star (ratings), and Handshake (connect) icons
-- October 17, 2025. Added location autofill/autocomplete functionality to category pages (ServiceLanding)
-- October 17, 2025. Changed "Quick Search" heading color to light green (text-green-500) for better visibility
-- October 17, 2025. Updated text colors in critical sections (HowItWorks, ContactUs, SearchResults) to light colors for readability on dark backgrounds
+- October 17, 2025. Implemented global dark theme - changed all page backgrounds from white/light to black (bg-black) across entire site
+- October 17, 2025. Added visual icons to "How It Works" section - Search (magnifying glass), Star (ratings), and Handshake (connect) icons with gold styling
+- October 17, 2025. Implemented location autofill/autocomplete functionality on category pages (ServiceLanding) with dropdown suggestions
+- October 17, 2025. Changed "Quick Search" heading color to light green (text-green-500) for enhanced visibility on dark background
+- October 17, 2025. Fixed text readability across all pages - updated text colors to white/light gray for proper contrast on dark backgrounds
+- October 17, 2025. Updated SearchResults page with readable artisan card text: white headings, light gray descriptions and details
+- October 17, 2025. E2E tested and verified: dark theme, icons, autofill, and text readability all working correctly
 ```
 
 ## User Preferences

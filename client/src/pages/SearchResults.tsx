@@ -161,12 +161,12 @@ export default function SearchResults() {
           
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-black-soft mb-2">
+              <h1 className="text-3xl font-bold text-white mb-2">
                 {service.charAt(0).toUpperCase() + service.slice(1)} in {searchLocation}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-300">
                 Found {count} {count === 1 ? 'artisan' : 'artisans'} 
-                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-gray-400 text-gray-600' : 'bg-gold text-black'}`}>
+                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-gray-400 text-gray-300' : 'bg-gold text-black'}`}>
                   {resultTier.toUpperCase()} TIER - {resultTier === 'basic' ? 'UNVERIFIED' : 'VERIFIED'} ARTISANS
                 </Badge>
               </p>
@@ -177,10 +177,10 @@ export default function SearchResults() {
         {/* Results */}
         {artisans.length === 0 ? (
           <div className="text-center py-12">
-            <h2 className="text-xl font-semibold text-black-soft mb-4">
+            <h2 className="text-xl font-semibold text-white mb-4">
               No artisans found
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-300 mb-6">
               Try expanding your search area or selecting a different service.
             </p>
             <Link href="/">
@@ -204,7 +204,7 @@ export default function SearchResults() {
                       {/* Main Info */}
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
-                          <h3 className="text-xl font-semibold text-black-soft">
+                          <h3 className="text-xl font-semibold text-white">
                             {artisan.firstName} {artisan.lastName}
                           </h3>
                           {artisan.verified ? (
@@ -232,21 +232,21 @@ export default function SearchResults() {
                         </p>
                         
                         <div className="flex items-center space-x-4 mb-3">
-                          <div className="flex items-center space-x-1">
+                          <div className="flex items-center space-x-1 text-white">
                             <Star className="w-4 h-4 fill-gold text-gold" />
                             <span className="font-medium">{formatRating(artisan.rating || "0")}</span>
-                            <span className="text-gray-500">({artisan.reviewCount} reviews)</span>
+                            <span className="text-gray-400">({artisan.reviewCount} reviews)</span>
                           </div>
                           
-                          <div className="flex items-center space-x-1 text-gray-500">
+                          <div className="flex items-center space-x-1 text-gray-400">
                             <MapPin className="w-4 h-4" />
                             <span>{artisan.location}</span>
                           </div>
                         </div>
                         
-                        <p className="text-gray-600 mb-4 line-clamp-2">{artisan.description}</p>
+                        <p className="text-gray-300 mb-4 line-clamp-2">{artisan.description}</p>
                         
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-400">
                           {artisan.yearsExperience} years of experience
                         </div>
                       </div>
@@ -280,10 +280,10 @@ export default function SearchResults() {
         {resultTier === 'basic' && (
           <Card className="mt-8 bg-gradient-to-r from-gold/10 to-gold-dark/10 border-gold/30">
             <CardContent className="p-6 text-center">
-              <h3 className="text-lg font-semibold text-black-soft mb-2">
+              <h3 className="text-lg font-semibold text-white mb-2">
                 Want verified artisans?
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-300 mb-4">
                 Upgrade to Premium to see up to 5 ID & qualification verified artisans with detailed profiles and reviews.
               </p>
               <div className="flex gap-4 justify-center">
