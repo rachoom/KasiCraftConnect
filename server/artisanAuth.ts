@@ -1,9 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { db } from "./db";
-import { artisans } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { supabase } from "./supabase";
 import { emailService } from "./emailService";
 import type { Request, Response, NextFunction } from "express";
 
@@ -18,22 +16,18 @@ interface AuthResult {
 }
 
 class ArtisanAuthService {
-  // Generate a secure verification token
   generateVerificationToken(): string {
     return crypto.randomBytes(32).toString('hex');
   }
 
-  // Hash password
   async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, SALT_ROUNDS);
   }
 
-  // Verify password
   async verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
   }
 
-  // Generate JWT token
   generateJWTToken(artisanId: number, email: string): string {
     return jwt.sign(
       { artisanId, email, type: 'artisan' },
@@ -42,7 +36,6 @@ class ArtisanAuthService {
     );
   }
 
-  // Verify JWT token
   verifyJWTToken(token: string): any {
     try {
       return jwt.verify(token, JWT_SECRET);
@@ -51,27 +44,30 @@ class ArtisanAuthService {
     }
   }
 
-  // Register new artisan with email verification
   async registerArtisan(artisanData: any, password: string): Promise<AuthResult> {
     try {
-      // Hash password
       const hashedPassword = await this.hashPassword(password);
-      
-      // Generate verification token
       const verificationToken = this.generateVerificationToken();
-      const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours
+      const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
-      // Create artisan with authentication fields
-      const [artisan] = await db.insert(artisans).values({
-        ...artisanData,
-        password: hashedPassword,
-        emailVerificationToken: verificationToken,
-        emailVerificationExpires: verificationExpires,
-        isEmailVerified: false
-      }).returning();
+      const { data: artisan, error } = await supabase
+        .from('artisans')
+        .insert({
+          ...artisanData,
+          password: hashedPassword,
+          email_verification_token: verificationToken,
+          email_verification_expires: verificationExpires,
+          is_email_verified: false
+        })
+        .select()
+        .single();
 
-      // Send verification email
-      await this.sendVerificationEmail(artisan.email, verificationToken, artisan.firstName);
+      if (error) {
+        console.error("Artisan registration error:", error);
+        throw new Error("Registration failed");
+      }
+
+      await this.sendVerificationEmail(artisan.email, verificationToken, artisan.first_name);
 
       return {
         success: true,
@@ -83,7 +79,6 @@ class ArtisanAuthService {
     }
   }
 
-  // Send email verification
   async sendVerificationEmail(email: string, token: string, firstName: string): Promise<void> {
     const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:5000'}/artisan/verify-email?token=${token}`;
     
@@ -94,33 +89,34 @@ class ArtisanAuthService {
     });
   }
 
-  // Verify email token
   async verifyEmailToken(token: string): Promise<any> {
     try {
-      const [artisan] = await db.select()
-        .from(artisans)
-        .where(eq(artisans.emailVerificationToken, token));
+      const { data: artisan, error } = await supabase
+        .from('artisans')
+        .select('*')
+        .eq('email_verification_token', token)
+        .single();
 
-      if (!artisan || !artisan.emailVerificationExpires) {
+      if (error || !artisan || !artisan.email_verification_expires) {
         return null;
       }
 
-      // Check if token has expired
-      const expirationDate = new Date(artisan.emailVerificationExpires);
+      const expirationDate = new Date(artisan.email_verification_expires);
       if (expirationDate < new Date()) {
         return null;
       }
 
-      // Update artisan as verified
-      const [updatedArtisan] = await db.update(artisans)
-        .set({
-          isEmailVerified: true,
-          emailVerificationToken: null,
-          emailVerificationExpires: null,
-          updatedAt: new Date().toISOString()
+      const { data: updatedArtisan } = await supabase
+        .from('artisans')
+        .update({
+          is_email_verified: true,
+          email_verification_token: null,
+          email_verification_expires: null,
+          updated_at: new Date().toISOString()
         })
-        .where(eq(artisans.id, artisan.id))
-        .returning();
+        .eq('id', artisan.id)
+        .select()
+        .single();
 
       return updatedArtisan;
     } catch (error) {
@@ -129,21 +125,21 @@ class ArtisanAuthService {
     }
   }
 
-  // Login with email and password
   async loginArtisan(email: string, password: string): Promise<AuthResult> {
     try {
-      const [artisan] = await db.select()
-        .from(artisans)
-        .where(eq(artisans.email, email));
+      const { data: artisan, error } = await supabase
+        .from('artisans')
+        .select('*')
+        .eq('email', email)
+        .single();
 
-      if (!artisan || !artisan.password) {
+      if (error || !artisan || !artisan.password) {
         return {
           success: false,
           message: "Invalid email or password"
         };
       }
 
-      // Verify password
       const isPasswordValid = await this.verifyPassword(password, artisan.password);
       if (!isPasswordValid) {
         return {
@@ -152,23 +148,21 @@ class ArtisanAuthService {
         };
       }
 
-      // Check if email is verified
-      if (!artisan.isEmailVerified) {
+      if (!artisan.is_email_verified) {
         return {
           success: false,
           message: "Please verify your email address before logging in"
         };
       }
 
-      // Update last login
-      await db.update(artisans)
-        .set({
-          lastLogin: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+      await supabase
+        .from('artisans')
+        .update({
+          last_login: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         })
-        .where(eq(artisans.id, artisan.id));
+        .eq('id', artisan.id);
 
-      // Generate JWT token
       const token = this.generateJWTToken(artisan.id, artisan.email);
 
       return {
@@ -176,14 +170,14 @@ class ArtisanAuthService {
         token,
         artisan: {
           id: artisan.id,
-          firstName: artisan.firstName,
-          lastName: artisan.lastName,
+          firstName: artisan.first_name,
+          lastName: artisan.last_name,
           email: artisan.email,
           phone: artisan.phone,
           location: artisan.location,
           services: artisan.services,
           verified: artisan.verified,
-          approvalStatus: artisan.approvalStatus
+          approvalStatus: artisan.approval_status
         }
       };
     } catch (error: any) {
@@ -195,7 +189,6 @@ class ArtisanAuthService {
     }
   }
 
-  // Get artisan by token
   async getArtisanByToken(token: string): Promise<any> {
     try {
       const decoded = this.verifyJWTToken(token);
@@ -203,9 +196,11 @@ class ArtisanAuthService {
         return null;
       }
 
-      const [artisan] = await db.select()
-        .from(artisans)
-        .where(eq(artisans.id, decoded.artisanId));
+      const { data: artisan } = await supabase
+        .from('artisans')
+        .select('*')
+        .eq('id', decoded.artisanId)
+        .single();
 
       return artisan || null;
     } catch (error) {
@@ -214,41 +209,38 @@ class ArtisanAuthService {
     }
   }
 
-  // Verify email
   async verifyEmail(token: string): Promise<AuthResult> {
     try {
-      // Find artisan by verification token
-      const [artisan] = await db
-        .select()
-        .from(artisans)
-        .where(eq(artisans.emailVerificationToken, token))
-        .limit(1);
+      const { data: artisan, error } = await supabase
+        .from('artisans')
+        .select('*')
+        .eq('email_verification_token', token)
+        .single();
 
-      if (!artisan) {
+      if (error || !artisan) {
         return {
           success: false,
           message: "Invalid verification token"
         };
       }
 
-      // Check if token has expired
-      if (artisan.emailVerificationExpires && new Date(artisan.emailVerificationExpires) < new Date()) {
+      if (artisan.email_verification_expires && new Date(artisan.email_verification_expires) < new Date()) {
         return {
           success: false,
           message: "Verification token has expired. Please request a new verification email."
         };
       }
 
-      // Update artisan as verified
-      const [updatedArtisan] = await db
-        .update(artisans)
-        .set({
-          isEmailVerified: true,
-          emailVerificationToken: null,
-          emailVerificationExpires: null
+      const { data: updatedArtisan } = await supabase
+        .from('artisans')
+        .update({
+          is_email_verified: true,
+          email_verification_token: null,
+          email_verification_expires: null
         })
-        .where(eq(artisans.id, artisan.id))
-        .returning();
+        .eq('id', artisan.id)
+        .select()
+        .single();
 
       return {
         success: true,
@@ -264,10 +256,8 @@ class ArtisanAuthService {
     }
   }
 
-  // Handle Google OAuth
   async handleGoogleOAuth(code: string): Promise<AuthResult> {
     try {
-      // Exchange code for tokens
       const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
         method: 'POST',
         headers: {
@@ -290,7 +280,6 @@ class ArtisanAuthService {
 
       const tokens = await tokenResponse.json();
 
-      // Get user info from Google
       const userResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
         headers: {
           Authorization: `Bearer ${tokens.access_token}`
@@ -303,53 +292,51 @@ class ArtisanAuthService {
 
       const googleUser = await userResponse.json();
 
-      // Check if artisan already exists
-      const [existingArtisan] = await db
-        .select()
-        .from(artisans)
-        .where(eq(artisans.email, googleUser.email))
-        .limit(1);
+      const { data: existingArtisan } = await supabase
+        .from('artisans')
+        .select('*')
+        .eq('email', googleUser.email)
+        .single();
 
       let artisan;
       if (existingArtisan) {
-        // Update Google ID if not set
-        if (!existingArtisan.googleId) {
-          [artisan] = await db
-            .update(artisans)
-            .set({
-              googleId: googleUser.id,
-              isEmailVerified: true // Google emails are pre-verified
+        if (!existingArtisan.google_id) {
+          const { data: updated } = await supabase
+            .from('artisans')
+            .update({
+              google_id: googleUser.id,
+              is_email_verified: true
             })
-            .where(eq(artisans.id, existingArtisan.id))
-            .returning();
+            .eq('id', existingArtisan.id)
+            .select()
+            .single();
+          artisan = updated;
         } else {
           artisan = existingArtisan;
         }
       } else {
-        // Create new artisan profile
-        [artisan] = await db
-          .insert(artisans)
-          .values({
-            firstName: googleUser.given_name || googleUser.name?.split(' ')[0] || 'Google',
-            lastName: googleUser.family_name || googleUser.name?.split(' ').slice(1).join(' ') || 'User',
+        const { data: newArtisan } = await supabase
+          .from('artisans')
+          .insert({
+            first_name: googleUser.given_name || googleUser.name?.split(' ')[0] || 'Google',
+            last_name: googleUser.family_name || googleUser.name?.split(' ').slice(1).join(' ') || 'User',
             email: googleUser.email,
-            phone: '', // Will be filled in profile completion
-            location: '', // Will be filled in profile completion  
-            services: [], // Will be filled in profile completion
-            description: '', // Will be filled in profile completion
-            yearsExperience: 0, // Will be filled in profile completion
-            googleId: googleUser.id,
-            isEmailVerified: true,
-            profileComplete: false // Mark as incomplete to trigger completion flow
+            phone: '',
+            location: '',
+            services: [],
+            description: '',
+            years_experience: 0,
+            google_id: googleUser.id,
+            is_email_verified: true,
+            profile_complete: false
           })
-          .returning();
+          .select()
+          .single();
+        artisan = newArtisan;
       }
 
-      // Generate JWT token
       const token = this.generateJWTToken(artisan.id, artisan.email);
-
-      // Remove sensitive information
-      const { password, emailVerificationToken, emailVerificationExpires, ...safeArtisan } = artisan;
+      const { password, email_verification_token, email_verification_expires, ...safeArtisan } = artisan;
 
       return {
         success: true,
@@ -367,10 +354,8 @@ class ArtisanAuthService {
   }
 }
 
-// Create service instance
 export const artisanAuthService = new ArtisanAuthService();
 
-// Middleware to require artisan authentication
 export const requireArtisanAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization;

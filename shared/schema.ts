@@ -1,150 +1,162 @@
-import { pgTable, text, serial, integer, boolean, decimal } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-});
+// User types
+export interface User {
+  id: number;
+  username: string;
+  password: string;
+}
 
-export const adminUsers = pgTable("admin_users", {
-  id: serial("id").primaryKey(),
-  email: text("email").unique().notNull(),
-  password: text("password"),
-  googleId: text("google_id").unique(),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
-  profileImage: text("profile_image"),
-  isVerified: boolean("is_verified").default(false),
-  verificationToken: text("verification_token"),
-  verificationExpires: text("verification_expires"),
-  lastLogin: text("last_login"),
-  createdAt: text("created_at").default(new Date().toISOString()),
-  updatedAt: text("updated_at").default(new Date().toISOString()),
-});
-
-export const artisans = pgTable("artisans", {
-  id: serial("id").primaryKey(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
-  email: text("email").notNull().unique(),
-  password: text("password"), // Password for email login
-  googleId: text("google_id").unique(), // Google OAuth ID
-  phone: text("phone").notNull(),
-  location: text("location").notNull(),
-  services: text("services").array().notNull(),
-  description: text("description").notNull(),
-  yearsExperience: integer("years_experience").notNull(),
-  rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
-  reviewCount: integer("review_count").default(0),
-  verified: boolean("verified").default(false),
-  subscriptionTier: text("subscription_tier").default("unverified"), // unverified, verified, premium
-  profileImage: text("profile_image"),
-  portfolio: text("portfolio").array().default([]),
-  profileComplete: boolean("profile_complete").default(true), // For Google OAuth users
-  // Authentication and verification
-  isEmailVerified: boolean("is_email_verified").default(false),
-  emailVerificationToken: text("email_verification_token"),
-  emailVerificationExpires: text("email_verification_expires"),
-  lastLogin: text("last_login"),
-  // Verification documents
-  idDocument: text("id_document"), // Path to uploaded ID document
-  qualificationDocuments: text("qualification_documents").array().default([]), // Paths to qualification certificates
-  verificationStatus: text("verification_status").default("pending"), // pending, approved, rejected
-  verificationNotes: text("verification_notes"), // Admin notes about verification
-  verifiedAt: text("verified_at"), // When verification was completed
-  approvalStatus: text("approval_status").default("pending"), // pending, approved, rejected
-  approvedBy: text("approved_by"), // Admin who approved/rejected
-  approvedAt: text("approved_at"), // When approval decision was made
-  rejectionReason: text("rejection_reason"), // Reason for rejection
-  createdAt: text("created_at").default(new Date().toISOString()),
-  updatedAt: text("updated_at").default(new Date().toISOString())
-});
-
-export const searchRequests = pgTable("search_requests", {
-  id: serial("id").primaryKey(),
-  service: text("service").notNull(),
-  location: text("location").notNull(),
-  tier: text("tier").notNull().default("basic"), // basic, premium, enterprise
-  timestamp: text("timestamp").notNull(),
-});
-
-export const artisanSubscriptions = pgTable("artisan_subscriptions", {
-  id: serial("id").primaryKey(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
-  email: text("email").notNull(),
-  phone: text("phone").notNull(),
-  services: text("services").array().notNull(), // Array of services offered
-  location: text("location").notNull(),
-  description: text("description").notNull(),
-  yearsExperience: integer("years_experience").notNull(),
-  companyRegNumber: text("company_reg_number"),
-  artisanRegNumber: text("artisan_reg_number"),
-  subscriptionTier: text("subscription_tier").notNull(), // premium, enterprise
-  documents: text("documents").array().default([]), // Array of document URLs
-  applicationStatus: text("application_status").default("pending"), // pending, approved, rejected
-  reviewedBy: text("reviewed_by"), // Admin who reviewed
-  reviewedAt: text("reviewed_at"), // When reviewed
-  rejectionReason: text("rejection_reason"), // If rejected
-  createdAt: text("created_at").default(new Date().toISOString()),
-  updatedAt: text("updated_at").default(new Date().toISOString()),
-});
-
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});
-
-export const insertArtisanSchema = createInsertSchema(artisans).omit({
-  id: true,
-  rating: true,
-  reviewCount: true,
-  verified: true,
-  profileComplete: true,
-  isEmailVerified: true,
-  emailVerificationToken: true,
-  emailVerificationExpires: true,
-  lastLogin: true,
-  verificationStatus: true,
-  verificationNotes: true,
-  verifiedAt: true,
-  approvedBy: true,
-  approvedAt: true,
-  rejectionReason: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertSearchRequestSchema = createInsertSchema(searchRequests).omit({
-  id: true,
-  timestamp: true,
-});
-
-export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertArtisanSubscriptionSchema = createInsertSchema(artisanSubscriptions).omit({
-  id: true,
-  applicationStatus: true,
-  reviewedBy: true,
-  reviewedAt: true,
-  rejectionReason: true,
-  createdAt: true,
-  updatedAt: true,
+export const insertUserSchema = z.object({
+  username: z.string(),
+  password: z.string(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+
+// Admin User types
+export interface AdminUser {
+  id: number;
+  email: string;
+  password: string | null;
+  googleId: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  profileImage: string | null;
+  isVerified: boolean;
+  verificationToken: string | null;
+  verificationExpires: string | null;
+  lastLogin: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const insertAdminUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().optional(),
+  googleId: z.string().optional(),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  profileImage: z.string().optional(),
+  isVerified: z.boolean().optional(),
+  verificationToken: z.string().optional(),
+  verificationExpires: z.string().optional(),
+  lastLogin: z.string().optional(),
+});
+
 export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
-export type AdminUser = typeof adminUsers.$inferSelect;
+
+// Artisan types
+export interface Artisan {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string | null;
+  googleId: string | null;
+  phone: string;
+  location: string;
+  services: string[];
+  description: string;
+  yearsExperience: number;
+  rating: string;
+  reviewCount: number;
+  verified: boolean;
+  subscriptionTier: string;
+  profileImage: string | null;
+  portfolio: string[];
+  profileComplete: boolean;
+  isEmailVerified: boolean;
+  emailVerificationToken: string | null;
+  emailVerificationExpires: string | null;
+  lastLogin: string | null;
+  idDocument: string | null;
+  qualificationDocuments: string[];
+  verificationStatus: string;
+  verificationNotes: string | null;
+  verifiedAt: string | null;
+  approvalStatus: string;
+  approvedBy: string | null;
+  approvedAt: string | null;
+  rejectionReason: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const insertArtisanSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email(),
+  password: z.string().nullable().optional(),
+  googleId: z.string().nullable().optional(),
+  phone: z.string(),
+  location: z.string(),
+  services: z.array(z.string()),
+  description: z.string(),
+  yearsExperience: z.number(),
+  subscriptionTier: z.string().optional(),
+  profileImage: z.string().nullable().optional(),
+  portfolio: z.array(z.string()).optional(),
+  idDocument: z.string().nullable().optional(),
+  qualificationDocuments: z.array(z.string()).optional(),
+  approvalStatus: z.string().optional(),
+});
+
 export type InsertArtisan = z.infer<typeof insertArtisanSchema>;
-export type Artisan = typeof artisans.$inferSelect;
+
+// Search Request types
+export interface SearchRequest {
+  id: number;
+  service: string;
+  location: string;
+  tier: string;
+  timestamp: string;
+}
+
+export const insertSearchRequestSchema = z.object({
+  service: z.string(),
+  location: z.string(),
+  tier: z.string().optional(),
+});
+
 export type InsertSearchRequest = z.infer<typeof insertSearchRequestSchema>;
-export type SearchRequest = typeof searchRequests.$inferSelect;
+
+// Artisan Subscription types
+export interface ArtisanSubscription {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  services: string[];
+  location: string;
+  description: string;
+  yearsExperience: number;
+  companyRegNumber: string | null;
+  artisanRegNumber: string | null;
+  subscriptionTier: string;
+  documents: string[];
+  applicationStatus: string;
+  reviewedBy: string | null;
+  reviewedAt: string | null;
+  rejectionReason: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const insertArtisanSubscriptionSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email(),
+  phone: z.string(),
+  services: z.array(z.string()),
+  location: z.string(),
+  description: z.string(),
+  yearsExperience: z.number(),
+  companyRegNumber: z.string().optional(),
+  artisanRegNumber: z.string().optional(),
+  subscriptionTier: z.string(),
+  documents: z.array(z.string()).optional(),
+});
+
 export type InsertArtisanSubscription = z.infer<typeof insertArtisanSubscriptionSchema>;
-export type ArtisanSubscription = typeof artisanSubscriptions.$inferSelect;
