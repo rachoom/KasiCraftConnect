@@ -40,6 +40,7 @@ function Router() {
         <Route path="/service/tilers" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/service/cleaners" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/service/landscapers" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/mechanics" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/profiles" component={() => <PageTransition><ViewProfiles /></PageTransition>} />
         <Route path="/subscription" component={() => <PageTransition><ArtisanSubscription /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />

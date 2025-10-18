@@ -55,6 +55,12 @@ const serviceInfo = {
     description: "Expert landscaping and garden maintenance services",
     icon: "🌿",
     services: ["Garden Design", "Lawn Maintenance", "Tree Services", "Irrigation", "Landscaping", "Garden Cleanup"]
+  },
+  mechanics: {
+    title: "Verified Mechanics",
+    description: "Professional vehicle repair and maintenance specialists",
+    icon: "🔧",
+    services: ["Engine Repair", "Brake Service", "Oil Changes", "Transmission Service", "Diagnostics", "General Maintenance"]
   }
 };
 

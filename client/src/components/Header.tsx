@@ -70,10 +70,10 @@ export default function Header() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <a href="#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
+            <a href="/#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
               Services
             </a>
-            <a href="#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
+            <a href="/#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
               How It Works
             </a>
             <Link href="/profiles" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer inline-flex items-center">

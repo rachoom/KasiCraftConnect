@@ -38,10 +38,10 @@ const services = [
 ];
 
 const locations = [
-  "Johannesburg, Gauteng", "Cape Town, Western Cape", "Durban, KwaZulu-Natal",
-  "Pretoria, Gauteng", "Port Elizabeth, Eastern Cape", "Bloemfontein, Free State",
-  "East London, Eastern Cape", "Nelspruit, Mpumalanga", "Kimberley, Northern Cape",
-  "Polokwane, Limpopo", "Rustenburg, North West", "Witbank, Mpumalanga"
+  "Springs, Ekurhuleni", "Alberton, Ekurhuleni", "Benoni, Ekurhuleni", "Daveyton, Ekurhuleni",
+  "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", "Edenvale, Ekurhuleni",
+  "Brakpan, Ekurhuleni", "Nigel, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni",
+  "Thokoza, Ekurhuleni", "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
 ];
 
 export default function ArtisanSubscription() {

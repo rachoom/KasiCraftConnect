@@ -35,11 +35,14 @@ const serviceOptions = [
   { id: "cleaners", label: "Cleaner" },
   { id: "landscapers", label: "Landscaper" },
   { id: "painters", label: "Painter" },
+  { id: "mechanics", label: "Mechanic" },
 ];
 
 const locations = [
-  "Johannesburg, Gauteng", "Cape Town, Western Cape", "Durban, KwaZulu-Natal", "Pretoria, Gauteng",
-  "Sandton, Johannesburg", "Rosebank, Johannesburg", "Soweto, Johannesburg", "Alexandra, Johannesburg",
+  "Springs, Ekurhuleni", "Alberton, Ekurhuleni", "Benoni, Ekurhuleni", "Daveyton, Ekurhuleni",
+  "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", "Edenvale, Ekurhuleni",
+  "Brakpan, Ekurhuleni", "Nigel, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni",
+  "Thokoza, Ekurhuleni", "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
 ];
 
 export default function UnverifiedRegistrationForm() {

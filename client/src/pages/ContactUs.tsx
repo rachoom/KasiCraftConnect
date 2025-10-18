@@ -9,6 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -59,8 +61,9 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen bg-black py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black">
+      <Header />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
@@ -231,20 +234,20 @@ export default function ContactUs() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h5 className="font-semibold text-black-soft mb-2">How do I become a verified artisan?</h5>
-                  <p className="text-gray-600 text-sm">
+                  <h5 className="font-semibold text-white mb-2">How do I become a verified artisan?</h5>
+                  <p className="text-gray-300 text-sm">
                     Register through our platform and submit your qualification documents for verification.
                   </p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-black-soft mb-2">What are the pricing tiers?</h5>
-                  <p className="text-gray-600 text-sm">
+                  <h5 className="font-semibold text-white mb-2">What are the pricing tiers?</h5>
+                  <p className="text-gray-300 text-sm">
                     We offer Basic (free), Premium, and Enterprise tiers with different features and visibility levels.
                   </p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-black-soft mb-2">How do I report an issue?</h5>
-                  <p className="text-gray-600 text-sm">
+                  <h5 className="font-semibold text-white mb-2">How do I report an issue?</h5>
+                  <p className="text-gray-300 text-sm">
                     Use the contact form above or email us directly with details about your concern.
                   </p>
                 </div>
@@ -253,6 +256,7 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -272,7 +272,7 @@ export default function Hero() {
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
             }}
           >
-            <h3 className="text-2xl font-bold text-green-500 text-center mb-6">
+            <h3 className="text-2xl font-bold text-lime-400 text-center mb-6">
               Quick Search
             </h3>
             <div className="grid md:grid-cols-2 gap-4 mb-6">

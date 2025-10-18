@@ -44,6 +44,12 @@ const services = [
     name: "Landscapers",
     description: "Garden design & maintenance",
     image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+  },
+  {
+    id: "mechanics",
+    name: "Mechanics",
+    description: "Vehicle repair & maintenance",
+    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   }
 ];
 

@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
-  }
+  },
 });
 const upload = multer({ storage });
 
@@ -79,9 +79,9 @@ app.post("/api/join/unverified", upload.single("photo"), (req, res) => {
         return res.status(500).send("Error saving artisan.");
       }
       res.send(
-        "<h2>✅ You’re listed as Unverified. Upgrade anytime!</h2><a href='/join'>Back</a>"
+        "<h2>✅ You’re listed as Unverified. Upgrade anytime!</h2><a href='/join'>Back</a>",
       );
-    }
+    },
   );
 });
 
@@ -99,13 +99,42 @@ app.post("/api/join/verified", upload.array("documents", 3), (req, res) => {
         return res.status(500).send("Error saving application.");
       }
       res.send(
-        "<h2>✅ Application submitted. We’ll review and contact you with payment instructions.</h2><a href='/join'>Back</a>"
+        "<h2>✅ Application submitted. We’ll review and contact you with payment instructions.</h2><a href='/join'>Back</a>",
       );
-    }
+    },
   );
 });
 
 // ===== Start Server =====
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  // Import the createClient function
+  import { createClient } from "@supabase/supabase-js";
+
+  // Access your environment variables
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_ANON_KEY;
+
+  // Create the Supabase client
+  export const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // --- You are now connected! ---
+
+  // Example: How to fetch data from a table named 'profiles'
+  async function getArtisans() {
+    try {
+      let { data, error } = await supabase.from("profiles").select("*");
+
+      if (error) {
+        console.error("Error fetching data:", error);
+      } else {
+        console.log("Data fetched successfully:", data);
+      }
+    } catch (err) {
+      console.error("An unexpected error occurred:", err);
+    }
+  }
+
+  // Run the example function
+  getProfiles();
 });
