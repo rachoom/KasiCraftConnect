@@ -27,6 +27,27 @@ const stepVariants = {
   }
 };
 
+const steps = [
+  {
+    icon: Search,
+    title: "Search & Describe",
+    description: "Tell us what service you need and your location. No account required - just search and find.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
+  },
+  {
+    icon: Star,
+    title: "Get Top Matches",
+    description: "We'll show you the top 3 verified artisans in your area with their ratings and contact details.",
+    image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
+  },
+  {
+    icon: Handshake,
+    title: "Connect & Hire",
+    description: "Contact your chosen artisan directly and get your project started with confidence.",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
+  }
+];
+
 export default function HowItWorks() {
   return (
     <section id="how-it-works" className="py-16 lg:py-24 bg-black">
@@ -65,77 +86,42 @@ export default function HowItWorks() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          <motion.div 
-            className="text-center p-6 border-2 border-green-500 rounded-lg"
-            variants={stepVariants}
-            whileHover={{ 
-              y: -10,
-              transition: { duration: 0.3 }
-            }}
-          >
+          {steps.map((step, index) => (
             <motion.div 
-              className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
+              key={index}
+              className="relative text-center p-6 border-2 border-lime-400 rounded-lg overflow-hidden"
+              variants={stepVariants}
               whileHover={{ 
-                scale: 1.1,
-                backgroundColor: "rgba(218, 165, 32, 0.2)",
-                transition: { duration: 0.2 }
+                y: -10,
+                transition: { duration: 0.3 }
               }}
+              data-testid={`step-card-${index + 1}`}
             >
-              <Search className="w-10 h-10 text-gold" />
+              <div className="absolute inset-0 opacity-20">
+                <img 
+                  src={step.image}
+                  alt={step.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative z-10">
+                <motion.div 
+                  className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
+                  whileHover={{ 
+                    scale: 1.1,
+                    backgroundColor: "rgba(218, 165, 32, 0.2)",
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <step.icon className="w-10 h-10 text-gold" />
+                </motion.div>
+                <h4 className="text-xl font-semibold text-white mb-4">{step.title}</h4>
+                <p className="text-gray-300 leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
             </motion.div>
-            <h4 className="text-xl font-semibold text-white mb-4">Search & Describe</h4>
-            <p className="text-gray-300 leading-relaxed">
-              Tell us what service you need and your location. No account required - just search and find.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="text-center p-6 border-2 border-green-500 rounded-lg"
-            variants={stepVariants}
-            whileHover={{ 
-              y: -10,
-              transition: { duration: 0.3 }
-            }}
-          >
-            <motion.div 
-              className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
-              whileHover={{ 
-                scale: 1.1,
-                backgroundColor: "rgba(218, 165, 32, 0.2)",
-                transition: { duration: 0.2 }
-              }}
-            >
-              <Star className="w-10 h-10 text-gold" />
-            </motion.div>
-            <h4 className="text-xl font-semibold text-white mb-4">Get Top Matches</h4>
-            <p className="text-gray-300 leading-relaxed">
-              We'll show you the top 3 verified artisans in your area with their ratings and contact details.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="text-center p-6 border-2 border-green-500 rounded-lg"
-            variants={stepVariants}
-            whileHover={{ 
-              y: -10,
-              transition: { duration: 0.3 }
-            }}
-          >
-            <motion.div 
-              className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6"
-              whileHover={{ 
-                scale: 1.1,
-                backgroundColor: "rgba(218, 165, 32, 0.2)",
-                transition: { duration: 0.2 }
-              }}
-            >
-              <Handshake className="w-10 h-10 text-gold" />
-            </motion.div>
-            <h4 className="text-xl font-semibold text-white mb-4">Connect & Hire</h4>
-            <p className="text-gray-300 leading-relaxed">
-              Contact your chosen artisan directly and get your project started with confidence.
-            </p>
-          </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

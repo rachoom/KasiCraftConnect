@@ -148,7 +148,7 @@ export default function ServiceCategories() {
                   <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors">
                     <i className={`${getServiceIcon(service.id)} text-2xl text-gold-dark`} />
                   </div>
-                  <h4 className="font-semibold text-lg text-black-soft mb-2">{service.name}</h4>
+                  <h4 className="font-semibold text-lg text-gold mb-2">{service.name}</h4>
                   <p className="text-gray-600 text-sm">{service.description}</p>
                 </div>
               </div>
