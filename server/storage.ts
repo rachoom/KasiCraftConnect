@@ -1,6 +1,38 @@
 import { supabase } from "./supabase";
 import type { User, InsertUser, Artisan, InsertArtisan, SearchRequest, InsertSearchRequest, ArtisanSubscription, InsertArtisanSubscription } from "@shared/schema";
 
+// Helper function to convert camelCase to snake_case for database
+function toSnakeCase(obj: any): any {
+  if (obj === null || obj === undefined) return obj;
+  if (Array.isArray(obj)) return obj.map(toSnakeCase);
+  if (typeof obj !== 'object') return obj;
+
+  const snakeCased: any = {};
+  for (const [key, value] of Object.entries(obj)) {
+    const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+    snakeCased[snakeKey] = typeof value === 'object' && value !== null && !Array.isArray(value)
+      ? toSnakeCase(value)
+      : value;
+  }
+  return snakeCased;
+}
+
+// Helper function to convert snake_case to camelCase for application
+function toCamelCase(obj: any): any {
+  if (obj === null || obj === undefined) return obj;
+  if (Array.isArray(obj)) return obj.map(toCamelCase);
+  if (typeof obj !== 'object') return obj;
+
+  const camelCased: any = {};
+  for (const [key, value] of Object.entries(obj)) {
+    const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+    camelCased[camelKey] = typeof value === 'object' && value !== null && !Array.isArray(value)
+      ? toCamelCase(value)
+      : value;
+  }
+  return camelCased;
+}
+
 export interface IStorage {
   // User methods
   getUser(id: number): Promise<User | undefined>;
@@ -47,7 +79,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching user:', error);
       return undefined;
     }
-    return data as User;
+    return toCamelCase(data) as User;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
@@ -62,13 +94,15 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching user by username:', error);
       return undefined;
     }
-    return data as User;
+    return toCamelCase(data) as User;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
+    const snakeCaseData = toSnakeCase(insertUser);
+    
     const { data, error } = await supabase
       .from('users')
-      .insert(insertUser)
+      .insert(snakeCaseData)
       .select()
       .single();
     
@@ -76,7 +110,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error creating user:', error);
       throw new Error('Failed to create user');
     }
-    return data as User;
+    return toCamelCase(data) as User;
   }
 
   // Artisan methods
@@ -92,7 +126,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching artisan:', error);
       return undefined;
     }
-    return data as Artisan;
+    return toCamelCase(data) as Artisan;
   }
 
   async getArtisanByEmail(email: string): Promise<Artisan | undefined> {
@@ -107,7 +141,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching artisan by email:', error);
       return undefined;
     }
-    return data as Artisan;
+    return toCamelCase(data) as Artisan;
   }
 
   async getArtisanByPhone(phone: string): Promise<Artisan | undefined> {
@@ -122,7 +156,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching artisan by phone:', error);
       return undefined;
     }
-    return data as Artisan;
+    return toCamelCase(data) as Artisan;
   }
 
   async getAllArtisans(): Promise<Artisan[]> {
@@ -134,7 +168,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching all artisans:', error);
       return [];
     }
-    return data as Artisan[];
+    return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 
   async getArtisansByService(service: string): Promise<Artisan[]> {
@@ -147,7 +181,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching artisans by service:', error);
       return [];
     }
-    return data as Artisan[];
+    return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 
   async getArtisansByLocation(location: string): Promise<Artisan[]> {
@@ -160,7 +194,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching artisans by location:', error);
       return [];
     }
-    return data as Artisan[];
+    return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 
   async searchArtisans(service: string, location: string, limit: number = 3, tier: string = "basic"): Promise<Artisan[]> {
@@ -186,7 +220,8 @@ export class SupabaseStorage implements IStorage {
       return [];
     }
 
-    let results = data as Artisan[];
+    // Convert all results to camelCase
+    let results = (data || []).map(item => toCamelCase(item)) as Artisan[];
 
     // Sort by subscription tier first (premium > verified > unverified), then by rating
     results.sort((a, b) => {
@@ -213,9 +248,12 @@ export class SupabaseStorage implements IStorage {
   }
 
   async createArtisan(insertArtisan: InsertArtisan): Promise<Artisan> {
+    // Convert camelCase to snake_case for database
+    const snakeCaseData = toSnakeCase(insertArtisan);
+    
     const { data, error } = await supabase
       .from('artisans')
-      .insert(insertArtisan)
+      .insert(snakeCaseData)
       .select()
       .single();
     
@@ -223,13 +261,18 @@ export class SupabaseStorage implements IStorage {
       console.error('Error creating artisan:', error);
       throw new Error('Failed to create artisan');
     }
-    return data as Artisan;
+    
+    // Convert snake_case back to camelCase for application
+    return toCamelCase(data) as Artisan;
   }
 
   async updateArtisan(id: number, updates: Partial<Artisan>): Promise<Artisan | undefined> {
+    // Convert camelCase to snake_case for database
+    const snakeCaseUpdates = toSnakeCase(updates);
+    
     const { data, error } = await supabase
       .from('artisans')
-      .update(updates)
+      .update(snakeCaseUpdates)
       .eq('id', id)
       .select()
       .single();
@@ -238,7 +281,9 @@ export class SupabaseStorage implements IStorage {
       console.error('Error updating artisan:', error);
       return undefined;
     }
-    return data as Artisan;
+    
+    // Convert snake_case back to camelCase for application
+    return toCamelCase(data) as Artisan;
   }
 
   // Admin methods
@@ -252,7 +297,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching pending artisans:', error);
       return [];
     }
-    return data as Artisan[];
+    return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 
   async approveArtisan(id: number, approvedBy: string): Promise<Artisan | undefined> {
@@ -273,7 +318,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error approving artisan:', error);
       return undefined;
     }
-    return data as Artisan;
+    return toCamelCase(data) as Artisan;
   }
 
   async rejectArtisan(id: number, rejectionReason: string, rejectedBy: string): Promise<Artisan | undefined> {
@@ -293,16 +338,16 @@ export class SupabaseStorage implements IStorage {
       console.error('Error rejecting artisan:', error);
       return undefined;
     }
-    return data as Artisan;
+    return toCamelCase(data) as Artisan;
   }
 
   // Search request methods
   async createSearchRequest(insertRequest: InsertSearchRequest): Promise<SearchRequest> {
-    const requestData = {
+    const requestData = toSnakeCase({
       ...insertRequest,
       timestamp: new Date().toISOString(),
       tier: insertRequest.tier || "basic"
-    };
+    });
     
     const { data, error } = await supabase
       .from('search_requests')
@@ -314,7 +359,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error creating search request:', error);
       throw new Error('Failed to create search request');
     }
-    return data as SearchRequest;
+    return toCamelCase(data) as SearchRequest;
   }
 
   async getSearchRequests(): Promise<SearchRequest[]> {
@@ -326,14 +371,16 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching search requests:', error);
       return [];
     }
-    return data as SearchRequest[];
+    return (data || []).map(item => toCamelCase(item)) as SearchRequest[];
   }
 
   // Artisan subscription methods
   async createArtisanSubscription(insertSubscription: InsertArtisanSubscription): Promise<ArtisanSubscription> {
+    const snakeCaseData = toSnakeCase(insertSubscription);
+    
     const { data, error } = await supabase
       .from('artisan_subscriptions')
-      .insert(insertSubscription)
+      .insert(snakeCaseData)
       .select()
       .single();
     
@@ -341,7 +388,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error creating artisan subscription:', error);
       throw new Error('Failed to create artisan subscription');
     }
-    return data as ArtisanSubscription;
+    return toCamelCase(data) as ArtisanSubscription;
   }
 
   async getArtisanSubscriptions(): Promise<ArtisanSubscription[]> {
@@ -353,7 +400,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching artisan subscriptions:', error);
       return [];
     }
-    return data as ArtisanSubscription[];
+    return (data || []).map(item => toCamelCase(item)) as ArtisanSubscription[];
   }
 
   async getPendingSubscriptions(): Promise<ArtisanSubscription[]> {
@@ -366,7 +413,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error fetching pending subscriptions:', error);
       return [];
     }
-    return data as ArtisanSubscription[];
+    return (data || []).map(item => toCamelCase(item)) as ArtisanSubscription[];
   }
 
   async updateSubscriptionStatus(
@@ -392,7 +439,7 @@ export class SupabaseStorage implements IStorage {
       console.error('Error updating subscription status:', error);
       return undefined;
     }
-    return data as ArtisanSubscription;
+    return toCamelCase(data) as ArtisanSubscription;
   }
 }
 
