@@ -175,6 +175,12 @@ Changelog:
 - October 17, 2025. Fixed text readability across all pages - updated text colors to white/light gray for proper contrast on dark backgrounds
 - October 17, 2025. Updated SearchResults page with readable artisan card text: white headings, light gray descriptions and details
 - October 17, 2025. E2E tested and verified: dark theme, icons, autofill, and text readability all working correctly
+- October 18, 2025. Fixed global navigation links: changed header anchor links from #services/#how-it-works to /#services/#how-it-works so they work from all pages, not just homepage
+- October 18, 2025. Added Header and Footer components to Contact Us page for consistent site-wide navigation
+- October 18, 2025. Restricted all location dropdowns to show only Ekurhuleni areas (removed Johannesburg, Cape Town, Durban, Pretoria)
+- October 18, 2025. Added "Mechanics" service category across entire platform: ServiceCategories card, ServiceLanding page info, registration forms, and router (/service/mechanics)
+- October 18, 2025. Changed Quick Search heading color from text-green-500 to text-lime-400 for brighter lime yellow-green appearance
+- October 18, 2025. E2E tested and verified: navigation links, Contact page header/footer, Ekurhuleni-only locations, Mechanics category, and lime-400 color all working correctly
 ```
 
 ## User Preferences
