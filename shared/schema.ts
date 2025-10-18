@@ -110,7 +110,6 @@ export const insertArtisanSchema = createInsertSchema(artisans).omit({
   verificationStatus: true,
   verificationNotes: true,
   verifiedAt: true,
-  approvalStatus: true,
   approvedBy: true,
   approvedAt: true,
   rejectionReason: true,
