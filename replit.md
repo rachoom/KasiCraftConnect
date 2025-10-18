@@ -181,6 +181,11 @@ Changelog:
 - October 18, 2025. Added "Mechanics" service category across entire platform: ServiceCategories card, ServiceLanding page info, registration forms, and router (/service/mechanics)
 - October 18, 2025. Changed Quick Search heading color from text-green-500 to text-lime-400 for brighter lime yellow-green appearance
 - October 18, 2025. E2E tested and verified: navigation links, Contact page header/footer, Ekurhuleni-only locations, Mechanics category, and lime-400 color all working correctly
+- October 18, 2025. Reworked Artisan Service Tiers (PricingTiers.tsx) - changed content from user-focused to artisan-focused with benefits of joining platform
+- October 18, 2025. Updated tier cards: Unverified (Free), Verified (R100/month), Verified + Marketing (R299/month) with golden glowing borders and navigation to /artisan registration
+- October 18, 2025. Changed service category card titles from black to golden color (text-gold) across all service cards on homepage
+- October 18, 2025. Updated "How Skills Connect Works" cards - changed borders from green to lime-400 (matches Quick Search heading) and added background images
+- October 18, 2025. E2E tested and verified: golden service titles, lime-400 borders with background images, golden tier cards with navigation, and unverified registration flow all working correctly
 ```
 
 ## User Preferences
