@@ -1,0 +1,95 @@
+Use the attached screenshots as reference for design and structural updates: 1. Homepage - New Top-to-Bottom Structure
+
+Implement the following linear flow for the homepage, removing all other content.
+
+A. Main Heading & Hero
+
+
+
+Remove: The entire current "Quick Search" section (the box with "Service Required" and "Location" dropdowns).
+
+Remove: The "Get Started for Free" and "Upgrade to Verified" buttons currently in the hero section.
+
+Add: At the top of the page, add a new primary heading and sub-heading:
+
+Heading: "Find Local Artisans in the Far East Rand, Free."
+
+Sub-heading: "The easiest way to connect with local builders, plumbers, mechanics, and more."
+
+B. Service Category Cards
+
+
+
+Add: Directly below the new heading, create a grid of clickable service cards.
+
+Visual Style: The cards should be dark, rectangular, and feature a background image representing the service (e.g., a photo of construction for "Builders"). The service title should be clearly overlaid on the image.
+
+Cards to Create:
+
+Builders
+
+Plumbers
+
+Electricians
+
+Painters
+
+Tilers
+
+Carpenters
+
+Landscapers
+
+Mechanics
+
+A final card styled as "More Services Coming."
+
+C. Featured Artisans Section (Paid)
+
+
+
+Add: Below the service card grid, add a section titled "Featured Artisans."
+
+Visual Style: This section should display artisan profiles in individual cards, showing their name, skills, star rating, a short bio, and location.
+
+Constraint: This section must have exactly 4 slots for featured (paid) artisans.
+
+Add: Below this 4-card section, add a text link: "Contact us to be featured here" (linked to the Contact page).
+
+D. Business Ad Space (Paid)
+
+
+
+Add: Below the "Featured Artisans" section, create a section for "Trusted Partners" or "Business Ad Space."
+
+Visual Style: This section should consist of 3 rectangular cards, side-by-side, with a simple icon, title (e.g., "Hardware Store," "Material Delivery"), and a "Sponsored" tag.
+
+2. New Page: Service & Filter Page
+
+This new page loads after a user clicks on any of the Service Category Cards from the homepage (e.g., "Builders").
+
+
+
+Dynamic Title: The page title should reflect the service chosen (e.g., "Find a Builder").
+
+Primary Filter: The page must feature a Location Filter first. This filter must search artisan profiles and display results based on the location the user enters.
+
+Dynamic Skill Filters:
+
+Below the location filter, display a set of specific skill filters (e.g., checkboxes).
+
+These filters must be dynamic based on the category card the user clicked.
+
+Example: If the user clicks "Builders," the skill filters should be for building services, such as: "New Construction," "Home Renovation," "Extensions," "Roofing," "Foundations," "General Building."
+
+If the user clicks "Plumbers," different filters like "Emergency Repairs," "Pipe Installation," etc., must be shown.
+
+Results Display Logic: The search results list must be prioritized to display 4 Verified Artisans at the top, followed by 1 Unverified Artisan.
+
+3. Global Changes & Sections to Remove
+
+Remove: The "Find Verified Artisans" / "Advanced Search Filters" section (the one with fields for Location, Skill, and Project Description) must be completely removed from the homepage.
+
+Remove: The "Join Our Network" pricing table (showing "Unverified Tier" and "Verified Tier") must be removed from the homepage. This content should only be on its own page, accessible only via the "Register as an Artisan" links in the header/footer.
+
+Mobile Optimization: The entire site, especially this new homepage flow and the filter page, must be fully responsive and optimized for a fast, simple mobile user experience.
