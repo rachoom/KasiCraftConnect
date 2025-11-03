@@ -54,12 +54,9 @@ export default function Header() {
                 <circle cx="28" cy="28" r="1" fill="#B8860B" opacity="0.7"/>
               </svg>
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-light text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
-                  Skills <span className="text-gold font-extralight">Connect</span>
+                <h1 className="text-xl font-light text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
+                  Artisan Connect <span className="text-gold font-extralight">Far East Rand</span>
                 </h1>
-                <span className="bg-gold/20 border border-gold/40 text-gold text-xs font-semibold px-2 py-0.5 rounded-full">
-                  Ekurhuleni
-                </span>
               </div>
             </Link>
           </motion.div>
@@ -73,11 +70,8 @@ export default function Header() {
             <a href="/#services" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
               Services
             </a>
-            <a href="/#how-it-works" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md inline-flex items-center">
-              How It Works
-            </a>
             <Link href="/profiles" className="text-gold hover:text-yellow-300 transition-all duration-300 font-semibold hover:bg-gold/20 px-3 py-2 rounded-lg transform hover:scale-105 shadow-sm hover:shadow-md cursor-pointer inline-flex items-center">
-              View Profiles
+              Artisans
             </Link>
           </motion.nav>
           
@@ -94,8 +88,8 @@ export default function Header() {
             </Link>
 
             <Link href="/artisan">
-              <Button className="bg-gold hover:bg-yellow-600 text-black hover:text-gray-800 cosmic-glow-static text-lg px-6 py-3 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
-                Join as Artisan
+              <Button className="bg-gold hover:bg-yellow-600 text-black hover:text-gray-800 cosmic-glow-static px-6 py-2 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                Register as an Artisan
               </Button>
             </Link>
           </motion.div>
