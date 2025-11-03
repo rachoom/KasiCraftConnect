@@ -1,8 +1,8 @@
-# Skills Connect - Artisan Marketplace Platform
+# Artisan Connect Far East Rand - Artisan Marketplace Platform
 
 ## Overview
 
-Skills Connect is a full-stack web application that connects customers with trusted local artisans across South Africa. The platform serves as a marketplace where users can search for verified professionals in various trades like builders, plumbers, electricians, and more. The application features a modern React frontend with a Node.js/Express backend, utilizing PostgreSQL for data persistence.
+Artisan Connect Far East Rand is a full-stack web application that connects customers with trusted local artisans in the Brakpan area and surrounding Far East Rand regions. The platform serves as a marketplace where users can search for verified professionals in various trades like builders, plumbers, electricians, and more. The application features a modern React frontend with a Node.js/Express backend, utilizing external Supabase PostgreSQL for data persistence.
 
 ## System Architecture
 
@@ -59,7 +59,7 @@ The application uses three main entities:
   - Protected admin routes with token validation
 
 ### Artisan Subscription Tiers
-Skills Connect implements a three-tier artisan system with offline payment handling:
+Artisan Connect Far East Rand implements a three-tier artisan system with offline payment handling:
 
 - **Unverified (Free)**: 
   - Instant registration with basic information
@@ -186,6 +186,18 @@ Changelog:
 - October 18, 2025. Changed service category card titles from black to golden color (text-gold) across all service cards on homepage
 - October 18, 2025. Updated "How Skills Connect Works" cards - changed borders from green to lime-400 (matches Quick Search heading) and added background images
 - October 18, 2025. E2E tested and verified: golden service titles, lime-400 borders with background images, golden tier cards with navigation, and unverified registration flow all working correctly
+- November 3, 2025. Rebranded from "Skills Connect" to "Artisan Connect Far East Rand" - changed header branding and geographic focus from Ekurhuleni to Brakpan and Far East Rand
+- November 3, 2025. Updated footer branding to "Far East Rand Home Worx" with coverage areas: Brakpan, Benoni, Springs, Nigel, Daveyton
+- November 3, 2025. Migrated entire codebase to external Supabase database with full camelCase ↔ snake_case conversion system in storage layer
+- November 3, 2025. Complete homepage redesign: simplified hero with "Find Local Artisans in the Far East Rand, Free." heading and two CTA buttons (removed search box)
+- November 3, 2025. Redesigned service category cards with dark theme, golden borders, background images with overlays: Builders, Plumbers, Electricians, Painters, Tilers, Carpenters, Landscapers, Mechanics + "More Services Coming"
+- November 3, 2025. Rebuilt Featured Artisans section to show 4 profile cards (instead of 3) with circular avatars, ratings, Call Now and Email buttons, golden borders on dark background
+- November 3, 2025. Added "Contact us to be featured here" link below Featured Artisans section
+- November 3, 2025. Created new Trusted Partners section with 3 sponsored cards: Hardware Store (Build-It Brakpan), Material Delivery (FastDeliver SA), Tool Rental (ToolHire Pro)
+- November 3, 2025. Removed Quick Search section, PricingTiers component, and HowItWorks section from homepage
+- November 3, 2025. Cleaned up header navigation: removed "How It Works" link, renamed "View Profiles" to "Artisans", updated CTA button to "Register as an Artisan"
+- November 3, 2025. Updated footer with new structure: Services column, Coverage Area column with Brakpan locations, Contact Us column with phone/email
+- November 3, 2025. Verified all homepage changes with architect review - homepage redesign complete and production-ready with Royal Gold (#DAA520) theme on black backgrounds
 ```
 
 ## User Preferences
