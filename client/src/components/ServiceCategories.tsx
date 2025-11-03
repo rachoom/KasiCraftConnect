@@ -22,10 +22,10 @@ const services = [
     image: "https://images.unsplash.com/photo-1609010697446-11f2155278f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   },
   {
-    id: "carpenters",
-    name: "Carpenters",
-    description: "Custom woodwork & furniture",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+    id: "painters",
+    name: "Painters",
+    description: "Interior & exterior painting",
+    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   },
   {
     id: "tilers",
@@ -34,16 +34,16 @@ const services = [
     image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   },
   {
-    id: "cleaners",
-    name: "Cleaners",
-    description: "Home & office cleaning services",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+    id: "carpenters",
+    name: "Carpenters",
+    description: "Custom woodwork & furniture",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   },
   {
     id: "landscapers",
     name: "Landscapers",
     description: "Garden design & maintenance",
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+    image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   },
   {
     id: "mechanics",
@@ -87,7 +87,7 @@ export default function ServiceCategories() {
   };
 
   return (
-    <section id="services" className="py-16 lg:py-24 bg-gray-soft">
+    <section id="services" className="py-16 lg:py-24 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -97,16 +97,16 @@ export default function ServiceCategories() {
           viewport={{ once: true }}
         >
           <motion.h3 
-            className="text-3xl md:text-4xl font-bold text-black-soft mb-4"
+            className="text-3xl md:text-4xl font-bold text-gold mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Verified Artisans
+            Our Services
           </motion.h3>
           <motion.p 
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-xl text-gray-300 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -136,20 +136,21 @@ export default function ServiceCategories() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cosmic-selection">
-                <div className="absolute inset-0 opacity-45 group-hover:opacity-60 transition-opacity">
+              <div className="relative bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 cosmic-selection border-2 border-gold/20 hover:border-gold/60">
+                <div className="absolute inset-0">
                   <img 
                     src={service.image}
                     alt={service.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/90 group-hover:from-black/30 transition-colors duration-300"></div>
                 </div>
-                <div className="relative text-center">
-                  <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors">
-                    <i className={`${getServiceIcon(service.id)} text-2xl text-gold-dark`} />
+                <div className="relative p-8 h-64 flex flex-col justify-end">
+                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-gold/40 transition-colors border border-gold/40">
+                    <i className={`${getServiceIcon(service.id)} text-2xl text-gold`} />
                   </div>
-                  <h4 className="font-semibold text-lg text-gold mb-2">{service.name}</h4>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
+                  <h4 className="font-bold text-2xl text-gold mb-2">{service.name}</h4>
+                  <p className="text-white/90 text-sm">{service.description}</p>
                 </div>
               </div>
             </motion.div>
@@ -166,13 +167,13 @@ export default function ServiceCategories() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="relative bg-gradient-to-br from-amber-600 to-amber-800 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 text-white cosmic-glow">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="relative bg-gradient-to-br from-amber-700/90 to-amber-900 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 text-white cosmic-glow border-2 border-gold/40">
+              <div className="p-8 h-64 flex flex-col justify-end">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4 border border-white/40">
                   <i className="fas fa-plus text-2xl text-white" />
                 </div>
-                <h4 className="font-semibold text-lg mb-2">More Services Coming</h4>
-                <p className="text-white/80 text-sm">We're expanding our service categories</p>
+                <h4 className="font-bold text-2xl mb-2">More Services Coming</h4>
+                <p className="text-white/90 text-sm">We're expanding our service categories</p>
               </div>
             </div>
           </motion.div>

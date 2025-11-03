@@ -2,10 +2,8 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ServiceCategories from "@/components/ServiceCategories";
-import HowItWorks from "@/components/HowItWorks";
 import FeaturedArtisans from "@/components/FeaturedArtisans";
-import PricingTiers from "@/components/PricingTiers";
-import AdSpaces from "@/components/AdSpaces";
+import TrustedPartners from "@/components/TrustedPartners";
 import Footer from "@/components/Footer";
 
 const fadeInUp = {
@@ -38,16 +36,10 @@ export default function Home() {
         <ServiceCategories />
       </motion.div>
       <motion.div variants={fadeInUp}>
-        <HowItWorks />
-      </motion.div>
-      <motion.div variants={fadeInUp}>
         <FeaturedArtisans />
       </motion.div>
       <motion.div variants={fadeInUp}>
-        <PricingTiers />
-      </motion.div>
-      <motion.div variants={fadeInUp}>
-        <AdSpaces />
+        <TrustedPartners />
       </motion.div>
       <motion.div variants={fadeInUp}>
         <Footer />
