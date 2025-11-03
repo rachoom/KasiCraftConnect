@@ -60,7 +60,7 @@ export default function Hero() {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex justify-center items-center"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -71,15 +71,6 @@ export default function Hero() {
                 className="bg-gold hover:bg-yellow-600 text-black font-bold px-10 py-6 text-lg rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-200 cosmic-glow-static"
               >
                 Find Artisans
-              </Button>
-            </Link>
-            <Link href="/artisan">
-              <Button 
-                size="lg"
-                variant="outline"
-                className="border-2 border-gold text-gold hover:bg-gold/20 font-bold px-10 py-6 text-lg rounded-xl shadow-xl transform hover:scale-105 transition-all duration-200"
-              >
-                List Your Services
               </Button>
             </Link>
           </motion.div>

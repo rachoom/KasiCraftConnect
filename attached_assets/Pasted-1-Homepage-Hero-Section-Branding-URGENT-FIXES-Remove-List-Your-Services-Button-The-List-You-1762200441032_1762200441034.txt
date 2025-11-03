@@ -1,0 +1,54 @@
+1. Homepage Hero Section & Branding (URGENT FIXES)
+Remove "List Your Services" Button: The "List Your Services" button in the hero section must be completely removed.
+
+"Register as Artisan" Button Styling: The existing "Register as an Artisan" button should be styled prominently with a green or gold color.
+
+Logo Replacement: Replace the current site logo with the new logo image provided. Ensure it scales appropriately for all screen sizes.
+
+Header Branding - "Artisan Connect Far East Rand":
+
+"Artisan Connect" must be bold or visibly more prominent (e.g., larger font size, distinct font weight) to clearly establish it as the main site name.
+
+"Far East Rand" should remain visually distinct as the location descriptor (e.g., smaller font, lighter color, different font).
+
+2. Navigation & Responsiveness (CRITICAL FIXES)
+Hamburger Icon Visibility:
+
+The hamburger icon must NOT be visible in the desktop view.
+
+It must be visible and fully functional only in the mobile view.
+
+Header Link Alignment:
+
+In desktop view, the navigation links (e.g., 'Artisans', 'Services', 'Contact') should be moved to the right side of the header bar.
+
+Mobile Header Bar Responsiveness:
+
+In mobile view, the header bar should display ONLY the site logo/name ("Artisan Connect Far East Rand") on the left and the functional hamburger menu icon on the right. All other header links should be hidden within the hamburger menu.
+
+Urgent Fix Reminder: Confirm all header links (including the new "Contact Us" page and the "Return Home" function via the logo) are fully functional across all pages and views.
+
+3. Dark Mode & Overlay Consistency (CRITICAL FIX)
+Dark Overlay Fix: The site's dark overlay/background must remain consistent and intact when "dark mode" is enabled or triggered. The site should not lose its dark appearance under any circumstances. This needs immediate investigation and fix.
+
+4. "Contact Us" Page & Form Visibility (CRITICAL FIX)
+Contact Form Visibility: On the newly created "Contact Us" page, the contact form is not visible. This needs to be corrected so the form (with Name, Email, Subject, Message fields) is clearly displayed and functional.
+
+5. Existing Fixes Verification
+Please re-verify the following, previously requested, critical fixes are fully implemented and functional:
+
+"Return Home" Function: The site name/logo link in the header must reliably redirect to the Homepage.
+
+Header Link Functionality: All header links must work correctly regardless of the current page.
+
+Mobile Menu Icon Functionality: The hamburger icon must open the mobile menu correctly.
+
+Footer Coverage Area Update: Only areas within/surrounding Brakpan should be listed.
+
+ID/Passport Field: Labeled "ID/Passport Number" and optional in "Join as Artisan" form.
+
+"Contact us to be featured here" Link: Redirects to the specific advertising contact form.
+
+"Trusted Partners" Carousel: Functioning as a revolving carousel with placeholder ads.
+
+Artisan Registration Toggle Highlight: Uses a light blue border.

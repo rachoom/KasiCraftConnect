@@ -73,10 +73,10 @@ export default function ContactUs() {
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card>
+          <Card className="bg-zinc-900 border-gold/30">
             <CardHeader>
-              <CardTitle>Send us a message</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-white">Send us a message</CardTitle>
+              <CardDescription className="text-gray-300">
                 Fill out the form below and we'll respond as soon as possible.
               </CardDescription>
             </CardHeader>
@@ -88,9 +88,9 @@ export default function ContactUs() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
+                        <FormLabel className="text-white">Full Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your full name" {...field} />
+                          <Input className="bg-zinc-800 border-gold/20 text-white" placeholder="Your full name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -102,9 +102,9 @@ export default function ContactUs() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email Address</FormLabel>
+                        <FormLabel className="text-white">Email Address</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="your.email@example.com" {...field} />
+                          <Input className="bg-zinc-800 border-gold/20 text-white" type="email" placeholder="your.email@example.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -116,9 +116,9 @@ export default function ContactUs() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
+                        <FormLabel className="text-white">Phone Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="+27 XX XXX XXXX" {...field} />
+                          <Input className="bg-zinc-800 border-gold/20 text-white" placeholder="+27 XX XXX XXXX" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -130,9 +130,9 @@ export default function ContactUs() {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Subject</FormLabel>
+                        <FormLabel className="text-white">Subject</FormLabel>
                         <FormControl>
-                          <Input placeholder="What is this regarding?" {...field} />
+                          <Input className="bg-zinc-800 border-gold/20 text-white" placeholder="What is this regarding?" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -144,11 +144,11 @@ export default function ContactUs() {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Message</FormLabel>
+                        <FormLabel className="text-white">Message</FormLabel>
                         <FormControl>
                           <Textarea 
+                            className="bg-zinc-800 border-gold/20 text-white min-h-[120px]"
                             placeholder="Tell us how we can help you..."
-                            className="min-h-[120px]"
                             {...field}
                           />
                         </FormControl>
@@ -171,54 +171,54 @@ export default function ContactUs() {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <Card>
+            <Card className="bg-zinc-900 border-gold/30">
               <CardHeader>
-                <CardTitle>Get in touch</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-white">Get in touch</CardTitle>
+                <CardDescription className="text-gray-300">
                   Reach out to us through any of these channels
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-gold-dark" />
+                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black-soft">Email</h4>
-                    <p className="text-gray-600">hello@kasiconnect.co.za</p>
+                    <h4 className="font-semibold text-white">Email</h4>
+                    <p className="text-gray-300">info@artisanconnect.co.za</p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-gold-dark" />
+                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center">
+                    <Phone className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black-soft">Phone</h4>
-                    <p className="text-gray-600">+27 11 123 4567</p>
+                    <h4 className="font-semibold text-white">Phone</h4>
+                    <p className="text-gray-300">+27 11 748 5200</p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-gold-dark" />
+                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black-soft">Address</h4>
-                    <p className="text-gray-600">
-                      123 Business District<br />
-                      Johannesburg, Gauteng 2000
+                    <h4 className="font-semibold text-white">Address</h4>
+                    <p className="text-gray-300">
+                      Brakpan, Gauteng<br />
+                      Far East Rand
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-gold-dark" />
+                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center">
+                    <Clock className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black-soft">Business Hours</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-semibold text-white">Business Hours</h4>
+                    <p className="text-gray-300">
                       Monday - Friday: 8:00 AM - 6:00 PM<br />
                       Saturday: 9:00 AM - 4:00 PM<br />
                       Sunday: Closed
@@ -228,9 +228,9 @@ export default function ContactUs() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="bg-zinc-900 border-gold/30">
               <CardHeader>
-                <CardTitle>Frequently Asked Questions</CardTitle>
+                <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
