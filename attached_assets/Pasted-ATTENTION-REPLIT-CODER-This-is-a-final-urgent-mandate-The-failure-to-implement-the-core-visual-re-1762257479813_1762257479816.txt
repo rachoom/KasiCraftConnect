@@ -1,0 +1,28 @@
+ATTENTION REPLIT CODER: This is a final, urgent mandate. The failure to implement the core visual requirements after repeated instructions has resulted in a non-functional and frustrating user experience. The persistent visual bugs MUST be rectified immediately.
+
+1. CRITICAL FAILURE: VISUAL AESTHETIC & CONTRAST (Absolute Priority)
+The site's intended look (the view currently seen when your system's Dark Mode is ON) must be the permanent, default theme for all users, regardless of their system settings.
+
+Aesthetic Enforcement: YOU MUST FORCE THE DARK THEME across the entire application using explicit CSS. The background must be pure black/dark grey, and ALL TEXT must be high-contrast white or gold.
+
+Visibility Failure Fix:
+
+ALL TEXT on the site that is currently low-lighted or invisible in Normal Mode (including on Artisan Profiles, Service Search pages, and the main hero headings) MUST be changed to a highly visible color (Gold or White).
+
+The "Far East Rand" descriptor in the header is invisible in Normal Mode. This MUST be visible (Gold/White).
+
+2. CRITICAL UI & FUNCTIONAL BUGS (Must Be Fixed)
+Broken Link Fix: The "Painters" service card (and any others leading to a 404 Page Not Found error) must be fixed to route correctly to its respective Service & Filter Page.
+
+Text Overlap Fix: On the Service Search pages, the text inside the "Select date (optional)" box in the header is overlapping the text below it. Adjust the layout/padding to prevent this overlap.
+
+3. Styling and Layout Corrections
+Filter Text Color: The dropdown text and background for "Filter by service" and "Filter by status" must use gold text for high contrast.
+
+Profile Button Visibility: The text on the "View Details" button (or similar profile action buttons) is currently invisible. Change the button text color to white or gold.
+
+Status Tag Color: The status tag (e.g., "Approved") on profile cards must have a prominent green background.
+
+Hero Section Overlay: The image in the hero section must have a darker overlay to ensure the white and gold text is clearly readable.
+
+Icon Enhancement: Replace all generic icons (e.g., house, wrench) with aesthetically enhanced, professional icons that use the site's gold/yellow accent color.
