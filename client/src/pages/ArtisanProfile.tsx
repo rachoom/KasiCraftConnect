@@ -71,7 +71,7 @@ export default function ArtisanProfile() {
       <div className="min-h-screen bg-black">
         <Header />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Card className="border-gold/30 bg-zinc-900 max-w-2xl mx-auto">
+          <Card className="border border-gold/30 bg-black max-w-2xl mx-auto">
             <CardContent className="p-8 text-center">
               <User className="w-16 h-16 mx-auto mb-4 text-gold/50" />
               <h1 className="text-2xl font-bold text-white mb-4">Artisan Not Found</h1>
@@ -96,10 +96,10 @@ export default function ArtisanProfile() {
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
-        <Link href="/">
-          <Button variant="ghost" className="mb-6">
+        <Link href="/profiles">
+          <Button variant="outline" className="mb-6 border-gold/30 text-gold hover:bg-gold/10">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Search
+            Back to Artisans
           </Button>
         </Link>
 
@@ -107,7 +107,7 @@ export default function ArtisanProfile() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Profile Header */}
-            <Card className="border-gold/30 bg-zinc-900">
+            <Card className="border border-gold/30 bg-black">
               <CardContent className="p-6">
                 <div className="flex items-start space-x-6">
                   <div className="w-24 h-24 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">
@@ -170,7 +170,7 @@ export default function ArtisanProfile() {
             </Card>
 
             {/* About */}
-            <Card className="border-gold/30 bg-zinc-900">
+            <Card className="border border-gold/30 bg-black">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2 text-white">
                   <User className="w-5 h-5 text-gold" />
@@ -183,7 +183,7 @@ export default function ArtisanProfile() {
             </Card>
 
             {/* Services */}
-            <Card className="border-gold/30 bg-zinc-900">
+            <Card className="border border-gold/30 bg-black">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2 text-white">
                   <Award className="w-5 h-5 text-gold" />
@@ -203,7 +203,7 @@ export default function ArtisanProfile() {
 
             {/* Reviews Section - Only for Verified and Premium tiers */}
             {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') ? (
-              <Card className="border-gold/30 bg-zinc-900">
+              <Card className="border border-gold/30 bg-black">
                 <CardHeader>
                   <CardTitle className="text-white">Customer Reviews</CardTitle>
                 </CardHeader>
@@ -215,7 +215,7 @@ export default function ArtisanProfile() {
                 </CardContent>
               </Card>
             ) : (
-              <Card className="border-gold/30 bg-zinc-900">
+              <Card className="border border-gold/30 bg-black">
                 <CardContent className="p-6 text-center">
                   <Shield className="w-12 h-12 mx-auto mb-4 text-gold/50" />
                   <h3 className="font-semibold text-white mb-2">Reviews Available for Verified Artisans</h3>
@@ -230,7 +230,7 @@ export default function ArtisanProfile() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Contact Card */}
-            <Card className="border-gold/30 bg-zinc-900">
+            <Card className="border border-gold/30 bg-black">
               <CardHeader>
                 <CardTitle className="text-white">Contact {artisan.firstName}</CardTitle>
               </CardHeader>
@@ -261,7 +261,7 @@ export default function ArtisanProfile() {
             </Card>
 
             {/* Quick Stats */}
-            <Card className="border-gold/30 bg-zinc-900">
+            <Card className="border border-gold/30 bg-black">
               <CardHeader>
                 <CardTitle className="text-white">Quick Stats</CardTitle>
               </CardHeader>

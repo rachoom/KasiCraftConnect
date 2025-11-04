@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, MapPin, Search, Users, Shield, Star } from "lucide-react";
+import { CalendarIcon, MapPin, Search, Users, Shield, Star, ArrowLeft, Building2 } from "lucide-react";
 import { format } from "date-fns";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -185,16 +185,22 @@ export default function ServiceLanding() {
         <section className="pt-2 pb-4 min-h-screen bg-black">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
+              <Link href="/">
+                <Button variant="outline" className="mb-4 border-gold/30 text-gold hover:bg-gold/10">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Home
+                </Button>
+              </Link>
               {/* Get Started Form - Primary Focus */}
               <div className="max-w-4xl mx-auto">
-                <Card className="shadow-2xl border-2 border-gold/30">
-                  <CardHeader className="pb-3 bg-gradient-to-r from-black-soft to-gray-800 text-white rounded-t-lg">
+                <Card className="shadow-2xl border border-gold/30 bg-black">
+                  <CardHeader className="pb-3 bg-black text-white rounded-t-lg">
                     <div className="text-center">
-                      <div className="text-5xl mb-3">{service.icon}</div>
-                      <CardTitle className="text-3xl font-bold mb-3">
+                      <Building2 className="w-16 h-16 mb-3 mx-auto text-gold" />
+                      <CardTitle className="text-3xl font-bold mb-3 text-white">
                         Get Started - Find Verified {service.title}
                       </CardTitle>
-                      <p className="text-base text-gray-100 mb-4 max-w-2xl mx-auto">
+                      <p className="text-base text-white mb-4 max-w-2xl mx-auto">
                         {service.description}
                       </p>
                       <div className="flex flex-wrap justify-center items-center gap-4 text-gold">
@@ -213,11 +219,11 @@ export default function ServiceLanding() {
                       </div>
                     </div>
                   </CardHeader>
-                <CardContent className="space-y-4 p-6">
+                <CardContent className="space-y-4 p-6 bg-black">
                   {/* Location and Date Side by Side - Compact */}
                   <div className="grid gap-3 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="location" className="text-base font-semibold text-black-soft">
+                      <Label htmlFor="location" className="text-base font-semibold text-white">
                         Where do you need the service?
                       </Label>
                       <div className="relative" ref={locationInputRef}>
@@ -228,7 +234,7 @@ export default function ServiceLanding() {
                           onChange={(e) => handleLocationChange(e.target.value)}
                           onFocus={() => setShowLocationSuggestions(searchLocation.length > 0)}
                           placeholder="Enter your location"
-                          className="pl-9 py-2 text-sm border-2 border-gray-200 focus:border-gold rounded-lg"
+                          className="pl-9 py-2 text-sm bg-zinc-800 border border-gold/20 text-white placeholder:text-white/60 focus:border-gold rounded-lg"
                           data-testid="input-location"
                         />
                         {showLocationSuggestions && locationSuggestions.length > 0 && (
@@ -248,14 +254,14 @@ export default function ServiceLanding() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-base font-semibold text-black-soft">
+                      <Label className="text-base font-semibold text-white">
                         When do you need the service?
                       </Label>
                       <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
-                            className="w-full justify-start text-left font-normal py-2 text-sm border-2 border-gray-200 hover:border-gold rounded-lg"
+                            className="w-full justify-start text-left font-normal py-2 text-sm bg-zinc-800 border border-gold/20 text-white hover:bg-zinc-700 hover:border-gold rounded-lg"
                           >
                             <CalendarIcon className="mr-2 h-4 w-4 text-gold" />
                             {selectedDate ? format(selectedDate, "MMM d, yyyy") : "Select date (optional)"}
@@ -279,22 +285,22 @@ export default function ServiceLanding() {
 
                   {/* Services Selection - Ultra Compact */}
                   <div className="space-y-2">
-                    <Label className="text-base font-semibold text-black-soft">
+                    <Label className="text-base font-semibold text-white">
                       Select Services You Need
                     </Label>
                     <div className="grid gap-1 grid-cols-2 md:grid-cols-4 max-h-32 overflow-y-auto">
                       {service.services.map((serviceItem, index) => (
-                        <div key={index} className="flex items-center space-x-2 p-2 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                        <div key={index} className="flex items-center space-x-2 p-2 bg-zinc-800 rounded hover:bg-zinc-700 transition-colors">
                           <input
                             type="checkbox"
                             id={`service-${index}`}
                             checked={selectedServices.includes(serviceItem)}
                             onChange={() => handleServiceToggle(serviceItem)}
-                            className="w-3 h-3 text-gold bg-gray-100 border-gray-300 rounded focus:ring-gold focus:ring-1"
+                            className="w-3 h-3 text-gold bg-zinc-700 border-gold/30 rounded focus:ring-gold focus:ring-1"
                           />
                           <label 
                             htmlFor={`service-${index}`} 
-                            className="text-black-soft font-medium cursor-pointer flex-1 text-xs leading-tight"
+                            className="text-white font-medium cursor-pointer flex-1 text-xs leading-tight"
                           >
                             {serviceItem}
                           </label>
@@ -302,7 +308,7 @@ export default function ServiceLanding() {
                       ))}
                     </div>
                     {selectedServices.length > 0 && (
-                      <p className="text-xs text-gray-600">
+                      <p className="text-xs text-white/80">
                         {selectedServices.length} service{selectedServices.length > 1 ? 's' : ''} selected
                       </p>
                     )}
@@ -320,7 +326,7 @@ export default function ServiceLanding() {
                     </Button>
                     
                     {searchLocation && (
-                      <p className="mt-2 text-xs text-gray-600 text-center">
+                      <p className="mt-2 text-xs text-white/80 text-center">
                         Searching in {searchLocation}
                         {selectedServices.length > 0 && ` for ${selectedServices.slice(0, 2).join(', ')}${selectedServices.length > 2 ? '...' : ''}`}
                       </p>

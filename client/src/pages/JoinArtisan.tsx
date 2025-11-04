@@ -21,7 +21,7 @@ export default function JoinArtisan() {
           <FadeInSection>
             <div className="mb-8">
               <Link href="/">
-                <Button variant="ghost" className="text-gold hover:text-gold-dark mb-4">
+                <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/10 mb-4">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
@@ -51,7 +51,7 @@ export default function JoinArtisan() {
                 <Card className={`h-full border-2 transition-all ${
                   selectedPath === 'unverified' 
                     ? 'border-blue-500 bg-blue-500/10' 
-                    : 'border-gold/30 hover:border-gold/50 bg-zinc-900'
+                    : 'border-gold/30 hover:border-gold/50 bg-black'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">

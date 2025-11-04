@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
-import { User, MapPin, Phone, Mail, Briefcase, Star, CheckCircle, XCircle, Clock } from "lucide-react";
+import { User, MapPin, Phone, Mail, Briefcase, Star, CheckCircle, XCircle, Clock, ArrowLeft } from "lucide-react";
 
 const serviceOptions = [
   { id: "builders", label: "Builder" },
@@ -30,12 +30,12 @@ export default function ViewProfiles() {
   const [filterLocation, setFilterLocation] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
 
-  const { data: artisans, isLoading } = useQuery({
+  const { data: artisans = [], isLoading } = useQuery<any[]>({
     queryKey: ["/api/artisans"],
   });
 
   // Filter artisans based on search criteria
-  const filteredArtisans = (artisans || []).filter((artisan: any) => {
+  const filteredArtisans = artisans.filter((artisan: any) => {
     const matchesSearch = !searchTerm || 
       `${artisan.firstName} ${artisan.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
       artisan.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -74,6 +74,12 @@ export default function ViewProfiles() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="mb-8">
+              <Link href="/">
+                <Button variant="outline" className="mb-4 border-gold/30 text-gold hover:bg-gold/10">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Home
+                </Button>
+              </Link>
               <h1 className="text-4xl font-bold text-white mb-2">
                 Artisan Profiles
               </h1>
@@ -83,7 +89,7 @@ export default function ViewProfiles() {
             </div>
 
             {/* Search and Filter Section */}
-            <Card className="mb-8 shadow-lg border-gold/30 bg-black">
+            <Card className="mb-8 shadow-lg border border-gold/30 bg-black">
               <CardHeader>
                 <CardTitle className="text-white">Search & Filter</CardTitle>
               </CardHeader>
@@ -147,7 +153,7 @@ export default function ViewProfiles() {
             {/* Results Summary */}
             <div className="mb-6">
               <p className="text-white">
-                {isLoading ? "Loading..." : `Showing ${filteredArtisans.length} of ${(artisans || []).length} profiles`}
+                {isLoading ? "Loading..." : `Showing ${filteredArtisans.length} of ${artisans.length} profiles`}
               </p>
             </div>
 
@@ -188,7 +194,7 @@ export default function ViewProfiles() {
                         {/* Header with name and status */}
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="text-lg font-bold text-white">
+                            <h3 className="text-lg font-bold text-gold">
                               {artisan.firstName} {artisan.lastName}
                             </h3>
                             <div className="flex items-center text-white/80 text-sm">

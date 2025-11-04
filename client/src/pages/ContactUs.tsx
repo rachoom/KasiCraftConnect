@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -64,6 +65,12 @@ export default function ContactUs() {
     <div className="min-h-screen bg-black">
       <Header />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Link href="/">
+          <Button variant="outline" className="mb-6 border-gold/30 text-gold hover:bg-gold/10">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
@@ -73,7 +80,7 @@ export default function ContactUs() {
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card className="bg-zinc-900 border-gold/30">
+          <Card className="bg-black border border-gold/30">
             <CardHeader>
               <CardTitle className="text-white">Send us a message</CardTitle>
               <CardDescription className="text-gray-300">
@@ -171,7 +178,7 @@ export default function ContactUs() {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <Card className="bg-zinc-900 border-gold/30">
+            <Card className="bg-black border border-gold/30">
               <CardHeader>
                 <CardTitle className="text-white">Get in touch</CardTitle>
                 <CardDescription className="text-gray-300">
@@ -228,7 +235,7 @@ export default function ContactUs() {
               </CardContent>
             </Card>
 
-            <Card className="bg-zinc-900 border-gold/30">
+            <Card className="bg-black border border-gold/30">
               <CardHeader>
                 <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
               </CardHeader>
