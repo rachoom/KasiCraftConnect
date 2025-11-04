@@ -31,7 +31,7 @@ export default function JoinArtisan() {
           <FadeInSection>
             <div className="mb-8">
               <Link href="/">
-                <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/10 mb-4">
+                <Button variant="outline" className="border border-gold/30 text-gold hover:bg-gold/10 mb-4">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
@@ -63,7 +63,7 @@ export default function JoinArtisan() {
                 <Card className={`h-full border border-gold/30 transition-all ${
                   selectedPath === 'unverified' 
                     ? 'bg-gold/10 shadow-xl' 
-                    : 'hover:border-gold/50 bg-black'
+                    : 'bg-black hover:shadow-lg'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -126,7 +126,7 @@ export default function JoinArtisan() {
                 <Card className={`h-full border border-gold/30 transition-all ${
                   selectedPath === 'verified' 
                     ? 'bg-gold/10 shadow-xl' 
-                    : 'hover:border-gold/50 bg-black'
+                    : 'bg-black hover:shadow-lg'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4">

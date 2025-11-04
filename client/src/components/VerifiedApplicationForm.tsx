@@ -232,7 +232,7 @@ export default function VerifiedApplicationForm() {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-zinc-800 border-gold/20 text-white"
+                    className="bg-zinc-800 border border-gold/30 text-white"
                     data-testid="input-firstName"
                   />
                 </FormControl>
@@ -250,7 +250,7 @@ export default function VerifiedApplicationForm() {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-zinc-800 border-gold/20 text-white"
+                    className="bg-zinc-800 border border-gold/30 text-white"
                     data-testid="input-lastName"
                   />
                 </FormControl>
@@ -271,7 +271,7 @@ export default function VerifiedApplicationForm() {
                   <Input 
                     {...field} 
                     type="email"
-                    className="bg-zinc-800 border-gold/20 text-white"
+                    className="bg-zinc-800 border border-gold/30 text-white"
                     data-testid="input-email"
                   />
                 </FormControl>
@@ -290,7 +290,7 @@ export default function VerifiedApplicationForm() {
                   <Input 
                     {...field} 
                     type="tel"
-                    className="bg-zinc-800 border-gold/20 text-white"
+                    className="bg-zinc-800 border border-gold/30 text-white"
                     data-testid="input-phone"
                   />
                 </FormControl>
@@ -308,11 +308,11 @@ export default function VerifiedApplicationForm() {
               <FormLabel className="text-white">Location *</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-zinc-800 border-gold/20 text-white" data-testid="select-location">
+                  <SelectTrigger className="bg-zinc-800 border border-gold/30 text-white" data-testid="select-location">
                     <SelectValue placeholder="Select your location" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="bg-zinc-800 border-gold/30 text-white">
+                <SelectContent className="bg-zinc-800 border border-gold/30 text-white">
                   {locations.map((location) => (
                     <SelectItem key={location} value={location} className="text-white focus:bg-gold/20 focus:text-white">
                       {location}
@@ -348,7 +348,7 @@ export default function VerifiedApplicationForm() {
                                 : (field.value || []).filter((val) => val !== service.id);
                               field.onChange(updatedValue);
                             }}
-                            className="border-gold/30"
+                            className="border border-gold/30"
                             data-testid={`checkbox-service-${service.id}`}
                           />
                         </FormControl>
@@ -378,7 +378,7 @@ export default function VerifiedApplicationForm() {
                   min={1}
                   max={50}
                   onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
-                  className="bg-zinc-800 border-gold/20 text-white"
+                  className="bg-zinc-800 border border-gold/30 text-white"
                   data-testid="input-yearsExperience"
                 />
               </FormControl>
@@ -398,7 +398,7 @@ export default function VerifiedApplicationForm() {
                   {...field} 
                   rows={6}
                   placeholder="Tell clients about your experience, specializations, and what makes you stand out..."
-                  className="bg-zinc-800 border-gold/20 text-white"
+                  className="bg-zinc-800 border border-gold/30 text-white"
                   data-testid="textarea-description"
                 />
               </FormControl>
@@ -421,7 +421,7 @@ export default function VerifiedApplicationForm() {
                   const file = e.target.files?.[0];
                   if (file) handleFileUpload(file, 'id');
                 }}
-                className="bg-zinc-800 border-gold/20 text-white"
+                className="bg-zinc-800 border border-gold/30 text-white"
                 data-testid="input-id-document"
               />
               {uploadedIdDoc && (
@@ -441,7 +441,7 @@ export default function VerifiedApplicationForm() {
                   const file = e.target.files?.[0];
                   if (file) handleFileUpload(file, 'qualification');
                 }}
-                className="bg-zinc-800 border-gold/20 text-white"
+                className="bg-zinc-800 border border-gold/30 text-white"
                 data-testid="input-qualification-documents"
               />
               {uploadedQualDocs.length > 0 && (

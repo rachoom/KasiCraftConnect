@@ -75,7 +75,7 @@ export default function ViewProfiles() {
           <FadeInSection>
             <div className="mb-8">
               <Link href="/">
-                <Button variant="outline" className="mb-4 border-gold/30 text-gold hover:bg-gold/10">
+                <Button variant="outline" className="mb-4 border border-gold/30 text-gold hover:bg-gold/10">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
@@ -98,10 +98,10 @@ export default function ViewProfiles() {
                   {/* REORDERED: 1. Filter by service */}
                   <div>
                     <Select value={filterService} onValueChange={setFilterService}>
-                      <SelectTrigger className="bg-zinc-800 border-gold/20 text-white placeholder:text-white/60">
+                      <SelectTrigger className="bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by service" />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-800 border-gold/20 text-gold">
+                      <SelectContent className="bg-zinc-800 border border-gold/30 text-gold">
                         <SelectItem value="all" className="text-gold">All Services</SelectItem>
                         {serviceOptions.map((service) => (
                           <SelectItem key={service.id} value={service.id} className="text-gold">
@@ -118,17 +118,17 @@ export default function ViewProfiles() {
                       placeholder="Filter by location..."
                       value={filterLocation}
                       onChange={(e) => setFilterLocation(e.target.value)}
-                      className="w-full bg-zinc-800 border-gold/20 text-white placeholder:text-white/60"
+                      className="w-full bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60"
                     />
                   </div>
                   
                   {/* REORDERED: 3. Filter by status */}
                   <div>
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger className="bg-zinc-800 border-gold/20 text-white placeholder:text-white/60">
+                      <SelectTrigger className="bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by status" />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-800 border-gold/20 text-gold">
+                      <SelectContent className="bg-zinc-800 border border-gold/30 text-gold">
                         <SelectItem value="all" className="text-gold">All Statuses</SelectItem>
                         <SelectItem value="pending" className="text-gold">Pending</SelectItem>
                         <SelectItem value="approved" className="text-gold">Approved</SelectItem>
@@ -143,7 +143,7 @@ export default function ViewProfiles() {
                       placeholder="Search by name or email..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full bg-zinc-800 border-gold/20 text-white placeholder:text-white/60"
+                      className="w-full bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60"
                     />
                   </div>
                 </div>

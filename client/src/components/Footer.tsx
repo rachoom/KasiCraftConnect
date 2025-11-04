@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gold/30 pt-8">
+        <div className="border-t border border-gold/30 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/80 text-sm mb-4 md:mb-0">
               © 2024 Far East Rand Home Worx. All rights reserved.
