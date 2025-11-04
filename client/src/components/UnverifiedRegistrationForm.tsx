@@ -102,7 +102,7 @@ export default function UnverifiedRegistrationForm() {
           <CheckCircle className="w-12 h-12 text-green-500" />
         </div>
         <h3 className="text-2xl font-bold text-gold mb-4">Profile Created Successfully!</h3>
-        <p className="text-gray-400 mb-6 max-w-md mx-auto">
+        <p className="text-white/80 mb-6 max-w-md mx-auto">
           Your unverified artisan profile is now live. Clients can find you and contact you directly.
         </p>
         <Button 
@@ -125,11 +125,11 @@ export default function UnverifiedRegistrationForm() {
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">First Name *</FormLabel>
+                <FormLabel className="text-white">First Name *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-firstName"
                   />
                 </FormControl>
@@ -143,11 +143,11 @@ export default function UnverifiedRegistrationForm() {
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">Last Name *</FormLabel>
+                <FormLabel className="text-white">Last Name *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-lastName"
                   />
                 </FormControl>
@@ -163,12 +163,12 @@ export default function UnverifiedRegistrationForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">Email Address *</FormLabel>
+                <FormLabel className="text-white">Email Address *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
                     type="email"
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-email"
                   />
                 </FormControl>
@@ -182,12 +182,12 @@ export default function UnverifiedRegistrationForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">Phone Number *</FormLabel>
+                <FormLabel className="text-white">Phone Number *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
                     type="tel"
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-phone"
                   />
                 </FormControl>
@@ -202,16 +202,16 @@ export default function UnverifiedRegistrationForm() {
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Location *</FormLabel>
+              <FormLabel className="text-white">Location *</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white" data-testid="select-location">
+                  <SelectTrigger className="bg-zinc-800 border-gold/20 text-white" data-testid="select-location">
                     <SelectValue placeholder="Select your location" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="bg-zinc-800 border-gold/30 text-white">
                   {locations.map((location) => (
-                    <SelectItem key={location} value={location}>
+                    <SelectItem key={location} value={location} className="text-white focus:bg-gold/20 focus:text-white">
                       {location}
                     </SelectItem>
                   ))}
@@ -227,7 +227,7 @@ export default function UnverifiedRegistrationForm() {
           name="services"
           render={() => (
             <FormItem>
-              <FormLabel className="text-gray-300">Services Offered *</FormLabel>
+              <FormLabel className="text-white">Services Offered *</FormLabel>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                 {serviceOptions.map((service) => (
                   <FormField
@@ -245,11 +245,11 @@ export default function UnverifiedRegistrationForm() {
                                 : (field.value || []).filter((val) => val !== service.id);
                               field.onChange(updatedValue);
                             }}
-                            className="border-gray-600"
+                            className="border-gold/30"
                             data-testid={`checkbox-service-${service.id}`}
                           />
                         </FormControl>
-                        <FormLabel className="text-sm text-gray-300 font-normal cursor-pointer">
+                        <FormLabel className="text-sm text-white font-normal cursor-pointer">
                           {service.label}
                         </FormLabel>
                       </FormItem>
@@ -267,7 +267,7 @@ export default function UnverifiedRegistrationForm() {
           name="yearsExperience"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Years of Experience *</FormLabel>
+              <FormLabel className="text-white">Years of Experience *</FormLabel>
               <FormControl>
                 <Input 
                   {...field} 
@@ -275,7 +275,7 @@ export default function UnverifiedRegistrationForm() {
                   min={0}
                   max={50}
                   onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                  className="bg-gray-800 border-gray-700 text-white"
+                  className="bg-zinc-800 border-gold/20 text-white"
                   data-testid="input-yearsExperience"
                 />
               </FormControl>
@@ -289,13 +289,13 @@ export default function UnverifiedRegistrationForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Brief Description *</FormLabel>
+              <FormLabel className="text-white">Brief Description *</FormLabel>
               <FormControl>
                 <Textarea 
                   {...field} 
                   rows={4}
                   placeholder="Tell clients about yourself and your services..."
-                  className="bg-gray-800 border-gray-700 text-white"
+                  className="bg-zinc-800 border-gold/20 text-white"
                   data-testid="textarea-description"
                 />
               </FormControl>

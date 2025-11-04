@@ -169,7 +169,7 @@ export default function ServiceCategories() {
           >
             <div className="relative bg-gradient-to-br from-amber-700/90 to-amber-900 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 text-white cosmic-glow border-2 border-gold/40">
               <div className="p-8 h-64 flex flex-col justify-end">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4 border border-white/40">
+                <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-4 border border-gold/30">
                   <i className="fas fa-plus text-2xl text-white" />
                 </div>
                 <h4 className="font-bold text-2xl mb-2">More Services Coming</h4>

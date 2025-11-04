@@ -265,7 +265,7 @@ export default function ViewProfiles() {
                         )}
 
                         {/* Verification Status */}
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                        <div className="flex items-center justify-between pt-2 border-t border-gold/30">
                           <div className="flex items-center text-sm">
                             {artisan.verified ? (
                               <span className="flex items-center text-green-600">

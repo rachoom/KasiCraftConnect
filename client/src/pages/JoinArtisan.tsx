@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, CheckCircle, Star, Crown, Zap, Users, TrendingUp, Camera, FileText } from "lucide-react";
@@ -11,6 +11,16 @@ import VerifiedApplicationForm from "@/components/VerifiedApplicationForm";
 
 export default function JoinArtisan() {
   const [selectedPath, setSelectedPath] = useState<'unverified' | 'verified' | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to form when a tier is selected
+  useEffect(() => {
+    if (selectedPath && formRef.current) {
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [selectedPath]);
 
   return (
     <div className="min-h-screen bg-black">
@@ -44,14 +54,16 @@ export default function JoinArtisan() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                onClick={() => setSelectedPath('unverified')}
+                onClick={() => {
+                  setSelectedPath('unverified');
+                }}
                 className="cursor-pointer"
                 data-testid="card-unverified"
               >
-                <Card className={`h-full border-2 transition-all ${
+                <Card className={`h-full border border-gold/30 transition-all ${
                   selectedPath === 'unverified' 
-                    ? 'border-blue-500 bg-blue-500/10' 
-                    : 'border-gold/30 hover:border-gold/50 bg-black'
+                    ? 'bg-gold/10 shadow-xl' 
+                    : 'hover:border-gold/50 bg-black'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -99,7 +111,9 @@ export default function JoinArtisan() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                onClick={() => setSelectedPath('verified')}
+                onClick={() => {
+                  setSelectedPath('verified');
+                }}
                 className="cursor-pointer relative"
                 data-testid="card-verified"
               >
@@ -109,10 +123,10 @@ export default function JoinArtisan() {
                   </span>
                 </div>
                 
-                <Card className={`h-full border-2 transition-all ${
+                <Card className={`h-full border border-gold/30 transition-all ${
                   selectedPath === 'verified' 
-                    ? 'border-blue-500 bg-blue-500/10 shadow-xl shadow-blue-500/20' 
-                    : 'border-gold/50 hover:border-gold bg-zinc-900'
+                    ? 'bg-gold/10 shadow-xl' 
+                    : 'hover:border-gold/50 bg-black'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -168,7 +182,7 @@ export default function JoinArtisan() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="max-w-4xl mx-auto"
               >
-                <Card className="border-2 border-purple-500/50 bg-gradient-to-br from-purple-900/20 to-gray-900">
+                <Card className="border border-gold/30 bg-gradient-to-br from-gold/10 to-black">
                   <CardContent className="p-8">
                     <div className="flex items-start gap-6">
                       <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
@@ -221,12 +235,13 @@ export default function JoinArtisan() {
             {/* Registration Forms */}
             {selectedPath === 'unverified' && (
               <motion.div
+                ref={formRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className="max-w-2xl mx-auto"
               >
-                <Card className="border-2 border-gold bg-gray-900">
+                <Card className="border border-gold/30 bg-black">
                   <CardHeader>
                     <CardTitle className="text-2xl text-gold">
                       Create Your Free Unverified Profile
@@ -242,12 +257,13 @@ export default function JoinArtisan() {
 
             {selectedPath === 'verified' && (
               <motion.div
+                ref={formRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className="max-w-3xl mx-auto"
               >
-                <Card className="border-2 border-gold bg-gray-900">
+                <Card className="border border-gold/30 bg-black">
                   <CardHeader>
                     <CardTitle className="text-2xl text-gold">
                       Apply for Verified Status

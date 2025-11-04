@@ -12,7 +12,7 @@ export default function Footer() {
                 Far East Rand Home Worx
               </h5>
             </div>
-            <p className="text-gray-300 mb-6">
+            <p className="text-white mb-6">
               Connecting you to reliable, vetted professionals across Brakpan. Your safety and satisfaction are our priority.
             </p>
             <div className="bg-gold/10 border border-gold/30 rounded-lg px-4 py-2 inline-flex items-center">
@@ -22,7 +22,7 @@ export default function Footer() {
 
           <div>
             <h6 className="font-semibold text-lg mb-4 text-gold">Services</h6>
-            <ul className="space-y-3 text-gray-300">
+            <ul className="space-y-3 text-white">
               <li><Link href="/service/electricians" className="hover:text-gold transition-colors">⚡ Electricians</Link></li>
               <li><Link href="/service/builders" className="hover:text-gold transition-colors">🏗️ Builders</Link></li>
               <li><Link href="/service/plumbers" className="hover:text-gold transition-colors">🔧 Plumbers</Link></li>
@@ -33,7 +33,7 @@ export default function Footer() {
 
           <div>
             <h6 className="font-semibold text-lg mb-4 text-gold">Coverage Area</h6>
-            <ul className="space-y-3 text-gray-300">
+            <ul className="space-y-3 text-white">
               <li className="flex items-center"><span className="text-gold mr-2">📍</span> Brakpan</li>
               <li className="flex items-center"><span className="text-gold mr-2">📍</span> Benoni</li>
               <li className="flex items-center"><span className="text-gold mr-2">📍</span> Springs</li>
@@ -44,7 +44,7 @@ export default function Footer() {
 
           <div>
             <h6 className="font-semibold text-lg mb-4 text-gold">Contact Us</h6>
-            <ul className="space-y-3 text-gray-300">
+            <ul className="space-y-3 text-white">
               <li className="flex items-center"><span className="text-gold mr-2">📞</span> +27 11 123 4567</li>
               <li className="flex items-center"><span className="text-gold mr-2">📧</span> info@ferandworx.co.za</li>
               <li className="flex items-center mt-4"><span className="text-gold mr-2">✓</span> Verified & Insured</li>
@@ -52,12 +52,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 pt-8">
+        <div className="border-t border-gold/30 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+            <p className="text-white/80 text-sm mb-4 md:mb-0">
               © 2024 Far East Rand Home Worx. All rights reserved.
             </p>
-            <div className="flex space-x-6 text-sm text-gray-400">
+            <div className="flex space-x-6 text-sm text-white/80">
               <a href="#" className="hover:text-gold transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-gold transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-gold transition-colors">Cookie Policy</a>

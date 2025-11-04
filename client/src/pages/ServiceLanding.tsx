@@ -116,6 +116,14 @@ export default function ServiceLanding() {
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
   const locationInputRef = useRef<HTMLInputElement>(null);
+  const getStartedRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to Get Started section on page load
+  useEffect(() => {
+    if (getStartedRef.current) {
+      getStartedRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -192,7 +200,7 @@ export default function ServiceLanding() {
                 </Button>
               </Link>
               {/* Get Started Form - Primary Focus */}
-              <div className="max-w-4xl mx-auto">
+              <div ref={getStartedRef} className="max-w-4xl mx-auto">
                 <Card className="shadow-2xl border border-gold/30 bg-black">
                   <CardHeader className="pb-3 bg-black text-white rounded-t-lg">
                     <div className="text-center">
@@ -238,11 +246,11 @@ export default function ServiceLanding() {
                           data-testid="input-location"
                         />
                         {showLocationSuggestions && locationSuggestions.length > 0 && (
-                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                          <div className="absolute top-full left-0 right-0 bg-zinc-800 border border-gold/30 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
                             {locationSuggestions.map((suggestion, index) => (
                               <button
                                 key={index}
-                                className="w-full text-left px-4 py-3 hover:bg-gold/10 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                                className="w-full text-left px-4 py-3 text-white hover:bg-gold/20 transition-colors first:rounded-t-lg last:rounded-b-lg"
                                 onClick={() => selectLocation(suggestion)}
                               >
                                 {suggestion}

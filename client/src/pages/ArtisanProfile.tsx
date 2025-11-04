@@ -122,7 +122,7 @@ export default function ArtisanProfile() {
                       
                       {/* Tier Badges */}
                       {artisan.subscriptionTier === 'unverified' && (
-                        <Badge variant="outline" className="text-white/80 border-white/40 bg-zinc-800/50">
+                        <Badge variant="outline" className="text-white/80 border-gold/30 bg-zinc-800/50">
                           <User className="w-3 h-3 mr-1" />
                           Unverified
                         </Badge>
@@ -136,7 +136,7 @@ export default function ArtisanProfile() {
                       )}
                       
                       {artisan.subscriptionTier === 'premium' && (
-                        <Badge variant="outline" className="text-purple-400 border-purple-500 bg-purple-900/30">
+                        <Badge variant="outline" className="text-gold border-gold/60 bg-gold/20">
                           <Star className="w-3 h-3 mr-1" />
                           Premium Marketing
                         </Badge>

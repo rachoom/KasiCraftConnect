@@ -81,7 +81,7 @@ export default function SearchResults() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">Search Error</h1>
-            <p className="text-gray-300 mb-4">Unable to perform search. Please try again.</p>
+            <p className="text-white mb-4">Unable to perform search. Please try again.</p>
             <p className="text-sm text-red-600 mb-6">Error: {error?.message || "Unknown error"}</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
@@ -103,8 +103,8 @@ export default function SearchResults() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">No Results</h1>
-            <p className="text-gray-300 mb-4">No search results found for "{service}" in "{searchLocation}".</p>
-            <p className="text-sm text-gray-400 mb-6">Try adjusting your search terms or location.</p>
+            <p className="text-white mb-4">No search results found for "{service}" in "{searchLocation}".</p>
+            <p className="text-sm text-white/80 mb-6">Try adjusting your search terms or location.</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -130,8 +130,8 @@ export default function SearchResults() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">No Artisans Found</h1>
-            <p className="text-gray-300 mb-4">No {service} found in {searchLocation}.</p>
-            <p className="text-sm text-gray-400 mb-6">Try searching in nearby areas or different services.</p>
+            <p className="text-white mb-4">No {service} found in {searchLocation}.</p>
+            <p className="text-sm text-white/80 mb-6">Try searching in nearby areas or different services.</p>
             <Link href="/">
               <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -164,9 +164,9 @@ export default function SearchResults() {
               <h1 className="text-3xl font-bold text-white mb-2">
                 {service.charAt(0).toUpperCase() + service.slice(1)} in {searchLocation}
               </h1>
-              <p className="text-gray-300">
+              <p className="text-white">
                 Found {count} {count === 1 ? 'artisan' : 'artisans'} 
-                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-gray-400 text-gray-300' : 'bg-gold text-black'}`}>
+                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-gold/30 text-white' : 'bg-gold text-black'}`}>
                   {resultTier.toUpperCase()} TIER - {resultTier === 'basic' ? 'UNVERIFIED' : 'VERIFIED'} ARTISANS
                 </Badge>
               </p>
@@ -180,7 +180,7 @@ export default function SearchResults() {
             <h2 className="text-xl font-semibold text-white mb-4">
               No artisans found
             </h2>
-            <p className="text-gray-300 mb-6">
+            <p className="text-white mb-6">
               Try expanding your search area or selecting a different service.
             </p>
             <Link href="/">
@@ -192,7 +192,7 @@ export default function SearchResults() {
         ) : (
           <div className="grid gap-6">
             {artisans.map((artisan: Artisan) => (
-              <Card key={artisan.id} className={`hover:shadow-lg transition-all cosmic-glow-static ${artisan.verified ? 'border-2 border-green-500/50' : ''}`}>
+              <Card key={artisan.id} className="border border-gold/30 hover:shadow-lg transition-all cosmic-glow-static">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
@@ -215,7 +215,7 @@ export default function SearchResults() {
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Badge variant="outline" className="text-gray-600 border-gray-400 bg-gray-50 text-sm px-3 py-1 flex items-center gap-1">
+                                  <Badge variant="outline" className="text-white border-gold/30 bg-zinc-800/50 text-sm px-3 py-1 flex items-center gap-1">
                                     Unverified <Info className="w-3 h-3" />
                                   </Badge>
                                 </TooltipTrigger>
@@ -235,18 +235,18 @@ export default function SearchResults() {
                           <div className="flex items-center space-x-1 text-white">
                             <Star className="w-4 h-4 fill-gold text-gold" />
                             <span className="font-medium">{formatRating(artisan.rating || "0")}</span>
-                            <span className="text-gray-400">({artisan.reviewCount} reviews)</span>
+                            <span className="text-white/80">({artisan.reviewCount} reviews)</span>
                           </div>
                           
-                          <div className="flex items-center space-x-1 text-gray-400">
+                          <div className="flex items-center space-x-1 text-white/80">
                             <MapPin className="w-4 h-4" />
                             <span>{artisan.location}</span>
                           </div>
                         </div>
                         
-                        <p className="text-gray-300 mb-4 line-clamp-2">{artisan.description}</p>
+                        <p className="text-white mb-4 line-clamp-2">{artisan.description}</p>
                         
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-white/80">
                           {artisan.yearsExperience} years of experience
                         </div>
                       </div>
@@ -283,7 +283,7 @@ export default function SearchResults() {
               <h3 className="text-lg font-semibold text-white mb-2">
                 Want verified artisans?
               </h3>
-              <p className="text-gray-300 mb-4">
+              <p className="text-white mb-4">
                 Upgrade to Premium to see up to 5 ID & qualification verified artisans with detailed profiles and reviews.
               </p>
               <div className="flex gap-4 justify-center">
@@ -307,7 +307,7 @@ export default function SearchResults() {
 
         {/* Tier selection for other tiers */}
         {resultTier !== 'basic' && (
-          <Card className="mt-8 bg-gray-50 border-gray-200">
+          <Card className="mt-8 bg-black border border-gold/30">
             <CardContent className="p-6 text-center">
               <h3 className="text-lg font-semibold text-black-soft mb-2">
                 Try different search tiers

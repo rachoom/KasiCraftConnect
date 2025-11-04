@@ -157,10 +157,10 @@ export default function VerifiedApplicationForm() {
           <CheckCircle className="w-12 h-12 text-green-500" />
         </div>
         <h3 className="text-2xl font-bold text-gold mb-4">Application Submitted!</h3>
-        <p className="text-gray-400 mb-4 max-w-md mx-auto">
+        <p className="text-white/80 mb-4 max-w-md mx-auto">
           Thank you for applying to become a verified artisan. Our team will review your application and supporting documents within 2-3 business days.
         </p>
-        <p className="text-gray-400 mb-6 max-w-md mx-auto">
+        <p className="text-white/80 mb-6 max-w-md mx-auto">
           We'll contact you via email with the next steps, including payment details once your application is approved.
         </p>
         <Button 
@@ -183,15 +183,15 @@ export default function VerifiedApplicationForm() {
           name="subscriptionTier"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Select Your Tier *</FormLabel>
+              <FormLabel className="text-white">Select Your Tier *</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
                   value={field.value}
                   className="grid md:grid-cols-2 gap-4"
                 >
-                  <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-                    field.value === 'verified' ? 'border-gold bg-gold/10' : 'border-gray-700'
+                  <div className={`border border-gold/30 rounded-lg p-4 cursor-pointer transition-all ${
+                    field.value === 'verified' ? 'bg-gold/10 shadow-lg' : ''
                   }`}>
                     <RadioGroupItem value="verified" id="tier-verified" className="sr-only" />
                     <label htmlFor="tier-verified" className="cursor-pointer" data-testid="radio-tier-verified">
@@ -199,12 +199,12 @@ export default function VerifiedApplicationForm() {
                         <h4 className="font-bold text-gold">Verified</h4>
                         <span className="text-gold font-bold">R100/month</span>
                       </div>
-                      <p className="text-sm text-gray-400">Priority placement, verified badge, photo gallery, reviews</p>
+                      <p className="text-sm text-white/80">Priority placement, verified badge, photo gallery, reviews</p>
                     </label>
                   </div>
 
-                  <div className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-                    field.value === 'premium' ? 'border-purple-500 bg-purple-500/10' : 'border-gray-700'
+                  <div className={`border border-gold/30 rounded-lg p-4 cursor-pointer transition-all ${
+                    field.value === 'premium' ? 'bg-gold/10 shadow-lg' : ''
                   }`}>
                     <RadioGroupItem value="premium" id="tier-premium" className="sr-only" />
                     <label htmlFor="tier-premium" className="cursor-pointer" data-testid="radio-tier-premium">
@@ -212,7 +212,7 @@ export default function VerifiedApplicationForm() {
                         <h4 className="font-bold text-purple-400">Verified + Marketing</h4>
                         <span className="text-purple-400 font-bold">R299/month</span>
                       </div>
-                      <p className="text-sm text-gray-400">All Verified benefits + marketing support</p>
+                      <p className="text-sm text-white/80">All Verified benefits + marketing support</p>
                     </label>
                   </div>
                 </RadioGroup>
@@ -228,11 +228,11 @@ export default function VerifiedApplicationForm() {
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">First Name *</FormLabel>
+                <FormLabel className="text-white">First Name *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-firstName"
                   />
                 </FormControl>
@@ -246,11 +246,11 @@ export default function VerifiedApplicationForm() {
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">Last Name *</FormLabel>
+                <FormLabel className="text-white">Last Name *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-lastName"
                   />
                 </FormControl>
@@ -266,12 +266,12 @@ export default function VerifiedApplicationForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">Email Address *</FormLabel>
+                <FormLabel className="text-white">Email Address *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
                     type="email"
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-email"
                   />
                 </FormControl>
@@ -285,12 +285,12 @@ export default function VerifiedApplicationForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-300">Phone Number *</FormLabel>
+                <FormLabel className="text-white">Phone Number *</FormLabel>
                 <FormControl>
                   <Input 
                     {...field} 
                     type="tel"
-                    className="bg-gray-800 border-gray-700 text-white"
+                    className="bg-zinc-800 border-gold/20 text-white"
                     data-testid="input-phone"
                   />
                 </FormControl>
@@ -305,16 +305,16 @@ export default function VerifiedApplicationForm() {
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Location *</FormLabel>
+              <FormLabel className="text-white">Location *</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white" data-testid="select-location">
+                  <SelectTrigger className="bg-zinc-800 border-gold/20 text-white" data-testid="select-location">
                     <SelectValue placeholder="Select your location" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="bg-zinc-800 border-gold/30 text-white">
                   {locations.map((location) => (
-                    <SelectItem key={location} value={location}>
+                    <SelectItem key={location} value={location} className="text-white focus:bg-gold/20 focus:text-white">
                       {location}
                     </SelectItem>
                   ))}
@@ -330,7 +330,7 @@ export default function VerifiedApplicationForm() {
           name="services"
           render={() => (
             <FormItem>
-              <FormLabel className="text-gray-300">Services Offered *</FormLabel>
+              <FormLabel className="text-white">Services Offered *</FormLabel>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                 {serviceOptions.map((service) => (
                   <FormField
@@ -348,11 +348,11 @@ export default function VerifiedApplicationForm() {
                                 : (field.value || []).filter((val) => val !== service.id);
                               field.onChange(updatedValue);
                             }}
-                            className="border-gray-600"
+                            className="border-gold/30"
                             data-testid={`checkbox-service-${service.id}`}
                           />
                         </FormControl>
-                        <FormLabel className="text-sm text-gray-300 font-normal cursor-pointer">
+                        <FormLabel className="text-sm text-white font-normal cursor-pointer">
                           {service.label}
                         </FormLabel>
                       </FormItem>
@@ -370,7 +370,7 @@ export default function VerifiedApplicationForm() {
           name="yearsExperience"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Years of Experience *</FormLabel>
+              <FormLabel className="text-white">Years of Experience *</FormLabel>
               <FormControl>
                 <Input 
                   {...field} 
@@ -378,7 +378,7 @@ export default function VerifiedApplicationForm() {
                   min={1}
                   max={50}
                   onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
-                  className="bg-gray-800 border-gray-700 text-white"
+                  className="bg-zinc-800 border-gold/20 text-white"
                   data-testid="input-yearsExperience"
                 />
               </FormControl>
@@ -392,13 +392,13 @@ export default function VerifiedApplicationForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Detailed Description *</FormLabel>
+              <FormLabel className="text-white">Detailed Description *</FormLabel>
               <FormControl>
                 <Textarea 
                   {...field} 
                   rows={6}
                   placeholder="Tell clients about your experience, specializations, and what makes you stand out..."
-                  className="bg-gray-800 border-gray-700 text-white"
+                  className="bg-zinc-800 border-gold/20 text-white"
                   data-testid="textarea-description"
                 />
               </FormControl>
@@ -412,7 +412,7 @@ export default function VerifiedApplicationForm() {
           <h3 className="text-lg font-semibold text-gold">Supporting Documents</h3>
           
           <div className="space-y-2">
-            <label className="text-gray-300">ID Document (Optional)</label>
+            <label className="text-white">ID Document (Optional)</label>
             <div className="flex items-center gap-4">
               <Input 
                 type="file"
@@ -421,18 +421,18 @@ export default function VerifiedApplicationForm() {
                   const file = e.target.files?.[0];
                   if (file) handleFileUpload(file, 'id');
                 }}
-                className="bg-gray-800 border-gray-700 text-white"
+                className="bg-zinc-800 border-gold/20 text-white"
                 data-testid="input-id-document"
               />
               {uploadedIdDoc && (
                 <FileText className="w-6 h-6 text-green-500" />
               )}
             </div>
-            <p className="text-xs text-gray-500">Upload a copy of your ID (PDF, JPG, or PNG, max 5MB)</p>
+            <p className="text-xs text-white/60">Upload a copy of your ID (PDF, JPG, or PNG, max 5MB)</p>
           </div>
 
           <div className="space-y-2">
-            <label className="text-gray-300">Qualification Documents (Optional)</label>
+            <label className="text-white">Qualification Documents (Optional)</label>
             <div className="flex items-center gap-4">
               <Input 
                 type="file"
@@ -441,14 +441,14 @@ export default function VerifiedApplicationForm() {
                   const file = e.target.files?.[0];
                   if (file) handleFileUpload(file, 'qualification');
                 }}
-                className="bg-gray-800 border-gray-700 text-white"
+                className="bg-zinc-800 border-gold/20 text-white"
                 data-testid="input-qualification-documents"
               />
               {uploadedQualDocs.length > 0 && (
                 <span className="text-green-500">{uploadedQualDocs.length} file(s) uploaded</span>
               )}
             </div>
-            <p className="text-xs text-gray-500">Upload certificates, licenses, or proof of past work</p>
+            <p className="text-xs text-white/60">Upload certificates, licenses, or proof of past work</p>
           </div>
         </div>
 
