@@ -41,6 +41,7 @@ function Router() {
         <Route path="/service/cleaners" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/service/landscapers" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/service/mechanics" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
+        <Route path="/service/painters" component={() => <PageTransition><ServiceLanding /></PageTransition>} />
         <Route path="/profiles" component={() => <PageTransition><ViewProfiles /></PageTransition>} />
         <Route path="/subscription" component={() => <PageTransition><ArtisanSubscription /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><ContactUs /></PageTransition>} />
@@ -58,7 +59,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <CosmicBackground />
-        <div className="relative z-10">
+        <div className="relative z-10 bg-black text-white min-h-screen">
           <Toaster />
           <Router />
         </div>

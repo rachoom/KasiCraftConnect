@@ -14,9 +14,15 @@ Preferred communication style: Simple, everyday language.
 - Modern React 18 frontend with TypeScript.
 - Shadcn/ui component library based on Radix UI, styled with Tailwind CSS and custom CSS variables.
 - Framer Motion for smooth animations and transitions.
-- Global dark theme (`bg-black`) with Royal Gold (`#DAA520`) accents and lime green elements for CTAs.
+- **PERMANENT DARK THEME**: Black background (#000000) enforced site-wide for ALL users regardless of system preferences. Dark theme CSS variables are set as default in `:root` to ensure consistent appearance.
+- **Strict White/Gold Color Palette**: ALL text uses white (text-white), white with opacity (text-white/80, text-white/60), or Royal Gold (#DAA520). NO gray text allowed on dark backgrounds for maximum contrast and visibility.
+- Royal Gold (`#DAA520`) used for primary branding, headings, and accent elements.
+- Hero section features darker overlay (95% opacity) for optimal text readability against background images.
+- "Far East Rand" subtitle always visible in header with gold color.
 - Redesigned homepage with a simplified hero section, gold-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
 - Mobile-responsive navigation with a hamburger menu for smaller viewports.
+- All cards use `bg-zinc-900` with `border-gold/30` for consistent styling.
+- Status badges use gold/white palette instead of colored variants for theme consistency.
 
 ### Technical Implementations
 - **Frontend**: React 18, Wouter for routing, TanStack Query for state management, Vite for building.
@@ -34,6 +40,9 @@ Preferred communication style: Simple, everyday language.
 - "Trusted Partners" section on the homepage featuring sponsored cards.
 - Cleaned-up header navigation with "Artisans", "Contact", and "Register as an Artisan" links.
 - Updated footer with Services, Coverage Area (Brakpan locations), and Contact Us columns.
+- All service routes including Painters properly configured to avoid 404 errors.
+- ViewProfiles filter order: Service → Location → Status → Search.
+- Logo increased to w-12 h-12 (mobile) and w-14 h-14 (desktop) for better visibility.
 
 ## External Dependencies
 

@@ -12,7 +12,7 @@ export default function Hero() {
           alt="Artisan at work"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-black/90 to-black/95"></div>
       </div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 w-full">
@@ -50,7 +50,7 @@ export default function Hero() {
           </motion.h1>
           
           <motion.p 
-            className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-white mb-12 leading-relaxed max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}

@@ -34,7 +34,7 @@ export default function Header() {
                 <h1 className="text-lg sm:text-xl font-bold text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
                   Artisan Connect
                 </h1>
-                <span className="text-xs sm:text-sm text-gold/70 font-light hidden sm:inline">Far East Rand</span>
+                <span className="text-xs sm:text-sm text-gold font-light">Far East Rand</span>
               </div>
             </Link>
           </motion.div>
