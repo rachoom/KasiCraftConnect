@@ -15,55 +15,55 @@ import FadeInSection from "@/components/FadeInSection";
 
 const serviceInfo = {
   builders: {
-    title: "Verified Builders",
+    title: "Builders",
     description: "Connect with professional builders and construction experts in your area",
     icon: "🏗️",
     services: ["New Construction", "Home Renovation", "Extensions", "Roofing", "Foundations", "General Building"]
   },
   plumbers: {
-    title: "Verified Plumbers",
+    title: "Plumbers",
     description: "Find trusted plumbing professionals for all your water and drainage needs",
     icon: "🔧",
     services: ["Emergency Repairs", "Pipe Installation", "Drain Cleaning", "Water Heater Services", "Bathroom Renovation", "Kitchen Plumbing"]
   },
   electricians: {
-    title: "Verified Electricians",
+    title: "Electricians",
     description: "Reliable electrical contractors for safe and professional installations",
     icon: "⚡",
     services: ["Electrical Installation", "Wiring", "Lighting", "Power Points", "Safety Inspections", "Emergency Repairs"]
   },
   painters: {
-    title: "Verified Painters",
+    title: "Painters",
     description: "Professional painting services for interior and exterior projects",
     icon: "🎨",
     services: ["Interior Painting", "Exterior Painting", "Wallpaper Installation", "Spray Painting", "Decorative Finishes", "Surface Preparation"]
   },
   carpenters: {
-    title: "Verified Carpenters",
+    title: "Carpenters",
     description: "Skilled carpenters for custom woodwork and furniture projects",
     icon: "🪵",
     services: ["Custom Furniture", "Kitchen Cabinets", "Built-in Wardrobes", "Decking", "Wooden Flooring", "Door Installation"]
   },
   tilers: {
-    title: "Verified Tilers",
+    title: "Tilers",
     description: "Professional tiling specialists for floors, walls, and bathrooms",
     icon: "🏠",
     services: ["Floor Tiling", "Wall Tiling", "Bathroom Tiling", "Kitchen Backsplash", "Outdoor Tiling", "Tile Repairs"]
   },
   cleaners: {
-    title: "Verified Cleaners", 
+    title: "Cleaners", 
     description: "Trusted cleaning services for homes and offices",
     icon: "🧽",
     services: ["House Cleaning", "Office Cleaning", "Deep Cleaning", "Move-in/Move-out", "Carpet Cleaning", "Window Cleaning"]
   },
   landscapers: {
-    title: "Verified Landscapers",
+    title: "Landscapers",
     description: "Expert landscaping and garden maintenance services",
     icon: "🌿",
     services: ["Garden Design", "Lawn Maintenance", "Tree Services", "Irrigation", "Landscaping", "Garden Cleanup"]
   },
   mechanics: {
-    title: "Verified Mechanics",
+    title: "Mechanics",
     description: "Professional vehicle repair and maintenance specialists",
     icon: "🔧",
     services: ["Engine Repair", "Brake Service", "Oil Changes", "Transmission Service", "Diagnostics", "General Maintenance"]

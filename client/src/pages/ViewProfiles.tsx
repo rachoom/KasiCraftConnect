@@ -52,9 +52,9 @@ export default function ViewProfiles() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-gold/20 text-gold border border-gold/40';
-      case 'rejected': return 'bg-white/10 text-white/80 border border-white/40';
-      default: return 'bg-white/10 text-white/70 border border-white/30';
+      case 'approved': return 'bg-green-600 text-white';
+      case 'rejected': return 'bg-green-600 text-white';
+      default: return 'bg-green-600 text-white';
     }
   };
 
@@ -83,7 +83,7 @@ export default function ViewProfiles() {
             </div>
 
             {/* Search and Filter Section */}
-            <Card className="mb-8 shadow-lg border-gold/30 bg-zinc-900">
+            <Card className="mb-8 shadow-lg border-gold/30 bg-black">
               <CardHeader>
                 <CardTitle className="text-white">Search & Filter</CardTitle>
               </CardHeader>
@@ -95,10 +95,10 @@ export default function ViewProfiles() {
                       <SelectTrigger className="bg-zinc-800 border-gold/20 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by service" />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-800 border-gold/20">
-                        <SelectItem value="all">All Services</SelectItem>
+                      <SelectContent className="bg-zinc-800 border-gold/20 text-gold">
+                        <SelectItem value="all" className="text-gold">All Services</SelectItem>
                         {serviceOptions.map((service) => (
-                          <SelectItem key={service.id} value={service.id}>
+                          <SelectItem key={service.id} value={service.id} className="text-gold">
                             {service.label}
                           </SelectItem>
                         ))}
@@ -122,11 +122,11 @@ export default function ViewProfiles() {
                       <SelectTrigger className="bg-zinc-800 border-gold/20 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by status" />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-800 border-gold/20">
-                        <SelectItem value="all">All Statuses</SelectItem>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="approved">Approved</SelectItem>
-                        <SelectItem value="rejected">Rejected</SelectItem>
+                      <SelectContent className="bg-zinc-800 border-gold/20 text-gold">
+                        <SelectItem value="all" className="text-gold">All Statuses</SelectItem>
+                        <SelectItem value="pending" className="text-gold">Pending</SelectItem>
+                        <SelectItem value="approved" className="text-gold">Approved</SelectItem>
+                        <SelectItem value="rejected" className="text-gold">Rejected</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -168,7 +168,7 @@ export default function ViewProfiles() {
                 ))}
               </div>
             ) : filteredArtisans.length === 0 ? (
-              <Card className="shadow-lg border-gold/30 bg-zinc-900">
+              <Card className="shadow-lg border-gold/30 bg-black">
                 <CardContent className="p-8 text-center">
                   <User className="w-12 h-12 text-white/40 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">
@@ -182,7 +182,7 @@ export default function ViewProfiles() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredArtisans.map((artisan: any) => (
-                  <Card key={artisan.id} className="shadow-lg border-gold/30 bg-zinc-900 hover:shadow-xl transition-shadow hover:border-gold/50">
+                  <Card key={artisan.id} className="shadow-lg border-gold/30 bg-black hover:shadow-xl transition-shadow hover:border-gold/50">
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         {/* Header with name and status */}
@@ -275,7 +275,7 @@ export default function ViewProfiles() {
                           </div>
                           
                           <Link href={`/artisan/${artisan.id}`}>
-                            <Button variant="outline" size="sm">
+                            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
                               View Details
                             </Button>
                           </Link>
