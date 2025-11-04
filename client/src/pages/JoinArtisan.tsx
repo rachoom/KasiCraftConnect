@@ -32,7 +32,7 @@ export default function JoinArtisan() {
               <h1 className="text-5xl font-bold text-gold mb-4">
                 Join Skills Connect as an Artisan
               </h1>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-white max-w-3xl mx-auto">
                 Choose the path that's right for you and start connecting with clients today
               </p>
             </div>
@@ -50,36 +50,36 @@ export default function JoinArtisan() {
               >
                 <Card className={`h-full border-2 transition-all ${
                   selectedPath === 'unverified' 
-                    ? 'border-gold bg-gold/10' 
-                    : 'border-gray-700 hover:border-gold/50 bg-gray-900'
+                    ? 'border-blue-500 bg-blue-500/10' 
+                    : 'border-gold/30 hover:border-gold/50 bg-zinc-900'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="w-8 h-8 text-gray-400" />
+                      <Users className="w-8 h-8 text-white/40" />
                     </div>
                     <CardTitle className="text-3xl text-gold">
                       Unverified Listing
                     </CardTitle>
-                    <p className="text-4xl font-bold text-gray-300 mt-2">FREE</p>
-                    <p className="text-sm text-gray-400 mt-1">Get started instantly</p>
+                    <p className="text-4xl font-bold text-white mt-2">FREE</p>
+                    <p className="text-sm text-white/80 mt-1">Get started instantly</p>
                   </CardHeader>
                   
                   <CardContent className="pt-2">
                     <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <CheckCircle className="w-5 h-5 text-gray-400" />
+                      <div className="flex items-center gap-3 text-white">
+                        <CheckCircle className="w-5 h-5 text-white/60" />
                         <span>Basic profile listing</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <CheckCircle className="w-5 h-5 text-gray-400" />
+                      <div className="flex items-center gap-3 text-white">
+                        <CheckCircle className="w-5 h-5 text-white/60" />
                         <span>Contact information display</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <CheckCircle className="w-5 h-5 text-gray-400" />
+                      <div className="flex items-center gap-3 text-white">
+                        <CheckCircle className="w-5 h-5 text-white/60" />
                         <span>Included in skill categories</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
-                        <CheckCircle className="w-5 h-5 text-gray-400" />
+                      <div className="flex items-center gap-3 text-white">
+                        <CheckCircle className="w-5 h-5 text-white/60" />
                         <span>Profile marked as "Unverified"</span>
                       </div>
                     </div>
@@ -111,8 +111,8 @@ export default function JoinArtisan() {
                 
                 <Card className={`h-full border-2 transition-all ${
                   selectedPath === 'verified' 
-                    ? 'border-gold bg-gold/10 shadow-xl shadow-gold/20' 
-                    : 'border-gold/50 hover:border-gold bg-gray-900'
+                    ? 'border-blue-500 bg-blue-500/10 shadow-xl shadow-blue-500/20' 
+                    : 'border-gold/50 hover:border-gold bg-zinc-900'
                 }`}>
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -122,28 +122,28 @@ export default function JoinArtisan() {
                       Verified Artisan
                     </CardTitle>
                     <p className="text-4xl font-bold text-gold mt-2">R100<span className="text-lg">/month</span></p>
-                    <p className="text-sm text-gray-400 mt-1">Build trust with clients</p>
+                    <p className="text-sm text-white/80 mt-1">Build trust with clients</p>
                   </CardHeader>
                   
                   <CardContent className="pt-2">
                     <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3 text-gray-300">
+                      <div className="flex items-center gap-3 text-white">
                         <Star className="w-5 h-5 text-gold" />
                         <span className="font-semibold">All Unverified features, plus:</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
+                      <div className="flex items-center gap-3 text-white">
                         <TrendingUp className="w-5 h-5 text-gold" />
                         <span><strong>Priority placement</strong> in search results</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
+                      <div className="flex items-center gap-3 text-white">
                         <CheckCircle className="w-5 h-5 text-gold" />
                         <span>Prominent <strong>"Verified"</strong> badge</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
+                      <div className="flex items-center gap-3 text-white">
                         <Camera className="w-5 h-5 text-gold" />
                         <span>Detailed profile with photo gallery</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-300">
+                      <div className="flex items-center gap-3 text-white">
                         <FileText className="w-5 h-5 text-gold" />
                         <span>Access to customer review system</span>
                       </div>
@@ -181,24 +181,24 @@ export default function JoinArtisan() {
                           <span className="text-3xl font-bold text-purple-400">R299<span className="text-lg">/month</span></span>
                         </div>
                         
-                        <p className="text-gray-300 mb-4">
+                        <p className="text-white mb-4">
                           Everything in Verified tier, plus dedicated marketing support to grow your business
                         </p>
                         
                         <div className="grid md:grid-cols-2 gap-3 mb-6">
-                          <div className="flex items-center gap-2 text-gray-300">
+                          <div className="flex items-center gap-2 text-white">
                             <Zap className="w-5 h-5 text-purple-400" />
                             <span>Featured placement on homepage</span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-300">
+                          <div className="flex items-center gap-2 text-white">
                             <TrendingUp className="w-5 h-5 text-purple-400" />
                             <span>Social media promotion</span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-300">
+                          <div className="flex items-center gap-2 text-white">
                             <Star className="w-5 h-5 text-purple-400" />
                             <span>Email marketing campaigns</span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-300">
+                          <div className="flex items-center gap-2 text-white">
                             <CheckCircle className="w-5 h-5 text-purple-400" />
                             <span>Priority customer support</span>
                           </div>
@@ -231,7 +231,7 @@ export default function JoinArtisan() {
                     <CardTitle className="text-2xl text-gold">
                       Create Your Free Unverified Profile
                     </CardTitle>
-                    <p className="text-gray-400">Fill in the form below to get started instantly</p>
+                    <p className="text-white/80">Fill in the form below to get started instantly</p>
                   </CardHeader>
                   <CardContent>
                     <UnverifiedRegistrationForm />
@@ -252,7 +252,7 @@ export default function JoinArtisan() {
                     <CardTitle className="text-2xl text-gold">
                       Apply for Verified Status
                     </CardTitle>
-                    <p className="text-gray-400">
+                    <p className="text-white/80">
                       Submit your application with supporting documents. We'll review within 2-3 business days.
                     </p>
                   </CardHeader>

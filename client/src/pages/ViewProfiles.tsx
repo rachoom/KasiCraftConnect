@@ -52,9 +52,9 @@ export default function ViewProfiles() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      default: return 'bg-yellow-100 text-yellow-800';
+      case 'approved': return 'bg-gold/20 text-gold border border-gold/40';
+      case 'rejected': return 'bg-white/10 text-white/80 border border-white/40';
+      default: return 'bg-white/10 text-white/70 border border-white/30';
     }
   };
 
@@ -74,36 +74,28 @@ export default function ViewProfiles() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="mb-8">
-              <h1 className="text-4xl font-bold text-black-soft mb-2">
+              <h1 className="text-4xl font-bold text-white mb-2">
                 Artisan Profiles
               </h1>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-white/90">
                 Browse and search through all registered artisan profiles
               </p>
             </div>
 
             {/* Search and Filter Section */}
-            <Card className="mb-8 shadow-lg border-0">
+            <Card className="mb-8 shadow-lg border-gold/30 bg-zinc-900">
               <CardHeader>
-                <CardTitle className="text-black-soft">Search & Filter</CardTitle>
+                <CardTitle className="text-white">Search & Filter</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  <div>
-                    <Input
-                      placeholder="Search by name or email..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full"
-                    />
-                  </div>
-                  
+                  {/* REORDERED: 1. Filter by service */}
                   <div>
                     <Select value={filterService} onValueChange={setFilterService}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-zinc-800 border-gold/20 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by service" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-zinc-800 border-gold/20">
                         <SelectItem value="all">All Services</SelectItem>
                         {serviceOptions.map((service) => (
                           <SelectItem key={service.id} value={service.id}>
@@ -114,21 +106,23 @@ export default function ViewProfiles() {
                     </Select>
                   </div>
                   
+                  {/* REORDERED: 2. Filter by location */}
                   <div>
                     <Input
                       placeholder="Filter by location..."
                       value={filterLocation}
                       onChange={(e) => setFilterLocation(e.target.value)}
-                      className="w-full"
+                      className="w-full bg-zinc-800 border-gold/20 text-white placeholder:text-white/60"
                     />
                   </div>
                   
+                  {/* REORDERED: 3. Filter by status */}
                   <div>
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-zinc-800 border-gold/20 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by status" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-zinc-800 border-gold/20">
                         <SelectItem value="all">All Statuses</SelectItem>
                         <SelectItem value="pending">Pending</SelectItem>
                         <SelectItem value="approved">Approved</SelectItem>
@@ -136,13 +130,23 @@ export default function ViewProfiles() {
                       </SelectContent>
                     </Select>
                   </div>
+                  
+                  {/* REORDERED: 4. Search by name or email */}
+                  <div>
+                    <Input
+                      placeholder="Search by name or email..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full bg-zinc-800 border-gold/20 text-white placeholder:text-white/60"
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Results Summary */}
             <div className="mb-6">
-              <p className="text-gray-600">
+              <p className="text-white">
                 {isLoading ? "Loading..." : `Showing ${filteredArtisans.length} of ${(artisans || []).length} profiles`}
               </p>
             </div>
@@ -164,13 +168,13 @@ export default function ViewProfiles() {
                 ))}
               </div>
             ) : filteredArtisans.length === 0 ? (
-              <Card className="shadow-lg border-0">
+              <Card className="shadow-lg border-gold/30 bg-zinc-900">
                 <CardContent className="p-8 text-center">
-                  <User className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  <User className="w-12 h-12 text-white/40 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     No profiles found
                   </h3>
-                  <p className="text-gray-500">
+                  <p className="text-white/80">
                     Try adjusting your search criteria or filters
                   </p>
                 </CardContent>
@@ -178,16 +182,16 @@ export default function ViewProfiles() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredArtisans.map((artisan: any) => (
-                  <Card key={artisan.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow">
+                  <Card key={artisan.id} className="shadow-lg border-gold/30 bg-zinc-900 hover:shadow-xl transition-shadow hover:border-gold/50">
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         {/* Header with name and status */}
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="text-lg font-bold text-black-soft">
+                            <h3 className="text-lg font-bold text-white">
                               {artisan.firstName} {artisan.lastName}
                             </h3>
-                            <div className="flex items-center text-gray-600 text-sm">
+                            <div className="flex items-center text-white/80 text-sm">
                               <Mail className="w-4 h-4 mr-1" />
                               {artisan.email}
                             </div>
@@ -202,13 +206,13 @@ export default function ViewProfiles() {
                         {/* Contact Info */}
                         <div className="space-y-2">
                           {artisan.phone && (
-                            <div className="flex items-center text-gray-600 text-sm">
+                            <div className="flex items-center text-white/80 text-sm">
                               <Phone className="w-4 h-4 mr-2" />
                               {artisan.phone}
                             </div>
                           )}
                           {artisan.location && (
-                            <div className="flex items-center text-gray-600 text-sm">
+                            <div className="flex items-center text-white/80 text-sm">
                               <MapPin className="w-4 h-4 mr-2" />
                               {artisan.location}
                             </div>
@@ -218,7 +222,7 @@ export default function ViewProfiles() {
                         {/* Services */}
                         {artisan.services && artisan.services.length > 0 && (
                           <div>
-                            <div className="flex items-center text-gray-700 text-sm mb-2">
+                            <div className="flex items-center text-white text-sm mb-2">
                               <Briefcase className="w-4 h-4 mr-2" />
                               Services
                             </div>
@@ -226,13 +230,13 @@ export default function ViewProfiles() {
                               {artisan.services.slice(0, 3).map((service: string) => {
                                 const serviceLabel = serviceOptions.find(s => s.id === service)?.label || service;
                                 return (
-                                  <Badge key={service} variant="outline" className="text-xs">
+                                  <Badge key={service} variant="outline" className="text-xs text-gold border-gold/40">
                                     {serviceLabel}
                                   </Badge>
                                 );
                               })}
                               {artisan.services.length > 3 && (
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs text-gold border-gold/40">
                                   +{artisan.services.length - 3} more
                                 </Badge>
                               )}
@@ -242,14 +246,14 @@ export default function ViewProfiles() {
 
                         {/* Experience */}
                         {artisan.yearsExperience && (
-                          <div className="text-sm text-gray-600">
+                          <div className="text-sm text-white">
                             <strong>{artisan.yearsExperience}</strong> years of experience
                           </div>
                         )}
 
                         {/* Description */}
                         {artisan.description && (
-                          <div className="text-sm text-gray-600 line-clamp-2">
+                          <div className="text-sm text-white/80 line-clamp-2">
                             {artisan.description}
                           </div>
                         )}

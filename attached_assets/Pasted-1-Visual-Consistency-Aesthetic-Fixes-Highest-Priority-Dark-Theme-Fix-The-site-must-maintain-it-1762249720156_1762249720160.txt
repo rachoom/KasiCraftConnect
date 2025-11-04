@@ -1,0 +1,39 @@
+1. Visual Consistency & Aesthetic Fixes (Highest Priority)
+Dark Theme Fix: The site must maintain its current dark, black aesthetic with light text as the default and only visual setting (i.e., ignore the user's system "Dark Mode" setting).
+
+Text Visibility Fix: Ensure all primary and descriptive text is highly visible (e.g., white or gold text) against the dark background on all pages (e.g., Artisan Profiles, Service Search). Low-lighted text must be corrected.
+
+Icon Enhancement: The icons used throughout the site (e.g., the wrench icon in the Service Search box, or the generic icons in the 'Trusted Partners' section) need an aesthetic upgrade. Replace existing icons with better-designed icons that are visually appealing and complement the dark theme and gold/yellow highlights.
+
+2. Layout & UI Fixes (New & Urgent)
+Artisan Profile Location Overlap Fix: On the Artisan Profile page (Reference Screenshots (183), (185), (186)), the text within the location dropdowns or fields (e.g., the service type below the name) overlaps or clashes with other surrounding text. Adjust the spacing, padding, or container size to prevent text overlap and ensure a clean layout.
+
+Artisan Search & Filter Reorder: On the Artisan Profiles page, rearrange the four filter boxes from left-to-right in this exact order:
+
+Filter by service
+
+Filter by location
+
+Filter by status
+
+Search by name or email... (or equivalent text search box)
+
+3. Identified Issues & Quality-of-Life Fixes
+404 Broken Link: The "Painters" service card (and any others leading to a 404 error) must be fixed to correctly redirect to its specific Service & Filter Page.
+
+Homepage Button Fix: The "Find Artisans" button in the hero section must remain and is NOT to be removed.
+
+Header Link Alignment (Desktop): The navigation links ('Services', 'Artisans', 'Contact') must be aligned to the far right of the header bar.
+
+Toggle Highlight: The toggle for Unverified/Verified forms must use a light blue border on selection.
+
+4. Mandatory Branding & Functionality Verification
+Header Title: Must display Artisan Connect (Bold/Prominent Site Name) followed by Far East Rand (Smaller/Subtle Location Descriptor).
+
+Logo Size: Slightly increase the size of the site logo.
+
+Navigation Check: All header links, the "Return Home" function via the logo, and the mobile hamburger icon must be fully functional on all pages.
+
+Mobile Header: In Mobile View, the header displays ONLY the logo/name and the functional hamburger menu icon.
+
+Location Constraint: All site features (search, profiles, footers) must be strictly limited to the Brakpan area.

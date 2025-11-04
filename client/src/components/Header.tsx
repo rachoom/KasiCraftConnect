@@ -28,7 +28,7 @@ export default function Header() {
               <img 
                 src={logoUrl} 
                 alt="Artisan Connect Logo" 
-                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+                className="w-12 h-12 sm:w-14 sm:h-14 object-contain"
               />
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
                 <h1 className="text-lg sm:text-xl font-bold text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>

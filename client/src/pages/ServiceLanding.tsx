@@ -32,6 +32,12 @@ const serviceInfo = {
     icon: "⚡",
     services: ["Electrical Installation", "Wiring", "Lighting", "Power Points", "Safety Inspections", "Emergency Repairs"]
   },
+  painters: {
+    title: "Verified Painters",
+    description: "Professional painting services for interior and exterior projects",
+    icon: "🎨",
+    services: ["Interior Painting", "Exterior Painting", "Wallpaper Installation", "Spray Painting", "Decorative Finishes", "Surface Preparation"]
+  },
   carpenters: {
     title: "Verified Carpenters",
     description: "Skilled carpenters for custom woodwork and furniture projects",
