@@ -242,7 +242,7 @@ export default function ServiceLanding() {
                           onChange={(e) => handleLocationChange(e.target.value)}
                           onFocus={() => setShowLocationSuggestions(searchLocation.length > 0)}
                           placeholder="Enter your location"
-                          className="pl-9 py-2 text-sm bg-zinc-800 border border-gold/20 text-white placeholder:text-white/60 focus:border-gold rounded-lg"
+                          className="pl-9 py-2 text-sm bg-zinc-800 border border-green/30 text-white placeholder:text-white/60 focus:border-gold rounded-lg"
                           data-testid="input-location"
                         />
                         {showLocationSuggestions && locationSuggestions.length > 0 && (
@@ -269,7 +269,7 @@ export default function ServiceLanding() {
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
-                            className="w-full justify-start text-left font-normal py-2 text-sm bg-zinc-800 border border-gold/20 text-white hover:bg-zinc-700 hover:border-gold rounded-lg"
+                            className="w-full justify-start text-left font-normal py-2 text-sm bg-zinc-800 border border-green/30 text-white hover:bg-zinc-700 hover:border-gold rounded-lg"
                           >
                             <CalendarIcon className="mr-2 h-4 w-4 text-gold" />
                             {selectedDate ? format(selectedDate, "MMM d, yyyy") : "Select date (optional)"}

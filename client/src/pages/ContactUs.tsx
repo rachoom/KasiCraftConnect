@@ -73,7 +73,7 @@ export default function ContactUs() {
         </Link>
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto">
             Have questions about Skills Connect? We're here to help you find the perfect artisan for your needs.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function ContactUs() {
           <Card className="bg-black border border-green/30">
             <CardHeader>
               <CardTitle className="text-white">Send us a message</CardTitle>
-              <CardDescription className="text-gray-300">
+              <CardDescription className="text-white/80">
                 Fill out the form below and we'll respond as soon as possible.
               </CardDescription>
             </CardHeader>
@@ -97,7 +97,7 @@ export default function ContactUs() {
                       <FormItem>
                         <FormLabel className="text-white">Full Name</FormLabel>
                         <FormControl>
-                          <Input className="bg-zinc-800 border-gold/20 text-white" placeholder="Your full name" {...field} />
+                          <Input className="bg-zinc-800 border-green/30 text-white" placeholder="Your full name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -111,7 +111,7 @@ export default function ContactUs() {
                       <FormItem>
                         <FormLabel className="text-white">Email Address</FormLabel>
                         <FormControl>
-                          <Input className="bg-zinc-800 border-gold/20 text-white" type="email" placeholder="your.email@example.com" {...field} />
+                          <Input className="bg-zinc-800 border-green/30 text-white" type="email" placeholder="your.email@example.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -125,7 +125,7 @@ export default function ContactUs() {
                       <FormItem>
                         <FormLabel className="text-white">Phone Number</FormLabel>
                         <FormControl>
-                          <Input className="bg-zinc-800 border-gold/20 text-white" placeholder="+27 XX XXX XXXX" {...field} />
+                          <Input className="bg-zinc-800 border-green/30 text-white" placeholder="+27 XX XXX XXXX" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -139,7 +139,7 @@ export default function ContactUs() {
                       <FormItem>
                         <FormLabel className="text-white">Subject</FormLabel>
                         <FormControl>
-                          <Input className="bg-zinc-800 border-gold/20 text-white" placeholder="What is this regarding?" {...field} />
+                          <Input className="bg-zinc-800 border-green/30 text-white" placeholder="What is this regarding?" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -154,7 +154,7 @@ export default function ContactUs() {
                         <FormLabel className="text-white">Message</FormLabel>
                         <FormControl>
                           <Textarea 
-                            className="bg-zinc-800 border-gold/20 text-white min-h-[120px]"
+                            className="bg-zinc-800 border-green/30 text-white min-h-[120px]"
                             placeholder="Tell us how we can help you..."
                             {...field}
                           />
@@ -181,7 +181,7 @@ export default function ContactUs() {
             <Card className="bg-black border border-green/30">
               <CardHeader>
                 <CardTitle className="text-white">Get in touch</CardTitle>
-                <CardDescription className="text-gray-300">
+                <CardDescription className="text-white/80">
                   Reach out to us through any of these channels
                 </CardDescription>
               </CardHeader>
@@ -192,7 +192,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">Email</h4>
-                    <p className="text-gray-300">info@artisanconnect.co.za</p>
+                    <p className="text-white/80">info@artisanconnect.co.za</p>
                   </div>
                 </div>
 
@@ -202,7 +202,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">Phone</h4>
-                    <p className="text-gray-300">+27 11 748 5200</p>
+                    <p className="text-white/80">+27 11 748 5200</p>
                   </div>
                 </div>
 
@@ -212,7 +212,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">Address</h4>
-                    <p className="text-gray-300">
+                    <p className="text-white/80">
                       Brakpan, Gauteng<br />
                       Far East Rand
                     </p>
@@ -225,7 +225,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">Business Hours</h4>
-                    <p className="text-gray-300">
+                    <p className="text-white/80">
                       Monday - Friday: 8:00 AM - 6:00 PM<br />
                       Saturday: 9:00 AM - 4:00 PM<br />
                       Sunday: Closed
@@ -242,19 +242,19 @@ export default function ContactUs() {
               <CardContent className="space-y-4">
                 <div>
                   <h5 className="font-semibold text-white mb-2">How do I become a verified artisan?</h5>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-white/80 text-sm">
                     Register through our platform and submit your qualification documents for verification.
                   </p>
                 </div>
                 <div>
                   <h5 className="font-semibold text-white mb-2">What are the pricing tiers?</h5>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-white/80 text-sm">
                     We offer Basic (free), Premium, and Enterprise tiers with different features and visibility levels.
                   </p>
                 </div>
                 <div>
                   <h5 className="font-semibold text-white mb-2">How do I report an issue?</h5>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-white/80 text-sm">
                     Use the contact form above or email us directly with details about your concern.
                   </p>
                 </div>

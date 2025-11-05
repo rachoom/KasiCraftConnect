@@ -70,7 +70,7 @@ export default function PricingTiers() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Join Skills Connect</h3>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto">
             Choose the plan that helps you grow your artisan business and connect with more customers.
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function PricingTiers() {
               className={`rounded-2xl p-8 transition-all duration-300 ${
                 tier.popular 
                   ? "bg-gradient-to-br from-gold to-gold-dark text-white relative overflow-hidden shadow-[0_0_30px_rgba(218,165,32,0.5)]" 
-                  : "bg-gray-900 border-2 border-gold/50 hover:border-gold shadow-[0_0_20px_rgba(218,165,32,0.3)] hover:shadow-[0_0_30px_rgba(218,165,32,0.5)]"
+                  : "bg-gray-900 border-2 border-green/30 hover:border-green shadow-[0_0_20px_rgba(218,165,32,0.3)] hover:shadow-[0_0_30px_rgba(218,165,32,0.5)]"
               }`}
               data-testid={`tier-card-${tier.name.toLowerCase()}`}
             >
@@ -100,11 +100,11 @@ export default function PricingTiers() {
                   {tier.price}
                 </div>
                 {tier.period && (
-                  <div className={`mb-4 ${tier.popular ? "text-white/80" : "text-gray-400"}`}>
+                  <div className={`mb-4 ${tier.popular ? "text-white/80" : "text-white/70"}`}>
                     {tier.period}
                   </div>
                 )}
-                <p className={tier.popular ? "text-white/90" : "text-gray-300"}>
+                <p className={tier.popular ? "text-white/90" : "text-white/80"}>
                   {tier.description}
                 </p>
               </div>
@@ -126,7 +126,7 @@ export default function PricingTiers() {
                 className={`w-full ${
                   tier.popular 
                     ? "bg-white text-gold-dark hover:bg-gray-100 cosmic-selection" 
-                    : "border-2 border-gold text-gold hover:bg-gold hover:text-black cosmic-selection"
+                    : "border-2 border-green text-green hover:bg-green hover:text-white cosmic-selection"
                 }`}
                 data-testid={`button-${tier.name.toLowerCase()}`}
               >

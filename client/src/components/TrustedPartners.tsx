@@ -75,7 +75,7 @@ export default function TrustedPartners() {
             Our Trusted Partners
           </motion.h3>
           <motion.p 
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
+            className="text-xl text-white/80 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -104,9 +104,9 @@ export default function TrustedPartners() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="relative bg-zinc-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-green/30 hover:border-gold/60 h-full">
+                <div className="relative bg-zinc-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-green/30 hover:border-green/30 h-full">
                   {partner.sponsored && (
-                    <div className="absolute top-4 right-4 bg-gold/20 text-gold text-xs font-bold px-3 py-1 rounded-full border border-gold/40">
+                    <div className="absolute top-4 right-4 bg-gold/20 text-gold text-xs font-bold px-3 py-1 rounded-full border border-green/30">
                       SPONSORED
                     </div>
                   )}
@@ -124,7 +124,7 @@ export default function TrustedPartners() {
                       {partner.type}
                     </p>
                     
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-white/80 text-sm leading-relaxed">
                       {partner.description}
                     </p>
                   </div>

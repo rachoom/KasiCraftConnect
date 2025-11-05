@@ -181,24 +181,24 @@ export default function ArtisanDashboard() {
                   <CardContent className="space-y-4">
                     <div className="grid gap-4">
                       <div className="flex items-center">
-                        <Mail className="w-4 h-4 text-gray-400 mr-3" />
+                        <Mail className="w-4 h-4 text-white/70 mr-3" />
                         <span className="text-gray-700">{artisanData.email}</span>
                       </div>
                       {artisanData.phone && (
                         <div className="flex items-center">
-                          <Phone className="w-4 h-4 text-gray-400 mr-3" />
+                          <Phone className="w-4 h-4 text-white/70 mr-3" />
                           <span className="text-gray-700">{artisanData.phone}</span>
                         </div>
                       )}
                       {artisanData.location && (
                         <div className="flex items-center">
-                          <MapPin className="w-4 h-4 text-gray-400 mr-3" />
+                          <MapPin className="w-4 h-4 text-white/70 mr-3" />
                           <span className="text-gray-700">{artisanData.location}</span>
                         </div>
                       )}
                       {artisanData.yearsExperience && (
                         <div className="flex items-center">
-                          <Star className="w-4 h-4 text-gray-400 mr-3" />
+                          <Star className="w-4 h-4 text-white/70 mr-3" />
                           <span className="text-gray-700">{artisanData.yearsExperience} years experience</span>
                         </div>
                       )}

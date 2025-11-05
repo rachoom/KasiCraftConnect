@@ -188,7 +188,7 @@ export default function ViewProfiles() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredArtisans.map((artisan: any) => (
-                  <Card key={artisan.id} className="shadow-lg border-green/30 bg-black hover:shadow-xl transition-shadow hover:border-gold/50">
+                  <Card key={artisan.id} className="shadow-lg border-green/30 bg-black hover:shadow-xl transition-shadow hover:border-green/30">
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         {/* Header with name and status */}
@@ -236,13 +236,13 @@ export default function ViewProfiles() {
                               {artisan.services.slice(0, 3).map((service: string) => {
                                 const serviceLabel = serviceOptions.find(s => s.id === service)?.label || service;
                                 return (
-                                  <Badge key={service} variant="outline" className="text-xs text-gold border-gold/40">
+                                  <Badge key={service} variant="outline" className="text-xs text-gold border-green/30">
                                     {serviceLabel}
                                   </Badge>
                                 );
                               })}
                               {artisan.services.length > 3 && (
-                                <Badge variant="outline" className="text-xs text-gold border-gold/40">
+                                <Badge variant="outline" className="text-xs text-gold border-green/30">
                                   +{artisan.services.length - 3} more
                                 </Badge>
                               )}

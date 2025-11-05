@@ -32,14 +32,14 @@ export default function AdSpaces() {
           {adSpaces.map((ad, index) => (
             <div 
               key={index}
-              className="bg-white rounded-xl p-6 border-2 border-dashed border-gray-300 text-center hover:border-gold/50 transition-colors cursor-pointer"
+              className="bg-white rounded-xl p-6 border-2 border-dashed border-gray-300 text-center hover:border-green/30 transition-colors cursor-pointer"
             >
               <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ad.icon className="w-8 h-8 text-gold-dark" />
               </div>
               <h4 className="font-semibold text-lg text-black-soft mb-2">{ad.title}</h4>
               <p className="text-gray-600 text-sm mb-4">{ad.description}</p>
-              <Badge variant="secondary" className="text-xs text-gray-500 bg-gray-100">
+              <Badge variant="secondary" className="text-xs text-white/60 bg-gray-100">
                 SPONSORED
               </Badge>
             </div>

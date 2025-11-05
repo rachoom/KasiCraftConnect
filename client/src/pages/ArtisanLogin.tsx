@@ -168,7 +168,7 @@ export default function ArtisanLogin() {
 
                 <div className="relative my-6">
                   <Separator />
-                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-500">
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-white/60">
                     or continue with email
                   </span>
                 </div>
@@ -184,7 +184,7 @@ export default function ArtisanLogin() {
                           <FormLabel className="text-black-soft">Email Address</FormLabel>
                           <FormControl>
                             <div className="relative">
-                              <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                              <Mail className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                               <Input
                                 placeholder="Enter your email"
                                 className="pl-10 py-3 text-lg"
@@ -219,7 +219,7 @@ export default function ArtisanLogin() {
                           </div>
                           <FormControl>
                             <div className="relative">
-                              <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                              <Lock className="absolute left-3 top-3 h-4 w-4 text-white/70" />
                               <Input
                                 type="password"
                                 placeholder="Enter your password"

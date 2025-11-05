@@ -98,7 +98,7 @@ export default function AdminLogin() {
         <div className="min-h-screen bg-black">
           <Header />
           <div className="max-w-md mx-auto px-4 py-20">
-            <Card className="border-2 border-gold/20">
+            <Card className="border-2 border-green/30">
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center">
                   <Mail className="w-8 h-8 text-gold" />
@@ -144,7 +144,7 @@ export default function AdminLogin() {
         <Header />
         
         <div className="max-w-md mx-auto px-4 py-20">
-          <Card className="border-2 border-gold/20">
+          <Card className="border-2 border-green/30">
             <CardHeader className="text-center">
               <div className="mx-auto mb-4 w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center">
                 <Shield className="w-8 h-8 text-gold" />
@@ -186,7 +186,7 @@ export default function AdminLogin() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-gray-600"
                     >
                       {showPassword ? (
                         <EyeOff className="w-4 h-4" />
@@ -227,7 +227,7 @@ export default function AdminLogin() {
                     <div className="w-full border-t border-gray-300" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                    <span className="bg-white px-2 text-white/60">Or continue with</span>
                   </div>
                 </div>
                 

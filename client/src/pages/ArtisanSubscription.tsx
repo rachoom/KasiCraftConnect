@@ -172,7 +172,7 @@ export default function ArtisanSubscription() {
           <h1 className="text-4xl font-bold text-white mb-4">
             Join as a <span className="text-gold">Premium Artisan</span>
           </h1>
-          <p className="text-xl text-gray-300">
+          <p className="text-xl text-white/80">
             Get verified and connect with more customers through our subscription service
           </p>
         </div>
@@ -189,7 +189,7 @@ export default function ArtisanSubscription() {
                     </div>
                     <div>
                       <CardTitle className="text-white">{tier.name}</CardTitle>
-                      <CardDescription className="text-gray-300">
+                      <CardDescription className="text-white/80">
                         {tier.price} {tier.period}
                       </CardDescription>
                     </div>
@@ -202,7 +202,7 @@ export default function ArtisanSubscription() {
               <CardContent>
                 <ul className="space-y-2">
                   {tier.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-300">
+                    <li key={index} className="flex items-center text-white/80">
                       <Check className="w-4 h-4 text-green mr-2" />
                       {feature}
                     </li>
@@ -220,7 +220,7 @@ export default function ArtisanSubscription() {
               <Users className="w-6 h-6 mr-2" />
               Artisan Registration
             </CardTitle>
-            <CardDescription className="text-gray-300">
+            <CardDescription className="text-white/80">
               Complete your profile to get verified and start receiving job requests
             </CardDescription>
           </CardHeader>
@@ -239,7 +239,7 @@ export default function ArtisanSubscription() {
                           <Input
                             {...field}
                             placeholder="Enter your first name"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                           />
                         </FormControl>
                         <FormMessage />
@@ -256,7 +256,7 @@ export default function ArtisanSubscription() {
                           <Input
                             {...field}
                             placeholder="Enter your last name"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                           />
                         </FormControl>
                         <FormMessage />
@@ -278,7 +278,7 @@ export default function ArtisanSubscription() {
                             {...field}
                             type="email"
                             placeholder="your.email@example.com"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                           />
                         </FormControl>
                         <FormMessage />
@@ -295,7 +295,7 @@ export default function ArtisanSubscription() {
                           <Input
                             {...field}
                             placeholder="0XX XXX XXXX"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                           />
                         </FormControl>
                         <FormMessage />
@@ -389,7 +389,7 @@ export default function ArtisanSubscription() {
                           type="number"
                           min="1"
                           onChange={(e) => field.onChange(parseInt(e.target.value))}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                          className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                         />
                       </FormControl>
                       <FormMessage />
@@ -407,7 +407,7 @@ export default function ArtisanSubscription() {
                         <Textarea
                           {...field}
                           placeholder="Describe your services, specializations, and what makes you unique..."
-                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 min-h-[100px]"
+                          className="bg-white/10 border-white/20 text-white placeholder:text-white/70 min-h-[100px]"
                         />
                       </FormControl>
                       <FormMessage />
@@ -427,7 +427,7 @@ export default function ArtisanSubscription() {
                           <Input
                             {...field}
                             placeholder="XXXXXXX/XX"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                           />
                         </FormControl>
                         <FormMessage />
@@ -444,7 +444,7 @@ export default function ArtisanSubscription() {
                           <Input
                             {...field}
                             placeholder="ARN-XXXXXXX"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                           />
                         </FormControl>
                         <FormMessage />
@@ -482,7 +482,7 @@ export default function ArtisanSubscription() {
                     <FileText className="w-5 h-5 mr-2" />
                     Upload Documents
                   </h3>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-white/80 text-sm">
                     Upload your ID, certificates, licenses, or any other relevant documents
                   </p>
                   
@@ -501,7 +501,7 @@ export default function ArtisanSubscription() {
 
                   {uploadedDocuments.length > 0 && (
                     <div className="space-y-2">
-                      <p className="text-sm text-gray-300">Uploaded documents:</p>
+                      <p className="text-sm text-white/80">Uploaded documents:</p>
                       {uploadedDocuments.map((doc, index) => (
                         <div key={index} className="flex items-center text-green text-sm">
                           <Check className="w-4 h-4 mr-2" />

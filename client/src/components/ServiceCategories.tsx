@@ -106,7 +106,7 @@ export default function ServiceCategories() {
             Our Services
           </motion.h3>
           <motion.p 
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
+            className="text-xl text-white/80 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -136,7 +136,7 @@ export default function ServiceCategories() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="relative bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 cosmic-selection border-2 border-gold/20 hover:border-gold/60">
+              <div className="relative bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 cosmic-selection border-2 border-green/30 hover:border-green">
                 <div className="absolute inset-0">
                   <img 
                     src={service.image}
@@ -146,7 +146,7 @@ export default function ServiceCategories() {
                   <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/90 group-hover:from-black/30 transition-colors duration-300"></div>
                 </div>
                 <div className="relative p-8 h-64 flex flex-col justify-end">
-                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-gold/40 transition-colors border border-gold/40">
+                  <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-gold/40 transition-colors border border-green/40">
                     <i className={`${getServiceIcon(service.id)} text-2xl text-gold`} />
                   </div>
                   <h4 className="font-bold text-2xl text-gold mb-2">{service.name}</h4>
@@ -167,7 +167,7 @@ export default function ServiceCategories() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="relative bg-gradient-to-br from-amber-700/90 to-amber-900 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 text-white cosmic-glow border-2 border-gold/40">
+            <div className="relative bg-gradient-to-br from-amber-700/90 to-amber-900 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 text-white cosmic-glow border-2 border-green/30">
               <div className="p-8 h-64 flex flex-col justify-end">
                 <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-4 border border-green/30">
                   <i className="fas fa-plus text-2xl text-white" />

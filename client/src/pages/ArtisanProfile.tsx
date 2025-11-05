@@ -129,14 +129,14 @@ export default function ArtisanProfile() {
                       )}
                       
                       {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') && (
-                        <Badge variant="outline" className="text-gold border-gold/60 bg-gold/20">
+                        <Badge variant="outline" className="text-gold border-green/30 bg-gold/20">
                           <Shield className="w-3 h-3 mr-1" />
                           Verified
                         </Badge>
                       )}
                       
                       {artisan.subscriptionTier === 'premium' && (
-                        <Badge variant="outline" className="text-gold border-gold/60 bg-gold/20">
+                        <Badge variant="outline" className="text-gold border-green/30 bg-gold/20">
                           <Star className="w-3 h-3 mr-1" />
                           Premium Marketing
                         </Badge>
@@ -193,7 +193,7 @@ export default function ArtisanProfile() {
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {artisan.services.map((service) => (
-                    <Badge key={service} className="px-3 py-1 bg-gold/20 text-gold border-gold/40">
+                    <Badge key={service} className="px-3 py-1 bg-gold/20 text-gold border-green/30">
                       {service.charAt(0).toUpperCase() + service.slice(1)}
                     </Badge>
                   ))}
@@ -240,7 +240,7 @@ export default function ArtisanProfile() {
                   Call Now
                 </Button>
                 
-                <Button variant="outline" className="w-full border-gold/40 text-white hover:bg-gold/20" size="lg">
+                <Button variant="outline" className="w-full border-green/30 text-white hover:bg-gold/20" size="lg">
                   <Mail className="w-4 h-4 mr-2" />
                   Send Message
                 </Button>

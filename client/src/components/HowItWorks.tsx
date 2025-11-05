@@ -69,7 +69,7 @@ export default function HowItWorks() {
             How Skills Connect Works
           </motion.h3>
           <motion.p 
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
+            className="text-xl text-white/80 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -116,7 +116,7 @@ export default function HowItWorks() {
                   <step.icon className="w-10 h-10 text-gold" />
                 </motion.div>
                 <h4 className="text-xl font-semibold text-white mb-4">{step.title}</h4>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   {step.description}
                 </p>
               </div>

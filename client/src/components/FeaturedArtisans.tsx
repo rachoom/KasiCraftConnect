@@ -96,7 +96,7 @@ export default function FeaturedArtisans() {
             Featured Artisans
           </motion.h3>
           <motion.p 
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
+            className="text-xl text-white/80 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -123,7 +123,7 @@ export default function FeaturedArtisans() {
                 transition: { duration: 0.2 }
               }}
             >
-              <Card className="bg-zinc-900 shadow-xl border-2 border-gold/40 hover:border-gold/80 transition-all duration-300 h-full">
+              <Card className="bg-zinc-900 shadow-xl border-2 border-green/30 hover:border-green transition-all duration-300 h-full">
               <CardContent className="p-6 flex flex-col h-full">
                 <div className="flex flex-col items-center mb-4">
                   <div className="w-24 h-24 bg-gradient-to-br from-gold to-amber-700 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-3 border-4 border-green/30">
@@ -145,17 +145,17 @@ export default function FeaturedArtisans() {
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
                   </div>
-                  <span className="text-gray-300 text-sm">
+                  <span className="text-white/80 text-sm">
                     {formatRating(artisan.rating || "0")} ({artisan.reviewCount})
                   </span>
                 </div>
 
-                <div className="flex items-center justify-center text-gray-400 mb-3">
+                <div className="flex items-center justify-center text-white/70 mb-3">
                   <MapPin className="w-4 h-4 mr-1" />
                   <span className="text-sm">{artisan.location}</span>
                 </div>
 
-                <p className="text-gray-300 text-sm mb-4 line-clamp-3 flex-grow text-center">{artisan.description}</p>
+                <p className="text-white/80 text-sm mb-4 line-clamp-3 flex-grow text-center">{artisan.description}</p>
 
                 {artisan.verified && (
                   <Badge variant="outline" className="text-green border-green mb-4 mx-auto">
@@ -165,12 +165,12 @@ export default function FeaturedArtisans() {
 
                 <div className="flex gap-2 mt-auto">
                   <a href={`tel:${artisan.phone}`} className="flex-1">
-                    <Button className="w-full bg-gold hover:bg-yellow-600 text-black font-bold text-sm py-2">
+                    <Button className="w-full bg-green hover:bg-green-dark text-white font-bold text-sm py-2">
                       <Phone className="w-4 h-4 mr-1" /> Call
                     </Button>
                   </a>
                   <a href={`mailto:${artisan.email}`} className="flex-1">
-                    <Button variant="outline" className="w-full border-gold text-gold hover:bg-gold/20 font-bold text-sm py-2">
+                    <Button variant="outline" className="w-full border-green text-green hover:bg-green/20 font-bold text-sm py-2">
                       <Mail className="w-4 h-4 mr-1" /> Email
                     </Button>
                   </a>

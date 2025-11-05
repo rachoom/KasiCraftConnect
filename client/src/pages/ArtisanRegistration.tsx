@@ -387,7 +387,7 @@ export default function ArtisanRegistration() {
                         <FormLabel>Location</FormLabel>
                         <FormControl>
                           <div className="relative" ref={locationInputRef}>
-                            <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
+                            <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/70 w-5 h-5 z-10" />
                             <Input 
                               placeholder="City, Province" 
                               className="pl-12 pr-16"
@@ -542,11 +542,11 @@ export default function ArtisanRegistration() {
                         <div className="flex items-center justify-center w-full">
                           <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                              <Upload className="w-8 h-8 mb-4 text-gray-500" />
-                              <p className="mb-2 text-sm text-gray-500">
+                              <Upload className="w-8 h-8 mb-4 text-white/60" />
+                              <p className="mb-2 text-sm text-white/60">
                                 <span className="font-semibold">Click to upload</span> your ID document
                               </p>
-                              <p className="text-xs text-gray-500">JPG, PNG or PDF (max 5MB)</p>
+                              <p className="text-xs text-white/60">JPG, PNG or PDF (max 5MB)</p>
                             </div>
                             <input 
                               type="file" 
@@ -564,7 +564,7 @@ export default function ArtisanRegistration() {
                           </div>
                         )}
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-white/60 mt-1">
                         Upload your South African ID document for identity verification. Accepted formats: JPG, PNG, PDF (max 5MB).
                       </p>
                     </div>
@@ -575,11 +575,11 @@ export default function ArtisanRegistration() {
                         <div className="flex items-center justify-center w-full">
                           <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                              <FileText className="w-8 h-8 mb-4 text-gray-500" />
-                              <p className="mb-2 text-sm text-gray-500">
+                              <FileText className="w-8 h-8 mb-4 text-white/60" />
+                              <p className="mb-2 text-sm text-white/60">
                                 <span className="font-semibold">Click to upload</span> qualification documents
                               </p>
-                              <p className="text-xs text-gray-500">JPG, PNG or PDF (max 5MB each, up to 5 files)</p>
+                              <p className="text-xs text-white/60">JPG, PNG or PDF (max 5MB each, up to 5 files)</p>
                             </div>
                             <input 
                               type="file" 
@@ -610,7 +610,7 @@ export default function ArtisanRegistration() {
                           </div>
                         )}
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-white/60 mt-1">
                         Upload trade certificates, licenses, or relevant qualifications. Accepted formats: JPG, PNG, PDF (max 5MB each, up to 5 files).
                       </p>
                     </div>

@@ -236,7 +236,7 @@ export default function AdminReview() {
                         <h4 className="font-semibold text-black mb-2">Services</h4>
                         <div className="flex flex-wrap gap-2">
                           {artisan.services.map((service, index) => (
-                            <Badge key={index} variant="secondary" className="bg-gold/10 text-gold border-gold/20">
+                            <Badge key={index} variant="secondary" className="bg-gold/10 text-gold border-green/30">
                               {service}
                             </Badge>
                           ))}
