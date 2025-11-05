@@ -514,7 +514,7 @@ export default function ArtisanSubscription() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-3"
+                  className="w-full bg-green hover:bg-green-dark text-white font-semibold py-3"
                   disabled={isSubmitting || submitMutation.isPending}
                 >
                   {isSubmitting || submitMutation.isPending ? "Submitting..." : "Submit Application"}

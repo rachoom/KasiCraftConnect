@@ -77,7 +77,7 @@ export default function ArtisanProfile() {
               <h1 className="text-2xl font-bold text-white mb-4">Artisan Not Found</h1>
               <p className="text-white mb-6">The artisan profile you're looking for doesn't exist.</p>
               <Link href="/">
-                <Button className="bg-gold hover:bg-gold-dark text-black">
+                <Button className="bg-green hover:bg-green-dark text-white">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
@@ -235,7 +235,7 @@ export default function ArtisanProfile() {
                 <CardTitle className="text-white">Contact {artisan.firstName}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button className="w-full bg-gold hover:bg-gold-dark text-black" size="lg">
+                <Button className="w-full bg-green hover:bg-green-dark text-white" size="lg">
                   <Phone className="w-4 h-4 mr-2" />
                   Call Now
                 </Button>

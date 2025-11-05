@@ -84,7 +84,7 @@ export default function SearchResults() {
             <p className="text-white mb-4">Unable to perform search. Please try again.</p>
             <p className="text-sm text-red-600 mb-6">Error: {error?.message || "Unknown error"}</p>
             <Link href="/">
-              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+              <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>
@@ -106,7 +106,7 @@ export default function SearchResults() {
             <p className="text-white mb-4">No search results found for "{service}" in "{searchLocation}".</p>
             <p className="text-sm text-white/80 mb-6">Try adjusting your search terms or location.</p>
             <Link href="/">
-              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+              <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>
@@ -133,7 +133,7 @@ export default function SearchResults() {
             <p className="text-white mb-4">No {service} found in {searchLocation}.</p>
             <p className="text-sm text-white/80 mb-6">Try searching in nearby areas or different services.</p>
             <Link href="/">
-              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+              <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>
@@ -184,7 +184,7 @@ export default function SearchResults() {
               Try expanding your search area or selecting a different service.
             </p>
             <Link href="/">
-              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+              <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static">
                 Try New Search
               </Button>
             </Link>
@@ -255,7 +255,7 @@ export default function SearchResults() {
                     {/* Actions */}
                     <div className="flex flex-col space-y-2 ml-6">
                       <Link href={`/artisan/${artisan.id}`}>
-                        <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static">
+                        <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static">
                           View Profile
                         </Button>
                       </Link>
@@ -288,7 +288,7 @@ export default function SearchResults() {
               </p>
               <div className="flex gap-4 justify-center">
                 <Button 
-                  className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static"
+                  className="bg-green hover:bg-green-dark text-white cosmic-glow-static"
                   onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
                 >
                   Premium - R99
@@ -321,7 +321,7 @@ export default function SearchResults() {
                 </Button>
                 {resultTier !== 'premium' && (
                   <Button 
-                    className="bg-gold hover:bg-gold-dark text-black"
+                    className="bg-green hover:bg-green-dark text-white"
                     onClick={() => navigate(`/search?service=${service}&location=${searchLocation}&tier=premium`)}
                   >
                     Premium - R99

@@ -70,7 +70,7 @@ export default function ArtisanAuth() {
                     </div>
                     
                     <Link href="/artisan/login">
-                      <Button className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-3">
+                      <Button className="w-full bg-green hover:bg-green-dark text-white font-semibold py-3">
                         Sign In
                       </Button>
                     </Link>

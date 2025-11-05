@@ -267,7 +267,7 @@ export default function ArtisanRegistration() {
               </p>
               <div className="space-y-3">
                 <Link href="/">
-                  <Button className="bg-gold hover:bg-gold-dark text-black w-full">
+                  <Button className="bg-green hover:bg-green-dark text-white w-full">
                     Back to Home
                   </Button>
                 </Link>
@@ -629,7 +629,7 @@ export default function ArtisanRegistration() {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-gold hover:bg-gold-dark text-black"
+                  className="w-full bg-green hover:bg-green-dark text-white"
                   disabled={registerMutation.isPending}
                   onClick={(e) => {
                     console.log("Button clicked");

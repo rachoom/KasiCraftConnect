@@ -205,7 +205,7 @@ export default function AdminLogin() {
                 <Button
                   type="submit"
                   disabled={loginMutation.isPending}
-                  className="w-full bg-gold hover:bg-gold-dark text-black font-semibold"
+                  className="w-full bg-green hover:bg-green-dark text-white font-semibold"
                 >
                   {loginMutation.isPending ? (
                     <div className="flex items-center gap-2">

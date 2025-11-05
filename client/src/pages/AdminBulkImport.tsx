@@ -193,7 +193,7 @@ export default function AdminBulkImport() {
               />
               <Button 
                 onClick={handleAdminAuth}
-                className="w-full bg-gold hover:bg-gold-dark text-black cosmic-glow-static"
+                className="w-full bg-green hover:bg-green-dark text-white cosmic-glow-static"
               >
                 Authenticate
               </Button>
@@ -302,7 +302,7 @@ John,Doe,john.doe@email.com,+27 82 123 4567,Cape Town,builders,Experienced build
                 <Button 
                   onClick={handleImport}
                   disabled={importMutation.isPending || !csvData.trim()}
-                  className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static"
+                  className="bg-green hover:bg-green-dark text-white cosmic-glow-static"
                 >
                   {importMutation.isPending ? "Importing..." : "Import Artisans"}
                 </Button>

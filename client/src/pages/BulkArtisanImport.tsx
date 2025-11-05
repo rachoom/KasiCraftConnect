@@ -247,7 +247,7 @@ John,Doe,john.doe@email.com,+27 82 123 4567,Cape Town,builders,Experienced build
                 <Button 
                   onClick={handleImport}
                   disabled={importMutation.isPending || !csvData.trim()}
-                  className="bg-gold hover:bg-gold-dark text-black"
+                  className="bg-green hover:bg-green-dark text-white"
                 >
                   {importMutation.isPending ? "Importing..." : "Import Artisans"}
                 </Button>

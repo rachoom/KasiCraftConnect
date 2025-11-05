@@ -235,7 +235,7 @@ export default function ArtisanLogin() {
 
                     <Button
                       type="submit"
-                      className="w-full bg-gold hover:bg-gold-dark text-black font-semibold py-4 text-lg rounded-lg shadow-md hover:shadow-lg transition-all"
+                      className="w-full bg-green hover:bg-green-dark text-white font-semibold py-4 text-lg rounded-lg shadow-md hover:shadow-lg transition-all"
                       disabled={loginMutation.isPending}
                     >
                       {loginMutation.isPending ? "Signing In..." : "Sign In with Email"}
