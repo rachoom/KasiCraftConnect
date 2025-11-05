@@ -16,19 +16,22 @@ Preferred communication style: Simple, everyday language.
 - Framer Motion for smooth animations and transitions.
 - **PERMANENT DARK THEME**: Black background (#000000) enforced site-wide for ALL users regardless of system preferences. Dark theme CSS variables are set as default in `:root` to ensure consistent appearance.
 - **Brand Colors - Black/Gold/Green Theme**:
-  - **Gold** (#DAA520 / hsl(45, 85%, 45%)): Used for "SKILLS CONNECT" branding, headings, and primary text elements
-  - **Deep Forest Green** (hsl(140, 45%, 25%)): Used for ALL borders, accents, CTA buttons, and interactive elements
+  - **Bright Yellow/Gold** (#E0B82E / hsl(48, 89%, 56%)): Used for "SKILLS CONNECT" branding, headings, primary text, and CTA buttons like "Register as an Artisan"
+  - **Deep Forest Green** (#1a4d2e / hsl(146, 50%, 20%)): Used for ALL borders and accents (typically at 30% opacity for subtle styling)
   - **White**: Body text with varying opacity (text-white, text-white/80, text-white/60)
   - NO gray text allowed on dark backgrounds for maximum contrast and visibility
 - **Branding**:
-  - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase gold typography)
+  - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase bright yellow typography) at size h-10 sm:h-12 md:h-14 for optimal visibility
   - "Far East Rand" subtitle always visible in header with gold color
-  - Brand consistency maintained across all platforms with exact font and colors
+  - Brand consistency maintained across all platforms with exact font and colors matching brand image (#E0B82E)
+  - "Register as an Artisan" button uses bright yellow background (bg-gold) with black text for high contrast
 - Hero section features darker overlay (95% opacity) for optimal text readability against background images.
 - Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
 - Mobile-responsive navigation with a hamburger menu for smaller viewports.
-- All cards use `bg-zinc-900` with thin `border border-green/30` for consistent styling.
+- All cards use `bg-zinc-900` with thin `border-2 border-green/30` for consistent styling with deep forest green borders at 30% opacity.
 - Status badges use green for success states, maintaining the black/gold/green theme consistency.
+- Footer features green top border (`border-t-2 border-green/30`) separating it from page content.
+- All custom CSS color utilities properly use `hsl()` wrapper around CSS variables for correct color rendering.
 
 ### Technical Implementations
 - **Frontend**: React 18, Wouter for routing, TanStack Query for state management, Vite for building.

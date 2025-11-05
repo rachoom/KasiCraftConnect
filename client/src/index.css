@@ -26,12 +26,12 @@
   --radius: 0.5rem;
 
   /* Custom Skills Connect colors - Gold & Green Theme */
-  --gold: hsl(45, 85%, 45%);
-  --gold-dark: hsl(43, 90%, 35%);
-  --gold-royal: hsl(45, 95%, 40%);
-  --green: hsl(146, 50%, 20%); /* #1a4d2e - Deep Forest Green */
-  --green-light: hsl(146, 50%, 30%);
-  --green-dark: hsl(146, 50%, 15%);
+  --gold: 48 89% 56%; /* #E0B82E - Bright Yellow to match brand */
+  --gold-dark: 45 85% 45%;
+  --gold-royal: 45 95% 40%;
+  --green: 146 50% 20%; /* #1a4d2e - Deep Forest Green */
+  --green-light: 146 50% 30%;
+  --green-dark: 146 50% 15%;
   --black-soft: hsl(0, 0%, 10%);
   --gray-soft: hsl(0, 0%, 97%);
 }
@@ -47,19 +47,19 @@
 
   /* Custom utility classes for Skills Connect */
   .text-gold {
-    color: var(--gold);
+    color: hsl(var(--gold));
   }
   
   .text-gold-dark {
-    color: var(--gold-dark);
+    color: hsl(var(--gold-dark));
   }
   
   .bg-gold {
-    background-color: var(--gold);
+    background-color: hsl(var(--gold));
   }
   
   .bg-gold-dark {
-    background-color: var(--gold-dark);
+    background-color: hsl(var(--gold-dark));
   }
   
   .text-black-soft {
@@ -75,43 +75,43 @@
   }
   
   .border-gold {
-    border-color: var(--gold);
+    border-color: hsl(var(--gold));
   }
   
   .border-green {
-    border-color: var(--green);
+    border-color: hsl(var(--green));
   }
   
   .bg-green {
-    background-color: var(--green);
+    background-color: hsl(var(--green));
   }
   
   .bg-green-dark {
-    background-color: var(--green-dark);
+    background-color: hsl(var(--green-dark));
   }
   
   .text-green {
-    color: var(--green);
+    color: hsl(var(--green));
   }
   
   .hover\:bg-gold:hover {
-    background-color: var(--gold);
+    background-color: hsl(var(--gold));
   }
   
   .hover\:bg-gold-dark:hover {
-    background-color: var(--gold-dark);
+    background-color: hsl(var(--gold-dark));
   }
   
   .hover\:text-gold:hover {
-    color: var(--gold);
+    color: hsl(var(--gold));
   }
   
   .hover\:border-gold:hover {
-    border-color: var(--gold);
+    border-color: hsl(var(--gold));
   }
   
   .hover\:border-green:hover {
-    border-color: var(--green);
+    border-color: hsl(var(--green));
   }
 
   /* Background overlay utilities */

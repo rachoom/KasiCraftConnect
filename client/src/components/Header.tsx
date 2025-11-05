@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import logoUrl from "@assets/logo_1762199548948.png";
-import brandLogoUrl from "@assets/skills connect site name_1762349160474.png";
+import brandLogoUrl from "@assets/skills connect site name (2)_1762351707480.png";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function Header() {
                 <img 
                   src={brandLogoUrl} 
                   alt="SKILLS CONNECT" 
-                  className="h-8 sm:h-10 w-auto object-contain"
+                  className="h-10 sm:h-12 md:h-14 w-auto object-contain"
                 />
                 <span className="text-xs sm:text-sm text-gold font-light mt-0.5">Far East Rand</span>
               </div>
@@ -61,7 +61,7 @@ export default function Header() {
               </Button>
             </Link>
             <Link href="/artisan">
-              <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static px-6 py-2 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+              <Button className="bg-gold hover:bg-gold-dark text-black cosmic-glow-static px-6 py-2 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Register as an Artisan
               </Button>
             </Link>
@@ -117,7 +117,7 @@ export default function Header() {
                 className="block"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Button className="w-full bg-green hover:bg-green-dark text-white cosmic-glow-static font-bold shadow-lg">
+                <Button className="w-full bg-gold hover:bg-gold-dark text-black cosmic-glow-static font-bold shadow-lg">
                   Register as an Artisan
                 </Button>
               </Link>
