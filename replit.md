@@ -1,8 +1,8 @@
-# Artisan Connect Far East Rand - Artisan Marketplace Platform
+# SKILLS CONNECT - Far East Rand Artisan Marketplace Platform
 
 ## Overview
 
-Artisan Connect Far East Rand is a full-stack web application connecting customers with local artisans in the Brakpan and Far East Rand regions. The platform facilitates searching for and connecting with verified professionals in various trades, featuring a modern React frontend, a Node.js/Express backend, and an external Supabase PostgreSQL database. The platform rebranded from "Skills Connect" to "Artisan Connect Far East Rand" with a focus on local geographic service, aiming to be the premier marketplace for artisan services in the region.
+SKILLS CONNECT is a full-stack web application connecting customers with local artisans in the Brakpan and Far East Rand regions. The platform facilitates searching for and connecting with verified professionals in various trades, featuring a modern React frontend, a Node.js/Express backend, and an external Supabase PostgreSQL database. The brand name "SKILLS CONNECT" is displayed using a distinctive bold gold typography on black background, with "Far East Rand" as a subtitle to emphasize the local geographic service area. The platform aims to be the premier marketplace for artisan services in the Far East Rand region.
 
 ## User Preferences
 
@@ -15,14 +15,20 @@ Preferred communication style: Simple, everyday language.
 - Shadcn/ui component library based on Radix UI, styled with Tailwind CSS and custom CSS variables.
 - Framer Motion for smooth animations and transitions.
 - **PERMANENT DARK THEME**: Black background (#000000) enforced site-wide for ALL users regardless of system preferences. Dark theme CSS variables are set as default in `:root` to ensure consistent appearance.
-- **Strict White/Gold Color Palette**: ALL text uses white (text-white), white with opacity (text-white/80, text-white/60), or Royal Gold (#DAA520). NO gray text allowed on dark backgrounds for maximum contrast and visibility.
-- Royal Gold (`#DAA520`) used for primary branding, headings, and accent elements.
+- **Brand Colors - Black/Gold/Green Theme**:
+  - **Gold** (#DAA520 / hsl(45, 85%, 45%)): Used for "SKILLS CONNECT" branding, headings, and primary text elements
+  - **Deep Forest Green** (hsl(140, 45%, 25%)): Used for ALL borders, accents, CTA buttons, and interactive elements
+  - **White**: Body text with varying opacity (text-white, text-white/80, text-white/60)
+  - NO gray text allowed on dark backgrounds for maximum contrast and visibility
+- **Branding**:
+  - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase gold typography)
+  - "Far East Rand" subtitle always visible in header with gold color
+  - Brand consistency maintained across all platforms with exact font and colors
 - Hero section features darker overlay (95% opacity) for optimal text readability against background images.
-- "Far East Rand" subtitle always visible in header with gold color.
-- Redesigned homepage with a simplified hero section, gold-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
+- Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
 - Mobile-responsive navigation with a hamburger menu for smaller viewports.
-- All cards use `bg-zinc-900` with `border-gold/30` for consistent styling.
-- Status badges use gold/white palette instead of colored variants for theme consistency.
+- All cards use `bg-zinc-900` with thin `border border-green/30` for consistent styling.
+- Status badges use green for success states, maintaining the black/gold/green theme consistency.
 
 ### Technical Implementations
 - **Frontend**: React 18, Wouter for routing, TanStack Query for state management, Vite for building.
