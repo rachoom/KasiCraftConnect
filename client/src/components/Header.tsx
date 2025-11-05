@@ -17,7 +17,7 @@ export default function Header() {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24">
+        <div className="flex justify-between items-center h-28 md:h-32 lg:h-40">
           {/* Logo and Brand Name */}
           <motion.div 
             className="flex items-center"
@@ -25,19 +25,19 @@ export default function Header() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Link href="/" className="flex items-center space-x-3 transition-all duration-300 transform hover:scale-105">
+            <Link href="/" className="flex items-center space-x-3 sm:space-x-4 transition-all duration-300 transform hover:scale-105">
               <img 
                 src={logoUrl} 
                 alt="Skills Connect Logo Icon" 
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain"
               />
-              <div className="flex flex-col">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <img 
                   src={brandLogoUrl} 
                   alt="SKILLS CONNECT" 
-                  className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
+                  className="h-24 sm:h-28 md:h-32 lg:h-40 w-auto object-contain flex-shrink-0"
                 />
-                <span className="text-xs sm:text-sm md:text-base text-gold font-light mt-1">Far East Rand</span>
+                <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center">Far East Rand</span>
               </div>
             </Link>
           </motion.div>

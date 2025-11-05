@@ -21,10 +21,11 @@ Preferred communication style: Simple, everyday language.
   - **White**: Body text with varying opacity (text-white, text-white/80, text-white/60)
   - NO gray text allowed on dark backgrounds for maximum contrast and visibility
 - **Branding**:
-  - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase bright yellow typography) at size h-10 sm:h-12 md:h-14 for optimal visibility
-  - "Far East Rand" subtitle always visible in header with gold color
+  - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase bright yellow typography) at size h-24 sm:h-28 md:h-32 lg:h-40 (96px to 160px) for maximum visibility and legibility
+  - "Far East Rand" subtitle positioned horizontally to the RIGHT of brand logo, vertically centered for clean layout
   - Brand consistency maintained across all platforms with exact font and colors matching brand image (#E0B82E)
   - "Register as an Artisan" button uses bright yellow background (bg-gold) with black text for high contrast
+  - Header height increased to h-28 md:h-32 lg:h-40 (112px to 160px) to accommodate large branding
 - Hero section features darker overlay (95% opacity) for optimal text readability against background images.
 - Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
 - Mobile-responsive navigation with a hamburger menu for smaller viewports.
