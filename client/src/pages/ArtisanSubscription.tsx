@@ -203,7 +203,7 @@ export default function ArtisanSubscription() {
                 <ul className="space-y-2">
                   {tier.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-gray-300">
-                      <Check className="w-4 h-4 text-green-400 mr-2" />
+                      <Check className="w-4 h-4 text-green mr-2" />
                       {feature}
                     </li>
                   ))}
@@ -503,7 +503,7 @@ export default function ArtisanSubscription() {
                     <div className="space-y-2">
                       <p className="text-sm text-gray-300">Uploaded documents:</p>
                       {uploadedDocuments.map((doc, index) => (
-                        <div key={index} className="flex items-center text-green-400 text-sm">
+                        <div key={index} className="flex items-center text-green text-sm">
                           <Check className="w-4 h-4 mr-2" />
                           Document {index + 1} uploaded successfully
                         </div>

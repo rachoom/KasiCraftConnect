@@ -56,15 +56,15 @@ export default function ArtisanAuth() {
                   <CardContent className="pt-2">
                     <div className="space-y-4 mb-6">
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-green" />
                         <span>Manage your artisan profile</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-green" />
                         <span>View customer inquiries</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-green" />
                         <span>Update your services and rates</span>
                       </div>
                     </div>
@@ -100,15 +100,15 @@ export default function ArtisanAuth() {
                   <CardContent className="pt-2">
                     <div className="space-y-4 mb-6">
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-green" />
                         <span>Free profile creation</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-green" />
                         <span>Verification process included</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-green" />
                         <span>Connect with local customers</span>
                       </div>
                     </div>
@@ -152,7 +152,7 @@ export default function ArtisanAuth() {
                   </div>
                   
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mx-auto mb-4">
                       <CheckCircle className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold text-black-soft mb-2">Easy Management</h3>

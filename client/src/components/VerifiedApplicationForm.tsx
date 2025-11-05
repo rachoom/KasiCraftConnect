@@ -153,8 +153,8 @@ export default function VerifiedApplicationForm() {
   if (isSuccess) {
     return (
       <div className="text-center py-12">
-        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle className="w-12 h-12 text-green-500" />
+        <div className="w-20 h-20 bg-green/20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <CheckCircle className="w-12 h-12 text-green" />
         </div>
         <h3 className="text-2xl font-bold text-gold mb-4">Application Submitted!</h3>
         <p className="text-white/80 mb-4 max-w-md mx-auto">
@@ -425,7 +425,7 @@ export default function VerifiedApplicationForm() {
                 data-testid="input-id-document"
               />
               {uploadedIdDoc && (
-                <FileText className="w-6 h-6 text-green-500" />
+                <FileText className="w-6 h-6 text-green" />
               )}
             </div>
             <p className="text-xs text-white/60">Upload a copy of your ID (PDF, JPG, or PNG, max 5MB)</p>
@@ -445,7 +445,7 @@ export default function VerifiedApplicationForm() {
                 data-testid="input-qualification-documents"
               />
               {uploadedQualDocs.length > 0 && (
-                <span className="text-green-500">{uploadedQualDocs.length} file(s) uploaded</span>
+                <span className="text-green">{uploadedQualDocs.length} file(s) uploaded</span>
               )}
             </div>
             <p className="text-xs text-white/60">Upload certificates, licenses, or proof of past work</p>

@@ -128,7 +128,7 @@ export default function ArtisanDashboard() {
   const getStatusInfo = (status: string) => {
     switch (status) {
       case 'approved':
-        return { color: 'bg-green-100 text-green-800', icon: CheckCircle, text: 'Approved' };
+        return { color: 'bg-green/10 text-green-dark', icon: CheckCircle, text: 'Approved' };
       case 'pending':
         return { color: 'bg-yellow-100 text-yellow-800', icon: Clock, text: 'Pending Review' };
       case 'rejected':

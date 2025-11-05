@@ -197,7 +197,7 @@ export default function AdminReview() {
 
           {!pendingArtisans || pendingArtisans.length === 0 ? (
             <div className="text-center py-12">
-              <CheckCircle className="mx-auto h-16 w-16 text-green-500 mb-4" />
+              <CheckCircle className="mx-auto h-16 w-16 text-green mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No Pending Applications</h3>
               <p className="text-gray-600">All artisan applications have been reviewed.</p>
             </div>
@@ -288,7 +288,7 @@ export default function AdminReview() {
                     <Button
                       onClick={() => handleApprove(artisan)}
                       disabled={approveMutation.isPending || !adminName.trim()}
-                      className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+                      className="bg-green hover:bg-green-dark text-white flex items-center gap-2"
                     >
                       <CheckCircle className="w-4 h-4" />
                       Approve

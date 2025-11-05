@@ -114,8 +114,8 @@ export default function ArtisanLogin() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-green-600 mb-2">Login Successful!</h2>
+            <CheckCircle className="w-16 h-16 text-green mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-green mb-2">Login Successful!</h2>
             <p className="text-gray-600">Redirecting to your dashboard...</p>
           </motion.div>
         </div>

@@ -208,7 +208,7 @@ export default function SearchResults() {
                             {artisan.firstName} {artisan.lastName}
                           </h3>
                           {artisan.verified ? (
-                            <Badge variant="outline" className="text-green-600 border-green-500 bg-green-50 text-sm px-3 py-1">
+                            <Badge variant="outline" className="text-green border-green bg-green/10 text-sm px-3 py-1">
                               ✓ Verified
                             </Badge>
                           ) : (

@@ -286,7 +286,7 @@ export default function ArtisanProfile() {
                 
                 <div className="flex justify-between items-center">
                   <span className="text-white/80">Verified</span>
-                  <Badge variant={artisan.verified ? "default" : "secondary"} className={artisan.verified ? "bg-green-600" : "bg-gray-700"}>
+                  <Badge variant={artisan.verified ? "default" : "secondary"} className={artisan.verified ? "bg-green" : "bg-gray-700"}>
                     {artisan.verified ? "Yes" : "No"}
                   </Badge>
                 </div>

@@ -112,7 +112,7 @@ export default function PricingTiers() {
               <ul className="space-y-4 mb-8">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-start">
-                    <Check className={`w-5 h-5 mr-3 mt-0.5 flex-shrink-0 ${tier.popular ? "text-white" : "text-green-500"}`} />
+                    <Check className={`w-5 h-5 mr-3 mt-0.5 flex-shrink-0 ${tier.popular ? "text-white" : "text-green"}`} />
                     <span className={tier.popular ? "text-white" : "text-gray-200"}>
                       {feature}
                     </span>

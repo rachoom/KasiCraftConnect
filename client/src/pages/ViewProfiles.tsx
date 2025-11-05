@@ -52,9 +52,9 @@ export default function ViewProfiles() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-green-600 text-white';
-      case 'rejected': return 'bg-green-600 text-white';
-      default: return 'bg-green-600 text-white';
+      case 'approved': return 'bg-green text-white';
+      case 'rejected': return 'bg-red-900 text-white';
+      default: return 'bg-zinc-700 text-white';
     }
   };
 
@@ -268,7 +268,7 @@ export default function ViewProfiles() {
                         <div className="flex items-center justify-between pt-2 border-t border-green/30">
                           <div className="flex items-center text-sm">
                             {artisan.verified ? (
-                              <span className="flex items-center text-green-600">
+                              <span className="flex items-center text-green">
                                 <CheckCircle className="w-4 h-4 mr-1" />
                                 Verified
                               </span>
@@ -281,7 +281,7 @@ export default function ViewProfiles() {
                           </div>
                           
                           <Link href={`/artisan/${artisan.id}`}>
-                            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                            <Button size="sm" className="bg-green hover:bg-green-dark text-white">
                               View Details
                             </Button>
                           </Link>

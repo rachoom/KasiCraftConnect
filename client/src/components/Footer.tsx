@@ -46,7 +46,7 @@ export default function Footer() {
             <h6 className="font-semibold text-lg mb-4 text-gold">Contact Us</h6>
             <ul className="space-y-3 text-white">
               <li className="flex items-center"><span className="text-gold mr-2">📞</span> +27 11 123 4567</li>
-              <li className="flex items-center"><span className="text-gold mr-2">📧</span> info@ferandworx.co.za</li>
+              <li className="flex items-center"><span className="text-gold mr-2">📧</span> info@skillsconnect.co.za</li>
               <li className="flex items-center mt-4"><span className="text-gold mr-2">✓</span> Verified & Insured</li>
             </ul>
           </div>

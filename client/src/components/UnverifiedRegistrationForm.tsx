@@ -98,8 +98,8 @@ export default function UnverifiedRegistrationForm() {
   if (isSuccess) {
     return (
       <div className="text-center py-12">
-        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle className="w-12 h-12 text-green-500" />
+        <div className="w-20 h-20 bg-green/20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <CheckCircle className="w-12 h-12 text-green" />
         </div>
         <h3 className="text-2xl font-bold text-gold mb-4">Profile Created Successfully!</h3>
         <p className="text-white/80 mb-6 max-w-md mx-auto">

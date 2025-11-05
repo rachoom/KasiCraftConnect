@@ -29,9 +29,9 @@
   --gold: hsl(45, 85%, 45%);
   --gold-dark: hsl(43, 90%, 35%);
   --gold-royal: hsl(45, 95%, 40%);
-  --green: hsl(140, 45%, 25%);
-  --green-light: hsl(140, 45%, 35%);
-  --green-dark: hsl(140, 50%, 18%);
+  --green: hsl(146, 50%, 20%); /* #1a4d2e - Deep Forest Green */
+  --green-light: hsl(146, 50%, 30%);
+  --green-dark: hsl(146, 50%, 15%);
   --black-soft: hsl(0, 0%, 10%);
   --gray-soft: hsl(0, 0%, 97%);
 }

@@ -158,7 +158,7 @@ export default function FeaturedArtisans() {
                 <p className="text-gray-300 text-sm mb-4 line-clamp-3 flex-grow text-center">{artisan.description}</p>
 
                 {artisan.verified && (
-                  <Badge variant="outline" className="text-green-500 border-green-500 mb-4 mx-auto">
+                  <Badge variant="outline" className="text-green border-green mb-4 mx-auto">
                     ✓ Verified
                   </Badge>
                 )}

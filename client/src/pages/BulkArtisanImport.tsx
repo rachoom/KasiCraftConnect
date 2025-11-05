@@ -261,7 +261,7 @@ John,Doe,john.doe@email.com,+27 82 123 4567,Cape Town,builders,Experienced build
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   {importResults.errors.length === 0 ? (
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-green" />
                   ) : (
                     <AlertCircle className="w-5 h-5 text-yellow-600" />
                   )}
@@ -271,7 +271,7 @@ John,Doe,john.doe@email.com,+27 82 123 4567,Cape Town,builders,Experienced build
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                    <div className="bg-green/10 text-green-dark px-3 py-1 rounded-full text-sm">
                       ✓ {importResults.success} successful
                     </div>
                     {importResults.errors.length > 0 && (

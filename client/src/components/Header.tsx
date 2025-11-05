@@ -61,7 +61,7 @@ export default function Header() {
               </Button>
             </Link>
             <Link href="/artisan">
-              <Button className="bg-green-600 hover:bg-green-700 text-white cosmic-glow-static px-6 py-2 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+              <Button className="bg-green hover:bg-green-dark text-white cosmic-glow-static px-6 py-2 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
                 Register as an Artisan
               </Button>
             </Link>
@@ -117,7 +117,7 @@ export default function Header() {
                 className="block"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Button className="w-full bg-green-600 hover:bg-green-700 text-white cosmic-glow-static font-bold shadow-lg">
+                <Button className="w-full bg-green hover:bg-green-dark text-white cosmic-glow-static font-bold shadow-lg">
                   Register as an Artisan
                 </Button>
               </Link>

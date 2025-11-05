@@ -257,7 +257,7 @@ export default function ArtisanRegistration() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <Card>
             <CardContent className="p-8 text-center">
-              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
+              <CheckCircle className="w-16 h-16 text-green mx-auto mb-6" />
               <h1 className="text-2xl font-bold text-black-soft mb-4">
                 Registration Successful!
               </h1>
@@ -558,7 +558,7 @@ export default function ArtisanRegistration() {
                           </label>
                         </div>
                         {uploadedIdDocument && (
-                          <div className="mt-2 flex items-center gap-2 text-sm text-green-600">
+                          <div className="mt-2 flex items-center gap-2 text-sm text-green">
                             <CheckCircle className="w-4 h-4" />
                             <span>ID document selected: {uploadedIdDocument.split('_').pop()}</span>
                           </div>
@@ -593,7 +593,7 @@ export default function ArtisanRegistration() {
                         </div>
                         {uploadedQualificationDocs.length > 0 && (
                           <div className="mt-2 space-y-1">
-                            <div className="flex items-center gap-2 text-sm text-green-600 mb-2">
+                            <div className="flex items-center gap-2 text-sm text-green mb-2">
                               <CheckCircle className="w-4 h-4" />
                               <span>{uploadedQualificationDocs.length} document(s) selected</span>
                             </div>
