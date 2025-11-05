@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import logoUrl from "@assets/logo_1762199548948.png";
-import brandLogoUrl from "@assets/skills connect site name (2)_1762351707480.png";
+import brandLogoUrl from "@assets/skills connect site name (3)_1762355369451.png";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function Header() {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20 md:h-24">
           {/* Logo and Brand Name */}
           <motion.div 
             className="flex items-center"
@@ -29,15 +29,15 @@ export default function Header() {
               <img 
                 src={logoUrl} 
                 alt="Skills Connect Logo Icon" 
-                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain"
               />
               <div className="flex flex-col">
                 <img 
                   src={brandLogoUrl} 
                   alt="SKILLS CONNECT" 
-                  className="h-10 sm:h-12 md:h-14 w-auto object-contain"
+                  className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
                 />
-                <span className="text-xs sm:text-sm text-gold font-light mt-0.5">Far East Rand</span>
+                <span className="text-xs sm:text-sm md:text-base text-gold font-light mt-1">Far East Rand</span>
               </div>
             </Link>
           </motion.div>
