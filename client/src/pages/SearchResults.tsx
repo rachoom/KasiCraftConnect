@@ -166,7 +166,7 @@ export default function SearchResults() {
               </h1>
               <p className="text-white">
                 Found {count} {count === 1 ? 'artisan' : 'artisans'} 
-                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-gold/30 text-white' : 'bg-gold text-black'}`}>
+                <Badge variant={resultTier === 'basic' ? 'outline' : 'default'} className={`ml-2 ${resultTier === 'basic' ? 'border-green/30 text-white' : 'bg-gold text-black'}`}>
                   {resultTier.toUpperCase()} TIER - {resultTier === 'basic' ? 'UNVERIFIED' : 'VERIFIED'} ARTISANS
                 </Badge>
               </p>
@@ -192,7 +192,7 @@ export default function SearchResults() {
         ) : (
           <div className="grid gap-6">
             {artisans.map((artisan: Artisan) => (
-              <Card key={artisan.id} className="border border-gold/30 hover:shadow-lg transition-all cosmic-glow-static">
+              <Card key={artisan.id} className="border border-green/30 hover:shadow-lg transition-all cosmic-glow-static">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
@@ -215,7 +215,7 @@ export default function SearchResults() {
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Badge variant="outline" className="text-white border-gold/30 bg-zinc-800/50 text-sm px-3 py-1 flex items-center gap-1">
+                                  <Badge variant="outline" className="text-white border-green/30 bg-zinc-800/50 text-sm px-3 py-1 flex items-center gap-1">
                                     Unverified <Info className="w-3 h-3" />
                                   </Badge>
                                 </TooltipTrigger>
@@ -278,7 +278,7 @@ export default function SearchResults() {
         
         {/* Upgrade prompt for basic tier */}
         {resultTier === 'basic' && (
-          <Card className="mt-8 bg-gradient-to-r from-gold/10 to-gold-dark/10 border-gold/30">
+          <Card className="mt-8 bg-gradient-to-r from-gold/10 to-gold-dark/10 border-green/30">
             <CardContent className="p-6 text-center">
               <h3 className="text-lg font-semibold text-white mb-2">
                 Want verified artisans?
@@ -307,7 +307,7 @@ export default function SearchResults() {
 
         {/* Tier selection for other tiers */}
         {resultTier !== 'basic' && (
-          <Card className="mt-8 bg-black border border-gold/30">
+          <Card className="mt-8 bg-black border border-green/30">
             <CardContent className="p-6 text-center">
               <h3 className="text-lg font-semibold text-black-soft mb-2">
                 Try different search tiers

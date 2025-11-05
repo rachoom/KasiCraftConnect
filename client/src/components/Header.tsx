@@ -4,13 +4,14 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import logoUrl from "@assets/logo_1762199548948.png";
+import brandLogoUrl from "@assets/skills connect site name_1762349160474.png";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <motion.header 
-      className="shadow-sm border-b border-gold/20 bg-black sticky top-0 z-50"
+      className="shadow-sm border-b border-green/20 bg-black sticky top-0 z-50"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -27,14 +28,16 @@ export default function Header() {
             <Link href="/" className="flex items-center space-x-3 transition-all duration-300 transform hover:scale-105">
               <img 
                 src={logoUrl} 
-                alt="Artisan Connect Logo" 
-                className="w-12 h-12 sm:w-14 sm:h-14 object-contain"
+                alt="Skills Connect Logo Icon" 
+                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
               />
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-                <h1 className="text-lg sm:text-xl font-bold text-gold cursor-pointer tracking-wide" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
-                  Artisan Connect
-                </h1>
-                <span className="text-xs sm:text-sm text-gold font-light">Far East Rand</span>
+              <div className="flex flex-col">
+                <img 
+                  src={brandLogoUrl} 
+                  alt="SKILLS CONNECT" 
+                  className="h-8 sm:h-10 w-auto object-contain"
+                />
+                <span className="text-xs sm:text-sm text-gold font-light mt-0.5">Far East Rand</span>
               </div>
             </Link>
           </motion.div>
@@ -85,7 +88,7 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-black border-t border-gold/20"
+            className="lg:hidden bg-black border-t border-green/20"
           >
             <nav className="px-4 py-4 space-y-3">
               <a 

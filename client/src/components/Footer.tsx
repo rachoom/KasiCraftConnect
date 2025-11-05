@@ -9,13 +9,13 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <h5 className="text-2xl font-bold text-gold">
-                Far East Rand Home Worx
+                SKILLS CONNECT
               </h5>
             </div>
             <p className="text-white mb-6">
-              Connecting you to reliable, vetted professionals across Brakpan. Your safety and satisfaction are our priority.
+              Connecting you to reliable, vetted professionals across Far East Rand. Your safety and satisfaction are our priority.
             </p>
-            <div className="bg-gold/10 border border-gold/30 rounded-lg px-4 py-2 inline-flex items-center">
+            <div className="bg-gold/10 border border-green/30 rounded-lg px-4 py-2 inline-flex items-center">
               <span className="text-gold text-sm font-semibold">🇿🇦 Proudly South African</span>
             </div>
           </div>
@@ -52,10 +52,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border border-gold/30 pt-8">
+        <div className="border-t border border-green/30 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/80 text-sm mb-4 md:mb-0">
-              © 2024 Far East Rand Home Worx. All rights reserved.
+              © 2024 SKILLS CONNECT - Far East Rand. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm text-white/80">
               <a href="#" className="hover:text-gold transition-colors">Privacy Policy</a>

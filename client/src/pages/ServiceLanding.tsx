@@ -194,14 +194,14 @@ export default function ServiceLanding() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
               <Link href="/">
-                <Button variant="outline" className="mb-4 border-gold/30 text-gold hover:bg-gold/10">
+                <Button variant="outline" className="mb-4 border-green/30 text-gold hover:bg-gold/10">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
               </Link>
               {/* Get Started Form - Primary Focus */}
               <div ref={getStartedRef} className="max-w-4xl mx-auto">
-                <Card className="shadow-2xl border border-gold/30 bg-black">
+                <Card className="shadow-2xl border border-green/30 bg-black">
                   <CardHeader className="pb-3 bg-black text-white rounded-t-lg">
                     <div className="text-center">
                       <Building2 className="w-16 h-16 mb-3 mx-auto text-gold" />
@@ -246,7 +246,7 @@ export default function ServiceLanding() {
                           data-testid="input-location"
                         />
                         {showLocationSuggestions && locationSuggestions.length > 0 && (
-                          <div className="absolute top-full left-0 right-0 bg-zinc-800 border border-gold/30 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                          <div className="absolute top-full left-0 right-0 bg-zinc-800 border border-green/30 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
                             {locationSuggestions.map((suggestion, index) => (
                               <button
                                 key={index}
@@ -304,7 +304,7 @@ export default function ServiceLanding() {
                             id={`service-${index}`}
                             checked={selectedServices.includes(serviceItem)}
                             onChange={() => handleServiceToggle(serviceItem)}
-                            className="w-3 h-3 text-gold bg-zinc-700 border-gold/30 rounded focus:ring-gold focus:ring-1"
+                            className="w-3 h-3 text-gold bg-zinc-700 border-green/30 rounded focus:ring-gold focus:ring-1"
                           />
                           <label 
                             htmlFor={`service-${index}`} 

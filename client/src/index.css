@@ -25,10 +25,13 @@
   --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
 
-  /* Custom Skills Connect colors - Royal Gold Theme */
+  /* Custom Skills Connect colors - Gold & Green Theme */
   --gold: hsl(45, 85%, 45%);
   --gold-dark: hsl(43, 90%, 35%);
   --gold-royal: hsl(45, 95%, 40%);
+  --green: hsl(140, 45%, 25%);
+  --green-light: hsl(140, 45%, 35%);
+  --green-dark: hsl(140, 50%, 18%);
   --black-soft: hsl(0, 0%, 10%);
   --gray-soft: hsl(0, 0%, 97%);
 }
@@ -75,6 +78,22 @@
     border-color: var(--gold);
   }
   
+  .border-green {
+    border-color: var(--green);
+  }
+  
+  .bg-green {
+    background-color: var(--green);
+  }
+  
+  .bg-green-dark {
+    background-color: var(--green-dark);
+  }
+  
+  .text-green {
+    color: var(--green);
+  }
+  
   .hover\:bg-gold:hover {
     background-color: var(--gold);
   }
@@ -89,6 +108,10 @@
   
   .hover\:border-gold:hover {
     border-color: var(--gold);
+  }
+  
+  .hover\:border-green:hover {
+    border-color: var(--green);
   }
 
   /* Background overlay utilities */

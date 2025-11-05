@@ -75,7 +75,7 @@ export default function ViewProfiles() {
           <FadeInSection>
             <div className="mb-8">
               <Link href="/">
-                <Button variant="outline" className="mb-4 border border-gold/30 text-gold hover:bg-gold/10">
+                <Button variant="outline" className="mb-4 border border-green/30 text-gold hover:bg-gold/10">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
@@ -89,7 +89,7 @@ export default function ViewProfiles() {
             </div>
 
             {/* Search and Filter Section */}
-            <Card className="mb-8 shadow-lg border border-gold/30 bg-black">
+            <Card className="mb-8 shadow-lg border border-green/30 bg-black">
               <CardHeader>
                 <CardTitle className="text-white">Search & Filter</CardTitle>
               </CardHeader>
@@ -98,10 +98,10 @@ export default function ViewProfiles() {
                   {/* REORDERED: 1. Filter by service */}
                   <div>
                     <Select value={filterService} onValueChange={setFilterService}>
-                      <SelectTrigger className="bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60">
+                      <SelectTrigger className="bg-zinc-800 border border-green/30 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by service" />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-800 border border-gold/30 text-gold">
+                      <SelectContent className="bg-zinc-800 border border-green/30 text-gold">
                         <SelectItem value="all" className="text-gold">All Services</SelectItem>
                         {serviceOptions.map((service) => (
                           <SelectItem key={service.id} value={service.id} className="text-gold">
@@ -118,17 +118,17 @@ export default function ViewProfiles() {
                       placeholder="Filter by location..."
                       value={filterLocation}
                       onChange={(e) => setFilterLocation(e.target.value)}
-                      className="w-full bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60"
+                      className="w-full bg-zinc-800 border border-green/30 text-white placeholder:text-white/60"
                     />
                   </div>
                   
                   {/* REORDERED: 3. Filter by status */}
                   <div>
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger className="bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60">
+                      <SelectTrigger className="bg-zinc-800 border border-green/30 text-white placeholder:text-white/60">
                         <SelectValue placeholder="Filter by status" />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-800 border border-gold/30 text-gold">
+                      <SelectContent className="bg-zinc-800 border border-green/30 text-gold">
                         <SelectItem value="all" className="text-gold">All Statuses</SelectItem>
                         <SelectItem value="pending" className="text-gold">Pending</SelectItem>
                         <SelectItem value="approved" className="text-gold">Approved</SelectItem>
@@ -143,7 +143,7 @@ export default function ViewProfiles() {
                       placeholder="Search by name or email..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full bg-zinc-800 border border-gold/30 text-white placeholder:text-white/60"
+                      className="w-full bg-zinc-800 border border-green/30 text-white placeholder:text-white/60"
                     />
                   </div>
                 </div>
@@ -174,7 +174,7 @@ export default function ViewProfiles() {
                 ))}
               </div>
             ) : filteredArtisans.length === 0 ? (
-              <Card className="shadow-lg border-gold/30 bg-black">
+              <Card className="shadow-lg border-green/30 bg-black">
                 <CardContent className="p-8 text-center">
                   <User className="w-12 h-12 text-white/40 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">
@@ -188,7 +188,7 @@ export default function ViewProfiles() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredArtisans.map((artisan: any) => (
-                  <Card key={artisan.id} className="shadow-lg border-gold/30 bg-black hover:shadow-xl transition-shadow hover:border-gold/50">
+                  <Card key={artisan.id} className="shadow-lg border-green/30 bg-black hover:shadow-xl transition-shadow hover:border-gold/50">
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         {/* Header with name and status */}
@@ -265,7 +265,7 @@ export default function ViewProfiles() {
                         )}
 
                         {/* Verification Status */}
-                        <div className="flex items-center justify-between pt-2 border-t border-gold/30">
+                        <div className="flex items-center justify-between pt-2 border-t border-green/30">
                           <div className="flex items-center text-sm">
                             {artisan.verified ? (
                               <span className="flex items-center text-green-600">

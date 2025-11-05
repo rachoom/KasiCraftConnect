@@ -126,7 +126,7 @@ export default function FeaturedArtisans() {
               <Card className="bg-zinc-900 shadow-xl border-2 border-gold/40 hover:border-gold/80 transition-all duration-300 h-full">
               <CardContent className="p-6 flex flex-col h-full">
                 <div className="flex flex-col items-center mb-4">
-                  <div className="w-24 h-24 bg-gradient-to-br from-gold to-amber-700 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-3 border-4 border-gold/30">
+                  <div className="w-24 h-24 bg-gradient-to-br from-gold to-amber-700 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-3 border-4 border-green/30">
                     {artisan.profileImage || getInitials(artisan.firstName, artisan.lastName)}
                   </div>
                   <div className="text-center">

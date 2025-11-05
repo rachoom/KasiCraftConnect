@@ -104,7 +104,7 @@ export default function TrustedPartners() {
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="relative bg-zinc-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-gold/30 hover:border-gold/60 h-full">
+                <div className="relative bg-zinc-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-green/30 hover:border-gold/60 h-full">
                   {partner.sponsored && (
                     <div className="absolute top-4 right-4 bg-gold/20 text-gold text-xs font-bold px-3 py-1 rounded-full border border-gold/40">
                       SPONSORED
@@ -112,7 +112,7 @@ export default function TrustedPartners() {
                   )}
                   
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mb-6 border-2 border-gold/30">
+                    <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mb-6 border-2 border-green/30">
                       <Icon className="w-10 h-10 text-gold" />
                     </div>
                     

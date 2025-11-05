@@ -31,7 +31,7 @@ export default function JoinArtisan() {
           <FadeInSection>
             <div className="mb-8">
               <Link href="/">
-                <Button variant="outline" className="border border-gold/30 text-gold hover:bg-gold/10 mb-4">
+                <Button variant="outline" className="border border-green/30 text-gold hover:bg-gold/10 mb-4">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Home
                 </Button>
@@ -40,7 +40,7 @@ export default function JoinArtisan() {
 
             <div className="text-center mb-12">
               <h1 className="text-5xl font-bold text-gold mb-4">
-                Join Skills Connect as an Artisan
+                Join SKILLS CONNECT as an Artisan
               </h1>
               <p className="text-xl text-white max-w-3xl mx-auto">
                 Choose the path that's right for you and start connecting with clients today
@@ -60,7 +60,7 @@ export default function JoinArtisan() {
                 className="cursor-pointer"
                 data-testid="card-unverified"
               >
-                <Card className={`h-full border border-gold/30 transition-all ${
+                <Card className={`h-full border border-green/30 transition-all ${
                   selectedPath === 'unverified' 
                     ? 'bg-gold/10 shadow-xl' 
                     : 'bg-black hover:shadow-lg'
@@ -123,7 +123,7 @@ export default function JoinArtisan() {
                   </span>
                 </div>
                 
-                <Card className={`h-full border border-gold/30 transition-all ${
+                <Card className={`h-full border border-green/30 transition-all ${
                   selectedPath === 'verified' 
                     ? 'bg-gold/10 shadow-xl' 
                     : 'bg-black hover:shadow-lg'
@@ -182,7 +182,7 @@ export default function JoinArtisan() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="max-w-4xl mx-auto"
               >
-                <Card className="border border-gold/30 bg-gradient-to-br from-gold/10 to-black">
+                <Card className="border border-green/30 bg-gradient-to-br from-gold/10 to-black">
                   <CardContent className="p-8">
                     <div className="flex items-start gap-6">
                       <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
@@ -241,7 +241,7 @@ export default function JoinArtisan() {
                 transition={{ duration: 0.3 }}
                 className="max-w-2xl mx-auto"
               >
-                <Card className="border border-gold/30 bg-black">
+                <Card className="border border-green/30 bg-black">
                   <CardHeader>
                     <CardTitle className="text-2xl text-gold">
                       Create Your Free Unverified Profile
@@ -263,7 +263,7 @@ export default function JoinArtisan() {
                 transition={{ duration: 0.3 }}
                 className="max-w-3xl mx-auto"
               >
-                <Card className="border border-gold/30 bg-black">
+                <Card className="border border-green/30 bg-black">
                   <CardHeader>
                     <CardTitle className="text-2xl text-gold">
                       Apply for Verified Status

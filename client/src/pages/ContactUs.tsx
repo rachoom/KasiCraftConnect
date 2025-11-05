@@ -66,7 +66,7 @@ export default function ContactUs() {
       <Header />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link href="/">
-          <Button variant="outline" className="mb-6 border-gold/30 text-gold hover:bg-gold/10">
+          <Button variant="outline" className="mb-6 border-green/30 text-gold hover:bg-gold/10">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>
@@ -80,7 +80,7 @@ export default function ContactUs() {
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card className="bg-black border border-gold/30">
+          <Card className="bg-black border border-green/30">
             <CardHeader>
               <CardTitle className="text-white">Send us a message</CardTitle>
               <CardDescription className="text-gray-300">
@@ -178,7 +178,7 @@ export default function ContactUs() {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <Card className="bg-black border border-gold/30">
+            <Card className="bg-black border border-green/30">
               <CardHeader>
                 <CardTitle className="text-white">Get in touch</CardTitle>
                 <CardDescription className="text-gray-300">
@@ -235,7 +235,7 @@ export default function ContactUs() {
               </CardContent>
             </Card>
 
-            <Card className="bg-black border border-gold/30">
+            <Card className="bg-black border border-green/30">
               <CardHeader>
                 <CardTitle className="text-white">Frequently Asked Questions</CardTitle>
               </CardHeader>

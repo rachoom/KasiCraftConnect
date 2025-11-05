@@ -40,7 +40,7 @@ export default function ArtisanAuth() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card className="h-full border-2 border-transparent hover:border-gold/30 transition-all">
+                <Card className="h-full border-2 border-transparent hover:border-green/30 transition-all">
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
                       <User className="w-8 h-8 text-gold" />
@@ -84,7 +84,7 @@ export default function ArtisanAuth() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <Card className="h-full border-2 border-transparent hover:border-gold/30 transition-all">
+                <Card className="h-full border-2 border-transparent hover:border-green/30 transition-all">
                   <CardHeader className="text-center pb-4">
                     <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <UserPlus className="w-8 h-8 text-blue-600" />

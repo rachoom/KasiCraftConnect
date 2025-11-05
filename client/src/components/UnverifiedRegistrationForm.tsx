@@ -129,7 +129,7 @@ export default function UnverifiedRegistrationForm() {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-zinc-800 border border-gold/30 text-white"
+                    className="bg-zinc-800 border border-green/30 text-white"
                     data-testid="input-firstName"
                   />
                 </FormControl>
@@ -147,7 +147,7 @@ export default function UnverifiedRegistrationForm() {
                 <FormControl>
                   <Input 
                     {...field} 
-                    className="bg-zinc-800 border border-gold/30 text-white"
+                    className="bg-zinc-800 border border-green/30 text-white"
                     data-testid="input-lastName"
                   />
                 </FormControl>
@@ -168,7 +168,7 @@ export default function UnverifiedRegistrationForm() {
                   <Input 
                     {...field} 
                     type="email"
-                    className="bg-zinc-800 border border-gold/30 text-white"
+                    className="bg-zinc-800 border border-green/30 text-white"
                     data-testid="input-email"
                   />
                 </FormControl>
@@ -187,7 +187,7 @@ export default function UnverifiedRegistrationForm() {
                   <Input 
                     {...field} 
                     type="tel"
-                    className="bg-zinc-800 border border-gold/30 text-white"
+                    className="bg-zinc-800 border border-green/30 text-white"
                     data-testid="input-phone"
                   />
                 </FormControl>
@@ -205,11 +205,11 @@ export default function UnverifiedRegistrationForm() {
               <FormLabel className="text-white">Location *</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-zinc-800 border border-gold/30 text-white" data-testid="select-location">
+                  <SelectTrigger className="bg-zinc-800 border border-green/30 text-white" data-testid="select-location">
                     <SelectValue placeholder="Select your location" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="bg-zinc-800 border border-gold/30 text-white">
+                <SelectContent className="bg-zinc-800 border border-green/30 text-white">
                   {locations.map((location) => (
                     <SelectItem key={location} value={location} className="text-white focus:bg-gold/20 focus:text-white">
                       {location}
@@ -245,7 +245,7 @@ export default function UnverifiedRegistrationForm() {
                                 : (field.value || []).filter((val) => val !== service.id);
                               field.onChange(updatedValue);
                             }}
-                            className="border border-gold/30"
+                            className="border border-green/30"
                             data-testid={`checkbox-service-${service.id}`}
                           />
                         </FormControl>
@@ -275,7 +275,7 @@ export default function UnverifiedRegistrationForm() {
                   min={0}
                   max={50}
                   onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                  className="bg-zinc-800 border border-gold/30 text-white"
+                  className="bg-zinc-800 border border-green/30 text-white"
                   data-testid="input-yearsExperience"
                 />
               </FormControl>
@@ -295,7 +295,7 @@ export default function UnverifiedRegistrationForm() {
                   {...field} 
                   rows={4}
                   placeholder="Tell clients about yourself and your services..."
-                  className="bg-zinc-800 border border-gold/30 text-white"
+                  className="bg-zinc-800 border border-green/30 text-white"
                   data-testid="textarea-description"
                 />
               </FormControl>
