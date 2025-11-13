@@ -12,7 +12,7 @@ export default function Hero() {
           alt="Artisan at work"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/70 to-black/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-black/93 to-black/95"></div>
       </div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 w-full">
