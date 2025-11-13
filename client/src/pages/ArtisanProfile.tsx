@@ -240,7 +240,7 @@ export default function ArtisanProfile() {
                   Call Now
                 </Button>
                 
-                <Button variant="outline" className="w-full border-green/30 text-white hover:bg-gold/20" size="lg">
+                <Button variant="outline" className="w-full border-2 border-gold text-gold hover:bg-gold/20 hover:border-gold-dark" size="lg">
                   <Mail className="w-4 h-4 mr-2" />
                   Send Message
                 </Button>

@@ -25,20 +25,13 @@ export default function Header() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Link href="/" className="flex items-center space-x-3 sm:space-x-4 transition-all duration-300 transform hover:scale-105">
+            <Link href="/" className="flex items-center gap-3 sm:gap-4 transition-all duration-300 transform hover:scale-105">
               <img 
-                src={logoUrl} 
-                alt="Skills Connect Logo Icon" 
-                className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain"
+                src={brandLogoUrl} 
+                alt="SKILLS CONNECT" 
+                className="h-24 sm:h-28 md:h-32 lg:h-40 w-auto object-contain flex-shrink-0"
               />
-              <div className="flex items-center gap-3 sm:gap-4">
-                <img 
-                  src={brandLogoUrl} 
-                  alt="SKILLS CONNECT" 
-                  className="h-24 sm:h-28 md:h-32 lg:h-40 w-auto object-contain flex-shrink-0"
-                />
-                <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center">Far East Rand</span>
-              </div>
+              <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center">Far East Rand</span>
             </Link>
           </motion.div>
           

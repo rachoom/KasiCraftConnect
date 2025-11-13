@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getInitials, formatRating } from "@/lib/utils";
-import { MapPin, Star, Phone, Mail } from "lucide-react";
+import { MapPin, Star, Phone, Mail, User } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function FeaturedArtisans() {
@@ -127,7 +127,11 @@ export default function FeaturedArtisans() {
               <CardContent className="p-6 flex flex-col h-full">
                 <div className="flex flex-col items-center mb-4">
                   <div className="w-24 h-24 bg-gradient-to-br from-gold to-amber-700 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-3 border-4 border-green/30">
-                    {artisan.profileImage || getInitials(artisan.firstName, artisan.lastName)}
+                    {artisan.profileImage ? (
+                      <img src={artisan.profileImage} alt={`${artisan.firstName} ${artisan.lastName}`} className="w-full h-full rounded-full object-cover" />
+                    ) : (
+                      <User className="w-12 h-12 text-white/80" />
+                    )}
                   </div>
                   <div className="text-center">
                     <h4 className="font-bold text-xl text-white mb-1">

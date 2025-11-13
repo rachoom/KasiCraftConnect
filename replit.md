@@ -11,6 +11,8 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### UI/UX Decisions
+- Form error messages styled with dark red background (bg-red-950/60), red border, and padding for high visibility.
+- Email buttons on artisan profiles use golden border (border-2 border-gold) and golden text matching brand colors.
 - Modern React 18 frontend with TypeScript.
 - Shadcn/ui component library based on Radix UI, styled with Tailwind CSS and custom CSS variables.
 - Framer Motion for smooth animations and transitions.
@@ -22,12 +24,14 @@ Preferred communication style: Simple, everyday language.
   - NO gray text allowed on dark backgrounds for maximum contrast and visibility
 - **Branding**:
   - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase bright yellow typography) at size h-24 sm:h-28 md:h-32 lg:h-40 (96px to 160px) for maximum visibility and legibility
+  - Logo icon REMOVED from header - only brand text image displayed for cleaner layout
   - "Far East Rand" subtitle positioned horizontally to the RIGHT of brand logo, vertically centered for clean layout
   - Brand consistency maintained across all platforms with exact font and colors matching brand image (#E0B82E)
   - "Register as an Artisan" button uses bright yellow background (bg-gold) with black text for high contrast
   - Header height increased to h-28 md:h-32 lg:h-40 (112px to 160px) to accommodate large branding
 - Hero section features darker overlay (95% opacity) for optimal text readability against background images.
 - Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
+- Featured Artisans profile pictures display uploaded images or User icon placeholder on golden gradient background.
 - Mobile-responsive navigation with a hamburger menu for smaller viewports.
 - All cards use `bg-zinc-900` with thin `border-2 border-green/30` for consistent styling with deep forest green borders at 30% opacity.
 - Status badges use green for success states, maintaining the black/gold/green theme consistency.
