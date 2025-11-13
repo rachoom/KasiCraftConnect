@@ -13,12 +13,13 @@ Preferred communication style: Simple, everyday language.
 ### UI/UX Decisions
 - Form error messages styled with dark red background (bg-red-950/60), red border, and padding for high visibility.
 - Email buttons on artisan profiles use golden border (border-2 border-gold) and golden text matching brand colors.
+- **Rating/Review System Removed**: All star ratings, review counts, and review sections removed from the platform as this feature is not yet available.
 - Modern React 18 frontend with TypeScript.
 - Shadcn/ui component library based on Radix UI, styled with Tailwind CSS and custom CSS variables.
 - Framer Motion for smooth animations and transitions.
 - **PERMANENT DARK THEME**: Black background (#000000) enforced site-wide for ALL users regardless of system preferences. Dark theme CSS variables are set as default in `:root` to ensure consistent appearance.
 - **Brand Colors - Black/Gold/Green Theme**:
-  - **Bright Yellow/Gold** (#E0B82E / hsl(48, 89%, 56%)): Used for "SKILLS CONNECT" branding, headings, primary text, and CTA buttons like "Register as an Artisan"
+  - **Warm Amber Gold** (#D4A54A / hsl(40, 60%, 55%)): Primary gold color used throughout site for branding, headings, borders, and CTA buttons
   - **Deep Forest Green** (#1a4d2e / hsl(146, 50%, 20%)): Used for ALL borders and accents (typically at 30% opacity for subtle styling)
   - **White**: Body text with varying opacity (text-white, text-white/80, text-white/60)
   - NO gray text allowed on dark backgrounds for maximum contrast and visibility
@@ -31,7 +32,13 @@ Preferred communication style: Simple, everyday language.
   - Header height increased to h-28 md:h-32 lg:h-40 (112px to 160px) to accommodate large branding
 - Hero section features darker overlay (95% opacity) for optimal text readability against background images.
 - Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
-- Featured Artisans profile pictures display uploaded images or User icon placeholder on golden gradient background.
+- Featured Artisans cards redesigned with:
+  - Golden borders (border-2 border-gold/80) matching reference design
+  - Profile images in circles with User icon placeholders
+  - Featured badge for verified/premium artisans
+  - Contact information displayed (phone, email) with icons
+  - "Call Now" button (gold background, black text) and "Email" button (outlined)
+  - No rating/review elements (feature not yet available)
 - Mobile-responsive navigation with a hamburger menu for smaller viewports.
 - All cards use `bg-zinc-900` with thin `border-2 border-green/30` for consistent styling with deep forest green borders at 30% opacity.
 - Status badges use green for success states, maintaining the black/gold/green theme consistency.

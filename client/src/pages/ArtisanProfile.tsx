@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getInitials, formatRating } from "@/lib/utils";
+import { getInitials } from "@/lib/utils";
 import { 
   MapPin, 
-  Star, 
   Phone, 
   Mail, 
   ArrowLeft, 
@@ -137,7 +136,7 @@ export default function ArtisanProfile() {
                       
                       {artisan.subscriptionTier === 'premium' && (
                         <Badge variant="outline" className="text-gold border-green/30 bg-gold/20">
-                          <Star className="w-3 h-3 mr-1" />
+                          <Award className="w-3 h-3 mr-1" />
                           Premium Marketing
                         </Badge>
                       )}
@@ -148,20 +147,14 @@ export default function ArtisanProfile() {
                     </p>
                     
                     <div className="flex flex-wrap items-center gap-4 mb-4">
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-5 h-5 fill-gold text-gold" />
-                        <span className="font-semibold text-lg text-white">{formatRating(artisan.rating || "0")}</span>
-                        <span className="text-white/80">({artisan.reviewCount} reviews)</span>
-                      </div>
-                      
                       <div className="flex items-center space-x-1 text-white/80">
-                        <MapPin className="w-4 h-4" />
+                        <MapPin className="w-4 h-4 text-gold" />
                         <span>{artisan.location}</span>
                       </div>
                       
                       <div className="flex items-center space-x-1 text-white/80">
-                        <Clock className="w-4 h-4" />
-                        <span>{artisan.yearsExperience} years experience</span>
+                        <Clock className="w-4 h-4 text-gold" />
+                        <span>{artisan.yearsExperience}+ years experience</span>
                       </div>
                     </div>
                   </div>
@@ -201,30 +194,6 @@ export default function ArtisanProfile() {
               </CardContent>
             </Card>
 
-            {/* Reviews Section - Only for Verified and Premium tiers */}
-            {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') ? (
-              <Card className="border border-green/30 bg-black">
-                <CardHeader>
-                  <CardTitle className="text-white">Customer Reviews</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-8 text-white">
-                    <Star className="w-12 h-12 mx-auto mb-4 text-gold/50" />
-                    <p>No reviews yet. Be the first to review!</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="border border-green/30 bg-black">
-                <CardContent className="p-6 text-center">
-                  <Shield className="w-12 h-12 mx-auto mb-4 text-gold/50" />
-                  <h3 className="font-semibold text-white mb-2">Reviews Available for Verified Artisans</h3>
-                  <p className="text-sm text-white/80">
-                    This artisan needs to upgrade to a verified tier to access the customer review system.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
           </div>
 
           {/* Sidebar */}
@@ -267,27 +236,23 @@ export default function ArtisanProfile() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-white/80">Rating</span>
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                    <span className="font-semibold text-white">{formatRating(artisan.rating || "0")}</span>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-white/80">Reviews</span>
-                  <span className="font-semibold text-white">{artisan.reviewCount}</span>
-                </div>
-                
-                <div className="flex justify-between items-center">
                   <span className="text-white/80">Experience</span>
-                  <span className="font-semibold text-white">{artisan.yearsExperience} years</span>
+                  <span className="font-semibold text-white">{artisan.yearsExperience}+ years</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-white/80">Verified</span>
                   <Badge variant={artisan.verified ? "default" : "secondary"} className={artisan.verified ? "bg-green" : "bg-gray-700"}>
                     {artisan.verified ? "Yes" : "No"}
+                  </Badge>
+                </div>
+                
+                <div className="flex justify-between items-center">
+                  <span className="text-white/80">Subscription</span>
+                  <Badge className="bg-gold/20 text-gold border-green/30">
+                    {artisan.subscriptionTier === 'unverified' && 'Free'}
+                    {artisan.subscriptionTier === 'verified' && 'Verified'}
+                    {artisan.subscriptionTier === 'premium' && 'Premium'}
                   </Badge>
                 </div>
               </CardContent>

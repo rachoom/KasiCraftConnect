@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { getInitials, formatRating } from "@/lib/utils";
-import { MapPin, Star, Phone, Mail, ArrowLeft, Info } from "lucide-react";
+import { getInitials } from "@/lib/utils";
+import { MapPin, Phone, Mail, ArrowLeft, Info, User } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function SearchResults() {
@@ -227,28 +227,22 @@ export default function SearchResults() {
                           )}
                         </div>
                         
-                        <p className="text-gold-dark font-medium mb-2">
+                        <p className="text-gold font-medium mb-2">
                           {artisan.services.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(", ")}
                         </p>
                         
                         <div className="flex items-center space-x-4 mb-3">
-                          <div className="flex items-center space-x-1 text-white">
-                            <Star className="w-4 h-4 fill-gold text-gold" />
-                            <span className="font-medium">{formatRating(artisan.rating || "0")}</span>
-                            <span className="text-white/80">({artisan.reviewCount} reviews)</span>
-                          </div>
-                          
                           <div className="flex items-center space-x-1 text-white/80">
-                            <MapPin className="w-4 h-4" />
+                            <MapPin className="w-4 h-4 text-gold" />
                             <span>{artisan.location}</span>
                           </div>
+                          
+                          <div className="text-white/80">
+                            {artisan.yearsExperience}+ years experience
+                          </div>
                         </div>
                         
-                        <p className="text-white mb-4 line-clamp-2">{artisan.description}</p>
-                        
-                        <div className="text-sm text-white/80">
-                          {artisan.yearsExperience} years of experience
-                        </div>
+                        <p className="text-white/80 mb-4 line-clamp-2 text-sm leading-relaxed">{artisan.description}</p>
                       </div>
                     </div>
                     
@@ -284,7 +278,7 @@ export default function SearchResults() {
                 Want verified artisans?
               </h3>
               <p className="text-white mb-4">
-                Upgrade to Premium to see up to 5 ID & qualification verified artisans with detailed profiles and reviews.
+                Upgrade to Premium to see up to 5 ID & qualification verified artisans with detailed profiles.
               </p>
               <div className="flex gap-4 justify-center">
                 <Button 

@@ -5,8 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getInitials, formatRating } from "@/lib/utils";
-import { MapPin, Star, Phone, Mail, User } from "lucide-react";
+import { MapPin, Phone, Mail, User } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function FeaturedArtisans() {
@@ -21,7 +20,7 @@ export default function FeaturedArtisans() {
           <div className="text-center mb-16">
             <h3 className="text-3xl md:text-4xl font-bold text-black-soft mb-4">Featured Artisans</h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Meet some of our top-rated professionals ready to help with your next project.
+              Premium professionals who have earned their place in our spotlight
             </p>
           </div>
 
@@ -102,7 +101,7 @@ export default function FeaturedArtisans() {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            Meet some of our top-rated professionals ready to help with your next project.
+            Premium professionals who have earned their place in our spotlight
           </motion.p>
         </motion.div>
 
@@ -118,64 +117,95 @@ export default function FeaturedArtisans() {
               key={artisan.id}
               variants={cardVariants}
               whileHover={{
-                scale: 1.05,
-                y: -5,
+                scale: 1.02,
+                y: -3,
                 transition: { duration: 0.2 }
               }}
             >
-              <Card className="bg-zinc-900 shadow-xl border-2 border-green/30 hover:border-green transition-all duration-300 h-full">
+              <Card className="bg-black shadow-xl border-2 border-gold/80 hover:border-gold transition-all duration-300 h-full rounded-xl">
               <CardContent className="p-6 flex flex-col h-full">
-                <div className="flex flex-col items-center mb-4">
-                  <div className="w-24 h-24 bg-gradient-to-br from-gold to-amber-700 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-3 border-4 border-green/30">
-                    {artisan.profileImage ? (
-                      <img src={artisan.profileImage} alt={`${artisan.firstName} ${artisan.lastName}`} className="w-full h-full rounded-full object-cover" />
-                    ) : (
-                      <User className="w-12 h-12 text-white/80" />
+                {/* Profile Image with Featured Badge */}
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="relative flex-shrink-0">
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-gold to-gold-dark border-2 border-gold/50">
+                      {artisan.profileImage ? (
+                        <img src={artisan.profileImage} alt={`${artisan.firstName} ${artisan.lastName}`} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <User className="w-8 h-8 text-black/80" />
+                        </div>
+                      )}
+                    </div>
+                    {artisan.subscriptionTier === 'premium' && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-gold rounded-full border-2 border-black flex items-center justify-center">
+                        <span className="text-[10px] font-bold text-black">P</span>
+                      </div>
                     )}
                   </div>
-                  <div className="text-center">
-                    <h4 className="font-bold text-xl text-white mb-1">
-                      {artisan.firstName} {artisan.lastName}
-                    </h4>
-                    <p className="text-gold font-semibold text-sm">
-                      {artisan.services.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(", ")}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-bold text-lg text-gold truncate">
+                        {artisan.firstName} {artisan.lastName}
+                      </h4>
+                      {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') && (
+                        <Badge className="bg-gold text-black font-semibold text-xs px-2 py-0.5 rounded-full">
+                          Featured
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-white/70 text-sm">
+                      {artisan.services.map(s => {
+                        const serviceMap: Record<string, string> = {
+                          'builders': 'Builder',
+                          'plumbers': 'Plumber',
+                          'electricians': 'Electrician',
+                          'carpenters': 'Carpenter',
+                          'tilers': 'Tiler',
+                          'painters': 'Painter',
+                          'cleaners': 'Cleaner',
+                          'landscapers': 'Landscaper',
+                          'mechanics': 'Mechanic'
+                        };
+                        return serviceMap[s] || s.charAt(0).toUpperCase() + s.slice(1);
+                      }).join(', ')}
                     </p>
                   </div>
                 </div>
-                
-                <div className="flex items-center justify-center mb-3">
-                  <div className="flex text-gold mr-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                  </div>
-                  <span className="text-white/80 text-sm">
-                    {formatRating(artisan.rating || "0")} ({artisan.reviewCount})
-                  </span>
-                </div>
 
-                <div className="flex items-center justify-center text-white/70 mb-3">
-                  <MapPin className="w-4 h-4 mr-1" />
+                {/* Location */}
+                <div className="flex items-center gap-1 text-white/70 mb-3">
+                  <MapPin className="w-4 h-4 text-gold flex-shrink-0" />
                   <span className="text-sm">{artisan.location}</span>
                 </div>
 
-                <p className="text-white/80 text-sm mb-4 line-clamp-3 flex-grow text-center">{artisan.description}</p>
+                {/* Description */}
+                <p className="text-white/80 text-sm mb-4 line-clamp-3 flex-grow leading-relaxed">
+                  {artisan.yearsExperience && `${artisan.yearsExperience}+ years experience in `}
+                  {artisan.description}
+                </p>
 
-                {artisan.verified && (
-                  <Badge variant="outline" className="text-green border-green mb-4 mx-auto">
-                    ✓ Verified
-                  </Badge>
-                )}
+                {/* Contact Information */}
+                <div className="space-y-2 mb-4 text-sm">
+                  <div className="flex items-center gap-2 text-white/70">
+                    <Phone className="w-4 h-4 text-gold flex-shrink-0" />
+                    <span className="truncate">{artisan.phone}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/70">
+                    <Mail className="w-4 h-4 text-gold flex-shrink-0" />
+                    <span className="truncate text-xs">{artisan.email}</span>
+                  </div>
+                </div>
 
-                <div className="flex gap-2 mt-auto">
-                  <a href={`tel:${artisan.phone}`} className="flex-1">
-                    <Button className="w-full bg-green hover:bg-green-dark text-white font-bold text-sm py-2">
-                      <Phone className="w-4 h-4 mr-1" /> Call
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2 mt-auto">
+                  <a href={`tel:${artisan.phone}`} className="w-full" data-testid={`button-call-${artisan.id}`}>
+                    <Button className="w-full bg-gold hover:bg-gold-dark text-black font-bold text-sm py-2.5 rounded-lg">
+                      Call Now
                     </Button>
                   </a>
-                  <a href={`mailto:${artisan.email}`} className="flex-1">
-                    <Button variant="outline" className="w-full border-green text-green hover:bg-green/20 font-bold text-sm py-2">
-                      <Mail className="w-4 h-4 mr-1" /> Email
+                  <a href={`mailto:${artisan.email}`} className="w-full" data-testid={`button-email-${artisan.id}`}>
+                    <Button variant="outline" className="w-full border-gold/30 text-white hover:bg-gold/10 hover:border-gold font-semibold text-sm py-2.5 rounded-lg bg-black">
+                      Email
                     </Button>
                   </a>
                 </div>
