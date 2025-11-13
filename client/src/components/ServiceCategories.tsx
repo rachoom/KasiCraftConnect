@@ -143,7 +143,7 @@ export default function ServiceCategories() {
                     alt={service.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/90 group-hover:from-black/30 transition-colors duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black/95 group-hover:from-black/60 group-hover:via-black/75 transition-colors duration-300"></div>
                 </div>
                 <div className="relative p-8 h-64 flex flex-col justify-end">
                   <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-gold/40 transition-colors border border-green/40">

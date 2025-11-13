@@ -30,7 +30,8 @@ Preferred communication style: Simple, everyday language.
   - Brand consistency maintained across all platforms with exact font and colors matching brand image (#E0B82E)
   - "Register as an Artisan" button uses bright yellow background (bg-gold) with black text for high contrast
   - Header height increased to h-28 md:h-32 lg:h-40 (112px to 160px) to accommodate large branding
-- Hero section features darker overlay (95% opacity) for optimal text readability against background images.
+- Hero section features very dark overlay (97-95% opacity) for optimal text readability against background images.
+- Service category cards use progressively darker overlays (70-80-95% from top to bottom) ensuring gold and white text remains readable; hover state maintains visibility with slightly lighter overlay.
 - Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
 - Featured Artisans cards redesigned with:
   - Golden borders (border-2 border-gold/80) matching reference design
