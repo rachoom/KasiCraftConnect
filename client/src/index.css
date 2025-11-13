@@ -26,9 +26,9 @@
   --radius: 0.5rem;
 
   /* Custom Skills Connect colors - Gold & Green Theme */
-  --gold: 40 60% 55%; /* #D4A54A - Warm amber gold from reference design */
-  --gold-dark: 40 60% 45%;
-  --gold-royal: 40 70% 40%;
+  --gold: 45 89% 56%; /* Vibrant royal gold - bright and eye-catching */
+  --gold-dark: 45 89% 46%;
+  --gold-royal: 45 95% 50%;
   --green: 146 50% 20%; /* #1a4d2e - Deep Forest Green */
   --green-light: 146 50% 30%;
   --green-dark: 146 50% 15%;

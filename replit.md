@@ -19,7 +19,7 @@ Preferred communication style: Simple, everyday language.
 - Framer Motion for smooth animations and transitions.
 - **PERMANENT DARK THEME**: Black background (#000000) enforced site-wide for ALL users regardless of system preferences. Dark theme CSS variables are set as default in `:root` to ensure consistent appearance.
 - **Brand Colors - Black/Gold/Green Theme**:
-  - **Warm Amber Gold** (#D4A54A / hsl(40, 60%, 55%)): Primary gold color used throughout site for branding, headings, borders, and CTA buttons
+  - **Vibrant Royal Gold** (hsl(45, 89%, 56%)): Bright, eye-catching gold color used throughout site for branding, headings, borders, and CTA buttons
   - **Deep Forest Green** (#1a4d2e / hsl(146, 50%, 20%)): Used for ALL borders and accents (typically at 30% opacity for subtle styling)
   - **White**: Body text with varying opacity (text-white, text-white/80, text-white/60)
   - NO gray text allowed on dark backgrounds for maximum contrast and visibility
@@ -27,10 +27,10 @@ Preferred communication style: Simple, everyday language.
   - Header displays "SKILLS CONNECT" using the official brand image (bold uppercase bright yellow typography) at size h-24 sm:h-28 md:h-32 lg:h-40 (96px to 160px) for maximum visibility and legibility
   - Logo icon REMOVED from header - only brand text image displayed for cleaner layout
   - "Far East Rand" subtitle positioned horizontally to the RIGHT of brand logo, vertically centered for clean layout
-  - Brand consistency maintained across all platforms with exact font and colors matching brand image (#E0B82E)
+  - Brand consistency maintained across all platforms with vibrant royal gold color (hsl(45, 89%, 56%))
   - "Register as an Artisan" button uses bright yellow background (bg-gold) with black text for high contrast
   - Header height increased to h-28 md:h-32 lg:h-40 (112px to 160px) to accommodate large branding
-- Hero section features very dark overlay (97-95% opacity) for optimal text readability against background images.
+- Hero section features dark overlay (75-70-85% opacity) allowing background to be visible while ensuring text readability.
 - Service category cards use progressively darker overlays (70-80-95% from top to bottom) ensuring gold and white text remains readable; hover state maintains visibility with slightly lighter overlay.
 - Redesigned homepage with a simplified hero section, green-bordered service category cards with background images, and a "Featured Artisans" section with circular avatars and direct contact options.
 - Featured Artisans cards redesigned with:
