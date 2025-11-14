@@ -184,6 +184,14 @@ export class ObjectStorageService {
       ttlSec: 900, // 15 minutes
     });
 
+    console.log("Generated presigned URL for upload:", { 
+      entityType, 
+      entityId, 
+      assetType,
+      objectPath,
+      urlPreview: uploadURL.substring(0, 100) + "..."
+    });
+
     return { uploadURL, objectPath };
   }
 

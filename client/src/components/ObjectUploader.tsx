@@ -86,7 +86,23 @@ export function ObjectUploader({
     })
       .use(AwsS3, {
         shouldUseMultipart: false,
-        getUploadParameters: onGetUploadParameters,
+        getUploadParameters: async (file) => {
+          console.log("Getting upload params for file:", file.name, file.type);
+          const params = await onGetUploadParameters();
+          console.log("Upload params received:", { 
+            method: params.method, 
+            urlPreview: params.url?.substring(0, 100) + "..." 
+          });
+          
+          // Return params with headers for the upload
+          return {
+            method: params.method,
+            url: params.url,
+            headers: {
+              "Content-Type": file.type || "application/octet-stream",
+            },
+          };
+        },
       })
       .on("file-added", (file) => {
         console.log("File queued for upload:", file.name);
