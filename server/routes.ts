@@ -422,11 +422,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/pending-artisans", async (req, res) => {
     // Add auth check
     const { requireAdminAuth } = await import("./adminAuth");
-    await new Promise((resolve, reject) => {
-      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-    }).catch(() => {
+    try {
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+    } catch {
       return res.status(401).json({ message: "Unauthorized" });
-    });
+    }
+    
     try {
       const pendingArtisans = await storage.getPendingArtisans();
       res.json(pendingArtisans);
@@ -439,11 +442,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/approve-artisan/:id", async (req, res) => {
     // Add auth check
     const { requireAdminAuth } = await import("./adminAuth");
-    await new Promise((resolve, reject) => {
-      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-    }).catch(() => {
+    try {
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+    } catch {
       return res.status(401).json({ message: "Unauthorized" });
-    });
+    }
     
     try {
       const artisanId = parseInt(req.params.id);
@@ -469,11 +474,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/reject-artisan/:id", async (req, res) => {
     // Add auth check
     const { requireAdminAuth } = await import("./adminAuth");
-    await new Promise((resolve, reject) => {
-      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-    }).catch(() => {
+    try {
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+    } catch {
       return res.status(401).json({ message: "Unauthorized" });
-    });
+    }
     
     try {
       const artisanId = parseInt(req.params.id);
@@ -499,11 +506,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin artisan management routes
   app.get("/api/admin/artisans", async (req, res) => {
     const { requireAdminAuth } = await import("./adminAuth");
-    await new Promise((resolve, reject) => {
-      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-    }).catch(() => {
+    try {
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+    } catch {
       return res.status(401).json({ message: "Unauthorized" });
-    });
+    }
 
     try {
       const artisans = await storage.getAllArtisans();
@@ -516,11 +525,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/admin/artisan/:id", async (req, res) => {
     const { requireAdminAuth } = await import("./adminAuth");
-    await new Promise((resolve, reject) => {
-      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-    }).catch(() => {
+    try {
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+    } catch {
       return res.status(401).json({ message: "Unauthorized" });
-    });
+    }
 
     try {
       const artisanId = parseInt(req.params.id);
@@ -541,11 +552,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/artisan/:id/profile-image", async (req, res) => {
     const { requireAdminAuth } = await import("./adminAuth");
-    await new Promise((resolve, reject) => {
-      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-    }).catch(() => {
+    try {
+      await new Promise((resolve, reject) => {
+        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+    } catch {
       return res.status(401).json({ message: "Unauthorized" });
-    });
+    }
 
     try {
       const artisanId = parseInt(req.params.id);
