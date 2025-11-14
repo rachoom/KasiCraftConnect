@@ -317,6 +317,9 @@ export default function AdminManagement() {
                     >
                       Upload Profile Picture
                     </ObjectUploader>
+                    <p className="text-white/60 text-xs mt-2">
+                      Max 5MB • JPG, PNG, or GIF
+                    </p>
                   </div>
                 </div>
               </div>

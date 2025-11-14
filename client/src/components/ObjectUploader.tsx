@@ -5,6 +5,7 @@ import { DashboardModal } from "@uppy/react";
 import AwsS3 from "@uppy/aws-s3";
 import type { UploadResult } from "@uppy/core";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
@@ -63,6 +64,8 @@ export function ObjectUploader({
   disabled = false,
 }: ObjectUploaderProps) {
   const [showModal, setShowModal] = useState(false);
+  const { toast } = useToast();
+  
   const [uppy] = useState(() => {
     const restrictions: any = {
       maxNumberOfFiles,
@@ -73,21 +76,64 @@ export function ObjectUploader({
       restrictions.allowedFileTypes = allowedFileTypes;
     }
 
-    return new Uppy({
+    const uppyInstance = new Uppy({
       restrictions,
       autoProceed: true,
+      onBeforeFileAdded: (currentFile) => {
+        console.log("File added:", currentFile.name, "Size:", currentFile.size, "Type:", currentFile.type);
+        return true;
+      },
     })
       .use(AwsS3, {
         shouldUseMultipart: false,
         getUploadParameters: onGetUploadParameters,
       })
+      .on("file-added", (file) => {
+        console.log("File queued for upload:", file.name);
+      })
+      .on("upload", (data) => {
+        console.log("Upload started:", data);
+      })
+      .on("upload-success", (file, response) => {
+        console.log("Upload success:", file?.name, response);
+      })
       .on("complete", (result) => {
+        console.log("Upload complete:", result);
+        if (result.successful && result.successful.length > 0) {
+          toast({
+            title: "Upload Complete",
+            description: `${result.successful.length} file(s) uploaded successfully.`,
+          });
+        }
         onComplete?.(result);
         setShowModal(false);
       })
+      .on("restriction-failed", (file, error) => {
+        console.error("Restriction failed:", error);
+        toast({
+          variant: "destructive",
+          title: "File Restriction Error",
+          description: error.message || "File does not meet requirements.",
+        });
+      })
       .on("upload-error", (file, error) => {
-        console.error("Upload error:", error);
+        console.error("Upload error:", file?.name, error);
+        toast({
+          variant: "destructive",
+          title: "Upload Failed",
+          description: `Failed to upload ${file?.name || "file"}. ${error.message || "Please try again."}`,
+        });
+      })
+      .on("error", (error) => {
+        console.error("Uppy error:", error);
+        toast({
+          variant: "destructive",
+          title: "Upload Error",
+          description: error.message || "An error occurred during upload.",
+        });
       });
+    
+    return uppyInstance;
   });
 
   return (
