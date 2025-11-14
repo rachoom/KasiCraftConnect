@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,7 +23,7 @@ export default function AdminManagement() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [editingArtisan, setEditingArtisan] = useState<Artisan | null>(null);
   const [formData, setFormData] = useState<Partial<Artisan>>({});
-  const [uploadedObjectPath, setUploadedObjectPath] = useState<string | null>(null);
+  const uploadedObjectPathRef = useRef<string | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -96,20 +96,39 @@ export default function AdminManagement() {
 
   const handleSave = () => {
     if (editingArtisan) {
+      console.log("Saving artisan with formData:", { 
+        id: editingArtisan.id, 
+        profileImage: formData.profileImage,
+        otherFields: Object.keys(formData).length
+      });
       updateMutation.mutate({ id: editingArtisan.id, updates: formData });
     }
   };
 
   const handleUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    if (result.successful && result.successful.length > 0 && editingArtisan && uploadedObjectPath) {
-      setFormData(prev => ({ ...prev, profileImage: uploadedObjectPath }));
+    const objectPath = uploadedObjectPathRef.current;
+    console.log("Upload complete:", { 
+      successful: result.successful?.length, 
+      uploadedObjectPath: objectPath, 
+      editingArtisan: !!editingArtisan 
+    });
+    
+    if (result.successful && result.successful.length > 0 && editingArtisan && objectPath) {
+      console.log("Setting profile image to:", objectPath);
+      setFormData(prev => ({ ...prev, profileImage: objectPath }));
       
       toast({
         title: "Image Uploaded",
         description: "Profile image uploaded. Click Save to apply changes.",
       });
       
-      setUploadedObjectPath(null);
+      uploadedObjectPathRef.current = null;
+    } else {
+      console.log("Upload complete but conditions not met:", {
+        hasSuccessful: !!(result.successful && result.successful.length > 0),
+        hasEditingArtisan: !!editingArtisan,
+        hasUploadedObjectPath: !!objectPath
+      });
     }
   };
 
@@ -121,7 +140,8 @@ export default function AdminManagement() {
     });
     const data = await response.json();
     
-    setUploadedObjectPath(data.objectPath);
+    console.log("Got upload params:", { objectPath: data.objectPath, url: data.url?.substring(0, 50) + "..." });
+    uploadedObjectPathRef.current = data.objectPath;
     
     return { 
       method: "PUT" as const, 

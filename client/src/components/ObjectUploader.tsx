@@ -75,7 +75,7 @@ export function ObjectUploader({
 
     return new Uppy({
       restrictions,
-      autoProceed: false,
+      autoProceed: true,
     })
       .use(AwsS3, {
         shouldUseMultipart: false,
@@ -84,6 +84,9 @@ export function ObjectUploader({
       .on("complete", (result) => {
         onComplete?.(result);
         setShowModal(false);
+      })
+      .on("upload-error", (file, error) => {
+        console.error("Upload error:", error);
       });
   });
 
