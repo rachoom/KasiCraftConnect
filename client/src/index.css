@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure Uppy modal appears above shadcn dialogs */
+.uppy-Dashboard--modal {
+  z-index: 100000 !important;
+}
+
+.uppy-Dashboard-overlay {
+  z-index: 99999 !important;
+}
+
 :root {
   /* PERMANENT DARK THEME - Always active for all users */
   --background: hsl(240, 10%, 3.9%);
