@@ -19,6 +19,7 @@ import ServiceLanding from "@/pages/ServiceLanding";
 import ContactUs from "@/pages/ContactUs";
 import AdminBulkImport from "@/pages/AdminBulkImport";
 import AdminReview from "@/pages/AdminReview";
+import AdminManagement from "@/pages/AdminManagement";
 import AdminLogin from "@/pages/AdminLogin";
 import NotFound from "@/pages/not-found";
 
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/admin/login" component={() => <PageTransition><AdminLogin /></PageTransition>} />
         <Route path="/admin/bulk-import" component={() => <PageTransition><AdminBulkImport /></PageTransition>} />
         <Route path="/admin/review" component={() => <PageTransition><AdminReview /></PageTransition>} />
+        <Route path="/admin/manage" component={() => <PageTransition><AdminManagement /></PageTransition>} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>
     </AnimatePresence>

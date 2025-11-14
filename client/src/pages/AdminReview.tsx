@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { MapPin, Star, Phone, Mail, FileText, CheckCircle, XCircle, Clock } from "lucide-react";
+import { MapPin, Star, Phone, Mail, FileText, CheckCircle, XCircle, Clock, Users } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import type { Artisan } from "@shared/schema";
 
@@ -178,19 +179,29 @@ export default function AdminReview() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-black mb-4">Admin Review Panel</h1>
-            <p className="text-gray-600">Review and approve pending artisan applications</p>
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h1 className="text-3xl font-bold text-gold">Admin Review Panel</h1>
+                <p className="text-white/80">Review and approve pending artisan applications</p>
+              </div>
+              <Link href="/admin/manage">
+                <Button className="bg-gold hover:bg-gold-dark text-black" data-testid="button-manage-artisans">
+                  <Users className="w-4 h-4 mr-2" />
+                  Manage All Artisans
+                </Button>
+              </Link>
+            </div>
             
             {/* Admin Name Input */}
             <div className="mt-6 max-w-md">
-              <Label htmlFor="adminName">Admin Name</Label>
+              <Label htmlFor="adminName" className="text-white">Admin Name</Label>
               <Input
                 id="adminName"
                 type="text"
                 placeholder="Enter your name"
                 value={adminName}
                 onChange={(e) => setAdminName(e.target.value)}
-                className="mt-1"
+                className="mt-1 bg-zinc-900 border-green/30 text-white"
               />
             </div>
           </div>
