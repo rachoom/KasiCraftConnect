@@ -156,6 +156,82 @@ export class ObjectStorageService {
     const documentPath = rawObjectPath.slice(privateDir.length);
     return `/${documentPath}`;
   }
+
+  // Gets the upload URL for an entity asset (e.g., profile image).
+  async getEntityAssetUploadURL(entityType: string, entityId: number, assetType: string): Promise<{
+    uploadURL: string;
+    objectPath: string;
+  }> {
+    const privateObjectDir = this.getPrivateObjectDir();
+    if (!privateObjectDir) {
+      throw new Error(
+        "PRIVATE_OBJECT_DIR not set. Create a bucket in 'Object Storage' " +
+          "tool and set PRIVATE_OBJECT_DIR env var."
+      );
+    }
+
+    const assetId = randomUUID();
+    const fullPath = `${privateObjectDir}/entities/${entityType}/${entityId}/${assetType}/${assetId}`;
+    const objectPath = `/entities/${entityType}/${entityId}/${assetType}/${assetId}`;
+
+    const { bucketName, objectName } = parseObjectPath(fullPath);
+
+    // Sign URL for PUT method with TTL
+    const uploadURL = await signObjectURL({
+      bucketName,
+      objectName,
+      method: "PUT",
+      ttlSec: 900, // 15 minutes
+    });
+
+    return { uploadURL, objectPath };
+  }
+
+  // Normalizes entity asset path from signed URL or full path to storage path.
+  normalizeEntityAssetPath(rawPath: string): string {
+    if (rawPath.startsWith("/entities/")) {
+      return rawPath;
+    }
+
+    if (rawPath.startsWith("https://storage.googleapis.com/")) {
+      const url = new URL(rawPath);
+      const pathname = url.pathname;
+      
+      let privateDir = this.getPrivateObjectDir();
+      if (!privateDir.endsWith("/")) {
+        privateDir = `${privateDir}/`;
+      }
+
+      if (pathname.includes("/entities/")) {
+        const entitiesIndex = pathname.indexOf("/entities/");
+        return pathname.substring(entitiesIndex);
+      }
+    }
+
+    return rawPath;
+  }
+
+  // Gets the entity asset file from the object path.
+  async getEntityAssetFile(objectPath: string): Promise<File> {
+    if (!objectPath.startsWith("/entities/")) {
+      throw new ObjectNotFoundError();
+    }
+
+    let privateDir = this.getPrivateObjectDir();
+    if (!privateDir.endsWith("/")) {
+      privateDir = `${privateDir}/`;
+    }
+    
+    const assetPath = `${privateDir}${objectPath.slice(1)}`;
+    const { bucketName, objectName } = parseObjectPath(assetPath);
+    const bucket = objectStorageClient.bucket(bucketName);
+    const assetFile = bucket.file(objectName);
+    const [exists] = await assetFile.exists();
+    if (!exists) {
+      throw new ObjectNotFoundError();
+    }
+    return assetFile;
+  }
 }
 
 function parseObjectPath(path: string): {

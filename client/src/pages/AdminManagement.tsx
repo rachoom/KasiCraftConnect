@@ -23,6 +23,7 @@ export default function AdminManagement() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [editingArtisan, setEditingArtisan] = useState<Artisan | null>(null);
   const [formData, setFormData] = useState<Partial<Artisan>>({});
+  const [uploadedObjectPath, setUploadedObjectPath] = useState<string | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -100,16 +101,15 @@ export default function AdminManagement() {
   };
 
   const handleUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    if (result.successful && result.successful.length > 0 && editingArtisan) {
-      const uploadedFile = result.successful[0];
-      const profileImageURL = uploadedFile.uploadURL;
-      
-      setFormData(prev => ({ ...prev, profileImage: profileImageURL }));
+    if (result.successful && result.successful.length > 0 && editingArtisan && uploadedObjectPath) {
+      setFormData(prev => ({ ...prev, profileImage: uploadedObjectPath }));
       
       toast({
         title: "Image Uploaded",
         description: "Profile image uploaded. Click Save to apply changes.",
       });
+      
+      setUploadedObjectPath(null);
     }
   };
 
@@ -120,7 +120,13 @@ export default function AdminManagement() {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    return { method: "PUT" as const, url: data.url };
+    
+    setUploadedObjectPath(data.objectPath);
+    
+    return { 
+      method: "PUT" as const, 
+      url: data.url
+    };
   };
 
   if (isLoading) {

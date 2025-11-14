@@ -549,17 +549,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     try {
       const artisanId = parseInt(req.params.id);
+      const { ObjectStorageService } = await import("./objectStorage");
+      const objectStorageService = new ObjectStorageService();
       
-      // Generate a presigned URL for upload (using Google Cloud Storage or S3)
-      const uploadURL = `${req.protocol}://${req.get('host')}/uploads/profile-${artisanId}-${Date.now()}.jpg`;
+      // Generate a presigned URL for upload using object storage
+      const { uploadURL, objectPath } = await objectStorageService.getEntityAssetUploadURL(
+        "artisans",
+        artisanId,
+        "profile-image"
+      );
       
       res.json({
         method: "PUT",
-        url: uploadURL
+        url: uploadURL,
+        objectPath,
       });
     } catch (error) {
       console.error("Error generating upload URL:", error);
       res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
+
+  // Serve entity assets (like profile images)
+  app.get("/entities/:entityType/:entityId/:assetType/:assetId", async (req, res) => {
+    try {
+      const { ObjectStorageService, ObjectNotFoundError } = await import("./objectStorage");
+      const objectStorageService = new ObjectStorageService();
+      const objectPath = `/entities/${req.params.entityType}/${req.params.entityId}/${req.params.assetType}/${req.params.assetId}`;
+      
+      const file = await objectStorageService.getEntityAssetFile(objectPath);
+      await objectStorageService.downloadObject(file, res);
+    } catch (error: any) {
+      if (error.name === "ObjectNotFoundError") {
+        return res.status(404).json({ message: "Asset not found" });
+      }
+      console.error("Error serving entity asset:", error);
+      res.status(500).json({ message: "Failed to serve asset" });
     }
   });
 
