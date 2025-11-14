@@ -78,7 +78,7 @@ export function ObjectUploader({
 
     const uppyInstance = new Uppy({
       restrictions,
-      autoProceed: true,
+      autoProceed: false,
       onBeforeFileAdded: (currentFile) => {
         console.log("File added:", currentFile.name, "Size:", currentFile.size, "Type:", currentFile.type);
         return true;
@@ -171,6 +171,7 @@ export function ObjectUploader({
         open={showModal}
         onRequestClose={() => setShowModal(false)}
         proudlyDisplayPoweredByUppy={false}
+        note={allowedFileTypes ? `Allowed: ${allowedFileTypes.join(", ")}. Max size: ${Math.round((maxFileSize || 5242880) / 1024 / 1024)}MB` : undefined}
       />
     </div>
   );
