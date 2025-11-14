@@ -4,6 +4,36 @@
 
 SKILLS CONNECT is a full-stack web application connecting customers with local artisans in the Brakpan and Far East Rand regions. The platform facilitates searching for and connecting with verified professionals in various trades, featuring a modern React frontend, a Node.js/Express backend, and an external Supabase PostgreSQL database. The brand name "SKILLS CONNECT" is displayed using a distinctive bold gold typography on black background, with "Far East Rand" as a subtitle to emphasize the local geographic service area. The platform aims to be the premier marketplace for artisan services in the Far East Rand region.
 
+## Admin Setup Instructions
+
+### Creating an Admin User
+To access the admin dashboard at `/admin/login`, you need to create an admin user in your Supabase database:
+
+1. Go to your Supabase project dashboard
+2. Navigate to the SQL Editor
+3. Run this SQL query to create an admin user:
+```sql
+INSERT INTO admin_users (email, password, first_name, last_name, is_verified, created_at, updated_at)
+VALUES (
+  'admin@skillsconnect.co.za',
+  '$2b$12$dt3vlLwJAJQPU84iUML0hOAv7uVZfDNdcvVp798cHwi14eby9BGxO',  -- Password: Admin@2024
+  'Admin',
+  'User',
+  true,
+  NOW(),
+  NOW()
+);
+```
+
+**Admin Credentials:**
+- Email: `admin@skillsconnect.co.za`
+- Password: `Admin@2024`
+
+**Admin Features:**
+- Review and approve/reject pending artisan applications at `/admin/review`
+- Manage all artisan profiles at `/admin/manage` - search, filter, edit profiles, and upload profile pictures
+- Upload profile pictures for artisans using Replit's App Storage
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
