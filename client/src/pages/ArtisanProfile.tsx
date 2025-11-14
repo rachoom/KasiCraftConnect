@@ -109,8 +109,16 @@ export default function ArtisanProfile() {
             <Card className="border border-green/30 bg-black">
               <CardContent className="p-6">
                 <div className="flex items-start space-x-6">
-                  <div className="w-24 h-24 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">
-                    {artisan.profileImage || getInitials(artisan.firstName, artisan.lastName)}
+                  <div className="w-24 h-24 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold text-2xl flex-shrink-0 overflow-hidden">
+                    {artisan.profileImage ? (
+                      <img 
+                        src={artisan.profileImage} 
+                        alt={`${artisan.firstName} ${artisan.lastName}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      getInitials(artisan.firstName, artisan.lastName)
+                    )}
                   </div>
                   
                   <div className="flex-1 min-w-0">

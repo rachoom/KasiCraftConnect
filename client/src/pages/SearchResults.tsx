@@ -197,8 +197,16 @@ export default function SearchResults() {
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
                       {/* Avatar */}
-                      <div className="w-16 h-16 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold text-xl">
-                        {artisan.profileImage || getInitials(artisan.firstName, artisan.lastName)}
+                      <div className="w-16 h-16 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center text-white font-bold text-xl overflow-hidden">
+                        {artisan.profileImage ? (
+                          <img 
+                            src={artisan.profileImage} 
+                            alt={`${artisan.firstName} ${artisan.lastName}`}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          getInitials(artisan.firstName, artisan.lastName)
+                        )}
                       </div>
                       
                       {/* Main Info */}
