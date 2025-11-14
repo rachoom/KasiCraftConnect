@@ -5,6 +5,7 @@ import { insertArtisanSchema, insertSearchRequestSchema } from "@shared/schema";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { emailService } from "./emailService";
 import { artisanAuthService } from "./artisanAuth";
+import { verifyAdminToken } from "./adminAuth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Artisan routes
@@ -419,17 +420,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin routes for artisan approval
-  app.get("/api/admin/pending-artisans", async (req, res) => {
-    // Add auth check
-    const { requireAdminAuth } = await import("./adminAuth");
-    try {
-      await new Promise((resolve, reject) => {
-        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-      });
-    } catch {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-    
+  app.get("/api/admin/pending-artisans", verifyAdminToken, async (req, res) => {
     try {
       const pendingArtisans = await storage.getPendingArtisans();
       res.json(pendingArtisans);
@@ -439,17 +430,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/approve-artisan/:id", async (req, res) => {
-    // Add auth check
-    const { requireAdminAuth } = await import("./adminAuth");
-    try {
-      await new Promise((resolve, reject) => {
-        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-      });
-    } catch {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-    
+  app.post("/api/admin/approve-artisan/:id", verifyAdminToken, async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
       const { approvedBy } = req.body;
@@ -471,17 +452,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/reject-artisan/:id", async (req, res) => {
-    // Add auth check
-    const { requireAdminAuth } = await import("./adminAuth");
-    try {
-      await new Promise((resolve, reject) => {
-        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-      });
-    } catch {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-    
+  app.post("/api/admin/reject-artisan/:id", verifyAdminToken, async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
       const { rejectionReason, rejectedBy } = req.body;
@@ -504,16 +475,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin artisan management routes
-  app.get("/api/admin/artisans", async (req, res) => {
-    const { requireAdminAuth } = await import("./adminAuth");
-    try {
-      await new Promise((resolve, reject) => {
-        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-      });
-    } catch {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
+  app.get("/api/admin/artisans", verifyAdminToken, async (req, res) => {
     try {
       const artisans = await storage.getAllArtisans();
       res.json(artisans);
@@ -523,16 +485,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/admin/artisan/:id", async (req, res) => {
-    const { requireAdminAuth } = await import("./adminAuth");
-    try {
-      await new Promise((resolve, reject) => {
-        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-      });
-    } catch {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
+  app.put("/api/admin/artisan/:id", verifyAdminToken, async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
       const updates = req.body;
@@ -550,16 +503,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/artisan/:id/profile-image", async (req, res) => {
-    const { requireAdminAuth } = await import("./adminAuth");
-    try {
-      await new Promise((resolve, reject) => {
-        requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
-      });
-    } catch {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
+  app.post("/api/admin/artisan/:id/profile-image", verifyAdminToken, async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
       const { ObjectStorageService } = await import("./objectStorage");

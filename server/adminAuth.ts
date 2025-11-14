@@ -57,27 +57,19 @@ class AdminAuthServiceImpl implements AdminAuthService {
   }
 
   async verifyEmail(email: string, password: string): Promise<{ user: AdminUser; token?: string; requiresVerification?: boolean }> {
-    console.log('[AdminAuth] Attempting login for:', email);
     const { data: admin, error } = await supabase
       .from('admin_users')
       .select('*')
       .eq('email', email)
       .single();
-
-    console.log('[AdminAuth] Query result - error:', error, 'admin found:', !!admin);
     
     if (error || !admin) {
-      console.log('[AdminAuth] No admin found or error occurred');
       throw new Error("Invalid credentials");
     }
 
-    console.log('[AdminAuth] Admin data:', { id: admin.id, email: admin.email, has_password: !!admin.password });
-
     if (admin.password) {
       const isValid = await bcrypt.compare(password, admin.password);
-      console.log('[AdminAuth] Password comparison result:', isValid);
       if (!isValid) {
-        console.log('[AdminAuth] Password mismatch');
         throw new Error("Invalid credentials");
       }
     }
@@ -286,3 +278,6 @@ export async function verifyAdminToken(req: Request, res: Response, next: NextFu
     res.status(401).json({ message: "Unauthorized: Token verification failed" });
   }
 }
+
+// Export alias for backward compatibility
+export { verifyAdminToken as requireAdminAuth };
