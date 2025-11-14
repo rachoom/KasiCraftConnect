@@ -496,6 +496,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin artisan management routes
+  app.get("/api/admin/artisans", async (req, res) => {
+    const { requireAdminAuth } = await import("./adminAuth");
+    await new Promise((resolve, reject) => {
+      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+    }).catch(() => {
+      return res.status(401).json({ message: "Unauthorized" });
+    });
+
+    try {
+      const artisans = await storage.getAllArtisans();
+      res.json(artisans);
+    } catch (error) {
+      console.error("Error fetching all artisans:", error);
+      res.status(500).json({ message: "Failed to fetch artisans" });
+    }
+  });
+
+  app.put("/api/admin/artisan/:id", async (req, res) => {
+    const { requireAdminAuth } = await import("./adminAuth");
+    await new Promise((resolve, reject) => {
+      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+    }).catch(() => {
+      return res.status(401).json({ message: "Unauthorized" });
+    });
+
+    try {
+      const artisanId = parseInt(req.params.id);
+      const updates = req.body;
+
+      const updatedArtisan = await storage.updateArtisan(artisanId, updates);
+      
+      if (!updatedArtisan) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+
+      res.json({ message: "Artisan updated successfully", artisan: updatedArtisan });
+    } catch (error) {
+      console.error("Error updating artisan:", error);
+      res.status(500).json({ message: "Failed to update artisan" });
+    }
+  });
+
+  app.post("/api/admin/artisan/:id/profile-image", async (req, res) => {
+    const { requireAdminAuth } = await import("./adminAuth");
+    await new Promise((resolve, reject) => {
+      requireAdminAuth(req, res, (err) => err ? reject(err) : resolve(null));
+    }).catch(() => {
+      return res.status(401).json({ message: "Unauthorized" });
+    });
+
+    try {
+      const artisanId = parseInt(req.params.id);
+      
+      // Generate a presigned URL for upload (using Google Cloud Storage or S3)
+      const uploadURL = `${req.protocol}://${req.get('host')}/uploads/profile-${artisanId}-${Date.now()}.jpg`;
+      
+      res.json({
+        method: "PUT",
+        url: uploadURL
+      });
+    } catch (error) {
+      console.error("Error generating upload URL:", error);
+      res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
+
   // Artisan subscription routes
   app.post("/api/artisan-subscription", async (req, res) => {
     try {
