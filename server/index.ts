@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { initializeStorageBucket } from "./supabaseStorage";
 
 const app = express();
 app.use(express.json());
@@ -37,6 +38,14 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize Supabase Storage bucket for profile pictures
+  try {
+    await initializeStorageBucket();
+  } catch (error) {
+    log('Warning: Could not initialize Supabase Storage bucket. Profile picture uploads may not work.');
+    console.error(error);
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
