@@ -209,20 +209,20 @@ export default function AdminReview() {
           {!pendingArtisans || pendingArtisans.length === 0 ? (
             <div className="text-center py-12">
               <CheckCircle className="mx-auto h-16 w-16 text-green mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No Pending Applications</h3>
-              <p className="text-gray-600">All artisan applications have been reviewed.</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Pending Applications</h3>
+              <p className="text-gray-600 dark:text-white/60">All artisan applications have been reviewed.</p>
             </div>
           ) : (
             <div className="grid gap-6">
               {pendingArtisans.map((artisan) => (
-                <Card key={artisan.id} className="border-2 border-orange-200 hover:border-gold transition-all duration-200">
+                <Card key={artisan.id} className="bg-white dark:bg-zinc-900 border-2 border-orange-200 dark:border-green/30 hover:border-gold dark:hover:border-gold transition-all duration-200">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="text-xl text-black">
+                        <CardTitle className="text-xl text-black dark:text-white">
                           {artisan.firstName} {artisan.lastName}
                         </CardTitle>
-                        <CardDescription className="text-gray-600">
+                        <CardDescription className="text-gray-600 dark:text-white/60">
                           <div className="flex items-center gap-4 mt-2">
                             <span className="flex items-center gap-1">
                               <MapPin className="w-4 h-4" />
@@ -244,10 +244,10 @@ export default function AdminReview() {
                   <CardContent>
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold text-black mb-2">Services</h4>
+                        <h4 className="font-semibold text-black dark:text-white mb-2">Services</h4>
                         <div className="flex flex-wrap gap-2">
                           {artisan.services.map((service, index) => (
-                            <Badge key={index} variant="secondary" className="bg-gold/10 text-gold border-green/30">
+                            <Badge key={index} variant="secondary" className="bg-gold/20 dark:bg-gold/10 text-black dark:text-gold border-green/30">
                               {service}
                             </Badge>
                           ))}
@@ -255,14 +255,14 @@ export default function AdminReview() {
                       </div>
                       
                       <div>
-                        <h4 className="font-semibold text-black mb-2">Description</h4>
-                        <p className="text-gray-700">{artisan.description}</p>
+                        <h4 className="font-semibold text-black dark:text-white mb-2">Description</h4>
+                        <p className="text-gray-700 dark:text-white/70">{artisan.description}</p>
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <h4 className="font-semibold text-black mb-2">Contact Information</h4>
-                          <div className="space-y-1 text-sm text-gray-600">
+                          <h4 className="font-semibold text-black dark:text-white mb-2">Contact Information</h4>
+                          <div className="space-y-1 text-sm text-gray-600 dark:text-white/60">
                             <div className="flex items-center gap-2">
                               <Mail className="w-4 h-4" />
                               {artisan.email}
@@ -275,8 +275,8 @@ export default function AdminReview() {
                         </div>
                         
                         <div>
-                          <h4 className="font-semibold text-black mb-2">Documents</h4>
-                          <div className="space-y-1 text-sm text-gray-600">
+                          <h4 className="font-semibold text-black dark:text-white mb-2">Documents</h4>
+                          <div className="space-y-1 text-sm text-gray-600 dark:text-white/60">
                             {artisan.idDocument && (
                               <div className="flex items-center gap-2">
                                 <FileText className="w-4 h-4" />
@@ -324,21 +324,21 @@ export default function AdminReview() {
         {/* Rejection Modal */}
         {selectedArtisan && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <Card className="w-full max-w-md">
+            <Card className="w-full max-w-md bg-white dark:bg-zinc-900">
               <CardHeader>
-                <CardTitle>Reject Application</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-black dark:text-white">Reject Application</CardTitle>
+                <CardDescription className="text-gray-600 dark:text-white/60">
                   Provide a reason for rejecting {selectedArtisan.firstName} {selectedArtisan.lastName}'s application.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Label htmlFor="rejectionReason">Rejection Reason</Label>
+                <Label htmlFor="rejectionReason" className="text-black dark:text-white">Rejection Reason</Label>
                 <Textarea
                   id="rejectionReason"
                   placeholder="Please provide a detailed reason for rejection..."
                   value={rejectionReason}
                   onChange={(e) => setRejectionReason(e.target.value)}
-                  className="mt-1"
+                  className="mt-1 bg-white dark:bg-zinc-800 border-gray-300 dark:border-green/30 text-black dark:text-white"
                   rows={4}
                 />
               </CardContent>
@@ -349,7 +349,7 @@ export default function AdminReview() {
                     setRejectionReason("");
                   }}
                   variant="outline"
-                  className="flex-1"
+                  className="flex-1 border-gray-300 dark:border-green/30 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800"
                 >
                   Cancel
                 </Button>
