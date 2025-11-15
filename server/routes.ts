@@ -506,6 +506,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/artisan/:id/profile-image", verifyAdminToken, async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
+      console.log("Generating upload URL for artisan:", artisanId);
+      
       const { ObjectStorageService } = await import("./objectStorage");
       const objectStorageService = new ObjectStorageService();
       
@@ -516,14 +518,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "profile-image"
       );
       
+      console.log("Successfully generated upload URL");
+      
       res.json({
         method: "PUT",
         url: uploadURL,
         objectPath,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error generating upload URL:", error);
-      res.status(500).json({ message: "Failed to generate upload URL" });
+      console.error("Error stack:", error?.stack);
+      console.error("Error message:", error?.message);
+      res.status(500).json({ message: error?.message || "Failed to generate upload URL" });
     }
   });
 
