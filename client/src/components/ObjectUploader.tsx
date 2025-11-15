@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import Uppy from "@uppy/core";
 import { DashboardModal } from "@uppy/react";
@@ -79,6 +79,7 @@ export function ObjectUploader({
     const uppyInstance = new Uppy({
       restrictions,
       autoProceed: false,
+      debug: true,
       onBeforeFileAdded: (currentFile) => {
         console.log("File added:", currentFile.name, "Size:", currentFile.size, "Type:", currentFile.type);
         return true;
@@ -151,6 +152,16 @@ export function ObjectUploader({
     
     return uppyInstance;
   });
+  
+  useEffect(() => {
+    if (showModal) {
+      console.log("Modal opened, Uppy state:", {
+        totalProgress: uppy.getState().totalProgress,
+        files: uppy.getFiles(),
+        capabilities: uppy.getState().capabilities,
+      });
+    }
+  }, [showModal, uppy]);
 
   return (
     <div>
@@ -172,6 +183,7 @@ export function ObjectUploader({
         onRequestClose={() => setShowModal(false)}
         proudlyDisplayPoweredByUppy={false}
         note={allowedFileTypes ? `Allowed: ${allowedFileTypes.join(", ")}. Max size: ${Math.round((maxFileSize || 5242880) / 1024 / 1024)}MB` : undefined}
+        disableLocalFiles={false}
       />
     </div>
   );
