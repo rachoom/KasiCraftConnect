@@ -56,7 +56,7 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### UI/UX Decisions
-- Form error messages styled with dark red background (bg-red-950/60), red border, and padding for high visibility.
+- Form error messages and page error states styled with gold gradient background (bg-gradient-to-r from-gold/10 to-gold-dark/10), green border (border-green/30), and padding for brand consistency.
 - Email buttons on artisan profiles use golden border (border-2 border-gold) and golden text matching brand colors.
 - **Rating/Review System Removed**: All star ratings, review counts, and review sections removed from the platform as this feature is not yet available.
 - Modern React 18 frontend with TypeScript.
