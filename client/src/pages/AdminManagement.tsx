@@ -138,6 +138,18 @@ export default function AdminManagement() {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Failed to get upload params:", error);
+      toast({
+        variant: "destructive",
+        title: "Upload Setup Failed",
+        description: error.message || "Failed to generate upload URL. Please try again.",
+      });
+      throw new Error(error.message || "Failed to get upload URL");
+    }
+    
     const data = await response.json();
     
     console.log("Got upload params:", { objectPath: data.objectPath, url: data.url?.substring(0, 50) + "..." });
