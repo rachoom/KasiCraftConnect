@@ -32,7 +32,22 @@ VALUES (
 **Admin Features:**
 - Review and approve/reject pending artisan applications at `/admin/review`
 - Manage all artisan profiles at `/admin/manage` - search, filter, edit profiles, and upload profile pictures
-- Upload profile pictures for artisans using Replit's App Storage
+- Upload profile pictures for artisans using Supabase Storage
+
+### Setting Up Supabase Storage for Profile Pictures
+To enable profile picture uploads, you need to create a storage bucket in Supabase:
+
+1. Go to your Supabase project dashboard
+2. Navigate to **Storage** in the left sidebar
+3. Click **New Bucket**
+4. Configure the bucket:
+   - **Name**: `profile-pictures` (must be exactly this name)
+   - **Public**: Toggle ON (make bucket public)
+   - **File size limit**: 5242880 bytes (5MB)
+   - **Allowed MIME types**: Leave default or add: image/jpeg, image/png, image/webp, image/gif
+5. Click **Create Bucket**
+
+The server will automatically detect the bucket on next restart and profile picture uploads will work immediately.
 
 ## User Preferences
 
@@ -80,6 +95,7 @@ Preferred communication style: Simple, everyday language.
 - **Frontend**: React 18, Wouter for routing, TanStack Query for state management, Vite for building.
 - **Backend**: Node.js with Express.js (TypeScript), Drizzle ORM for database interactions.
 - **Database**: External Supabase PostgreSQL with `camelCase` to `snake_case` conversion in the storage layer.
+- **File Storage**: Supabase Storage for profile pictures with server-side upload validation using multer and file-type buffer checking.
 - **Authentication**: Session-based user authentication, and a secure admin authentication system with email/password, JWT, email verification, and Google OAuth support.
 - **Artisan Tiers**: Implemented a three-tier subscription system (Unverified, Verified, Verified + Marketing) with offline payment handling and admin approval workflows, influencing search prioritization.
 - **Registration**: Dual registration paths for artisans: instant for unverified, and detailed application with document uploads for verified tiers.

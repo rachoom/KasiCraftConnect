@@ -6,6 +6,25 @@ import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { emailService } from "./emailService";
 import { artisanAuthService } from "./artisanAuth";
 import { verifyAdminToken } from "./adminAuth";
+import multer from "multer";
+import { uploadProfilePicture, deleteProfilePicture } from "./supabaseStorage";
+import { fileTypeFromBuffer } from "file-type";
+
+// Configure multer for profile image uploads (memory storage)
+const profileImageUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB max file size
+  },
+  fileFilter: (req, file, cb) => {
+    // Accept only image files
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  },
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Artisan routes
@@ -503,33 +522,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/admin/artisan/:id/profile-image", verifyAdminToken, async (req, res) => {
+  app.post("/api/admin/artisan/:id/profile-image", verifyAdminToken, profileImageUpload.single('image'), async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
-      console.log("Generating upload URL for artisan:", artisanId);
       
-      const { ObjectStorageService } = await import("./objectStorage");
-      const objectStorageService = new ObjectStorageService();
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file provided" });
+      }
+
+      console.log(`Uploading profile image for artisan ${artisanId}, size: ${req.file.size} bytes`);
       
-      // Generate a presigned URL for upload using object storage
-      const { uploadURL, objectPath } = await objectStorageService.getEntityAssetUploadURL(
-        "artisans",
+      // Validate file type by checking buffer (more secure than trusting MIME type)
+      const fileType = await fileTypeFromBuffer(req.file.buffer);
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      
+      if (!fileType || !allowedTypes.includes(fileType.mime)) {
+        return res.status(400).json({ 
+          message: "Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed." 
+        });
+      }
+
+      // Get current artisan to check for existing profile image
+      const artisan = await storage.getArtisan(artisanId);
+      if (!artisan) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+
+      // Upload new profile image to Supabase Storage
+      const publicUrl = await uploadProfilePicture(
         artisanId,
-        "profile-image"
+        req.file.buffer,
+        fileType.mime // Use validated MIME type
       );
-      
-      console.log("Successfully generated upload URL");
+
+      // Update artisan record with new profile image URL
+      await storage.updateArtisan(artisanId, {
+        profileImage: publicUrl
+      });
+
+      // Delete old profile image if it exists and is from Supabase
+      if (artisan.profileImage && artisan.profileImage.includes('supabase')) {
+        try {
+          await deleteProfilePicture(artisan.profileImage);
+        } catch (error) {
+          console.warn('Failed to delete old profile image:', error);
+          // Non-critical error, continue
+        }
+      }
+
+      console.log(`Successfully uploaded profile image for artisan ${artisanId}: ${publicUrl}`);
       
       res.json({
-        method: "PUT",
-        url: uploadURL,
-        objectPath,
+        message: "Profile image uploaded successfully",
+        url: publicUrl
       });
     } catch (error: any) {
-      console.error("Error generating upload URL:", error);
-      console.error("Error stack:", error?.stack);
-      console.error("Error message:", error?.message);
-      res.status(500).json({ message: error?.message || "Failed to generate upload URL" });
+      console.error("Error uploading profile image:", error);
+      res.status(500).json({ message: error?.message || "Failed to upload profile image" });
     }
   });
 

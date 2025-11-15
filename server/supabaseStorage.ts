@@ -4,7 +4,7 @@ const PROFILE_PICTURES_BUCKET = 'profile-pictures';
 
 /**
  * Initialize Supabase Storage bucket for profile pictures
- * Creates the bucket if it doesn't exist
+ * Checks if bucket exists - creation requires manual setup or service role key
  */
 export async function initializeStorageBucket() {
   try {
@@ -12,26 +12,20 @@ export async function initializeStorageBucket() {
     const { data: buckets } = await supabase.storage.listBuckets();
     const bucketExists = buckets?.some((bucket) => bucket.name === PROFILE_PICTURES_BUCKET);
 
-    if (!bucketExists) {
-      // Create the bucket as public
-      const { error } = await supabase.storage.createBucket(PROFILE_PICTURES_BUCKET, {
-        public: true,
-        fileSizeLimit: 5242880, // 5MB
-        allowedMimeTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/webp']
-      });
-
-      if (error) {
-        console.error('Error creating storage bucket:', error);
-        throw error;
-      }
-
-      console.log(`✅ Created Supabase Storage bucket: ${PROFILE_PICTURES_BUCKET}`);
+    if (bucketExists) {
+      console.log(`✅ Supabase Storage bucket '${PROFILE_PICTURES_BUCKET}' is ready`);
     } else {
-      console.log(`✅ Supabase Storage bucket already exists: ${PROFILE_PICTURES_BUCKET}`);
+      console.warn(`⚠️  Supabase Storage bucket '${PROFILE_PICTURES_BUCKET}' not found.`);
+      console.warn(`   Please create it manually in your Supabase dashboard:`);
+      console.warn(`   1. Go to Storage in Supabase Dashboard`);
+      console.warn(`   2. Create a new bucket named '${PROFILE_PICTURES_BUCKET}'`);
+      console.warn(`   3. Make it Public`);
+      console.warn(`   4. Set file size limit to 5MB`);
+      console.warn(`   Profile picture uploads will not work until the bucket is created.`);
     }
-  } catch (error) {
-    console.error('Error initializing storage bucket:', error);
-    throw error;
+  } catch (error: any) {
+    console.error('Warning: Could not verify Supabase Storage bucket:', error?.message);
+    console.warn('Profile picture uploads may not work. Please verify your Supabase configuration.');
   }
 }
 

@@ -9,13 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ObjectUploader } from "@/components/ObjectUploader";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Search, Edit, User, Shield, CheckCircle, XCircle } from "lucide-react";
+import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload } from "lucide-react";
 import { getInitials } from "@/lib/utils";
 import type { Artisan } from "@shared/schema";
-import type { UploadResult } from "@uppy/core";
 
 export default function AdminManagement() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +21,9 @@ export default function AdminManagement() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [editingArtisan, setEditingArtisan] = useState<Artisan | null>(null);
   const [formData, setFormData] = useState<Partial<Artisan>>({});
-  const uploadedObjectPathRef = useRef<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -105,60 +105,66 @@ export default function AdminManagement() {
     }
   };
 
-  const handleUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    const objectPath = uploadedObjectPathRef.current;
-    console.log("Upload complete:", { 
-      successful: result.successful?.length, 
-      uploadedObjectPath: objectPath, 
-      editingArtisan: !!editingArtisan 
-    });
-    
-    if (result.successful && result.successful.length > 0 && editingArtisan && objectPath) {
-      console.log("Setting profile image to:", objectPath);
-      setFormData(prev => ({ ...prev, profileImage: objectPath }));
-      
-      toast({
-        title: "Image Uploaded",
-        description: "Profile image uploaded. Click Save to apply changes.",
-      });
-      
-      uploadedObjectPathRef.current = null;
-    } else {
-      console.log("Upload complete but conditions not met:", {
-        hasSuccessful: !!(result.successful && result.successful.length > 0),
-        hasEditingArtisan: !!editingArtisan,
-        hasUploadedObjectPath: !!objectPath
-      });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          variant: "destructive",
+          title: "File Too Large",
+          description: "Profile image must be less than 5MB",
+        });
+        return;
+      }
+      setSelectedFile(file);
     }
   };
 
-  const handleGetUploadParams = async () => {
-    const token = localStorage.getItem("adminToken");
-    const response = await fetch(`/api/admin/artisan/${editingArtisan?.id}/profile-image`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    
-    if (!response.ok) {
-      const error = await response.json();
-      console.error("Failed to get upload params:", error);
+  const handleUploadImage = async () => {
+    if (!selectedFile || !editingArtisan) return;
+
+    setUploadingImage(true);
+    const formDataToSend = new FormData();
+    formDataToSend.append('image', selectedFile);
+
+    try {
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch(`/api/admin/artisan/${editingArtisan.id}/profile-image`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to upload image");
+      }
+
+      const data = await response.json();
+      
+      setFormData(prev => ({ ...prev, profileImage: data.url }));
+      setSelectedFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+
+      toast({
+        title: "Success",
+        description: "Profile image uploaded successfully",
+      });
+      
+      // Refresh artisan list to show new image
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
+    } catch (error: any) {
+      console.error("Error uploading image:", error);
       toast({
         variant: "destructive",
-        title: "Upload Setup Failed",
-        description: error.message || "Failed to generate upload URL. Please try again.",
+        title: "Upload Failed",
+        description: error.message || "Failed to upload profile image",
       });
-      throw new Error(error.message || "Failed to get upload URL");
+    } finally {
+      setUploadingImage(false);
     }
-    
-    const data = await response.json();
-    
-    console.log("Got upload params:", { objectPath: data.objectPath, url: data.url?.substring(0, 50) + "..." });
-    uploadedObjectPathRef.current = data.objectPath;
-    
-    return { 
-      method: "PUT" as const, 
-      url: data.url
-    };
   };
 
   if (isLoading) {
@@ -318,19 +324,43 @@ export default function AdminManagement() {
                     )}
                   </div>
                   
-                  <div className="mt-4 text-center">
-                    <ObjectUploader
-                      maxNumberOfFiles={1}
-                      maxFileSize={5242880}
-                      allowedFileTypes={["image/*"]}
-                      onGetUploadParameters={handleGetUploadParams}
-                      onComplete={handleUploadComplete}
-                      buttonClassName="bg-gold hover:bg-gold-dark text-black"
-                    >
-                      Upload Profile Picture
-                    </ObjectUploader>
-                    <p className="text-white/60 text-xs mt-2">
-                      Max 5MB • JPG, PNG, or GIF
+                  <div className="mt-4 space-y-3">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="profile-image-input"
+                    />
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="bg-zinc-800 hover:bg-zinc-700 text-white border border-green/30"
+                        disabled={uploadingImage}
+                      >
+                        <Upload className="w-4 h-4 mr-2" />
+                        Choose Image
+                      </Button>
+                      {selectedFile && (
+                        <Button
+                          type="button"
+                          onClick={handleUploadImage}
+                          className="bg-gold hover:bg-gold-dark text-black"
+                          disabled={uploadingImage}
+                        >
+                          {uploadingImage ? "Uploading..." : "Upload"}
+                        </Button>
+                      )}
+                    </div>
+                    {selectedFile && (
+                      <p className="text-white/70 text-sm">
+                        Selected: {selectedFile.name}
+                      </p>
+                    )}
+                    <p className="text-white/60 text-xs">
+                      Max 5MB • JPG, PNG, WebP, or GIF
                     </p>
                   </div>
                 </div>
