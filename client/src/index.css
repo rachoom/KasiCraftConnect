@@ -7,26 +7,10 @@
   z-index: 100000 !important;
 }
 
+/* FIX: The overlay was intercepting pointer events and blocking clicks */
 .uppy-Dashboard-overlay {
   z-index: 99999 !important;
-}
-
-/* Fix Uppy Dashboard browse button being inactive/grayed out */
-.uppy-Dashboard:not(.uppy-Dashboard--is-disabled) .uppy-DashboardTab-btn,
-.uppy-Dashboard:not(.uppy-Dashboard--is-disabled) .uppy-DashboardContent-addMore,
-.uppy-Dashboard:not(.uppy-Dashboard--is-disabled) button {
-  pointer-events: auto !important;
-  cursor: pointer !important;
-}
-
-/* Ensure file input is accessible */
-.uppy-Dashboard-input {
-  pointer-events: auto !important;
-}
-
-/* Ensure drag-drop area is active */
-.uppy-Dashboard-AddFiles {
-  pointer-events: auto !important;
+  pointer-events: none !important;
 }
 
 :root {

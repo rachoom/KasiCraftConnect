@@ -182,8 +182,8 @@ export function ObjectUploader({
         open={showModal}
         onRequestClose={() => setShowModal(false)}
         proudlyDisplayPoweredByUppy={false}
+        disabled={false}
         note={allowedFileTypes ? `Allowed: ${allowedFileTypes.join(", ")}. Max size: ${Math.round((maxFileSize || 5242880) / 1024 / 1024)}MB` : undefined}
-        disableLocalFiles={false}
       />
     </div>
   );
