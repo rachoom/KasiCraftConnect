@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload } from "lucide-react";
+import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload, AlertCircle } from "lucide-react";
 import { getInitials } from "@/lib/utils";
 import type { Artisan } from "@shared/schema";
 
@@ -23,6 +23,7 @@ export default function AdminManagement() {
   const [formData, setFormData] = useState<Partial<Artisan>>({});
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -107,12 +108,15 @@ export default function AdminManagement() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    setUploadError(null);
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
+        const errorMsg = "Profile image must be less than 5MB";
+        setUploadError(errorMsg);
         toast({
           variant: "destructive",
           title: "File Too Large",
-          description: "Profile image must be less than 5MB",
+          description: errorMsg,
         });
         return;
       }
@@ -124,6 +128,7 @@ export default function AdminManagement() {
     if (!selectedFile || !editingArtisan) return;
 
     setUploadingImage(true);
+    setUploadError(null);
     const formDataToSend = new FormData();
     formDataToSend.append('image', selectedFile);
 
@@ -147,6 +152,7 @@ export default function AdminManagement() {
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
+      setUploadError(null);
 
       toast({
         title: "Success",
@@ -157,10 +163,12 @@ export default function AdminManagement() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
     } catch (error: any) {
       console.error("Error uploading image:", error);
+      const errorMessage = error.message || "Failed to upload profile image";
+      setUploadError(errorMessage);
       toast({
         variant: "destructive",
         title: "Upload Failed",
-        description: error.message || "Failed to upload profile image",
+        description: errorMessage,
       });
     } finally {
       setUploadingImage(false);
@@ -298,7 +306,13 @@ export default function AdminManagement() {
         )}
       </div>
 
-      <Dialog open={!!editingArtisan} onOpenChange={(open) => !open && setEditingArtisan(null)}>
+      <Dialog open={!!editingArtisan} onOpenChange={(open) => {
+        if (!open) {
+          setEditingArtisan(null);
+          setUploadError(null);
+          setSelectedFile(null);
+        }
+      }}>
         <DialogContent className="bg-zinc-900 border-green/30 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-gold text-2xl">Edit Artisan Profile</DialogTitle>
@@ -358,6 +372,23 @@ export default function AdminManagement() {
                       <p className="text-white/70 text-sm">
                         Selected: {selectedFile.name}
                       </p>
+                    )}
+                    {uploadError && (
+                      <div className="p-4 rounded-md bg-gradient-to-r from-gold/10 to-gold-dark/10 border border-green/30">
+                        <p className="text-white font-semibold mb-1">Upload Error</p>
+                        <p className="text-white/90 text-sm">{uploadError}</p>
+                        {uploadError.includes("row-level security") && (
+                          <div className="mt-3 pt-3 border-t border-green/20">
+                            <p className="text-white/80 text-xs font-medium mb-2">To fix this:</p>
+                            <ol className="text-white/70 text-xs space-y-1 list-decimal list-inside">
+                              <li>Go to your Supabase dashboard</li>
+                              <li>Navigate to Storage → profile-pictures bucket</li>
+                              <li>Click Policies tab → New Policy</li>
+                              <li>Allow INSERT, UPDATE, DELETE for public</li>
+                            </ol>
+                          </div>
+                        )}
+                      </div>
                     )}
                     <p className="text-white/60 text-xs">
                       Max 5MB • JPG, PNG, WebP, or GIF
