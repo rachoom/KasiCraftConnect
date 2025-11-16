@@ -35,8 +35,9 @@ VALUES (
 - Upload profile pictures for artisans using Supabase Storage
 
 ### Setting Up Supabase Storage for Profile Pictures
-To enable profile picture uploads, you need to create a storage bucket in Supabase:
+To enable profile picture uploads, you need to create a storage bucket and configure security policies in Supabase:
 
+**Step 1: Create Storage Bucket**
 1. Go to your Supabase project dashboard
 2. Navigate to **Storage** in the left sidebar
 3. Click **New Bucket**
@@ -47,7 +48,37 @@ To enable profile picture uploads, you need to create a storage bucket in Supaba
    - **Allowed MIME types**: Leave default or add: image/jpeg, image/png, image/webp, image/gif
 5. Click **Create Bucket**
 
-The server will automatically detect the bucket on next restart and profile picture uploads will work immediately.
+**Step 2: Configure RLS Policies (CRITICAL)**
+After creating the bucket, you must add security policies to allow uploads:
+
+1. In Storage, click on the **profile-pictures** bucket
+2. Go to the **Policies** tab
+3. Click **New Policy**
+4. Choose **Full customization** or use template
+5. Add these two policies:
+
+**Policy 1: Allow Public Uploads**
+- Policy name: `Allow public uploads`
+- Policy command: INSERT
+- Target roles: `public` or `authenticated`
+- USING expression: `true`
+- WITH CHECK expression: `true`
+
+**Policy 2: Allow Public Updates/Deletes**
+- Policy name: `Allow public updates`
+- Policy command: UPDATE
+- Target roles: `public` or `authenticated`
+- USING expression: `true`
+- WITH CHECK expression: `true`
+
+Alternatively, run this SQL in your Supabase SQL Editor:
+```sql
+CREATE POLICY "Allow public uploads" ON storage.objects FOR INSERT TO public WITH CHECK (bucket_id = 'profile-pictures');
+CREATE POLICY "Allow public updates" ON storage.objects FOR UPDATE TO public USING (bucket_id = 'profile-pictures');
+CREATE POLICY "Allow public deletes" ON storage.objects FOR DELETE TO public USING (bucket_id = 'profile-pictures');
+```
+
+The server will automatically detect the bucket on next restart and profile picture uploads will work immediately once RLS policies are configured.
 
 ## User Preferences
 
@@ -56,7 +87,7 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### UI/UX Decisions
-- Form error messages and page error states styled with gold gradient background (bg-gradient-to-r from-gold/10 to-gold-dark/10), green border (border-green/30), and padding for brand consistency.
+- Form error messages, toast notifications, and page error states styled with gold gradient background (bg-gradient-to-r from-gold/10 to-gold-dark/10), green border (border-green/30), white text, and padding for brand consistency and maximum visibility on black backgrounds.
 - Email buttons on artisan profiles use golden border (border-2 border-gold) and golden text matching brand colors.
 - **Rating/Review System Removed**: All star ratings, review counts, and review sections removed from the platform as this feature is not yet available.
 - Modern React 18 frontend with TypeScript.
