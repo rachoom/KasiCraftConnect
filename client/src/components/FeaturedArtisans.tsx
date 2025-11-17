@@ -47,7 +47,7 @@ export default function FeaturedArtisans() {
     );
   }
 
-  const featuredArtisans = artisans?.slice(0, 4) || [];
+  const featuredArtisans = artisans?.filter(artisan => artisan.isFeatured) || [];
 
   const containerVariants = {
     hidden: {},

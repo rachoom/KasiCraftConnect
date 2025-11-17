@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload, AlertCircle } from "lucide-react";
+import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload, AlertCircle, Star } from "lucide-react";
 import { getInitials } from "@/lib/utils";
 import type { Artisan } from "@shared/schema";
 
@@ -60,6 +60,7 @@ export default function AdminManagement() {
         description: "Artisan profile updated successfully",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/artisans"] });
       setEditingArtisan(null);
       setFormData({});
     },
@@ -67,6 +68,33 @@ export default function AdminManagement() {
       toast({
         title: "Error",
         description: "Failed to update artisan profile",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const toggleFeaturedMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch(`/api/admin/artisan/${id}/toggle-featured`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error("Failed to toggle featured status");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Success",
+        description: data.message,
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/artisans"] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to toggle featured status",
         variant: "destructive",
       });
     },
@@ -267,6 +295,13 @@ export default function AdminManagement() {
                           <Badge variant="outline" className="border-green/30 text-white/80">Unverified</Badge>
                         )}
                         
+                        {artisan.isFeatured && (
+                          <Badge className="bg-gold/20 text-gold border border-gold/50">
+                            <Star className="w-3 h-3 mr-1 fill-gold" />
+                            Featured
+                          </Badge>
+                        )}
+                        
                         {artisan.verified ? (
                           <CheckCircle className="w-5 h-5 text-green" />
                         ) : (
@@ -283,14 +318,28 @@ export default function AdminManagement() {
                     </div>
                   </div>
 
-                  <Button
-                    onClick={() => handleEdit(artisan)}
-                    className="bg-gold hover:bg-gold-dark text-black"
-                    data-testid={`button-edit-${artisan.id}`}
-                  >
-                    <Edit className="w-4 h-4 mr-2" />
-                    Edit Profile
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => toggleFeaturedMutation.mutate(artisan.id)}
+                      className={artisan.isFeatured 
+                        ? "bg-gold/20 hover:bg-gold/30 text-gold border border-gold/50" 
+                        : "bg-zinc-800 hover:bg-zinc-700 text-white/80 border border-green/30"
+                      }
+                      disabled={toggleFeaturedMutation.isPending}
+                      data-testid={`button-toggle-featured-${artisan.id}`}
+                    >
+                      <Star className={`w-4 h-4 mr-2 ${artisan.isFeatured ? 'fill-gold' : ''}`} />
+                      {artisan.isFeatured ? 'Featured' : 'Feature'}
+                    </Button>
+                    <Button
+                      onClick={() => handleEdit(artisan)}
+                      className="bg-gold hover:bg-gold-dark text-black"
+                      data-testid={`button-edit-${artisan.id}`}
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      Edit Profile
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
