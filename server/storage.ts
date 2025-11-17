@@ -1,4 +1,4 @@
-import { supabase, pgPool } from "./supabase";
+import { supabase } from "./supabase";
 import type { User, InsertUser, Artisan, InsertArtisan, SearchRequest, InsertSearchRequest, ArtisanSubscription, InsertArtisanSubscription } from "@shared/schema";
 
 // Helper function to convert camelCase to snake_case for database
@@ -498,39 +498,76 @@ export class SupabaseStorage implements IStorage {
 
   async toggleArtisanFeatured(id: number): Promise<Artisan | undefined> {
     try {
-      const result = await pgPool.query(
-        `UPDATE artisans 
-         SET is_featured = NOT COALESCE(is_featured, false)
-         WHERE id = $1
-         RETURNING *`,
-        [id]
-      );
-      
-      if (result.rows.length === 0) {
-        console.error('Artisan not found for toggling featured status');
+      // Fetch current artisan to get current featured status
+      const currentArtisan = await this.getArtisan(id);
+      if (!currentArtisan) {
+        console.error('Artisan not found for toggling');
         return undefined;
       }
       
-      const artisan = toCamelCase(result.rows[0]) as Artisan;
-      console.log(`Successfully toggled featured status for artisan ${id} to ${artisan.isFeatured}`);
-      return artisan;
+      const currentFeaturedStatus = currentArtisan.isFeatured ?? false;
+      const newFeaturedStatus = !currentFeaturedStatus;
+      
+      console.log(`Toggling artisan ${id} featured from ${currentFeaturedStatus} to ${newFeaturedStatus}`);
+      
+      // Use direct REST API to bypass schema cache
+      const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/artisans?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': process.env.SUPABASE_ANON_KEY!,
+          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({ is_featured: newFeaturedStatus })
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error toggling featured status via REST:', errorText);
+        return undefined;
+      }
+      
+      const data = await response.json();
+      if (data.length === 0) {
+        console.error('No artisan returned after update');
+        return undefined;
+      }
+      
+      const result = toCamelCase(data[0]) as Artisan;
+      result.isFeatured = newFeaturedStatus;
+      console.log(`Successfully toggled featured status for artisan ${id} to ${result.isFeatured}`);
+      return result;
     } catch (error) {
-      console.error('Error toggling featured status via pgPool:', error);
+      console.error('Error toggling featured status:', error);
       return undefined;
     }
   }
 
   async getFeaturedArtisans(): Promise<Artisan[]> {
     try {
-      const result = await pgPool.query(
-        `SELECT * FROM artisans 
-         WHERE is_featured = true 
-         AND approval_status = 'approved'`
+      // Use direct REST API to bypass schema cache
+      const response = await fetch(
+        `${process.env.SUPABASE_URL}/rest/v1/artisans?is_featured=eq.true&approval_status=eq.approved&select=*`,
+        {
+          method: 'GET',
+          headers: {
+            'apikey': process.env.SUPABASE_ANON_KEY!,
+            'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`
+          }
+        }
       );
       
-      return result.rows.map(row => toCamelCase(row)) as Artisan[];
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error fetching featured artisans via REST:', errorText);
+        return [];
+      }
+      
+      const data = await response.json();
+      return data.map((row: any) => toCamelCase(row)) as Artisan[];
     } catch (error) {
-      console.error('Error fetching featured artisans via pgPool:', error);
+      console.error('Error fetching featured artisans:', error);
       return [];
     }
   }
