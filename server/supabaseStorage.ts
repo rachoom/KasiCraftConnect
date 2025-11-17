@@ -4,24 +4,24 @@ const PROFILE_PICTURES_BUCKET = 'profile-pictures';
 
 /**
  * Initialize Supabase Storage bucket for profile pictures
- * Checks if bucket exists - creation requires manual setup or service role key
+ * Tests bucket access by trying to list files
  */
 export async function initializeStorageBucket() {
   try {
-    // Check if bucket exists
-    const { data: buckets } = await supabase.storage.listBuckets();
-    const bucketExists = buckets?.some((bucket) => bucket.name === PROFILE_PICTURES_BUCKET);
+    // Test if we can access the bucket by listing files
+    const { error } = await supabase.storage
+      .from(PROFILE_PICTURES_BUCKET)
+      .list('', { limit: 1 });
 
-    if (bucketExists) {
-      console.log(`✅ Supabase Storage bucket '${PROFILE_PICTURES_BUCKET}' is ready`);
+    if (error) {
+      console.warn(`⚠️  Supabase Storage bucket '${PROFILE_PICTURES_BUCKET}' not accessible.`);
+      console.warn(`   Error: ${error.message}`);
+      console.warn(`   Please verify:`);
+      console.warn(`   1. Bucket exists in Supabase Dashboard → Storage`);
+      console.warn(`   2. Bucket is set to Public`);
+      console.warn(`   3. RLS policies allow public access (INSERT, UPDATE, DELETE)`);
     } else {
-      console.warn(`⚠️  Supabase Storage bucket '${PROFILE_PICTURES_BUCKET}' not found.`);
-      console.warn(`   Please create it manually in your Supabase dashboard:`);
-      console.warn(`   1. Go to Storage in Supabase Dashboard`);
-      console.warn(`   2. Create a new bucket named '${PROFILE_PICTURES_BUCKET}'`);
-      console.warn(`   3. Make it Public`);
-      console.warn(`   4. Set file size limit to 5MB`);
-      console.warn(`   Profile picture uploads will not work until the bucket is created.`);
+      console.log(`✅ Supabase Storage bucket '${PROFILE_PICTURES_BUCKET}' is ready and accessible`);
     }
   } catch (error: any) {
     console.error('Warning: Could not verify Supabase Storage bucket:', error?.message);
