@@ -64,6 +64,10 @@ export interface IStorage {
   getArtisanSubscriptions(): Promise<ArtisanSubscription[]>;
   getPendingSubscriptions(): Promise<ArtisanSubscription[]>;
   updateSubscriptionStatus(id: number, status: "approved" | "rejected", reviewedBy: string, rejectionReason?: string): Promise<ArtisanSubscription | undefined>;
+  
+  // Featured artisan methods
+  toggleArtisanFeatured(id: number): Promise<Artisan | undefined>;
+  getFeaturedArtisans(): Promise<Artisan[]>;
 }
 
 export class SupabaseStorage implements IStorage {
@@ -490,6 +494,51 @@ export class SupabaseStorage implements IStorage {
       return undefined;
     }
     return toCamelCase(data) as ArtisanSubscription;
+  }
+
+  async toggleArtisanFeatured(id: number): Promise<Artisan | undefined> {
+    const artisan = await this.getArtisan(id);
+    if (!artisan) {
+      console.error('Artisan not found for toggling featured status');
+      return undefined;
+    }
+
+    const currentFeaturedStatus = artisan.isFeatured ?? false;
+    const newFeaturedStatus = !currentFeaturedStatus;
+    
+    console.log(`Toggling featured status from ${currentFeaturedStatus} to ${newFeaturedStatus} for artisan ${id}`);
+    
+    const { data, error } = await supabase
+      .from('artisans')
+      .update({ is_featured: newFeaturedStatus })
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error toggling featured status:', error);
+      return undefined;
+    }
+    
+    const result = toCamelCase(data) as Artisan;
+    result.isFeatured = newFeaturedStatus;
+    
+    return result;
+  }
+
+  async getFeaturedArtisans(): Promise<Artisan[]> {
+    const { data, error } = await supabase
+      .from('artisans')
+      .select('*')
+      .eq('is_featured', true)
+      .eq('approval_status', 'approved');
+    
+    if (error) {
+      console.error('Error fetching featured artisans:', error);
+      return [];
+    }
+    
+    return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 }
 

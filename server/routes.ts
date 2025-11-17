@@ -527,17 +527,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const artisanId = parseInt(req.params.id);
       console.log(`[Toggle Featured] Request for artisan ${artisanId}`);
       
-      const artisan = await storage.getArtisan(artisanId);
-      if (!artisan) {
-        console.log(`[Toggle Featured] Artisan ${artisanId} not found`);
-        return res.status(404).json({ message: "Artisan not found" });
-      }
-
-      console.log(`[Toggle Featured] Current featured status: ${artisan.isFeatured}, toggling to ${!artisan.isFeatured}`);
+      const updatedArtisan = await storage.toggleArtisanFeatured(artisanId);
       
-      const updatedArtisan = await storage.updateArtisan(artisanId, {
-        isFeatured: !artisan.isFeatured
-      });
+      if (!updatedArtisan) {
+        console.log(`[Toggle Featured] Failed to toggle artisan ${artisanId}`);
+        return res.status(404).json({ message: "Failed to toggle featured status" });
+      }
 
       console.log(`[Toggle Featured] Successfully updated artisan ${artisanId}, new status: ${updatedArtisan.isFeatured}`);
       
