@@ -522,6 +522,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/admin/artisan/:id/toggle-featured", verifyAdminToken, async (req, res) => {
+    try {
+      const artisanId = parseInt(req.params.id);
+      
+      const artisan = await storage.getArtisan(artisanId);
+      if (!artisan) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+
+      const updatedArtisan = await storage.updateArtisan(artisanId, {
+        isFeatured: !artisan.isFeatured
+      });
+
+      res.json({ 
+        message: `Artisan ${updatedArtisan.isFeatured ? 'featured' : 'unfeatured'} successfully`, 
+        artisan: updatedArtisan 
+      });
+    } catch (error) {
+      console.error("Error toggling featured status:", error);
+      res.status(500).json({ message: "Failed to toggle featured status" });
+    }
+  });
+
   app.post("/api/admin/artisan/:id/profile-image", verifyAdminToken, profileImageUpload.single('image'), async (req, res) => {
     try {
       const artisanId = parseInt(req.params.id);
