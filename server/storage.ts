@@ -160,14 +160,24 @@ export class SupabaseStorage implements IStorage {
   }
 
   async getAllArtisans(): Promise<Artisan[]> {
-    const { data, error } = await supabase
-      .from('artisans')
-      .select('*');
+    // Use RPC function to get artisans with is_featured field (schema cache workaround)
+    const { data, error } = await supabase.rpc('get_all_artisans_with_featured');
     
     if (error) {
-      console.error('Error fetching all artisans:', error);
-      return [];
+      console.error('Error fetching all artisans via RPC:', error);
+      // Fallback to direct query if RPC fails
+      const { data: fallbackData, error: fallbackError } = await supabase
+        .from('artisans')
+        .select('*');
+      
+      if (fallbackError) {
+        console.error('Fallback query also failed:', fallbackError);
+        return [];
+      }
+      
+      return (fallbackData || []).map(item => toCamelCase(item)) as Artisan[];
     }
+    
     return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 
@@ -269,6 +279,46 @@ export class SupabaseStorage implements IStorage {
   async updateArtisan(id: number, updates: Partial<Artisan>): Promise<Artisan | undefined> {
     // Convert camelCase to snake_case for database
     const snakeCaseUpdates = toSnakeCase(updates);
+    
+    // Use RPC/SQL directly for is_featured updates to bypass schema cache issues
+    if ('is_featured' in snakeCaseUpdates) {
+      const { data, error } = await supabase.rpc('update_artisan_featured', {
+        artisan_id: id,
+        featured_status: snakeCaseUpdates.is_featured
+      });
+      
+      if (error) {
+        console.error('Error updating artisan featured status via RPC:', error);
+        // Fallback to direct update
+        const { data: fallbackData, error: fallbackError } = await supabase
+          .from('artisans')
+          .update(snakeCaseUpdates)
+          .eq('id', id)
+          .select()
+          .single();
+        
+        if (fallbackError) {
+          console.error('Fallback update also failed:', fallbackError);
+          return undefined;
+        }
+        
+        return toCamelCase(fallbackData) as Artisan;
+      }
+      
+      // After RPC update, fetch the updated artisan
+      const { data: updatedArtisan, error: fetchError } = await supabase
+        .from('artisans')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (fetchError) {
+        console.error('Error fetching updated artisan:', fetchError);
+        return undefined;
+      }
+      
+      return toCamelCase(updatedArtisan) as Artisan;
+    }
     
     const { data, error } = await supabase
       .from('artisans')

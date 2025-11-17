@@ -80,6 +80,39 @@ CREATE POLICY "Allow public deletes" ON storage.objects FOR DELETE TO public USI
 
 The server will automatically detect the bucket on next restart and profile picture uploads will work immediately once RLS policies are configured.
 
+### Featured Artisans Functionality
+
+The platform includes a featured artisans system that allows admins to highlight specific artisans on the homepage. This feature requires a one-time Supabase schema cache refresh to function properly.
+
+**Database Setup (Already Complete):**
+The following have been added to the database:
+1. Added `is_featured` boolean column to artisans table (default: false)
+2. Created SQL function `update_artisan_featured(artisan_id, featured_status)` for updating featured status
+3. Created SQL function `get_all_artisans_with_featured()` for fetching artisans with featured status
+
+**CRITICAL: Schema Cache Refresh Required**
+After the database schema changes, Supabase's PostgREST schema cache needs to be refreshed manually:
+
+1. Go to your Supabase project dashboard
+2. Navigate to **Settings** → **Database**
+3. Scroll to the **Schema** section
+4. Click **Reload schema** or **Restart PostgREST service**
+
+Without this refresh, the `is_featured` column and RPC functions will not be accessible via the Supabase REST API, preventing the featured artisan toggle from working.
+
+**Admin Features:**
+- Toggle featured status for artisans in `/admin/manage`
+- Featured artisans appear in the "Featured Artisans" section on the homepage
+- Featured status shown with gold star badge in admin panel
+- Toggle button: gold styling when featured, grey when not featured
+
+**How It Works:**
+- Admin logs in at `/admin/login` (admin@skillsconnect.co.za / Admin@2024)
+- Navigates to `/admin/manage` to view all artisans
+- Clicks the toggle button next to any artisan to mark/unmark as featured
+- Homepage automatically displays only artisans marked as featured
+- System uses RPC functions to bypass schema cache limitations
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

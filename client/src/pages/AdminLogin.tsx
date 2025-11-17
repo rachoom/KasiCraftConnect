@@ -48,7 +48,7 @@ export default function AdminLogin() {
         });
       } else {
         localStorage.setItem("adminToken", data.token);
-        window.location.href = "/admin/review";
+        window.location.href = "/admin/manage";
       }
     },
     onError: (error: any) => {
