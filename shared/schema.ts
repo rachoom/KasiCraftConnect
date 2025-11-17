@@ -63,6 +63,7 @@ export interface Artisan {
   reviewCount: number;
   verified: boolean;
   subscriptionTier: string;
+  isFeatured: boolean;
   profileImage: string | null;
   portfolio: string[];
   profileComplete: boolean;
