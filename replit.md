@@ -87,18 +87,21 @@ The platform includes a featured artisans system that allows admins to highlight
 **Database Setup (Already Complete):**
 The following have been added to the database:
 1. Added `is_featured` boolean column to artisans table (default: false)
-2. Created SQL function `update_artisan_featured(artisan_id, featured_status)` for updating featured status
-3. Created SQL function `get_all_artisans_with_featured()` for fetching artisans with featured status
+2. Created database view `artisans_with_featured` (SELECT * FROM artisans)
+3. Created SQL function `update_artisan_featured(artisan_id, featured_status)` for updating featured status
+4. Created SQL function `get_all_artisans_with_featured()` for fetching artisans with featured status
 
-**CRITICAL: Schema Cache Refresh Required**
-After the database schema changes, Supabase's PostgREST schema cache needs to be refreshed manually:
+**CRITICAL: PostgREST Service Restart Required**
+The `is_featured` column exists in the database but Supabase's PostgREST service cannot see it due to schema caching. **You must contact Supabase support** to restart the PostgREST service:
 
-1. Go to your Supabase project dashboard
-2. Navigate to **Settings** → **Database**
-3. Scroll to the **Schema** section
-4. Click **Reload schema** or **Restart PostgREST service**
+**What to tell Supabase Support:**
+> "I added an `is_featured` column to my artisans table and created the view `artisans_with_featured`, but I'm getting schema cache errors like 'column artisans_with_featured.is_featured does not exist' even though the column exists in the database. Could you please restart my PostgREST service to refresh the schema cache?"
 
-Without this refresh, the `is_featured` column and RPC functions will not be accessible via the Supabase REST API, preventing the featured artisan toggle from working.
+**Why "Reload schema" doesn't work:**
+The "Reload schema" button in Settings → Database often doesn't fully propagate changes. Only a full **PostgREST service restart** (done by Supabase support or via Settings → API → Restart PostgREST) will clear the cache completely.
+
+**After PostgREST Restart:**
+The featured artisan toggle will work immediately - all code is already implemented and waiting for the cache to clear.
 
 **Admin Features:**
 - Toggle featured status for artisans in `/admin/manage`
