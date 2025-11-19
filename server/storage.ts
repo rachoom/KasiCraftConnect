@@ -498,44 +498,37 @@ export class SupabaseStorage implements IStorage {
 
   async toggleArtisanFeatured(id: number): Promise<Artisan | undefined> {
     try {
-      // Fetch current artisan to get current featured status
-      const currentArtisan = await this.getArtisan(id);
-      if (!currentArtisan) {
-        console.error('Artisan not found for toggling');
+      // First, get current featured status from the view
+      const { data: currentData, error: fetchError } = await supabase
+        .from('artisans_with_featured')
+        .select('is_featured')
+        .eq('id', id)
+        .single();
+      
+      if (fetchError || !currentData) {
+        console.error('Artisan not found for toggling:', fetchError);
         return undefined;
       }
       
-      const currentFeaturedStatus = currentArtisan.isFeatured ?? false;
+      const currentFeaturedStatus = currentData.is_featured ?? false;
       const newFeaturedStatus = !currentFeaturedStatus;
       
       console.log(`Toggling artisan ${id} featured from ${currentFeaturedStatus} to ${newFeaturedStatus}`);
       
-      // Use direct REST API to bypass schema cache
-      const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/artisans?id=eq.${id}`, {
-        method: 'PATCH',
-        headers: {
-          'apikey': process.env.SUPABASE_ANON_KEY!,
-          'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
-        },
-        body: JSON.stringify({ is_featured: newFeaturedStatus })
-      });
+      // Update via the view (which should be updatable)
+      const { data, error } = await supabase
+        .from('artisans_with_featured')
+        .update({ is_featured: newFeaturedStatus })
+        .eq('id', id)
+        .select()
+        .single();
       
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error toggling featured status via REST:', errorText);
+      if (error) {
+        console.error('Error toggling featured status:', error);
         return undefined;
       }
       
-      const data = await response.json();
-      if (data.length === 0) {
-        console.error('No artisan returned after update');
-        return undefined;
-      }
-      
-      const result = toCamelCase(data[0]) as Artisan;
-      result.isFeatured = newFeaturedStatus;
+      const result = toCamelCase(data) as Artisan;
       console.log(`Successfully toggled featured status for artisan ${id} to ${result.isFeatured}`);
       return result;
     } catch (error) {
@@ -545,31 +538,18 @@ export class SupabaseStorage implements IStorage {
   }
 
   async getFeaturedArtisans(): Promise<Artisan[]> {
-    try {
-      // Use direct REST API to bypass schema cache
-      const response = await fetch(
-        `${process.env.SUPABASE_URL}/rest/v1/artisans?is_featured=eq.true&approval_status=eq.approved&select=*`,
-        {
-          method: 'GET',
-          headers: {
-            'apikey': process.env.SUPABASE_ANON_KEY!,
-            'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`
-          }
-        }
-      );
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error fetching featured artisans via REST:', errorText);
-        return [];
-      }
-      
-      const data = await response.json();
-      return data.map((row: any) => toCamelCase(row)) as Artisan[];
-    } catch (error) {
+    const { data, error } = await supabase
+      .from('artisans_with_featured')
+      .select('*')
+      .eq('is_featured', true)
+      .eq('approval_status', 'approved');
+    
+    if (error) {
       console.error('Error fetching featured artisans:', error);
       return [];
     }
+    
+    return (data || []).map(item => toCamelCase(item)) as Artisan[];
   }
 }
 
