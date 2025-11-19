@@ -188,7 +188,7 @@ export default function ViewProfiles() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {filteredArtisans.map((artisan: any) => (
-                  <Card key={artisan.id} className="shadow-lg border-green/30 bg-black hover:shadow-xl transition-shadow hover:border-green/30">
+                  <Card key={artisan.id} className="shadow-lg border-2 border-gold/80 bg-black hover:shadow-xl transition-all duration-300 hover:border-gold">
                     <CardContent className="p-6">
                       <div className="space-y-4">
                         {/* Header with name and status */}
