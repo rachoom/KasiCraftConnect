@@ -31,7 +31,7 @@ export default function Header() {
                 alt="SKILLS CONNECT" 
                 className="h-24 sm:h-28 md:h-32 lg:h-40 w-auto object-contain flex-shrink-0"
               />
-              <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center">Far East Rand</span>
+              <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center text-glow-pulse">Far East Rand</span>
             </Link>
           </motion.div>
           

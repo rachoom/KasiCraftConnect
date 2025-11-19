@@ -183,4 +183,18 @@
     box-shadow: 0 0 20px rgba(218, 165, 32, 0.7), 0 0 30px rgba(184, 134, 11, 0.4);
     transform: translateY(-2px);
   }
+  
+  /* Glowing text animation for "Far East Rand" */
+  @keyframes textGlow {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(243, 193, 43, 0.5), 0 0 20px rgba(243, 193, 43, 0.3);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(243, 193, 43, 0.8), 0 0 30px rgba(243, 193, 43, 0.6), 0 0 40px rgba(243, 193, 43, 0.4);
+    }
+  }
+  
+  .text-glow-pulse {
+    animation: textGlow 2s ease-in-out infinite;
+  }
 }
