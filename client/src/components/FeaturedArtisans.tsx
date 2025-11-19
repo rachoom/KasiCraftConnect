@@ -127,12 +127,12 @@ export default function FeaturedArtisans() {
                 {/* Profile Image with Featured Badge */}
                 <div className="flex items-start gap-3 mb-4">
                   <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-gold to-gold-dark border-2 border-gold/50">
+                    <div className="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-gold to-gold-dark border-2 border-gold/50">
                       {artisan.profileImage ? (
                         <img src={artisan.profileImage} alt={`${artisan.firstName} ${artisan.lastName}`} className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <User className="w-8 h-8 text-black/80" />
+                          <User className="w-12 h-12 text-black/80" />
                         </div>
                       )}
                     </div>
