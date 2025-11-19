@@ -33,9 +33,9 @@ export default function Hero() {
               className="text-gold"
               animate={{ 
                 textShadow: [
-                  "0 0 10px rgba(218, 165, 32, 0.5)",
-                  "0 0 25px rgba(218, 165, 32, 0.8)",
-                  "0 0 10px rgba(218, 165, 32, 0.5)"
+                  "0 0 8px rgba(218, 165, 32, 0.15)",
+                  "0 0 15px rgba(218, 165, 32, 0.25)",
+                  "0 0 8px rgba(218, 165, 32, 0.15)"
                 ]
               }}
               transition={{

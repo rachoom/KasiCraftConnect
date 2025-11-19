@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { MapPin, Star, Phone, Mail, FileText, CheckCircle, XCircle, Clock, Users } from "lucide-react";
+import { MapPin, Star, Phone, Mail, FileText, CheckCircle, XCircle, Clock, Users, Search } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import type { Artisan } from "@shared/schema";
 
@@ -19,6 +19,7 @@ export default function AdminReview() {
   const [selectedArtisan, setSelectedArtisan] = useState<Artisan | null>(null);
   const [rejectionReason, setRejectionReason] = useState("");
   const [adminName, setAdminName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -155,6 +156,20 @@ export default function AdminReview() {
     });
   };
 
+  const filteredArtisans = useMemo(() => {
+    if (!pendingArtisans) return [];
+    return pendingArtisans.filter((artisan) => {
+      const matchesSearch = 
+        searchTerm === "" ||
+        `${artisan.firstName} ${artisan.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        artisan.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        artisan.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        artisan.services.some(s => s.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      return matchesSearch;
+    });
+  }, [pendingArtisans, searchTerm]);
+
   if (isLoading) {
     return (
       <PageTransition>
@@ -179,7 +194,7 @@ export default function AdminReview() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-6">
               <div>
                 <h1 className="text-3xl font-bold text-gold">Admin Review Panel</h1>
                 <p className="text-white/80">Review and approve pending artisan applications</p>
@@ -192,18 +207,53 @@ export default function AdminReview() {
               </Link>
             </div>
             
-            {/* Admin Name Input */}
-            <div className="mt-6 max-w-md">
-              <Label htmlFor="adminName" className="text-white">Admin Name</Label>
+            {/* Admin Name Input - REQUIRED for approvals */}
+            <Card className="bg-gradient-to-r from-gold/10 to-gold-dark/10 border-2 border-gold/50 mb-6">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <div className="bg-gold/20 rounded-full p-2">
+                    <CheckCircle className="w-5 h-5 text-gold" />
+                  </div>
+                  <div className="flex-1">
+                    <Label htmlFor="adminName" className="text-white font-semibold text-base mb-1 block">
+                      Your Admin Name (Required for Approvals)
+                    </Label>
+                    <Input
+                      id="adminName"
+                      type="text"
+                      placeholder="Enter your name to enable approve/reject buttons"
+                      value={adminName}
+                      onChange={(e) => setAdminName(e.target.value)}
+                      className="mt-2 bg-zinc-900 border-green/30 text-white"
+                      data-testid="input-admin-name"
+                    />
+                    {!adminName.trim() && (
+                      <p className="text-white/70 text-sm mt-2">
+                        ⚠️ Enter your name above to enable the approve and reject buttons
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Search Box */}
+            <div className="relative max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" />
               <Input
-                id="adminName"
-                type="text"
-                placeholder="Enter your name"
-                value={adminName}
-                onChange={(e) => setAdminName(e.target.value)}
-                className="mt-1 bg-zinc-900 border-green/30 text-white"
+                placeholder="Search artisans by name, email, location, or service..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-zinc-900 border-green/30 text-white"
+                data-testid="input-search-artisans"
               />
             </div>
+            
+            {searchTerm && (
+              <p className="text-white/60 mt-3">
+                Showing {filteredArtisans.length} of {pendingArtisans?.length || 0} pending applications
+              </p>
+            )}
           </div>
 
           {!pendingArtisans || pendingArtisans.length === 0 ? (
@@ -212,9 +262,15 @@ export default function AdminReview() {
               <h3 className="text-xl font-semibold text-white mb-2">No Pending Applications</h3>
               <p className="text-white/60">All artisan applications have been reviewed.</p>
             </div>
+          ) : filteredArtisans.length === 0 ? (
+            <div className="text-center py-12">
+              <Search className="mx-auto h-16 w-16 text-white/40 mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">No Results Found</h3>
+              <p className="text-white/60">No pending artisans match your search "{searchTerm}"</p>
+            </div>
           ) : (
             <div className="grid gap-6">
-              {pendingArtisans.map((artisan) => (
+              {filteredArtisans.map((artisan) => (
                 <Card key={artisan.id} className="bg-zinc-900 border-2 border-green/30 hover:border-gold transition-all duration-200">
                   <CardHeader>
                     <div className="flex justify-between items-start">
@@ -300,6 +356,7 @@ export default function AdminReview() {
                       onClick={() => handleApprove(artisan)}
                       disabled={approveMutation.isPending || !adminName.trim()}
                       className="bg-green hover:bg-green-dark text-white flex items-center gap-2"
+                      data-testid={`button-approve-${artisan.id}`}
                     >
                       <CheckCircle className="w-4 h-4" />
                       Approve
@@ -307,9 +364,10 @@ export default function AdminReview() {
                     
                     <Button
                       onClick={() => setSelectedArtisan(artisan)}
-                      disabled={rejectMutation.isPending}
+                      disabled={rejectMutation.isPending || !adminName.trim()}
                       variant="destructive"
                       className="flex items-center gap-2"
+                      data-testid={`button-reject-${artisan.id}`}
                     >
                       <XCircle className="w-4 h-4" />
                       Reject
@@ -350,14 +408,16 @@ export default function AdminReview() {
                   }}
                   variant="outline"
                   className="flex-1 border-green/30 text-white hover:bg-zinc-800"
+                  data-testid="button-cancel-rejection"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={() => handleReject(selectedArtisan)}
-                  disabled={rejectMutation.isPending || !rejectionReason.trim()}
+                  disabled={rejectMutation.isPending || !rejectionReason.trim() || !adminName.trim()}
                   variant="destructive"
                   className="flex-1"
+                  data-testid="button-confirm-rejection"
                 >
                   Reject
                 </Button>
