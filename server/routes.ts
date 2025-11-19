@@ -42,6 +42,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.status(404).json({ message: "Login endpoint should use POST method" });
   });
 
+  // Featured artisans route - must come before :id route
+  app.get("/api/artisans/featured", async (req, res) => {
+    try {
+      const featuredArtisans = await storage.getFeaturedArtisans();
+      res.json(featuredArtisans);
+    } catch (error) {
+      console.error("Error fetching featured artisans:", error);
+      res.status(500).json({ message: "Failed to fetch featured artisans" });
+    }
+  });
+
   app.get("/api/artisans/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
