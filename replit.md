@@ -80,41 +80,44 @@ CREATE POLICY "Allow public deletes" ON storage.objects FOR DELETE TO public USI
 
 The server will automatically detect the bucket on next restart and profile picture uploads will work immediately once RLS policies are configured.
 
-### Featured Artisans Functionality
+### Featured Artisans Functionality ✅ FULLY WORKING
 
-The platform includes a featured artisans system that allows admins to highlight specific artisans on the homepage. This feature requires a one-time Supabase schema cache refresh to function properly.
+The platform includes a fully functional featured artisans system that allows admins to highlight specific artisans on the homepage.
 
-**Database Setup (Already Complete):**
-The following have been added to the database:
-1. Added `is_featured` boolean column to artisans table (default: false)
-2. Created database view `artisans_with_featured` (SELECT * FROM artisans)
-3. Created SQL function `update_artisan_featured(artisan_id, featured_status)` for updating featured status
-4. Created SQL function `get_all_artisans_with_featured()` for fetching artisans with featured status
+**Database Schema:**
+1. `is_featured` boolean column in artisans table (default: false) - added by Supabase support via ALTER TABLE
+2. `artisans_with_featured` view with explicit column definitions to bypass PostgREST cache
+3. RPC function `update_artisan_featured(artisan_id, featured_status)` for updating featured status
+4. RPC function `get_all_artisans_with_featured()` for fetching artisans (fallback for cache issues)
 
-**CRITICAL: PostgREST Service Restart Required**
-The `is_featured` column exists in the database but Supabase's PostgREST service cannot see it due to schema caching. **You must contact Supabase support** to restart the PostgREST service:
-
-**What to tell Supabase Support:**
-> "I added an `is_featured` column to my artisans table and created the view `artisans_with_featured`, but I'm getting schema cache errors like 'column artisans_with_featured.is_featured does not exist' even though the column exists in the database. Could you please restart my PostgREST service to refresh the schema cache?"
-
-**Why "Reload schema" doesn't work:**
-The "Reload schema" button in Settings → Database often doesn't fully propagate changes. Only a full **PostgREST service restart** (done by Supabase support or via Settings → API → Restart PostgREST) will clear the cache completely.
-
-**After PostgREST Restart:**
-The featured artisan toggle will work immediately - all code is already implemented and waiting for the cache to clear.
+**API Endpoints:**
+- `POST /api/admin/artisan/:id/toggle-featured` - Toggle featured status (requires admin auth)
+- `GET /api/artisans/featured` - Fetch all featured artisans (approved + is_featured=true)
 
 **Admin Features:**
 - Toggle featured status for artisans in `/admin/manage`
-- Featured artisans appear in the "Featured Artisans" section on the homepage
 - Featured status shown with gold star badge in admin panel
 - Toggle button: gold styling when featured, grey when not featured
+- Only approved artisans can be marked as featured
 
-**How It Works:**
-- Admin logs in at `/admin/login` (admin@skillsconnect.co.za / Admin@2024)
-- Navigates to `/admin/manage` to view all artisans
-- Clicks the toggle button next to any artisan to mark/unmark as featured
-- Homepage automatically displays only artisans marked as featured
-- System uses RPC functions to bypass schema cache limitations
+**Homepage Display:**
+- Featured artisans automatically appear in the "Featured Artisans" section on the homepage
+- Only displays artisans with both `is_featured = true` AND `approval_status = 'approved'`
+- Cards show circular profile images, name, location, services, phone, email
+- "Call Now" button (gold background, black text) and "Email" button (outlined)
+- Verified badge for verified/premium artisans
+
+**How to Use:**
+1. Admin logs in at `/admin/login` (admin@skillsconnect.co.za / Admin@2024)
+2. Navigates to `/admin/manage` to view all artisans
+3. Clicks the toggle button next to any approved artisan to mark/unmark as featured
+4. Featured artisans immediately appear on the homepage
+5. Unapproved artisans cannot be featured (toggle is disabled)
+
+**Implementation Notes:**
+- Uses `artisans_with_featured` view instead of direct table access to bypass PostgREST schema cache limitations
+- Frontend uses TanStack Query for real-time data fetching
+- Toggle API responds with updated artisan data including `isFeatured` status
 
 ## User Preferences
 
