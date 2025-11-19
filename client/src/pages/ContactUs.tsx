@@ -192,7 +192,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">Email</h4>
-                    <p className="text-white/80">info@artisanconnect.co.za</p>
+                    <p className="text-white/80">admin@skillsconnect.co.za</p>
                   </div>
                 </div>
 
@@ -202,7 +202,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">Phone</h4>
-                    <p className="text-white/80">+27 11 748 5200</p>
+                    <p className="text-white/80">069 702 6088</p>
                   </div>
                 </div>
 
