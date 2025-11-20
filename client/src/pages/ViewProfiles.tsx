@@ -24,6 +24,19 @@ const serviceOptions = [
   { id: "landscapers", label: "Landscaper" },
 ];
 
+const locationOptions = [
+  "Brakpan",
+  "Benoni",
+  "Springs",
+  "Nigel",
+  "Daveyton",
+  "Boksburg",
+  "Germiston",
+  "Kempton Park",
+  "Alberton",
+  "Edenvale",
+];
+
 export default function ViewProfiles() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterService, setFilterService] = useState("");
@@ -42,7 +55,7 @@ export default function ViewProfiles() {
     
     const matchesService = !filterService || filterService === 'all' || (artisan.services && artisan.services.includes(filterService));
     
-    const matchesLocation = !filterLocation || 
+    const matchesLocation = !filterLocation || filterLocation === 'all' || 
       (artisan.location && artisan.location.toLowerCase().includes(filterLocation.toLowerCase()));
     
     const matchesStatus = !filterStatus || filterStatus === 'all' || artisan.approvalStatus === filterStatus;
@@ -114,12 +127,19 @@ export default function ViewProfiles() {
                   
                   {/* REORDERED: 2. Filter by location */}
                   <div>
-                    <Input
-                      placeholder="Filter by location..."
-                      value={filterLocation}
-                      onChange={(e) => setFilterLocation(e.target.value)}
-                      className="w-full bg-zinc-800 border border-green/30 text-white placeholder:text-white/60"
-                    />
+                    <Select value={filterLocation} onValueChange={setFilterLocation}>
+                      <SelectTrigger className="bg-zinc-800 border border-green/30 text-white placeholder:text-white/60" data-testid="select-filter-location">
+                        <SelectValue placeholder="Filter by location" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-zinc-800 border border-green/30 text-gold">
+                        <SelectItem value="all" className="text-gold">All Locations</SelectItem>
+                        {locationOptions.map((location) => (
+                          <SelectItem key={location} value={location} className="text-gold">
+                            {location}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   
                   {/* REORDERED: 3. Filter by status */}
@@ -159,7 +179,7 @@ export default function ViewProfiles() {
 
             {/* Artisan Profiles Grid */}
             {isLoading ? (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {[...Array(6)].map((_, i) => (
                   <Card key={i} className="shadow-lg border-0">
                     <CardContent className="p-6">
@@ -186,10 +206,10 @@ export default function ViewProfiles() {
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {filteredArtisans.map((artisan: any) => (
-                  <Card key={artisan.id} className="shadow-lg border-2 border-gold/80 bg-black hover:shadow-xl transition-all duration-300 hover:border-gold">
-                    <CardContent className="p-6">
+                  <Card key={artisan.id} className="shadow-lg border-2 border-gold/80 bg-black hover:shadow-xl transition-all duration-300 hover:border-gold overflow-hidden">
+                    <CardContent className="p-4 sm:p-6">
                       <div className="space-y-4">
                         {/* Header with name and status */}
                         <div className="flex justify-between items-start">
