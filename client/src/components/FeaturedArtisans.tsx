@@ -106,7 +106,7 @@ export default function FeaturedArtisans() {
         </motion.div>
 
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12 overflow-hidden w-full"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

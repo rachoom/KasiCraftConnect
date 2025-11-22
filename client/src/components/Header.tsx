@@ -29,7 +29,7 @@ export default function Header() {
               <img 
                 src={brandLogoUrl} 
                 alt="SKILLS CONNECT" 
-                className="h-24 sm:h-28 md:h-32 lg:h-40 w-auto object-contain flex-shrink-0"
+                className="h-28 sm:h-32 md:h-40 lg:h-44 w-auto object-contain flex-shrink-0"
               />
               <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center text-glow-pulse">Far East Rand</span>
             </Link>
