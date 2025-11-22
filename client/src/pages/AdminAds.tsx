@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Plus, Edit, Trash2, Upload } from "lucide-react";
+import { Plus, Edit, Trash2, Upload, AlertCircle } from "lucide-react";
 import type { Advertisement, InsertAdvertisement } from "@shared/schema";
 import { insertAdvertisementSchema } from "@shared/schema";
 
@@ -21,6 +21,7 @@ export default function AdminAds() {
   const [editingAd, setEditingAd] = useState<Advertisement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -100,6 +101,7 @@ export default function AdminAds() {
       setEditingAd(null);
       form.reset();
       setSelectedFile(null);
+      setUploadError(null);
     },
     onError: (error: any) => {
       toast({
@@ -135,40 +137,66 @@ export default function AdminAds() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.size <= 5 * 1024 * 1024) {
+    setUploadError(null);
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        const errorMsg = "Ad image must be less than 5MB";
+        setUploadError(errorMsg);
+        toast({
+          variant: "destructive",
+          title: "File Too Large",
+          description: errorMsg,
+        });
+        return;
+      }
       setSelectedFile(file);
-    } else {
-      toast({
-        title: "Error",
-        description: "File must be less than 5MB",
-        variant: "destructive",
-      });
     }
   };
 
   const handleUploadImage = async () => {
-    if (!selectedFile) return;
+    if (!selectedFile || !editingAd) return;
+
     setUploadingImage(true);
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-    
+    setUploadError(null);
+    const formDataToSend = new FormData();
+    formDataToSend.append('image', selectedFile);
+
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch("/api/admin/artisan/0/profile-image", {
+      const response = await fetch(`/api/admin/advertisement/${editingAd.id}/image`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
-        body: formData,
+        body: formDataToSend,
       });
-      if (!response.ok) throw new Error("Upload failed");
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to upload image");
+      }
+
       const data = await response.json();
+      
       form.setValue("imageUrl", data.url);
       setSelectedFile(null);
-      toast({ title: "Success", description: "Image uploaded" });
-    } catch (error: any) {
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      setUploadError(null);
+
       toast({
-        title: "Error",
-        description: error.message || "Upload failed",
+        title: "Success",
+        description: "Ad image uploaded successfully",
+      });
+      
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/advertisements"] });
+    } catch (error: any) {
+      console.error("Error uploading image:", error);
+      const errorMessage = error.message || "Failed to upload ad image";
+      setUploadError(errorMessage);
+      toast({
         variant: "destructive",
+        title: "Upload Failed",
+        description: errorMessage,
       });
     } finally {
       setUploadingImage(false);
@@ -183,6 +211,8 @@ export default function AdminAds() {
       setEditingAd(null);
       form.reset();
     }
+    setUploadError(null);
+    setSelectedFile(null);
     setIsDialogOpen(true);
   };
 
@@ -233,7 +263,7 @@ export default function AdminAds() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     {ad.imageUrl && (
-                      <img src={ad.imageUrl} alt={ad.title} className="w-full h-32 object-cover rounded mb-4" />
+                      <img src={ad.imageUrl} alt={ad.title} className="w-full h-48 object-cover rounded mb-4" />
                     )}
                     <h3 className="text-xl font-semibold text-gold mb-2">{ad.title}</h3>
                     <p className="text-white/80 mb-2">{ad.description}</p>
@@ -278,19 +308,96 @@ export default function AdminAds() {
         )}
       </div>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="bg-zinc-900 border-green/30 text-white max-w-2xl">
+      <Dialog open={isDialogOpen} onOpenChange={(open) => {
+        if (!open) {
+          setEditingAd(null);
+          setUploadError(null);
+          setSelectedFile(null);
+        }
+      }}>
+        <DialogContent className="bg-zinc-900 border-green/30 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-gold text-2xl">
               {editingAd ? "Edit Advertisement" : "Create Advertisement"}
             </DialogTitle>
             <DialogDescription className="text-white/60">
-              {editingAd ? "Update ad details" : "Create a new featured ad"}
+              {editingAd ? "Update ad details and image" : "Create a new featured advertisement"}
             </DialogDescription>
           </DialogHeader>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-4">
+              <div className="flex items-center justify-center mb-6">
+                <div className="relative w-full">
+                  <div className="w-full h-64 bg-gradient-to-br from-gold/20 to-gold-dark/20 rounded flex items-center justify-center text-white font-bold text-2xl overflow-hidden border border-gold/30">
+                    {form.watch("imageUrl") ? (
+                      <img 
+                        src={form.watch("imageUrl") || ""} 
+                        alt="Ad Preview" 
+                        className="w-full h-full object-cover"
+                        data-testid="img-ad-preview"
+                      />
+                    ) : (
+                      <div className="text-center">
+                        <div className="text-5xl mb-2">🖼️</div>
+                        <p className="text-white/60">Ad Image</p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="mt-4 space-y-3">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="ad-image-input"
+                    />
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="bg-zinc-800 hover:bg-zinc-700 text-white border border-green/30"
+                        disabled={uploadingImage}
+                      >
+                        <Upload className="w-4 h-4 mr-2" />
+                        Choose Image
+                      </Button>
+                      {selectedFile && (
+                        <Button
+                          type="button"
+                          onClick={handleUploadImage}
+                          className="bg-gold hover:bg-gold-dark text-black"
+                          disabled={uploadingImage}
+                        >
+                          {uploadingImage ? "Uploading..." : "Upload"}
+                        </Button>
+                      )}
+                    </div>
+                    {selectedFile && (
+                      <p className="text-white/70 text-sm">
+                        Selected: {selectedFile.name}
+                      </p>
+                    )}
+                    {uploadError && (
+                      <div className="p-4 rounded-md bg-gradient-to-r from-gold/10 to-gold-dark/10 border border-green/30">
+                        <div className="flex items-start gap-2">
+                          <AlertCircle className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-white font-semibold mb-1">Upload Error</p>
+                            <p className="text-white/90 text-sm">{uploadError}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <p className="text-white/60 text-xs">
+                      Max 5MB • JPG, PNG, WebP, or GIF
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <FormField
                 control={form.control}
                 name="title"
@@ -298,7 +405,7 @@ export default function AdminAds() {
                   <FormItem>
                     <FormLabel className="text-white">Title</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Ad title" className="bg-zinc-800 border-green/30" />
+                      <Input {...field} placeholder="Ad title" className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-title" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -312,44 +419,12 @@ export default function AdminAds() {
                   <FormItem>
                     <FormLabel className="text-white">Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} placeholder="Ad description" className="bg-zinc-800 border-green/30" />
+                      <Textarea {...field} placeholder="Ad description" className="bg-zinc-800 border-green/30 text-white" data-testid="textarea-ad-description" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
-              <div className="space-y-2">
-                <Label className="text-white">Image</Label>
-                <div className="flex gap-2">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  <Button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="bg-zinc-800 hover:bg-zinc-700 text-white border border-green/30"
-                    disabled={uploadingImage}
-                  >
-                    <Upload className="w-4 h-4 mr-2" />
-                    Choose Image
-                  </Button>
-                  {selectedFile && (
-                    <Button
-                      type="button"
-                      onClick={handleUploadImage}
-                      className="bg-gold hover:bg-gold-dark text-black"
-                      disabled={uploadingImage}
-                    >
-                      {uploadingImage ? "Uploading..." : "Upload"}
-                    </Button>
-                  )}
-                </div>
-              </div>
 
               <FormField
                 control={form.control}
@@ -358,47 +433,61 @@ export default function AdminAds() {
                   <FormItem>
                     <FormLabel className="text-white">Link URL (optional)</FormLabel>
                     <FormControl>
-                      <Input {...field} value={field.value || ""} placeholder="https://..." className="bg-zinc-800 border-green/30" />
+                      <Input {...field} value={field.value || ""} placeholder="https://..." className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-link" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="displayOrder"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">Display Order</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="number" className="bg-zinc-800 border-green/30" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="grid md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="displayOrder"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Display Order</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="number" className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-order" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="isActive"
-                render={({ field }) => (
-                  <FormItem className="flex items-center gap-2">
-                    <FormControl>
-                      <input type="checkbox" {...field} className="w-4 h-4" />
-                    </FormControl>
-                    <FormLabel className="text-white mb-0">Active</FormLabel>
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="isActive"
+                  render={({ field }) => (
+                    <FormItem className="flex items-end gap-2">
+                      <FormControl>
+                        <input type="checkbox" {...field} className="w-4 h-4" data-testid="checkbox-ad-active" />
+                      </FormControl>
+                      <FormLabel className="text-white mb-0">Active</FormLabel>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-              <Button
-                type="submit"
-                className="w-full bg-gold hover:bg-gold-dark text-black"
-                disabled={createMutation.isPending || updateMutation.isPending}
-              >
-                {editingAd ? "Update Advertisement" : "Create Advertisement"}
-              </Button>
+              <div className="flex justify-end space-x-3 pt-4 border-t border-green/30">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsDialogOpen(false)}
+                  className="border-green/30 text-white hover:bg-zinc-800"
+                  data-testid="button-cancel-ad"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-gold hover:bg-gold-dark text-black"
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                  data-testid="button-save-ad"
+                >
+                  {editingAd ? "Update Advertisement" : "Create Advertisement"}
+                </Button>
+              </div>
             </form>
           </Form>
         </DialogContent>

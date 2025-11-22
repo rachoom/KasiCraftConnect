@@ -982,6 +982,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/admin/advertisement/:id/image", verifyAdminToken, profileImageUpload.single('image'), async (req, res) => {
+    try {
+      const adId = parseInt(req.params.id);
+      
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file provided" });
+      }
+
+      const fileType = await fileTypeFromBuffer(req.file.buffer);
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      
+      if (!fileType || !allowedTypes.includes(fileType.mime)) {
+        return res.status(400).json({ 
+          message: "Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed." 
+        });
+      }
+
+      const publicUrl = await uploadProfilePicture(
+        adId,
+        req.file.buffer,
+        fileType.mime
+      );
+
+      res.json({
+        message: "Advertisement image uploaded successfully",
+        url: publicUrl
+      });
+    } catch (error: any) {
+      console.error("Error uploading advertisement image:", error);
+      res.status(500).json({ message: error?.message || "Failed to upload image" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
