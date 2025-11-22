@@ -4,11 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, MapPin, Search, Users, Shield, Star, ArrowLeft, Building2 } from "lucide-react";
-import { format } from "date-fns";
+import { MapPin, Search, Users, Shield, Star, ArrowLeft, Building2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeInSection from "@/components/FadeInSection";
@@ -110,8 +106,6 @@ export default function ServiceLanding() {
   const [, setLocation] = useLocation();
   const [searchLocation, setSearchLocation] = useState("");
   const [selectedTier, setSelectedTier] = useState("basic");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
@@ -177,7 +171,6 @@ export default function ServiceLanding() {
       service: serviceType,
       location: searchLocation,
       tier: selectedTier,
-      ...(selectedDate && { date: selectedDate.toISOString() }),
       ...(selectedServices.length > 0 && { services: selectedServices.join(',') })
     });
 
@@ -228,66 +221,35 @@ export default function ServiceLanding() {
                     </div>
                   </CardHeader>
                 <CardContent className="space-y-4 p-6 bg-black">
-                  {/* Location and Date Side by Side - Compact */}
-                  <div className="grid gap-3 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="location" className="text-base font-semibold text-white">
-                        Where do you need the service?
-                      </Label>
-                      <div className="relative" ref={locationInputRef}>
-                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-4 h-4 z-10" />
-                        <Input
-                          id="location"
-                          value={searchLocation}
-                          onChange={(e) => handleLocationChange(e.target.value)}
-                          onFocus={() => setShowLocationSuggestions(searchLocation.length > 0)}
-                          placeholder="Enter your location"
-                          className="pl-9 py-2 text-sm bg-zinc-800 border border-green/30 text-white placeholder:text-white/60 focus:border-gold rounded-lg"
-                          data-testid="input-location"
-                        />
-                        {showLocationSuggestions && locationSuggestions.length > 0 && (
-                          <div className="absolute top-full left-0 right-0 bg-zinc-800 border border-green/30 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
-                            {locationSuggestions.map((suggestion, index) => (
-                              <button
-                                key={index}
-                                className="w-full text-left px-4 py-3 text-white hover:bg-gold/20 transition-colors first:rounded-t-lg last:rounded-b-lg"
-                                onClick={() => selectLocation(suggestion)}
-                              >
-                                {suggestion}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label className="text-base font-semibold text-white">
-                        When do you need the service?
-                      </Label>
-                      <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="w-full justify-start text-left font-normal py-2 text-sm bg-zinc-800 border border-green/30 text-white hover:bg-zinc-700 hover:border-gold rounded-lg"
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4 text-gold" />
-                            {selectedDate ? format(selectedDate, "MMM d, yyyy") : "Select date (optional)"}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={selectedDate}
-                            onSelect={(date) => {
-                              setSelectedDate(date);
-                              setIsCalendarOpen(false);
-                            }}
-                            disabled={(date) => date < new Date()}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                  {/* Location Input */}
+                  <div className="space-y-2">
+                    <Label htmlFor="location" className="text-base font-semibold text-white">
+                      Where do you need the service?
+                    </Label>
+                    <div className="relative" ref={locationInputRef}>
+                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-4 h-4 z-10" />
+                      <Input
+                        id="location"
+                        value={searchLocation}
+                        onChange={(e) => handleLocationChange(e.target.value)}
+                        onFocus={() => setShowLocationSuggestions(searchLocation.length > 0)}
+                        placeholder="Enter your location"
+                        className="pl-9 py-2 text-sm bg-zinc-800 border border-green/30 text-white placeholder:text-white/60 focus:border-gold rounded-lg"
+                        data-testid="input-location"
+                      />
+                      {showLocationSuggestions && locationSuggestions.length > 0 && (
+                        <div className="absolute top-full left-0 right-0 bg-zinc-800 border border-green/30 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto mt-1">
+                          {locationSuggestions.map((suggestion, index) => (
+                            <button
+                              key={index}
+                              className="w-full text-left px-4 py-3 text-white hover:bg-gold/20 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                              onClick={() => selectLocation(suggestion)}
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
 
