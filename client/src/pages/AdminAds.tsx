@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Plus, Edit, Trash2, Upload, AlertCircle } from "lucide-react";
+import { Plus, Edit, Trash2, Upload, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Advertisement, InsertAdvertisement } from "@shared/schema";
 import { insertAdvertisementSchema } from "@shared/schema";
 
@@ -22,6 +22,7 @@ export default function AdminAds() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -224,6 +225,14 @@ export default function AdminAds() {
     }
   };
 
+  const handlePreviousAd = () => {
+    setCarouselIndex((prev) => (prev - 1 + ads.length) % ads.length);
+  };
+
+  const handleNextAd = () => {
+    setCarouselIndex((prev) => (prev + 1) % ads.length);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black">
@@ -255,6 +264,87 @@ export default function AdminAds() {
             New Advertisement
           </Button>
         </div>
+
+        {/* Ad Carousel Viewer */}
+        {ads.length > 0 && (
+          <Card className="bg-zinc-900 border-green/30 mb-8" data-testid="card-ad-carousel">
+            <CardContent className="p-6">
+              <h2 className="text-2xl font-bold text-gold mb-4">Preview Ads Carousel</h2>
+              
+              <div className="relative bg-black rounded-lg overflow-hidden mb-6 h-80 flex items-center justify-center group">
+                {ads[carouselIndex].imageUrl ? (
+                  <img
+                    src={ads[carouselIndex].imageUrl}
+                    alt={ads[carouselIndex].title}
+                    className="w-full h-full object-cover"
+                    data-testid={`img-ad-carousel-${ads[carouselIndex].id}`}
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gold/10 to-gold-dark/10">
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold text-gold mb-2">{ads[carouselIndex].title}</h3>
+                      <p className="text-white/80">{ads[carouselIndex].description}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Overlay with text for image ads */}
+                {ads[carouselIndex].imageUrl && (
+                  <div className="absolute inset-0 bg-black/40 flex items-end p-6">
+                    <div>
+                      <h3 className="text-2xl font-bold text-gold mb-2">{ads[carouselIndex].title}</h3>
+                      <p className="text-white/90">{ads[carouselIndex].description}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Navigation Buttons */}
+                <button
+                  onClick={handlePreviousAd}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-gold/80 hover:bg-gold text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                  data-testid="button-carousel-prev"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+
+                <button
+                  onClick={handleNextAd}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-gold/80 hover:bg-gold text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                  data-testid="button-carousel-next"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex gap-2 flex-wrap">
+                  {ads.map((ad, idx) => (
+                    <button
+                      key={ad.id}
+                      onClick={() => setCarouselIndex(idx)}
+                      className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
+                        idx === carouselIndex
+                          ? "bg-gold text-black"
+                          : "bg-zinc-800 text-white/80 hover:bg-zinc-700"
+                      }`}
+                      data-testid={`button-carousel-ad-${ad.id}`}
+                    >
+                      Ad {idx + 1}
+                    </button>
+                  ))}
+                </div>
+                <Button
+                  onClick={() => handleOpenDialog(ads[carouselIndex])}
+                  className="bg-gold hover:bg-gold-dark text-black"
+                  data-testid="button-edit-carousel-ad"
+                >
+                  <Edit className="w-4 h-4 mr-2" />
+                  Edit This Ad
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <div className="space-y-4">
           {ads.map((ad) => (

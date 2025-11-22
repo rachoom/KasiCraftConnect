@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ServiceCategories from "@/components/ServiceCategories";
+import AdvertisementCarousel from "@/components/AdvertisementCarousel";
 import FeaturedArtisans from "@/components/FeaturedArtisans";
 import TrustedPartners from "@/components/TrustedPartners";
 import Footer from "@/components/Footer";
@@ -34,6 +35,9 @@ export default function Home() {
       </motion.div>
       <motion.div variants={fadeInUp}>
         <ServiceCategories />
+      </motion.div>
+      <motion.div variants={fadeInUp}>
+        <AdvertisementCarousel />
       </motion.div>
       <motion.div variants={fadeInUp}>
         <FeaturedArtisans />
