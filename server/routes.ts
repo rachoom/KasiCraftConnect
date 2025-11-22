@@ -932,19 +932,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/advertisements", async (req, res) => {
+  app.get("/api/admin/advertisements", verifyAdminToken, async (req, res) => {
     try {
-      await verifyAdminToken(req);
       const ads = await storage.getAllAdvertisements();
       res.json(ads);
     } catch (error) {
-      res.status(401).json({ message: "Unauthorized" });
+      res.status(500).json({ message: "Failed to fetch advertisements" });
     }
   });
 
-  app.post("/api/admin/advertisements", async (req, res) => {
+  app.post("/api/admin/advertisements", verifyAdminToken, async (req, res) => {
     try {
-      await verifyAdminToken(req);
       const { insertAdvertisementSchema } = await import("@shared/schema");
       const validatedData = insertAdvertisementSchema.parse(req.body);
       const ad = await storage.createAdvertisement(validatedData);
@@ -954,9 +952,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/admin/advertisements/:id", async (req, res) => {
+  app.put("/api/admin/advertisements/:id", verifyAdminToken, async (req, res) => {
     try {
-      await verifyAdminToken(req);
       const id = parseInt(req.params.id);
       const ad = await storage.updateAdvertisement(id, req.body);
       if (!ad) {
@@ -964,13 +961,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json(ad);
     } catch (error) {
-      res.status(401).json({ message: "Unauthorized" });
+      res.status(500).json({ message: "Failed to update advertisement" });
     }
   });
 
-  app.delete("/api/admin/advertisements/:id", async (req, res) => {
+  app.delete("/api/admin/advertisements/:id", verifyAdminToken, async (req, res) => {
     try {
-      await verifyAdminToken(req);
       const id = parseInt(req.params.id);
       const success = await storage.deleteAdvertisement(id);
       if (!success) {
@@ -978,7 +974,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json({ message: "Advertisement deleted successfully" });
     } catch (error) {
-      res.status(401).json({ message: "Unauthorized" });
+      res.status(500).json({ message: "Failed to delete advertisement" });
     }
   });
 

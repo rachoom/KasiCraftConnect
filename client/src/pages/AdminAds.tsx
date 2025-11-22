@@ -448,7 +448,13 @@ export default function AdminAds() {
                     <FormItem>
                       <FormLabel className="text-white">Display Order</FormLabel>
                       <FormControl>
-                        <Input {...field} type="number" className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-order" />
+                        <Input 
+                          {...field} 
+                          type="number" 
+                          className="bg-zinc-800 border-green/30 text-white" 
+                          data-testid="input-ad-order"
+                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -461,7 +467,13 @@ export default function AdminAds() {
                   render={({ field }) => (
                     <FormItem className="flex items-end gap-2">
                       <FormControl>
-                        <input type="checkbox" {...field} className="w-4 h-4" data-testid="checkbox-ad-active" />
+                        <input 
+                          type="checkbox" 
+                          checked={field.value}
+                          onChange={field.onChange}
+                          className="w-4 h-4" 
+                          data-testid="checkbox-ad-active" 
+                        />
                       </FormControl>
                       <FormLabel className="text-white mb-0">Active</FormLabel>
                     </FormItem>
