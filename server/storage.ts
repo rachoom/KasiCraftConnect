@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { User, InsertUser, Artisan, InsertArtisan, SearchRequest, InsertSearchRequest, ArtisanSubscription, InsertArtisanSubscription } from "@shared/schema";
+import type { User, InsertUser, Artisan, InsertArtisan, SearchRequest, InsertSearchRequest, ArtisanSubscription, InsertArtisanSubscription, Advertisement, InsertAdvertisement } from "@shared/schema";
 
 // Helper function to convert camelCase to snake_case for database
 function toSnakeCase(obj: any): any {
@@ -68,6 +68,13 @@ export interface IStorage {
   // Featured artisan methods
   toggleArtisanFeatured(id: number): Promise<Artisan | undefined>;
   getFeaturedArtisans(): Promise<Artisan[]>;
+
+  // Advertisement methods
+  getAllAdvertisements(): Promise<Advertisement[]>;
+  getActiveAdvertisements(): Promise<Advertisement[]>;
+  createAdvertisement(ad: InsertAdvertisement): Promise<Advertisement>;
+  updateAdvertisement(id: number, updates: Partial<Advertisement>): Promise<Advertisement | undefined>;
+  deleteAdvertisement(id: number): Promise<boolean>;
 }
 
 export class SupabaseStorage implements IStorage {
@@ -550,6 +557,78 @@ export class SupabaseStorage implements IStorage {
     }
     
     return (data || []).map(item => toCamelCase(item)) as Artisan[];
+  }
+
+  // Advertisement methods
+  async getAllAdvertisements(): Promise<Advertisement[]> {
+    const { data, error } = await supabase
+      .from('advertisements')
+      .select('*')
+      .order('display_order', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching advertisements:', error);
+      return [];
+    }
+    return (data || []).map(item => toCamelCase(item)) as Advertisement[];
+  }
+
+  async getActiveAdvertisements(): Promise<Advertisement[]> {
+    const { data, error } = await supabase
+      .from('advertisements')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching active advertisements:', error);
+      return [];
+    }
+    return (data || []).map(item => toCamelCase(item)) as Advertisement[];
+  }
+
+  async createAdvertisement(insertAd: InsertAdvertisement): Promise<Advertisement> {
+    const snakeCaseData = toSnakeCase(insertAd);
+    const { data, error } = await supabase
+      .from('advertisements')
+      .insert(snakeCaseData)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating advertisement:', error);
+      throw new Error('Failed to create advertisement');
+    }
+    return toCamelCase(data) as Advertisement;
+  }
+
+  async updateAdvertisement(id: number, updates: Partial<Advertisement>): Promise<Advertisement | undefined> {
+    const snakeCaseData = toSnakeCase(updates);
+    const { data, error } = await supabase
+      .from('advertisements')
+      .update(snakeCaseData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating advertisement:', error);
+      return undefined;
+    }
+    return toCamelCase(data) as Advertisement;
+  }
+
+  async deleteAdvertisement(id: number): Promise<boolean> {
+    const { error } = await supabase
+      .from('advertisements')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Error deleting advertisement:', error);
+      return false;
+    }
+    return true;
   }
 }
 

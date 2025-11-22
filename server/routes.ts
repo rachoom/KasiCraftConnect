@@ -922,6 +922,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Advertisement routes
+  app.get("/api/advertisements", async (req, res) => {
+    try {
+      const ads = await storage.getActiveAdvertisements();
+      res.json(ads);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch advertisements" });
+    }
+  });
+
+  app.get("/api/admin/advertisements", async (req, res) => {
+    try {
+      await verifyAdminToken(req);
+      const ads = await storage.getAllAdvertisements();
+      res.json(ads);
+    } catch (error) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  });
+
+  app.post("/api/admin/advertisements", async (req, res) => {
+    try {
+      await verifyAdminToken(req);
+      const { insertAdvertisementSchema } = await import("@shared/schema");
+      const validatedData = insertAdvertisementSchema.parse(req.body);
+      const ad = await storage.createAdvertisement(validatedData);
+      res.status(201).json(ad);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message || "Failed to create advertisement" });
+    }
+  });
+
+  app.put("/api/admin/advertisements/:id", async (req, res) => {
+    try {
+      await verifyAdminToken(req);
+      const id = parseInt(req.params.id);
+      const ad = await storage.updateAdvertisement(id, req.body);
+      if (!ad) {
+        return res.status(404).json({ message: "Advertisement not found" });
+      }
+      res.json(ad);
+    } catch (error) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  });
+
+  app.delete("/api/admin/advertisements/:id", async (req, res) => {
+    try {
+      await verifyAdminToken(req);
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteAdvertisement(id);
+      if (!success) {
+        return res.status(404).json({ message: "Advertisement not found" });
+      }
+      res.json({ message: "Advertisement deleted successfully" });
+    } catch (error) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

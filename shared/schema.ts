@@ -161,3 +161,27 @@ export const insertArtisanSubscriptionSchema = z.object({
 });
 
 export type InsertArtisanSubscription = z.infer<typeof insertArtisanSubscriptionSchema>;
+
+// Advertisement types
+export interface Advertisement {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string | null;
+  linkUrl: string | null;
+  displayOrder: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const insertAdvertisementSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  imageUrl: z.string().nullable().optional(),
+  linkUrl: z.string().nullable().optional(),
+  displayOrder: z.number().default(0),
+  isActive: z.boolean().default(true),
+});
+
+export type InsertAdvertisement = z.infer<typeof insertAdvertisementSchema>;
