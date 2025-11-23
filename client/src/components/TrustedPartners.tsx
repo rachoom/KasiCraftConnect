@@ -108,10 +108,33 @@ export default function TrustedPartners() {
 
             {/* Overlay with text for image ads */}
             {currentAd.imageUrl && (
-              <div className="absolute inset-0 bg-black/40 flex items-end p-8">
+              <div className="absolute inset-0 bg-black/50 flex items-end p-8">
                 <div className="w-full">
                   <h3 className="text-2xl font-bold text-gold mb-2">{currentAd.title}</h3>
                   <p className="text-white/90 mb-4">{currentAd.description}</p>
+                  
+                  {/* Contact Information */}
+                  <div className="flex flex-wrap gap-4 mb-4">
+                    {currentAd.contactPhone && (
+                      <a
+                        href={`tel:${currentAd.contactPhone}`}
+                        className="flex items-center gap-2 text-gold hover:text-gold-dark transition-colors"
+                        data-testid={`link-phone-${currentAd.id}`}
+                      >
+                        <span className="font-semibold">{currentAd.contactPhone}</span>
+                      </a>
+                    )}
+                    {currentAd.contactEmail && (
+                      <a
+                        href={`mailto:${currentAd.contactEmail}`}
+                        className="flex items-center gap-2 text-gold hover:text-gold-dark transition-colors"
+                        data-testid={`link-email-${currentAd.id}`}
+                      >
+                        <span className="font-semibold">{currentAd.contactEmail}</span>
+                      </a>
+                    )}
+                  </div>
+
                   {currentAd.linkUrl && (
                     <a
                       href={currentAd.linkUrl}
@@ -121,6 +144,50 @@ export default function TrustedPartners() {
                       data-testid={`link-partner-${currentAd.id}`}
                     >
                       Learn More
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Display contact info for non-image ads */}
+            {!currentAd.imageUrl && (
+              <div className="absolute inset-0 bg-gradient-to-br from-gold/10 to-gold-dark/10 flex flex-col items-center justify-center p-8">
+                <div className="text-center max-w-lg">
+                  <h3 className="text-2xl font-bold text-gold mb-3">{currentAd.title}</h3>
+                  <p className="text-white/80 mb-6">{currentAd.description}</p>
+                  
+                  {/* Contact Information */}
+                  <div className="flex flex-col gap-3 mb-6">
+                    {currentAd.contactPhone && (
+                      <a
+                        href={`tel:${currentAd.contactPhone}`}
+                        className="text-gold hover:text-gold-dark font-semibold transition-colors"
+                        data-testid={`link-phone-${currentAd.id}`}
+                      >
+                        📞 {currentAd.contactPhone}
+                      </a>
+                    )}
+                    {currentAd.contactEmail && (
+                      <a
+                        href={`mailto:${currentAd.contactEmail}`}
+                        className="text-gold hover:text-gold-dark font-semibold transition-colors"
+                        data-testid={`link-email-${currentAd.id}`}
+                      >
+                        ✉️ {currentAd.contactEmail}
+                      </a>
+                    )}
+                  </div>
+
+                  {currentAd.linkUrl && (
+                    <a
+                      href={currentAd.linkUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-gold hover:bg-gold-dark text-black font-semibold px-6 py-2 rounded transition-colors"
+                      data-testid={`link-partner-${currentAd.id}`}
+                    >
+                      Visit Website
                     </a>
                   )}
                 </div>

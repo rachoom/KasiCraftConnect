@@ -34,6 +34,8 @@ export default function AdminAds() {
       description: "",
       imageUrl: null,
       linkUrl: null,
+      contactPhone: null,
+      contactEmail: null,
       displayOrder: 0,
       isActive: true,
     },
@@ -65,11 +67,18 @@ export default function AdminAds() {
       if (!response.ok) throw new Error("Failed to create ad");
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (newAd: Advertisement) => {
       toast({ title: "Success", description: "Advertisement created" });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/advertisements"] });
-      setIsDialogOpen(false);
-      form.reset();
+      
+      // If there's a file to upload, set as editing and keep dialog open
+      if (selectedFile) {
+        setEditingAd(newAd);
+        // Don't close the dialog, let user upload image
+      } else {
+        setIsDialogOpen(false);
+        form.reset();
+      }
       setSelectedFile(null);
     },
     onError: (error: any) => {
@@ -154,8 +163,8 @@ export default function AdminAds() {
     }
   };
 
-  const handleUploadImage = async () => {
-    if (!selectedFile || !editingAd) return;
+  const handleUploadImage = async (adId: number) => {
+    if (!selectedFile) return;
 
     setUploadingImage(true);
     setUploadError(null);
@@ -164,7 +173,7 @@ export default function AdminAds() {
 
     try {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch(`/api/admin/advertisement/${editingAd.id}/image`, {
+      const response = await fetch(`/api/admin/advertisement/${adId}/image`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
@@ -217,7 +226,7 @@ export default function AdminAds() {
     setIsDialogOpen(true);
   };
 
-  const onSubmit = (data: InsertAdvertisement) => {
+  const onSubmit = async (data: InsertAdvertisement) => {
     if (editingAd) {
       updateMutation.mutate({ id: editingAd.id, data });
     } else {
@@ -454,10 +463,10 @@ export default function AdminAds() {
                         <Upload className="w-4 h-4 mr-2" />
                         Choose Image
                       </Button>
-                      {selectedFile && (
+                      {selectedFile && editingAd && (
                         <Button
                           type="button"
-                          onClick={handleUploadImage}
+                          onClick={() => handleUploadImage(editingAd.id)}
                           className="bg-gold hover:bg-gold-dark text-black"
                           disabled={uploadingImage}
                         >
@@ -521,7 +530,7 @@ export default function AdminAds() {
                 name="linkUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-white">Link URL (optional)</FormLabel>
+                    <FormLabel className="text-white">Business Website (optional)</FormLabel>
                     <FormControl>
                       <Input {...field} value={field.value || ""} placeholder="https://..." className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-link" />
                     </FormControl>
@@ -533,18 +542,12 @@ export default function AdminAds() {
               <div className="grid md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
-                  name="displayOrder"
+                  name="contactPhone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Display Order</FormLabel>
+                      <FormLabel className="text-white">Contact Phone (optional)</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
-                          type="number" 
-                          className="bg-zinc-800 border-green/30 text-white" 
-                          data-testid="input-ad-order"
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                        />
+                        <Input {...field} value={field.value || ""} placeholder="069 702 6088" className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-phone" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -553,23 +556,57 @@ export default function AdminAds() {
 
                 <FormField
                   control={form.control}
-                  name="isActive"
+                  name="contactEmail"
                   render={({ field }) => (
-                    <FormItem className="flex items-end gap-2">
+                    <FormItem>
+                      <FormLabel className="text-white">Contact Email (optional)</FormLabel>
                       <FormControl>
-                        <input 
-                          type="checkbox" 
-                          checked={field.value}
-                          onChange={field.onChange}
-                          className="w-4 h-4" 
-                          data-testid="checkbox-ad-active" 
-                        />
+                        <Input {...field} type="email" value={field.value || ""} placeholder="business@example.com" className="bg-zinc-800 border-green/30 text-white" data-testid="input-ad-email" />
                       </FormControl>
-                      <FormLabel className="text-white mb-0">Active</FormLabel>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
+
+              <FormField
+                control={form.control}
+                name="displayOrder"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Display Order</FormLabel>
+                    <FormControl>
+                      <Input 
+                        {...field} 
+                        type="number" 
+                        className="bg-zinc-800 border-green/30 text-white" 
+                        data-testid="input-ad-order"
+                        onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isActive"
+                render={({ field }) => (
+                  <FormItem className="flex items-center gap-2">
+                    <FormControl>
+                      <input 
+                        type="checkbox" 
+                        checked={field.value}
+                        onChange={field.onChange}
+                        className="w-4 h-4" 
+                        data-testid="checkbox-ad-active" 
+                      />
+                    </FormControl>
+                    <FormLabel className="text-white mb-0">Active</FormLabel>
+                  </FormItem>
+                )}
+              />
 
               <div className="flex justify-end space-x-3 pt-4 border-t border-green/30">
                 <Button

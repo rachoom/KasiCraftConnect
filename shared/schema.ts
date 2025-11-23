@@ -169,6 +169,8 @@ export interface Advertisement {
   description: string;
   imageUrl: string | null;
   linkUrl: string | null;
+  contactPhone: string | null;
+  contactEmail: string | null;
   displayOrder: number;
   isActive: boolean;
   createdAt: string;
@@ -180,6 +182,8 @@ export const insertAdvertisementSchema = z.object({
   description: z.string().min(1, "Description is required"),
   imageUrl: z.string().nullable().optional(),
   linkUrl: z.string().nullable().optional(),
+  contactPhone: z.string().nullable().optional(),
+  contactEmail: z.string().email().nullable().optional(),
   displayOrder: z.number().default(0),
   isActive: z.boolean().default(true),
 });
