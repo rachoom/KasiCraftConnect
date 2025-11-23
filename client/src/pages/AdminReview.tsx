@@ -45,14 +45,14 @@ export default function AdminReview() {
     });
   }, []);
 
-  const { data: pendingArtisans, isLoading } = useQuery<Artisan[]>({
-    queryKey: ["/api/admin/pending-artisans"],
+  const { data: allArtisans, isLoading } = useQuery<Artisan[]>({
+    queryKey: ["/api/admin/artisans"],
     queryFn: async () => {
       const token = localStorage.getItem("adminToken");
-      const response = await fetch("/api/admin/pending-artisans", {
+      const response = await fetch("/api/admin/artisans", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (!response.ok) throw new Error("Failed to fetch pending artisans");
+      if (!response.ok) throw new Error("Failed to fetch artisans");
       return response.json();
     },
   });
@@ -76,7 +76,7 @@ export default function AdminReview() {
         title: "Success",
         description: "Artisan approved successfully",
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-artisans"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
       setSelectedArtisan(null);
     },
     onError: (error) => {
@@ -107,7 +107,7 @@ export default function AdminReview() {
         title: "Success",
         description: "Artisan rejected successfully",
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/pending-artisans"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
       setSelectedArtisan(null);
       setRejectionReason("");
     },
@@ -157,8 +157,8 @@ export default function AdminReview() {
   };
 
   const filteredArtisans = useMemo(() => {
-    if (!pendingArtisans) return [];
-    return pendingArtisans.filter((artisan) => {
+    if (!allArtisans) return [];
+    return allArtisans.filter((artisan) => {
       const matchesSearch = 
         searchTerm === "" ||
         `${artisan.firstName} ${artisan.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -168,7 +168,7 @@ export default function AdminReview() {
       
       return matchesSearch;
     });
-  }, [pendingArtisans, searchTerm]);
+  }, [allArtisans, searchTerm]);
 
   if (isLoading) {
     return (
@@ -196,40 +196,45 @@ export default function AdminReview() {
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-gold">Admin Review Panel</h1>
-                <p className="text-white/80">Review and approve pending artisan applications</p>
+                <h1 className="text-3xl font-bold text-gold">Artisan Review & Management</h1>
+                <p className="text-white/80">Review, approve, reject, and manage artisan applications and profiles</p>
               </div>
               <Link href="/admin/manage">
                 <Button className="bg-gold hover:bg-gold-dark text-black" data-testid="button-manage-artisans">
                   <Users className="w-4 h-4 mr-2" />
-                  Manage All Artisans
+                  Go to Manage Artisans
                 </Button>
               </Link>
             </div>
             
             {/* Admin Name Input - REQUIRED for approvals */}
-            <Card className="bg-gradient-to-r from-gold/10 to-gold-dark/10 border-2 border-gold/50 mb-6">
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="bg-gold/20 rounded-full p-2">
-                    <CheckCircle className="w-5 h-5 text-gold" />
+            <Card className="bg-gradient-to-r from-gold/10 to-gold-dark/10 border-2 border-gold mb-8">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-gold/20 rounded-full p-3">
+                    <CheckCircle className="w-6 h-6 text-gold" />
                   </div>
                   <div className="flex-1">
-                    <Label htmlFor="adminName" className="text-white font-semibold text-base mb-1 block">
-                      Your Admin Name (Required for Approvals)
+                    <Label htmlFor="adminName" className="text-white font-bold text-base mb-2 block">
+                      Your Admin Name
                     </Label>
                     <Input
                       id="adminName"
                       type="text"
-                      placeholder="Enter your name to enable approve/reject buttons"
+                      placeholder="Enter your name to enable approve/reject functions"
                       value={adminName}
                       onChange={(e) => setAdminName(e.target.value)}
-                      className="mt-2 bg-zinc-900 border-green/30 text-white"
+                      className="bg-zinc-800 border-2 border-green/50 text-white placeholder:text-white/40"
                       data-testid="input-admin-name"
                     />
                     {!adminName.trim() && (
-                      <p className="text-white/70 text-sm mt-2">
-                        ⚠️ Enter your name above to enable the approve and reject buttons
+                      <p className="text-gold text-sm mt-3 font-semibold">
+                        ⚠️ Enter your name above to enable approval and rejection functions
+                      </p>
+                    )}
+                    {adminName.trim() && (
+                      <p className="text-green text-sm mt-3 font-semibold">
+                        ✓ You're all set! You can now approve or reject artisans.
                       </p>
                     )}
                   </div>
@@ -238,25 +243,27 @@ export default function AdminReview() {
             </Card>
 
             {/* Search Box */}
-            <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" />
-              <Input
-                placeholder="Search artisans by name, email, location, or service..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-zinc-900 border-green/30 text-white"
-                data-testid="input-search-artisans"
-              />
+            <div className="mb-6">
+              <Label className="text-white font-bold mb-2 block">Search Artisans</Label>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold w-5 h-5" />
+                <Input
+                  placeholder="Search by name, email, location, or service..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-12 bg-zinc-800 border-2 border-green/50 text-white placeholder:text-white/40"
+                  data-testid="input-search-artisans"
+                />
+              </div>
+              {allArtisans && allArtisans.length > 0 && (
+                <p className="text-white/70 text-sm mt-3">
+                  {searchTerm ? `Found ${filteredArtisans.length} of ${allArtisans.length} artisans` : `Total artisans: ${allArtisans.length}`}
+                </p>
+              )}
             </div>
-            
-            {searchTerm && (
-              <p className="text-white/60 mt-3">
-                Showing {filteredArtisans.length} of {pendingArtisans?.length || 0} pending applications
-              </p>
-            )}
           </div>
 
-          {!pendingArtisans || pendingArtisans.length === 0 ? (
+          {!allArtisans || allArtisans.length === 0 ? (
             <div className="text-center py-12">
               <CheckCircle className="mx-auto h-16 w-16 text-green mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">No Pending Applications</h3>
@@ -266,34 +273,44 @@ export default function AdminReview() {
             <div className="text-center py-12">
               <Search className="mx-auto h-16 w-16 text-white/40 mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">No Results Found</h3>
-              <p className="text-white/60">No pending artisans match your search "{searchTerm}"</p>
+              <p className="text-white/60">No artisans match your search "{searchTerm}"</p>
             </div>
           ) : (
             <div className="grid gap-6">
-              {filteredArtisans.map((artisan) => (
-                <Card key={artisan.id} className="bg-zinc-900 border-2 border-green/30 hover:border-gold transition-all duration-200">
+              {filteredArtisans.map((artisan) => {
+                const isPending = artisan.approvalStatus === "pending";
+                const isApproved = artisan.approvalStatus === "approved";
+                const isRejected = artisan.approvalStatus === "rejected";
+                
+                return (
+                <Card key={artisan.id} className="bg-zinc-900 border-2 border-green/50 hover:border-gold transition-all duration-200 hover:shadow-lg">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle className="text-xl text-white">
+                        <CardTitle className="text-xl text-gold">
                           {artisan.firstName} {artisan.lastName}
                         </CardTitle>
-                        <CardDescription className="text-white/60">
-                          <div className="flex items-center gap-4 mt-2">
+                        <CardDescription className="text-white/70">
+                          <div className="flex flex-wrap items-center gap-4 mt-2">
                             <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
+                              <MapPin className="w-4 h-4 text-gold" />
                               {artisan.location}
                             </span>
                             <span className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
+                              <Clock className="w-4 h-4 text-gold" />
                               {artisan.yearsExperience} years experience
                             </span>
                           </div>
                         </CardDescription>
                       </div>
-                      <Badge variant="outline" className="border-orange-400 text-orange-600">
-                        Pending Review
-                      </Badge>
+                      <div className="flex flex-col gap-2 items-end">
+                        {isPending && <Badge className="bg-orange-500/20 text-orange-400 border border-orange-400">Pending Review</Badge>}
+                        {isApproved && <Badge className="bg-green/20 text-green border border-green">Approved</Badge>}
+                        {isRejected && <Badge className="bg-red-500/20 text-red-400 border border-red-400">Rejected</Badge>}
+                        {artisan.subscriptionTier && (
+                          <Badge className="bg-gold/20 text-gold border border-gold/50">{artisan.subscriptionTier}</Badge>
+                        )}
+                      </div>
                     </div>
                   </CardHeader>
                   
@@ -351,11 +368,15 @@ export default function AdminReview() {
                     </div>
                   </CardContent>
                   
-                  <CardFooter className="flex gap-4">
+                  <CardFooter className="flex gap-3 border-t border-green/30 pt-4">
                     <Button
                       onClick={() => handleApprove(artisan)}
                       disabled={approveMutation.isPending || !adminName.trim()}
-                      className="bg-green hover:bg-green-dark text-white flex items-center gap-2"
+                      className={`flex-1 flex items-center justify-center gap-2 font-bold ${
+                        adminName.trim()
+                          ? "bg-green hover:bg-green-dark text-white cursor-pointer"
+                          : "bg-green/30 text-white/50 cursor-not-allowed"
+                      }`}
                       data-testid={`button-approve-${artisan.id}`}
                     >
                       <CheckCircle className="w-4 h-4" />
@@ -365,8 +386,11 @@ export default function AdminReview() {
                     <Button
                       onClick={() => setSelectedArtisan(artisan)}
                       disabled={rejectMutation.isPending || !adminName.trim()}
-                      variant="destructive"
-                      className="flex items-center gap-2"
+                      className={`flex-1 flex items-center justify-center gap-2 font-bold ${
+                        adminName.trim()
+                          ? "bg-red-600 hover:bg-red-700 text-white cursor-pointer"
+                          : "bg-red-600/30 text-white/50 cursor-not-allowed"
+                      }`}
                       data-testid={`button-reject-${artisan.id}`}
                     >
                       <XCircle className="w-4 h-4" />
@@ -374,7 +398,8 @@ export default function AdminReview() {
                     </Button>
                   </CardFooter>
                 </Card>
-              ))}
+              );
+              })}
             </div>
           )}
         </div>
