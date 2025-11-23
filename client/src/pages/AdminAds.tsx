@@ -23,6 +23,7 @@ export default function AdminAds() {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [pendingUpload, setPendingUpload] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -73,11 +74,18 @@ export default function AdminAds() {
       
       // Set the new ad as the editing ad so upload button shows
       setEditingAd(newAd);
-      form.reset();
       
-      // If no file selected, close the dialog
-      if (!selectedFile) {
-        setTimeout(() => setIsDialogOpen(false), 500);
+      // If file is pending upload, upload it now
+      if (pendingUpload && selectedFile) {
+        setPendingUpload(false);
+        // Upload will happen after state updates
+        setTimeout(() => handleUploadImage(newAd.id), 100);
+      } else {
+        // No file to upload, close the dialog
+        setTimeout(() => {
+          setIsDialogOpen(false);
+          form.reset();
+        }, 500);
       }
     },
     onError: (error: any) => {
@@ -229,7 +237,24 @@ export default function AdminAds() {
     if (editingAd) {
       updateMutation.mutate({ id: editingAd.id, data });
     } else {
+      // If we have a pending upload and no ad created yet, mark it for upload
+      if (selectedFile && !editingAd) {
+        setPendingUpload(true);
+      }
       createMutation.mutate(data);
+    }
+  };
+
+  const handleUploadClick = () => {
+    if (!selectedFile) return;
+    
+    // If we have an editing ad, upload directly
+    if (editingAd) {
+      handleUploadImage(editingAd.id);
+    } else {
+      // If no ad created yet, submit the form first, then upload will happen in onSuccess
+      setPendingUpload(true);
+      form.handleSubmit(onSubmit)();
     }
   };
 
@@ -459,21 +484,17 @@ export default function AdminAds() {
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         className="bg-zinc-800 hover:bg-zinc-700 text-white border border-green/30"
-                        disabled={uploadingImage}
+                        disabled={uploadingImage || createMutation.isPending}
                       >
                         <Upload className="w-4 h-4 mr-2" />
                         Choose Image
                       </Button>
-                      {selectedFile && editingAd && (
+                      {selectedFile && (
                         <Button
                           type="button"
-                          onClick={() => {
-                            if (editingAd) {
-                              handleUploadImage(editingAd.id);
-                            }
-                          }}
+                          onClick={handleUploadClick}
                           className="bg-gold hover:bg-gold-dark text-black"
-                          disabled={uploadingImage}
+                          disabled={uploadingImage || createMutation.isPending}
                           data-testid="button-upload-image"
                         >
                           {uploadingImage ? "Uploading..." : "Upload"}
