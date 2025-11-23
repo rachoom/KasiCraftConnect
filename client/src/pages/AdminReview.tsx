@@ -418,13 +418,34 @@ export default function AdminReview() {
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => handleReject(selectedArtisan)}
-                  disabled={rejectMutation.isPending || !rejectionReason.trim() || !adminName.trim()}
-                  variant="destructive"
-                  className="flex-1"
+                  onClick={() => {
+                    if (!rejectionReason.trim()) {
+                      toast({
+                        title: "Missing Rejection Reason",
+                        description: "Please provide a reason for rejecting this artisan",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    if (!adminName.trim()) {
+                      toast({
+                        title: "Missing Admin Name",
+                        description: "Please enter your name in the admin name field above",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    rejectMutation.mutate({ 
+                      id: selectedArtisan.id, 
+                      rejectionReason: rejectionReason.trim(), 
+                      rejectedBy: adminName 
+                    });
+                  }}
+                  disabled={rejectMutation.isPending}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold"
                   data-testid="button-confirm-rejection"
                 >
-                  Reject
+                  {rejectMutation.isPending ? "Rejecting..." : "Reject"}
                 </Button>
               </CardFooter>
             </Card>
