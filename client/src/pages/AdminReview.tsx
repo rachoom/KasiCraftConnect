@@ -123,8 +123,8 @@ export default function AdminReview() {
   const handleApprove = (artisan: Artisan) => {
     if (!adminName.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter your admin name",
+        title: "Missing Admin Name",
+        description: "Please enter your name in the admin name field above before approving",
         variant: "destructive",
       });
       return;
@@ -135,25 +135,13 @@ export default function AdminReview() {
   const handleReject = (artisan: Artisan) => {
     if (!adminName.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter your admin name",
+        title: "Missing Admin Name",
+        description: "Please enter your name in the admin name field above before rejecting",
         variant: "destructive",
       });
       return;
     }
-    if (!rejectionReason.trim()) {
-      toast({
-        title: "Error",
-        description: "Please provide a rejection reason",
-        variant: "destructive",
-      });
-      return;
-    }
-    rejectMutation.mutate({ 
-      id: artisan.id, 
-      rejectionReason: rejectionReason.trim(), 
-      rejectedBy: adminName 
-    });
+    setSelectedArtisan(artisan);
   };
 
   const filteredArtisans = useMemo(() => {
@@ -371,30 +359,22 @@ export default function AdminReview() {
                   <CardFooter className="flex gap-3 border-t border-green/30 pt-4">
                     <Button
                       onClick={() => handleApprove(artisan)}
-                      disabled={approveMutation.isPending || !adminName.trim()}
-                      className={`flex-1 flex items-center justify-center gap-2 font-bold ${
-                        adminName.trim()
-                          ? "bg-green hover:bg-green-dark text-white cursor-pointer"
-                          : "bg-green/30 text-white/50 cursor-not-allowed"
-                      }`}
+                      disabled={approveMutation.isPending}
+                      className="flex-1 flex items-center justify-center gap-2 font-bold bg-green hover:bg-green-dark text-white"
                       data-testid={`button-approve-${artisan.id}`}
                     >
                       <CheckCircle className="w-4 h-4" />
-                      Approve
+                      {approveMutation.isPending ? "Approving..." : "Approve"}
                     </Button>
                     
                     <Button
                       onClick={() => setSelectedArtisan(artisan)}
-                      disabled={rejectMutation.isPending || !adminName.trim()}
-                      className={`flex-1 flex items-center justify-center gap-2 font-bold ${
-                        adminName.trim()
-                          ? "bg-red-600 hover:bg-red-700 text-white cursor-pointer"
-                          : "bg-red-600/30 text-white/50 cursor-not-allowed"
-                      }`}
+                      disabled={rejectMutation.isPending}
+                      className="flex-1 flex items-center justify-center gap-2 font-bold bg-red-600 hover:bg-red-700 text-white"
                       data-testid={`button-reject-${artisan.id}`}
                     >
                       <XCircle className="w-4 h-4" />
-                      Reject
+                      {rejectMutation.isPending ? "Rejecting..." : "Reject"}
                     </Button>
                   </CardFooter>
                 </Card>
