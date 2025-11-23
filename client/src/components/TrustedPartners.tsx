@@ -24,11 +24,14 @@ export default function TrustedPartners() {
     if (activeAds.length === 0 || autoplayPaused) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % activeAds.length);
+      setCurrentIndex((prev) => {
+        const nextIndex = (prev + 1) % activeAds.length;
+        return nextIndex;
+      });
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [activeAds.length, autoplayPaused]);
+  }, [activeAds.length, autoplayPaused, activeAds]);
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + activeAds.length) % activeAds.length);

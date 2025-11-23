@@ -71,15 +71,14 @@ export default function AdminAds() {
       toast({ title: "Success", description: "Advertisement created" });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/advertisements"] });
       
-      // If there's a file to upload, set as editing and keep dialog open
-      if (selectedFile) {
-        setEditingAd(newAd);
-        // Don't close the dialog, let user upload image
-      } else {
-        setIsDialogOpen(false);
-        form.reset();
+      // Set the new ad as the editing ad so upload button shows
+      setEditingAd(newAd);
+      form.reset();
+      
+      // If no file selected, close the dialog
+      if (!selectedFile) {
+        setTimeout(() => setIsDialogOpen(false), 500);
       }
-      setSelectedFile(null);
     },
     onError: (error: any) => {
       toast({
@@ -408,10 +407,12 @@ export default function AdminAds() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={(open) => {
+        setIsDialogOpen(open);
         if (!open) {
           setEditingAd(null);
           setUploadError(null);
           setSelectedFile(null);
+          setCarouselIndex(0);
         }
       }}>
         <DialogContent className="bg-zinc-900 border-green/30 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -466,9 +467,14 @@ export default function AdminAds() {
                       {selectedFile && editingAd && (
                         <Button
                           type="button"
-                          onClick={() => handleUploadImage(editingAd.id)}
+                          onClick={() => {
+                            if (editingAd) {
+                              handleUploadImage(editingAd.id);
+                            }
+                          }}
                           className="bg-gold hover:bg-gold-dark text-black"
                           disabled={uploadingImage}
+                          data-testid="button-upload-image"
                         >
                           {uploadingImage ? "Uploading..." : "Upload"}
                         </Button>
