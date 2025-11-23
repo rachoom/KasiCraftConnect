@@ -517,13 +517,13 @@ export default function AdminManagement() {
                   value={formData.subscriptionTier || editingArtisan.subscriptionTier}
                   onValueChange={(value) => setFormData(prev => ({ ...prev, subscriptionTier: value as "unverified" | "verified" | "premium" }))}
                 >
-                  <SelectTrigger className="bg-zinc-800 border-green/30 text-white" data-testid="select-subscription-tier">
+                  <SelectTrigger className="bg-zinc-800 border-2 border-green/50 text-white hover:border-gold" data-testid="select-subscription-tier">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="unverified">Unverified (Free)</SelectItem>
-                    <SelectItem value="verified">Verified (R100/month)</SelectItem>
-                    <SelectItem value="premium">Premium (R299/month)</SelectItem>
+                  <SelectContent className="bg-zinc-900 border-2 border-green/50">
+                    <SelectItem value="unverified" className="text-white">Unverified (Free)</SelectItem>
+                    <SelectItem value="verified" className="text-white">Verified (R100/month)</SelectItem>
+                    <SelectItem value="premium" className="text-white">Premium (R299/month)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
