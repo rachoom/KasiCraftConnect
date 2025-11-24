@@ -84,10 +84,10 @@ export default function TrustedPartners() {
 
         {/* Carousel Container */}
         <motion.div 
-          className="relative bg-zinc-900 border-2 border-green/30 rounded-lg overflow-hidden h-96 group"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          className="relative bg-zinc-900 border-2 border-green/50 rounded-2xl overflow-hidden h-96 group card-modern glass"
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true }}
           data-testid="card-partners-carousel"
         >
@@ -201,7 +201,7 @@ export default function TrustedPartners() {
           {/* Navigation Buttons */}
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-gold/80 hover:bg-gold text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-gold/80 hover:bg-gold text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 btn-modern hover:scale-110"
             aria-label="Previous partner"
             data-testid="button-carousel-prev"
           >
@@ -210,7 +210,7 @@ export default function TrustedPartners() {
 
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-gold/80 hover:bg-gold text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-gold/80 hover:bg-gold text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 btn-modern hover:scale-110"
             aria-label="Next partner"
             data-testid="button-carousel-next"
           >
@@ -218,20 +218,22 @@ export default function TrustedPartners() {
           </button>
 
           {/* Dot Indicators */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10 glass rounded-full px-4 py-2">
             {activeAds.map((_, index) => (
-              <button
+              <motion.button
                 key={index}
                 onClick={() => {
                   setCurrentIndex(index);
                   setAutoplayPaused(true);
                   setTimeout(() => setAutoplayPaused(false), 8000);
                 }}
-                className={`w-2 h-2 rounded-full transition-all ${
+                className={`rounded-full transition-all cursor-pointer ${
                   index === currentIndex
-                    ? "bg-gold w-6"
-                    : "bg-white/40 hover:bg-white/60"
+                    ? "bg-gold w-6 h-2.5 shadow-lg shadow-gold/50"
+                    : "bg-white/40 hover:bg-white/60 w-2 h-2"
                 }`}
+                whileHover={{ scale: 1.3 }}
+                whileTap={{ scale: 0.9 }}
                 aria-label={`Go to partner ${index + 1}`}
                 data-testid={`button-carousel-dot-${index}`}
               />

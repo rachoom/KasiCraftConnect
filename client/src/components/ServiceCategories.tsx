@@ -136,7 +136,7 @@ export default function ServiceCategories() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="relative bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 cosmic-selection border-2 border-green/30 hover:border-green">
+              <div className="relative bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 cosmic-selection border-2 border-green/30 hover:border-green card-modern hover-lift">
                 <div className="absolute inset-0">
                   <img 
                     src={service.image}
