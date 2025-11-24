@@ -165,6 +165,87 @@ Skills Connect Admin Team
       return false;
     }
   }
+
+  // Send contact form notification to admin
+  async sendContactFormNotification(data: {
+    name: string;
+    email: string;
+    phone: string;
+    subject: string;
+    message: string;
+  }): Promise<boolean> {
+    if (!process.env.SENDGRID_API_KEY) {
+      console.log('SendGrid API key not configured - skipping contact form notification');
+      return false;
+    }
+
+    try {
+      const emailContent = `
+New Contact Form Submission - Skills Connect
+
+Someone has contacted you through the Skills Connect website:
+
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone}
+Subject: ${data.subject}
+
+Message:
+${data.message}
+
+---
+Skills Connect Contact System
+`;
+
+      await this.mailService.send({
+        to: 'admin@skillsconnect.co.za',
+        from: 'noreply@skillsconnect.co.za',
+        replyTo: data.email,
+        subject: `Contact Form: ${data.subject}`,
+        text: emailContent,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #B8860B;">New Contact Form Submission</h2>
+            
+            <p>Someone has contacted you through the Skills Connect website:</p>
+            
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+              <tr style="background-color: #f5f5f5;">
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Name:</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${data.name}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Email:</td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:${data.email}">${data.email}</a></td>
+              </tr>
+              <tr style="background-color: #f5f5f5;">
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Phone:</td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><a href="tel:${data.phone}">${data.phone}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Subject:</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${data.subject}</td>
+              </tr>
+            </table>
+            
+            <div style="background-color: #f9f9f9; border-left: 4px solid #B8860B; padding: 15px; margin: 20px 0;">
+              <h3 style="margin-top: 0;">Message:</h3>
+              <p style="white-space: pre-wrap; line-height: 1.6;">${data.message}</p>
+            </div>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+            <p style="color: #666; font-size: 12px;">Skills Connect Contact System</p>
+          </div>
+        `,
+      });
+
+      console.log(`Contact form notification sent successfully from: ${data.name} (${data.email})`);
+      return true;
+    } catch (error) {
+      console.error('Error sending contact form notification:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();
