@@ -189,3 +189,25 @@ export const insertAdvertisementSchema = z.object({
 });
 
 export type InsertAdvertisement = z.infer<typeof insertAdvertisementSchema>;
+
+// Contact Message types
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
+export const insertContactMessageSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(20, "Message must be at least 20 characters"),
+});
+
+export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
