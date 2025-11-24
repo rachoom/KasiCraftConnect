@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { User, InsertUser, Artisan, InsertArtisan, SearchRequest, InsertSearchRequest, ArtisanSubscription, InsertArtisanSubscription, Advertisement, InsertAdvertisement } from "@shared/schema";
+import type { User, InsertUser, Artisan, InsertArtisan, SearchRequest, InsertSearchRequest, ArtisanSubscription, InsertArtisanSubscription, Advertisement, InsertAdvertisement, ContactMessage, InsertContactMessage } from "@shared/schema";
 
 // Helper function to convert camelCase to snake_case for database
 function toSnakeCase(obj: any): any {
@@ -75,6 +75,10 @@ export interface IStorage {
   createAdvertisement(ad: InsertAdvertisement): Promise<Advertisement>;
   updateAdvertisement(id: number, updates: Partial<Advertisement>): Promise<Advertisement | undefined>;
   deleteAdvertisement(id: number): Promise<boolean>;
+
+  // Contact Message methods
+  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+  getContactMessages(): Promise<ContactMessage[]>;
 }
 
 export class SupabaseStorage implements IStorage {
@@ -629,6 +633,40 @@ export class SupabaseStorage implements IStorage {
       return false;
     }
     return true;
+  }
+
+  // Contact Message methods
+  async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    const snakeCaseData = toSnakeCase({
+      ...insertMessage,
+      is_read: false,
+      created_at: new Date().toISOString()
+    });
+    
+    const { data, error } = await supabase
+      .from('contact_messages')
+      .insert(snakeCaseData)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating contact message:', error);
+      throw new Error('Failed to create contact message');
+    }
+    return toCamelCase(data) as ContactMessage;
+  }
+
+  async getContactMessages(): Promise<ContactMessage[]> {
+    const { data, error } = await supabase
+      .from('contact_messages')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Error fetching contact messages:', error);
+      return [];
+    }
+    return (data || []).map(item => toCamelCase(item)) as ContactMessage[];
   }
 }
 
