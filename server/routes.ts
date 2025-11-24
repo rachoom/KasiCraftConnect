@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertArtisanSchema, insertSearchRequestSchema } from "@shared/schema";
+import { insertArtisanSchema, insertSearchRequestSchema, insertContactMessageSchema } from "@shared/schema";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { emailService } from "./emailService";
 import { artisanAuthService } from "./artisanAuth";
@@ -1008,6 +1008,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Error uploading advertisement image:", error);
       res.status(500).json({ message: error?.message || "Failed to upload image" });
+    }
+  });
+
+  // Contact Message routes
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const validatedData = insertContactMessageSchema.parse(req.body);
+      const message = await storage.createContactMessage(validatedData);
+      
+      // Send email notification to admin
+      try {
+        await emailService.sendContactFormNotification({
+          name: validatedData.name,
+          email: validatedData.email,
+          phone: validatedData.phone,
+          subject: validatedData.subject,
+          message: validatedData.message,
+        });
+      } catch (emailError) {
+        console.error("Error sending contact notification email:", emailError);
+        // Don't fail the response if email fails
+      }
+      
+      res.status(201).json(message);
+    } catch (error: any) {
+      console.error("Contact form error:", error);
+      res.status(400).json({ message: error.message || "Failed to send message" });
+    }
+  });
+
+  app.get("/api/admin/contact-messages", verifyAdminToken, async (req, res) => {
+    try {
+      const messages = await storage.getContactMessages();
+      res.json(messages);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch contact messages" });
     }
   });
 
