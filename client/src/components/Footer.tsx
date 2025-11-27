@@ -9,13 +9,14 @@ export default function Footer() {
         <div className="grid md:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand Section */}
           <div className="md:col-span-1">
-            <div className="mb-6">
+            <div className="pb-6 border-b border-gold/30 md:border-b-0 md:pr-4">
+              <div className="h-1 bg-gradient-to-r from-gold via-green to-gold rounded-full shimmer-line mb-4"></div>
               <h5 className="text-2xl lg:text-3xl font-bold text-gold mb-2">
                 SKILLS CONNECT
               </h5>
               <p className="text-green text-sm font-semibold">Far East Rand</p>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed mb-6">
+            <p className="text-white/70 text-sm leading-relaxed mb-6 mt-6">
               Connecting you to reliable, vetted professionals across Far East Rand. Your safety and satisfaction are our priority.
             </p>
             <div className="flex items-center gap-3 bg-gradient-to-r from-gold/10 to-green/10 border-2 border-gold/30 rounded-lg px-3 py-2">
@@ -25,7 +26,7 @@ export default function Footer() {
           </div>
 
           {/* Services Section */}
-          <div>
+          <div className="border-b md:border-b-0 md:border-l md:border-l-gold/30 md:pl-4 pb-6 md:pb-0">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-1 h-6 bg-gradient-to-b from-gold to-green rounded-full"></div>
               <h6 className="font-bold text-lg text-gold">Services</h6>
@@ -70,7 +71,7 @@ export default function Footer() {
           </div>
 
           {/* Coverage Area Section */}
-          <div>
+          <div className="border-b md:border-b-0 md:border-l md:border-l-gold/30 md:pl-4 pb-6 md:pb-0">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-1 h-6 bg-gradient-to-b from-gold to-green rounded-full"></div>
               <h6 className="font-bold text-lg text-gold">Coverage Area</h6>
@@ -86,7 +87,7 @@ export default function Footer() {
           </div>
 
           {/* Contact Section */}
-          <div>
+          <div className="border-b md:border-b-0 md:border-l md:border-l-gold/30 md:pl-4 pb-6 md:pb-0">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-1 h-6 bg-gradient-to-b from-gold to-green rounded-full"></div>
               <h6 className="font-bold text-lg text-gold">Get in Touch</h6>
@@ -114,7 +115,7 @@ export default function Footer() {
           </div>
 
           {/* Social Media Section */}
-          <div>
+          <div className="border-b md:border-b-0 md:border-l md:border-l-gold/30 md:pl-4 pb-6 md:pb-0">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-1 h-6 bg-gradient-to-b from-gold to-green rounded-full"></div>
               <h6 className="font-bold text-lg text-gold">Connect</h6>
@@ -141,7 +142,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-green/30 my-8"></div>
+        <div className="h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent rounded-full shimmer-line my-8"></div>
 
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">

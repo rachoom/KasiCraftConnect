@@ -253,6 +253,38 @@
     }
   }
 
+  @keyframes shimmerGold {
+    0% {
+      filter: drop-shadow(0 0 2px rgba(243, 193, 43, 0.3));
+    }
+    50% {
+      filter: drop-shadow(0 0 15px rgba(243, 193, 43, 0.8)) drop-shadow(0 0 25px rgba(218, 165, 32, 0.6));
+    }
+    100% {
+      filter: drop-shadow(0 0 2px rgba(243, 193, 43, 0.3));
+    }
+  }
+
+  .shimmer-gold {
+    animation: shimmerGold 2.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmerLine {
+    0% {
+      background: linear-gradient(90deg, transparent, transparent);
+    }
+    50% {
+      background: linear-gradient(90deg, transparent, rgba(243, 193, 43, 0.8), transparent);
+    }
+    100% {
+      background: linear-gradient(90deg, transparent, transparent);
+    }
+  }
+
+  .shimmer-line {
+    animation: shimmerLine 2s ease-in-out infinite;
+  }
+
   @keyframes pulseGlow {
     0%, 100% {
       box-shadow: 0 0 10px rgba(243, 193, 43, 0.3), 0 0 20px rgba(26, 77, 46, 0.2);
