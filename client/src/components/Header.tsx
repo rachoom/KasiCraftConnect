@@ -17,7 +17,7 @@ export default function Header() {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-32 sm:h-40 md:h-48 lg:h-52">
+        <div className="flex justify-between items-center h-36 sm:h-48 md:h-56 lg:h-60">
           {/* Logo and Brand Name */}
           <motion.div 
             className="flex items-center"
@@ -29,7 +29,7 @@ export default function Header() {
               <img 
                 src={brandLogoUrl} 
                 alt="SKILLS CONNECT" 
-                className="h-32 sm:h-40 md:h-48 lg:h-52 w-auto object-contain flex-shrink-0 shimmer-gold"
+                className="h-36 sm:h-48 md:h-56 lg:h-60 w-auto object-contain flex-shrink-0 shimmer-gold"
               />
               <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gold font-light whitespace-nowrap self-center text-glow-pulse">Far East Rand</span>
             </Link>
