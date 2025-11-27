@@ -91,15 +91,11 @@ const tiers = [
 ];
 
 const locations = [
-  "Johannesburg, Gauteng", "Cape Town, Western Cape", "Durban, KwaZulu-Natal", "Pretoria, Gauteng",
-  "Sandton, Johannesburg", "Rosebank, Johannesburg", "Soweto, Johannesburg", "Alexandra, Johannesburg",
-  "Melville, Johannesburg", "Randburg, Johannesburg", "Midrand, Johannesburg", "Fourways, Johannesburg",
-  "Roodepoort, Johannesburg", "Germiston, Johannesburg", "Benoni, Johannesburg", "Edenvale, Johannesburg",
-  "Kempton Park, Johannesburg", "Boksburg, Johannesburg", "Johannesburg CBD, Johannesburg",
-  "Springs, Ekurhuleni", "Alberton, Ekurhuleni", "Benoni, Ekurhuleni", "Daveyton, Ekurhuleni",
-  "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", "Edenvale, Ekurhuleni",
-  "Brakpan, Ekurhuleni", "Nigel, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni",
-  "Thokoza, Ekurhuleni", "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
+  "Brakpan, Ekurhuleni", "Benoni, Ekurhuleni", "Springs, Ekurhuleni", "Nigel, Ekurhuleni", 
+  "Daveyton, Ekurhuleni", "Kwa Thema, Ekurhuleni", "Tsakane, Ekurhuleni",
+  "Alberton, Ekurhuleni", "Germiston, Ekurhuleni", "Boksburg, Ekurhuleni", "Kempton Park, Ekurhuleni", 
+  "Edenvale, Ekurhuleni", "Tembisa, Ekurhuleni", "Duduza, Ekurhuleni", "Thokoza, Ekurhuleni", 
+  "Katlehong, Ekurhuleni", "Vosloorus, Ekurhuleni"
 ];
 
 export default function ServiceLanding() {
