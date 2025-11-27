@@ -306,11 +306,11 @@ export default function ArtisanRegistration() {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* Error Message Display */}
                 {errorMessage && (
-                  <Alert className="border-red-200 bg-red-50">
-                    <AlertCircle className="h-4 w-4 text-red-600" />
-                    <AlertDescription className="text-red-800 font-medium" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
-                      <strong className="font-semibold">Registration Failed:</strong>
-                      <div className="mt-1 text-sm leading-relaxed">
+                  <Alert className="border-2 border-green bg-gradient-to-r from-green/30 to-green-dark/20 rounded-lg">
+                    <AlertCircle className="h-5 w-5 text-white font-bold" />
+                    <AlertDescription className="text-white font-semibold ml-2" style={{fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"}}>
+                      <strong className="font-bold block mb-2 text-lg">⚠️ Registration Error:</strong>
+                      <div className="mt-2 text-sm leading-relaxed bg-black/30 border-l-4 border-gold p-3 rounded ml-2">
                         {errorMessage}
                       </div>
                     </AlertDescription>
