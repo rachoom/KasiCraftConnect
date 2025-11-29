@@ -74,6 +74,9 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Golden Shimmer Line */}
+      <div className="h-1 bg-gradient-to-r from-gold via-green to-gold rounded-full shimmer-line"></div>
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
