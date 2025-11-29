@@ -11,7 +11,7 @@ import { getInitials } from "@/lib/utils";
 import { 
   MapPin, 
   Phone, 
-  Mail, 
+  MessageCircle, 
   ArrowLeft, 
   Clock,
   Shield,
@@ -238,15 +238,19 @@ export default function ArtisanProfile() {
                 <CardTitle className="text-white">Contact {artisan.firstName}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button className="w-full bg-green hover:bg-green-dark text-white" size="lg">
-                  <Phone className="w-4 h-4 mr-2" />
-                  Call Now
-                </Button>
+                <a href={`tel:${artisan.phone}`} className="w-full block">
+                  <Button className="w-full bg-green hover:bg-green-dark text-white" size="lg" data-testid="button-call-now">
+                    <Phone className="w-4 h-4 mr-2" />
+                    Call Now
+                  </Button>
+                </a>
                 
-                <Button variant="outline" className="w-full border-2 border-gold text-gold hover:bg-gold/20 hover:border-gold-dark" size="lg">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Send Message
-                </Button>
+                <a href={`https://wa.me/${artisan.phone.replace(/\D/g, '')}?text=Hi%20${artisan.firstName}%2C%20I%20found%20your%20profile%20on%20Skills%20Connect%20and%20would%20like%20to%20discuss%20your%20services.`} className="w-full block" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="w-full border-2 border-gold text-gold hover:bg-gold/20 hover:border-gold-dark" size="lg" data-testid="button-whatsapp-message">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Message on WhatsApp
+                  </Button>
+                </a>
                 
                 <Separator className="bg-gold/20" />
                 
@@ -256,8 +260,8 @@ export default function ArtisanProfile() {
                     <span className="font-medium text-white">{artisan.phone}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Email:</span>
-                    <span className="font-medium text-white break-all">{artisan.email}</span>
+                    <span>Experience:</span>
+                    <span className="font-medium text-white">{artisan.yearsExperience}+ years</span>
                   </div>
                 </div>
               </CardContent>

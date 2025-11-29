@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MapPin, Phone, Mail, User } from "lucide-react";
+import { MapPin, Phone, MessageCircle, User } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function FeaturedArtisans() {
@@ -191,8 +191,8 @@ export default function FeaturedArtisans() {
                     <span className="truncate">{artisan.phone}</span>
                   </div>
                   <div className="flex items-center gap-2 text-white/70">
-                    <Mail className="w-4 h-4 text-gold flex-shrink-0" />
-                    <span className="truncate text-xs">{artisan.email}</span>
+                    <MessageCircle className="w-4 h-4 text-gold flex-shrink-0" />
+                    <span className="truncate text-xs">WhatsApp Available</span>
                   </div>
                 </div>
 
@@ -203,9 +203,10 @@ export default function FeaturedArtisans() {
                       Call Now
                     </Button>
                   </a>
-                  <a href={`mailto:${artisan.email}`} className="w-full" data-testid={`button-email-${artisan.id}`}>
+                  <a href={`https://wa.me/${artisan.phone.replace(/\D/g, '')}?text=Hi%20${artisan.firstName}%2C%20I%20found%20your%20profile%20on%20Skills%20Connect%20and%20would%20like%20to%20discuss%20your%20services.`} className="w-full" target="_blank" rel="noopener noreferrer" data-testid={`button-whatsapp-${artisan.id}`}>
                     <Button variant="outline" className="w-full border-gold/30 text-white hover:bg-gold/10 hover:border-gold font-semibold text-sm py-2.5 rounded-lg bg-black">
-                      Email
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      WhatsApp
                     </Button>
                   </a>
                 </div>
