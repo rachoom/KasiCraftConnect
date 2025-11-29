@@ -125,8 +125,8 @@ export default function FeaturedArtisans() {
               <Card className="bg-black shadow-xl border-2 border-gold/80 hover:border-gold transition-all duration-300 h-full rounded-xl">
               <CardContent className="p-6 flex flex-col h-full">
                 {/* Profile Image with Featured Badge */}
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="relative flex-shrink-0">
+                <div className="flex flex-col items-center mb-4">
+                  <div className="relative flex-shrink-0 mb-3">
                     <div className="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-gold to-gold-dark border-2 border-gold/50">
                       {artisan.profileImage ? (
                         <img src={artisan.profileImage} alt={`${artisan.firstName} ${artisan.lastName}`} className="w-full h-full object-cover" />
@@ -142,18 +142,18 @@ export default function FeaturedArtisans() {
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-bold text-lg text-gold truncate">
+                  <div className="w-full text-center">
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <h4 className="font-bold text-lg text-gold line-clamp-2">
                         {artisan.firstName} {artisan.lastName}
                       </h4>
                       {(artisan.subscriptionTier === 'verified' || artisan.subscriptionTier === 'premium') && (
-                        <Badge className="bg-gold text-black font-semibold text-xs px-2 py-0.5 rounded-full">
+                        <Badge className="bg-gold text-black font-semibold text-xs px-2 py-0.5 rounded-full whitespace-nowrap">
                           Featured
                         </Badge>
                       )}
                     </div>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white/70 text-sm line-clamp-2">
                       {artisan.services.map(s => {
                         const serviceMap: Record<string, string> = {
                           'builders': 'Builder',
@@ -164,7 +164,8 @@ export default function FeaturedArtisans() {
                           'painters': 'Painter',
                           'cleaners': 'Cleaner',
                           'landscapers': 'Landscaper',
-                          'mechanics': 'Mechanic'
+                          'mechanics': 'Mechanic',
+                          'dressmakers': 'Dressmaker'
                         };
                         return serviceMap[s] || s.charAt(0).toUpperCase() + s.slice(1);
                       }).join(', ')}
