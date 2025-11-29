@@ -105,3 +105,80 @@ export async function deleteProfilePicture(publicUrl: string): Promise<void> {
     // Don't throw - deletion is non-critical
   }
 }
+
+/**
+ * Upload a portfolio image to Supabase Storage
+ * @param artisanId - The artisan's ID
+ * @param file - The file buffer
+ * @param contentType - The file's MIME type
+ * @returns The public URL of the uploaded image
+ */
+export async function uploadPortfolioImage(
+  artisanId: number,
+  file: Buffer,
+  contentType: string
+): Promise<string> {
+  try {
+    // Generate unique filename
+    const fileExtension = contentType.split('/')[1];
+    const fileName = `artisan-${artisanId}-portfolio-${Date.now()}.${fileExtension}`;
+    const filePath = `portfolio/${fileName}`;
+
+    // Upload to Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from(PROFILE_PICTURES_BUCKET)
+      .upload(filePath, file, {
+        contentType,
+        cacheControl: '3600',
+        upsert: true
+      });
+
+    if (uploadError) {
+      console.error('Error uploading portfolio image to Supabase Storage:', uploadError);
+      throw uploadError;
+    }
+
+    // Get public URL
+    const { data } = supabase.storage
+      .from(PROFILE_PICTURES_BUCKET)
+      .getPublicUrl(filePath);
+
+    console.log(`✅ Uploaded portfolio image for artisan ${artisanId}: ${data.publicUrl}`);
+    return data.publicUrl;
+  } catch (error) {
+    console.error('Error in uploadPortfolioImage:', error);
+    throw error;
+  }
+}
+
+/**
+ * Delete a portfolio image from Supabase Storage
+ * @param publicUrl - The public URL of the image to delete
+ */
+export async function deletePortfolioImage(publicUrl: string): Promise<void> {
+  try {
+    // Extract the file path from the public URL
+    const urlParts = publicUrl.split(`/object/public/${PROFILE_PICTURES_BUCKET}/`);
+    if (urlParts.length < 2) {
+      console.warn('Invalid public URL format, cannot extract file path');
+      return;
+    }
+
+    const filePath = urlParts[1];
+
+    // Delete from Supabase Storage
+    const { error } = await supabase.storage
+      .from(PROFILE_PICTURES_BUCKET)
+      .remove([filePath]);
+
+    if (error) {
+      console.error('Error deleting portfolio image from Supabase Storage:', error);
+      throw error;
+    }
+
+    console.log(`✅ Deleted portfolio image: ${filePath}`);
+  } catch (error) {
+    console.error('Error in deletePortfolioImage:', error);
+    // Don't throw - deletion is non-critical
+  }
+}

@@ -363,57 +363,69 @@ export default function ArtisanDashboard() {
               </div>
             </div>
 
-            {/* Portfolio Section */}
-            <Card>
+            {/* Portfolio Section - Only for verified artisans */}
+            <Card className="border border-green/30 bg-black">
               <CardHeader>
-                <CardTitle className="flex items-center text-black-soft">
+                <CardTitle className="flex items-center text-white">
                   <Image className="w-5 h-5 mr-2 text-gold" />
                   Portfolio - Proof of Work
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Upload New Image */}
-                <div className="border-2 border-dashed border-gold/30 rounded-lg p-6 text-center">
-                  <label className="cursor-pointer block">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handlePortfolioUpload}
-                      disabled={isUploadingPortfolio}
-                      className="hidden"
-                    />
-                    <div className="space-y-2">
-                      <Plus className="w-8 h-8 text-gold mx-auto" />
-                      <p className="text-gray-700 font-medium">
-                        {isUploadingPortfolio ? 'Uploading...' : 'Click to upload portfolio image'}
-                      </p>
-                      <p className="text-xs text-gray-500">PNG, JPG, WebP up to 5MB</p>
-                    </div>
-                  </label>
-                </div>
-
-                {/* Portfolio Gallery */}
-                {portfolioImages.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {portfolioImages.map((image, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={image}
-                          alt={`Portfolio ${index + 1}`}
-                          className="w-full h-32 object-cover rounded-lg border border-gold/30"
-                        />
-                        <button
-                          onClick={() => handleRemovePortfolioImage(image)}
-                          className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                          title="Remove image"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
+                {artisanData.subscriptionTier === 'unverified' ? (
+                  <div className="text-center py-8 border-2 border-dashed border-gold/30 rounded-lg">
+                    <Shield className="w-12 h-12 text-gold/50 mx-auto mb-4" />
+                    <p className="text-white/80 mb-2">Portfolio uploads are available for Verified artisans only.</p>
+                    <p className="text-white/60 text-sm">Upgrade your subscription to showcase your work!</p>
                   </div>
                 ) : (
-                  <p className="text-center text-gray-500 py-8">No portfolio images yet. Upload your first proof of work!</p>
+                  <>
+                    {/* Upload New Image */}
+                    <div className="border-2 border-dashed border-gold/30 rounded-lg p-6 text-center hover:border-gold/50 transition-colors">
+                      <label className="cursor-pointer block">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePortfolioUpload}
+                          disabled={isUploadingPortfolio}
+                          className="hidden"
+                          data-testid="input-portfolio-upload"
+                        />
+                        <div className="space-y-2">
+                          <Plus className="w-8 h-8 text-gold mx-auto" />
+                          <p className="text-white font-medium">
+                            {isUploadingPortfolio ? 'Uploading...' : 'Click to upload portfolio image'}
+                          </p>
+                          <p className="text-xs text-white/60">PNG, JPG, WebP up to 5MB</p>
+                        </div>
+                      </label>
+                    </div>
+
+                    {/* Portfolio Gallery */}
+                    {portfolioImages.length > 0 ? (
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {portfolioImages.map((image, index) => (
+                          <div key={index} className="relative group" data-testid={`portfolio-image-${index}`}>
+                            <img
+                              src={image}
+                              alt={`Portfolio ${index + 1}`}
+                              className="w-full h-32 object-cover rounded-lg border border-gold/30"
+                            />
+                            <button
+                              onClick={() => handleRemovePortfolioImage(image)}
+                              className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                              title="Remove image"
+                              data-testid={`button-delete-portfolio-${index}`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-center text-white/60 py-8">No portfolio images yet. Upload your first proof of work!</p>
+                    )}
+                  </>
                 )}
               </CardContent>
             </Card>

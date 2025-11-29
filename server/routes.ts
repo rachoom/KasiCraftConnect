@@ -7,7 +7,7 @@ import { emailService } from "./emailService";
 import { artisanAuthService } from "./artisanAuth";
 import { verifyAdminToken } from "./adminAuth";
 import multer from "multer";
-import { uploadProfilePicture, deleteProfilePicture } from "./supabaseStorage";
+import { uploadProfilePicture, deleteProfilePicture, uploadPortfolioImage, deletePortfolioImage } from "./supabaseStorage";
 import { fileTypeFromBuffer } from "file-type";
 
 // Configure multer for profile image uploads (memory storage)
@@ -877,11 +877,110 @@ export async function registerRoutes(app: Express): Promise<Server> {
         yearsExperience: artisan.yearsExperience,
         verified: artisan.verified,
         approvalStatus: artisan.approvalStatus,
-        profileImage: artisan.profileImage
+        profileImage: artisan.profileImage,
+        portfolio: artisan.portfolio || [],
+        subscriptionTier: artisan.subscriptionTier
       });
     } catch (error) {
       console.error("Get artisan profile error:", error);
       res.status(401).json({ message: "Authentication required" });
+    }
+  });
+
+  // Portfolio image upload for artisans
+  app.post("/api/artisan/portfolio", profileImageUpload.single('image'), async (req, res) => {
+    try {
+      const { requireArtisanAuth } = await import("./artisanAuth");
+      await new Promise((resolve, reject) => {
+        requireArtisanAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+
+      const artisan = (req as any).artisan;
+      
+      // Check if artisan is verified (only verified artisans can upload portfolio)
+      if (artisan.subscriptionTier === 'unverified') {
+        return res.status(403).json({ 
+          message: "Only verified artisans can upload portfolio images. Please upgrade your subscription." 
+        });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file provided" });
+      }
+
+      console.log(`Uploading portfolio image for artisan ${artisan.id}, size: ${req.file.size} bytes`);
+
+      // Validate file type
+      const fileType = await fileTypeFromBuffer(req.file.buffer);
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      
+      if (!fileType || !allowedTypes.includes(fileType.mime)) {
+        return res.status(400).json({ 
+          message: "Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed." 
+        });
+      }
+
+      // Upload to Supabase Storage
+      const publicUrl = await uploadPortfolioImage(
+        artisan.id,
+        req.file.buffer,
+        fileType.mime
+      );
+
+      // Add to artisan's portfolio array
+      const currentPortfolio = artisan.portfolio || [];
+      const updatedPortfolio = [...currentPortfolio, publicUrl];
+      
+      await storage.updateArtisan(artisan.id, {
+        portfolio: updatedPortfolio
+      });
+
+      console.log(`✅ Portfolio image uploaded for artisan ${artisan.id}: ${publicUrl}`);
+      
+      res.json({
+        message: "Portfolio image uploaded successfully",
+        url: publicUrl
+      });
+    } catch (error: any) {
+      console.error("Error uploading portfolio image:", error);
+      res.status(500).json({ message: error?.message || "Failed to upload portfolio image" });
+    }
+  });
+
+  // Delete portfolio image for artisans
+  app.delete("/api/artisan/portfolio", async (req, res) => {
+    try {
+      const { requireArtisanAuth } = await import("./artisanAuth");
+      await new Promise((resolve, reject) => {
+        requireArtisanAuth(req, res, (err) => err ? reject(err) : resolve(null));
+      });
+
+      const artisan = (req as any).artisan;
+      const { imageUrl } = req.body;
+
+      if (!imageUrl) {
+        return res.status(400).json({ message: "Image URL is required" });
+      }
+
+      // Remove from portfolio array
+      const currentPortfolio = artisan.portfolio || [];
+      const updatedPortfolio = currentPortfolio.filter((url: string) => url !== imageUrl);
+      
+      await storage.updateArtisan(artisan.id, {
+        portfolio: updatedPortfolio
+      });
+
+      // Delete from Supabase Storage
+      await deletePortfolioImage(imageUrl);
+
+      console.log(`✅ Portfolio image deleted for artisan ${artisan.id}: ${imageUrl}`);
+      
+      res.json({
+        message: "Portfolio image deleted successfully"
+      });
+    } catch (error: any) {
+      console.error("Error deleting portfolio image:", error);
+      res.status(500).json({ message: error?.message || "Failed to delete portfolio image" });
     }
   });
 
