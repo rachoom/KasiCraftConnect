@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,11 +9,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeInSection from "@/components/FadeInSection";
-import { User, Mail, Phone, MapPin, Briefcase, LogOut, Shield, Clock, CheckCircle, AlertCircle, Star, Calendar } from "lucide-react";
+import { User, Mail, Phone, MapPin, Briefcase, LogOut, Shield, Clock, CheckCircle, AlertCircle, Star, Calendar, Image, Trash2, Plus } from "lucide-react";
 import type { Artisan } from "@shared/schema";
 
 export default function ArtisanDashboard() {
   const [, setLocation] = useLocation();
+  const [portfolioImages, setPortfolioImages] = useState<string[]>([]);
+  const [isUploadingPortfolio, setIsUploadingPortfolio] = useState(false);
 
   // Check authentication
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function ArtisanDashboard() {
   }, [setLocation]);
 
   // Fetch artisan profile data
-  const { data: artisanData, isLoading, error } = useQuery<Artisan>({
+  const { data: artisanData, isLoading, error, refetch } = useQuery<Artisan>({
     queryKey: ['/api/artisan/profile'],
     queryFn: async () => {
       const token = localStorage.getItem('artisan_token');
@@ -49,10 +51,66 @@ export default function ArtisanDashboard() {
     refetchOnWindowFocus: false,
   });
 
+  // Update portfolio images when artisan data loads
+  useEffect(() => {
+    if (artisanData?.portfolio) {
+      setPortfolioImages(artisanData.portfolio);
+    }
+  }, [artisanData?.portfolio]);
+
   const handleLogout = () => {
     localStorage.removeItem('artisan_token');
     localStorage.removeItem('artisan_user');
     setLocation('/');
+  };
+
+  const handlePortfolioUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingPortfolio(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const token = localStorage.getItem('artisan_token');
+      const response = await fetch('/api/artisan/portfolio', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Upload failed');
+      
+      const { url } = await response.json();
+      setPortfolioImages([...portfolioImages, url]);
+      refetch();
+    } catch (error) {
+      console.error('Portfolio upload error:', error);
+    } finally {
+      setIsUploadingPortfolio(false);
+    }
+  };
+
+  const handleRemovePortfolioImage = async (imageUrl: string) => {
+    try {
+      const token = localStorage.getItem('artisan_token');
+      await fetch('/api/artisan/portfolio', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageUrl }),
+      });
+      
+      setPortfolioImages(portfolioImages.filter(img => img !== imageUrl));
+      refetch();
+    } catch (error) {
+      console.error('Portfolio delete error:', error);
+    }
   };
 
   // Handle authentication error
@@ -304,6 +362,61 @@ export default function ArtisanDashboard() {
                 )}
               </div>
             </div>
+
+            {/* Portfolio Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center text-black-soft">
+                  <Image className="w-5 h-5 mr-2 text-gold" />
+                  Portfolio - Proof of Work
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Upload New Image */}
+                <div className="border-2 border-dashed border-gold/30 rounded-lg p-6 text-center">
+                  <label className="cursor-pointer block">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePortfolioUpload}
+                      disabled={isUploadingPortfolio}
+                      className="hidden"
+                    />
+                    <div className="space-y-2">
+                      <Plus className="w-8 h-8 text-gold mx-auto" />
+                      <p className="text-gray-700 font-medium">
+                        {isUploadingPortfolio ? 'Uploading...' : 'Click to upload portfolio image'}
+                      </p>
+                      <p className="text-xs text-gray-500">PNG, JPG, WebP up to 5MB</p>
+                    </div>
+                  </label>
+                </div>
+
+                {/* Portfolio Gallery */}
+                {portfolioImages.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {portfolioImages.map((image, index) => (
+                      <div key={index} className="relative group">
+                        <img
+                          src={image}
+                          alt={`Portfolio ${index + 1}`}
+                          className="w-full h-32 object-cover rounded-lg border border-gold/30"
+                        />
+                        <button
+                          onClick={() => handleRemovePortfolioImage(image)}
+                          className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Remove image"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-center text-gray-500 py-8">No portfolio images yet. Upload your first proof of work!</p>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </main>
         

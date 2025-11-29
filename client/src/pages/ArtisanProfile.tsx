@@ -202,6 +202,31 @@ export default function ArtisanProfile() {
               </CardContent>
             </Card>
 
+            {/* Portfolio - Proof of Work */}
+            {artisan.portfolio && artisan.portfolio.length > 0 && (
+              <Card className="border border-green/30 bg-black">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2 text-white">
+                    <Award className="w-5 h-5 text-gold" />
+                    <span>Portfolio - Proof of Work</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {artisan.portfolio.map((imageUrl, index) => (
+                      <div key={index} className="group relative overflow-hidden rounded-lg border border-gold/30">
+                        <img
+                          src={imageUrl}
+                          alt={`Portfolio ${index + 1}`}
+                          className="w-full h-40 object-cover hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
           </div>
 
           {/* Sidebar */}
