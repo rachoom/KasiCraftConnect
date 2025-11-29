@@ -63,6 +63,12 @@ const serviceInfo = {
     description: "Professional vehicle repair and maintenance specialists",
     icon: "🔧",
     services: ["Engine Repair", "Brake Service", "Oil Changes", "Transmission Service", "Diagnostics", "General Maintenance"]
+  },
+  dressmakers: {
+    title: "Dressmakers",
+    description: "Professional dressmakers specializing in custom tailoring and clothing design",
+    icon: "👗",
+    services: ["Custom Tailoring", "Wedding Dresses", "Alterations", "Bespoke Clothing", "Formal Wear", "Repairs & Adjustments"]
   }
 };
 
