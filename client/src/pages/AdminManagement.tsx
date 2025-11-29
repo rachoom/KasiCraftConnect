@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload, AlertCircle, Star } from "lucide-react";
+import { Search, Edit, User, Shield, CheckCircle, XCircle, Upload, AlertCircle, Star, Images, Trash2 } from "lucide-react";
 import { getInitials } from "@/lib/utils";
 import type { Artisan } from "@shared/schema";
 
@@ -24,7 +24,10 @@ export default function AdminManagement() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadingPortfolio, setUploadingPortfolio] = useState(false);
+  const [portfolioError, setPortfolioError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const portfolioInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -150,6 +153,84 @@ export default function AdminManagement() {
       }
       setSelectedFile(file);
     }
+  };
+
+  const handlePortfolioFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setPortfolioError(null);
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        const errorMsg = "Portfolio image must be less than 5MB";
+        setPortfolioError(errorMsg);
+        toast({
+          variant: "destructive",
+          title: "File Too Large",
+          description: errorMsg,
+        });
+        return;
+      }
+      handleUploadPortfolioImage(file);
+    }
+  };
+
+  const handleUploadPortfolioImage = async (file: File) => {
+    if (!editingArtisan) return;
+
+    setUploadingPortfolio(true);
+    setPortfolioError(null);
+    const formDataToSend = new FormData();
+    formDataToSend.append('image', file);
+
+    try {
+      const token = localStorage.getItem("adminToken");
+      const response = await fetch(`/api/admin/artisan/${editingArtisan.id}/portfolio`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to upload image");
+      }
+
+      const data = await response.json();
+      
+      setFormData(prev => ({ 
+        ...prev, 
+        portfolio: [...(prev.portfolio || []), data.url] 
+      }));
+      
+      if (portfolioInputRef.current) {
+        portfolioInputRef.current.value = '';
+      }
+      setPortfolioError(null);
+
+      toast({
+        title: "Success",
+        description: "Portfolio image uploaded successfully",
+      });
+      
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/artisans"] });
+    } catch (error: any) {
+      console.error("Error uploading portfolio image:", error);
+      const errorMessage = error.message || "Failed to upload portfolio image";
+      setPortfolioError(errorMessage);
+      toast({
+        variant: "destructive",
+        title: "Upload Failed",
+        description: errorMessage,
+      });
+    } finally {
+      setUploadingPortfolio(false);
+    }
+  };
+
+  const handleRemovePortfolioImage = (imageUrl: string) => {
+    setFormData(prev => ({
+      ...prev,
+      portfolio: (prev.portfolio || []).filter(url => url !== imageUrl)
+    }));
   };
 
   const handleUploadImage = async () => {
@@ -359,6 +440,7 @@ export default function AdminManagement() {
         if (!open) {
           setEditingArtisan(null);
           setUploadError(null);
+          setPortfolioError(null);
           setSelectedFile(null);
         }
       }}>
@@ -537,6 +619,69 @@ export default function AdminManagement() {
                   className="bg-zinc-800 border-green/30 text-white"
                   data-testid="input-years-experience"
                 />
+              </div>
+
+              {/* Portfolio Section */}
+              <div className="border-t border-green/30 pt-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Images className="w-5 h-5 text-gold" />
+                  <Label className="text-white text-lg font-semibold">Portfolio - Proof of Work</Label>
+                </div>
+
+                <div className="mb-4">
+                  <input
+                    ref={portfolioInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePortfolioFileChange}
+                    className="hidden"
+                    id="portfolio-image-input"
+                    disabled={uploadingPortfolio}
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => portfolioInputRef.current?.click()}
+                    className="bg-zinc-800 hover:bg-zinc-700 text-white border border-green/30"
+                    disabled={uploadingPortfolio}
+                    data-testid="button-upload-portfolio"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    {uploadingPortfolio ? "Uploading..." : "Add Portfolio Image"}
+                  </Button>
+                </div>
+
+                {portfolioError && (
+                  <div className="p-4 rounded-md bg-gradient-to-r from-gold/10 to-gold-dark/10 border border-green/30 mb-4">
+                    <p className="text-white font-semibold mb-1">Upload Error</p>
+                    <p className="text-white/90 text-sm">{portfolioError}</p>
+                  </div>
+                )}
+
+                {/* Portfolio Gallery */}
+                {(formData.portfolio || []).length > 0 ? (
+                  <div className="grid grid-cols-3 gap-3">
+                    {(formData.portfolio || []).map((imageUrl, index) => (
+                      <div key={index} className="relative group" data-testid={`portfolio-item-${index}`}>
+                        <img
+                          src={imageUrl}
+                          alt={`Portfolio ${index + 1}`}
+                          className="w-full h-24 object-cover rounded-lg border border-gold/30"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleRemovePortfolioImage(imageUrl)}
+                          className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Remove image"
+                          data-testid={`button-remove-portfolio-${index}`}
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-white/60 text-sm py-4">No portfolio images uploaded yet</p>
+                )}
               </div>
 
               <div className="flex justify-end space-x-3 pt-4 border-t border-green/30">

@@ -617,6 +617,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin portfolio image upload
+  app.post("/api/admin/artisan/:id/portfolio", verifyAdminToken, profileImageUpload.single('image'), async (req, res) => {
+    try {
+      const artisanId = parseInt(req.params.id);
+      
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file provided" });
+      }
+
+      console.log(`Uploading portfolio image for artisan ${artisanId}, size: ${req.file.size} bytes`);
+      
+      // Validate file type
+      const fileType = await fileTypeFromBuffer(req.file.buffer);
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      
+      if (!fileType || !allowedTypes.includes(fileType.mime)) {
+        return res.status(400).json({ 
+          message: "Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed." 
+        });
+      }
+
+      // Get current artisan
+      const artisan = await storage.getArtisan(artisanId);
+      if (!artisan) {
+        return res.status(404).json({ message: "Artisan not found" });
+      }
+
+      // Upload to Supabase Storage
+      const publicUrl = await uploadPortfolioImage(
+        artisanId,
+        req.file.buffer,
+        fileType.mime
+      );
+
+      // Add to artisan's portfolio array
+      const currentPortfolio = artisan.portfolio || [];
+      const updatedPortfolio = [...currentPortfolio, publicUrl];
+      
+      await storage.updateArtisan(artisanId, {
+        portfolio: updatedPortfolio
+      });
+
+      console.log(`✅ Portfolio image uploaded for artisan ${artisanId}: ${publicUrl}`);
+      
+      res.json({
+        message: "Portfolio image uploaded successfully",
+        url: publicUrl
+      });
+    } catch (error: any) {
+      console.error("Error uploading portfolio image:", error);
+      res.status(500).json({ message: error?.message || "Failed to upload portfolio image" });
+    }
+  });
+
   // Serve entity assets (like profile images)
   app.get("/entities/:entityType/:entityId/:assetType/:assetId", async (req, res) => {
     try {
