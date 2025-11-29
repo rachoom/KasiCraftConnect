@@ -67,6 +67,13 @@ export default function Footer() {
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               </li>
+              <li>
+                <Link href="/service/dressmakers" className="flex items-center gap-2 text-white/70 hover:text-gold transition-all duration-300 group">
+                  <Sparkles className="w-4 h-4 text-gold group-hover:scale-110 transition-transform" />
+                  <span>Dressmakers</span>
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+              </li>
             </ul>
           </div>
 

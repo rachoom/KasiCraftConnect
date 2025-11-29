@@ -40,6 +40,7 @@ const serviceOptions = [
   { id: "landscapers", label: "Landscaper" },
   { id: "painters", label: "Painter" },
   { id: "mechanics", label: "Mechanic" },
+  { id: "dressmakers", label: "Dressmaker" },
 ];
 
 const locations = [

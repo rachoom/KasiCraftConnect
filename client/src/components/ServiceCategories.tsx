@@ -50,6 +50,12 @@ const services = [
     name: "Mechanics",
     description: "Vehicle repair & maintenance",
     image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+  },
+  {
+    id: "dressmakers",
+    name: "Dressmakers",
+    description: "Custom tailoring & clothing design",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
   }
 ];
 
