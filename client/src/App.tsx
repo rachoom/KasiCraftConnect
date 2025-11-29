@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AnimatePresence } from "framer-motion";
 import CosmicBackground from "@/components/CosmicBackground";
 import PageTransition from "@/components/PageTransition";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import Home from "@/pages/Home";
 import SearchResults from "@/pages/SearchResults";
 import ArtisanProfile from "@/pages/ArtisanProfile";
@@ -25,6 +26,7 @@ import AdminLogin from "@/pages/AdminLogin";
 import NotFound from "@/pages/not-found";
 
 function Router() {
+  useScrollToTop();
   return (
     <AnimatePresence mode="wait">
       <Switch>
