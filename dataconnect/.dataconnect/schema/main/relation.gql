@@ -1,0 +1,572 @@
+extend type DiaryEntry {
+  """
+  ✨ List `DiaryEntryTag` objects in a one-to-many relationship (where `DiaryEntryTag`.`diaryEntry` is this object).
+  """
+  diaryEntryTags_on_diaryEntry(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DiaryEntryTag_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DiaryEntryTag_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DiaryEntryTag_Having
+  ): [DiaryEntryTag!]! @fdc_generated(from: "DiaryEntryTag.diaryEntry", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Tag` objects using `DiaryEntryTag` as the join table (a `DiaryEntryTag` object exists where its `diaryEntry` is this and its `tag` is that).
+  """
+  tags_via_DiaryEntryTag(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DiaryEntryTag_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DiaryEntryTag_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DiaryEntryTag_Having
+  ): [Tag!]! @fdc_generated(from: "DiaryEntryTag", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "DiaryEntry", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table.
+  """
+  _count: Int! @fdc_generated(from: "DiaryEntry.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `editedText` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  editedText_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.editedText", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `entryTimestamp` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  entryTimestamp_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.entryTimestamp", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `moodId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  moodId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.moodId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `recordedAudioUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  recordedAudioUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.recordedAudioUrl", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `transcribedText` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  transcribedText_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.transcribedText", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntry` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `DiaryEntry` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "DiaryEntry.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `entryTimestamp` field in the `DiaryEntry` table.
+  """
+  entryTimestamp_min: Timestamp @fdc_generated(from: "DiaryEntry.entryTimestamp", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `DiaryEntry` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "DiaryEntry.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `entryTimestamp` field in the `DiaryEntry` table.
+  """
+  entryTimestamp_max: Timestamp @fdc_generated(from: "DiaryEntry.entryTimestamp", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "DiaryEntry.id", purpose: GLOBAL_ID)
+}
+extend type DiaryEntryTag {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "DiaryEntryTag", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `DiaryEntryTag` table.
+  """
+  _count: Int! @fdc_generated(from: "DiaryEntryTag.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntryTag` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntryTag.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntryTag` table where the `diaryEntryId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  diaryEntryId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntryTag.diaryEntryId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `DiaryEntryTag` table where the `tagId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  tagId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntryTag.tagId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `DiaryEntryTag` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "DiaryEntryTag.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `DiaryEntryTag` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "DiaryEntryTag.createdAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "DiaryEntryTag.diaryEntryId,tagId", purpose: GLOBAL_ID)
+}
+extend type Mood {
+  """
+  ✨ List `DiaryEntry` objects in a one-to-many relationship (where `DiaryEntry`.`mood` is this object).
+  """
+  diaryEntries_on_mood(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DiaryEntry_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DiaryEntry_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DiaryEntry_Having
+  ): [DiaryEntry!]! @fdc_generated(from: "DiaryEntry.mood", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Mood", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Mood` table.
+  """
+  _count: Int! @fdc_generated(from: "Mood.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Mood` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Mood.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Mood` table where the `emoji` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  emoji_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Mood.emoji", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Mood` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Mood.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Mood` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Mood.name", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `Mood` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "Mood.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `Mood` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "Mood.createdAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "Mood.id", purpose: GLOBAL_ID)
+}
+extend type Tag {
+  """
+  ✨ List `DiaryEntryTag` objects in a one-to-many relationship (where `DiaryEntryTag`.`tag` is this object).
+  """
+  diaryEntryTags_on_tag(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DiaryEntryTag_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DiaryEntryTag_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DiaryEntryTag_Having
+  ): [DiaryEntryTag!]! @fdc_generated(from: "DiaryEntryTag.tag", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `DiaryEntry` objects using `DiaryEntryTag` as the join table (a `DiaryEntryTag` object exists where its `tag` is this and its `diaryEntry` is that).
+  """
+  diaryEntries_via_DiaryEntryTag(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DiaryEntryTag_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DiaryEntryTag_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DiaryEntryTag_Having
+  ): [DiaryEntry!]! @fdc_generated(from: "DiaryEntryTag", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Tag", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Tag` table.
+  """
+  _count: Int! @fdc_generated(from: "Tag.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tag` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tag.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tag` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tag.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tag` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tag.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tag` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tag.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `Tag` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "Tag.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `Tag` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "Tag.createdAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "Tag.id", purpose: GLOBAL_ID)
+}
+extend type User {
+  """
+  ✨ List `DiaryEntry` objects in a one-to-many relationship (where `DiaryEntry`.`user` is this object).
+  """
+  diaryEntries_on_user(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: DiaryEntry_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [DiaryEntry_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: DiaryEntry_Having
+  ): [DiaryEntry!]! @fdc_generated(from: "DiaryEntry.user", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Tag` objects in a one-to-many relationship (where `Tag`.`user` is this object).
+  """
+  tags_on_user(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Tag_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Tag_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Tag_Having
+  ): [Tag!]! @fdc_generated(from: "Tag.user", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "User", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `User` table.
+  """
+  _count: Int! @fdc_generated(from: "User.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `displayName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  displayName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.displayName", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.email", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `photoUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  photoUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.photoUrl", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `User` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "User.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `User` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "User.createdAt", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "User.id", purpose: GLOBAL_ID)
+}

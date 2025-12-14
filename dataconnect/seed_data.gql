@@ -1,0 +1,28 @@
+mutation CreateSeedData @transaction @auth(level: PUBLIC, insecureReason: "This operation is intended for initial data seeding and is safe to expose.") {
+  # Example: Inserting data for a User type
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      username: "seeduser1",
+      email: "seeduser1@example.com"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      username: "seeduser2",
+      email: "seeduser2@example.com"
+    }
+  ])
+  # Example: Inserting data for a Post type, referencing User id
+  post_insertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      userUid: "550e8400-e29b-41d4-a716-446655440000",
+      content: "Seed post from seeduser1"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      userUid: "550e8400-e29b-41d4-a716-446655440001",
+      content: "Seed post from seeduser2"
+    }
+  ])
+}

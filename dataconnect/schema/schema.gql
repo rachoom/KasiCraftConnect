@@ -1,0 +1,34 @@
+type User @table {
+  displayName: String!
+  createdAt: Timestamp!
+  email: String
+  photoUrl: String
+}
+
+type DiaryEntry @table {
+  transcribedText: String!
+  recordedAudioUrl: String!
+  entryTimestamp: Timestamp!
+  createdAt: Timestamp!
+  editedText: String
+  user: User
+  mood: Mood
+}
+
+type Tag @table {
+  name: String!
+  createdAt: Timestamp!
+  user: User
+}
+
+type Mood @table {
+  name: String!
+  createdAt: Timestamp!
+  emoji: String
+}
+
+type DiaryEntryTag @table(key: ["diaryEntry", "tag"]) {
+  createdAt: Timestamp!
+  diaryEntry: DiaryEntry!
+  tag: Tag!
+}

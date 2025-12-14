@@ -1,0 +1,46 @@
+I1209 21:23:01.146908    8904 load.go:31] Reloading schema and connectors...
+W1209 21:23:01.326704    8904 control.go:68] [/emulator/skillsconnect10 b923] connector "example" has errors: example\queries.gql:19:5: Cannot query field "id" on type "DiaryEntry_KeyOutput".
+example\queries.gql:9:3: Field "diaryEntry_insert" must not have a selection since type "DiaryEntry_KeyOutput" has no subfields.
+example\queries.gql:36:5: Cannot query field "id" on type "Tag_KeyOutput".
+example\queries.gql:35:3: Field "tag_insert" must not have a selection since type "Tag_KeyOutput" has no subfields.
+
+sources: example\queries.gql [963B] 
+I1209 21:23:01.328700    8904 control.go:94] [/emulator/skillsconnect10 b923] UpdateResources(): done
+Main schema: sources: schema\schema.gql [558B] 
+Connector "example": sources: example\queries.gql [963B] 
+E1209 21:23:01.351663    8904 load.go:73] Could not load sources: 
+Errors: example\queries.gql:19:5: Cannot query field "id" on type "DiaryEntry_KeyOutput".
+example\queries.gql:9:3: Field "diaryEntry_insert" must not have a selection since type "DiaryEntry_KeyOutput" has no subfields.
+example\queries.gql:36:5: Cannot query field "id" on type "Tag_KeyOutput".
+example\queries.gql:35:3: Field "tag_insert" must not have a selection since type "Tag_KeyOutput" has no subfields.
+I1209 21:23:01.377161    8904 collector.go:107] schema extensions wrote into "C:\\Users\\Khauhelo\\Documents\\ReplitCode\\Skills Connect\\Skills Connect 1.0\\dataconnect\\.dataconnect\\schema"
+Generated sources: main\implicit.gql [2255B] main\input.gql [38790B] main\relation.gql [19472B] prelude.gql [73219B] main\query.gql [6222B] main\mutation.gql [16779B] 
+I1209 21:23:01.378162    8904 load.go:74] Finished reloading
+I1209 21:23:01.396220    8904 dev.go:105] Listening on address (HTTP + gRPC): 127.0.0.1:9399
+I1209 21:23:01.399172    8904 dev.go:105] Listening on address (HTTP + gRPC): [::1]:9399
+I1209 21:23:39.030397    8904 migrate.go:24] Running migration SQL:
+Step 1: CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+Step 2: CREATE TABLE "public"."mood" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_at" timestamptz NOT NULL, "emoji" text NULL, "name" text NOT NULL, PRIMARY KEY ("id"))
+Step 3: CREATE TABLE "public"."user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_at" timestamptz NOT NULL, "display_name" text NOT NULL, "email" text NULL, "photo_url" text NULL, PRIMARY KEY ("id"))
+Step 4: CREATE TABLE "public"."diary_entry" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "mood_id" uuid NULL, "user_id" uuid NULL, "created_at" timestamptz NOT NULL, "edited_text" text NULL, "entry_timestamp" timestamptz NOT NULL, "recorded_audio_url" text NOT NULL, "transcribed_text" text NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "diary_entry_mood_id_fkey" FOREIGN KEY ("mood_id") REFERENCES "public"."mood" ("id") ON DELETE SET NULL, CONSTRAINT "diary_entry_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user" ("id") ON DELETE SET NULL)
+Step 5: CREATE INDEX "diary_entry_moodId_idx" ON "public"."diary_entry" ("mood_id")
+Step 6: CREATE INDEX "diary_entry_userId_idx" ON "public"."diary_entry" ("user_id")
+Step 7: CREATE TABLE "public"."tag" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "user_id" uuid NULL, "created_at" timestamptz NOT NULL, "name" text NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "tag_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user" ("id") ON DELETE SET NULL)
+Step 8: CREATE INDEX "tag_userId_idx" ON "public"."tag" ("user_id")
+Step 9: CREATE TABLE "public"."diary_entry_tag" ("diary_entry_id" uuid NOT NULL, "tag_id" uuid NOT NULL, "created_at" timestamptz NOT NULL, PRIMARY KEY ("diary_entry_id", "tag_id"), CONSTRAINT "diary_entry_tag_diary_entry_id_fkey" FOREIGN KEY ("diary_entry_id") REFERENCES "public"."diary_entry" ("id") ON DELETE CASCADE, CONSTRAINT "diary_entry_tag_tag_id_fkey" FOREIGN KEY ("tag_id") REFERENCES "public"."tag" ("id") ON DELETE CASCADE)
+Step 10: CREATE INDEX "diary_entry_tag_diaryEntryId_idx" ON "public"."diary_entry_tag" ("diary_entry_id")
+Step 11: CREATE INDEX "diary_entry_tag_tagId_idx" ON "public"."diary_entry_tag" ("tag_id")
+W1209 21:23:40.729319    8904 control.go:68] [/emulator/skillsconnect10 f8c5] connector "example" has errors: example\queries.gql:19:5: Cannot query field "id" on type "DiaryEntry_KeyOutput".
+example\queries.gql:9:3: Field "diaryEntry_insert" must not have a selection since type "DiaryEntry_KeyOutput" has no subfields.
+example\queries.gql:36:5: Cannot query field "id" on type "Tag_KeyOutput".
+example\queries.gql:35:3: Field "tag_insert" must not have a selection since type "Tag_KeyOutput" has no subfields.
+
+sources: example\queries.gql [963B] 
+I1209 21:23:40.729319    8904 control.go:94] [/emulator/skillsconnect10 f8c5] UpdateResources(): done
+Main schema: sources: schema\schema.gql [558B] 
+Connector "example": sources: example\queries.gql [963B] 
+I1209 21:23:40.729319    8904 service.go:148] [/emulator/skillsconnect10 f8c5] while configuring to server.Settings{ConnectionString:"dbname='fdcdb' host='127.0.0.1' port='5432' sslmode='disable' dbname='fdcdb'", MaxOpenConnection:1, UseDummy:false, EnableGoogleMLIntegration:false, SchemaValidationMode:""}, failed to reload last live sources: 
+Errors: example\queries.gql:19:5: Cannot query field "id" on type "DiaryEntry_KeyOutput".
+example\queries.gql:9:3: Field "diaryEntry_insert" must not have a selection since type "DiaryEntry_KeyOutput" has no subfields.
+example\queries.gql:36:5: Cannot query field "id" on type "Tag_KeyOutput".
+example\queries.gql:35:3: Field "tag_insert" must not have a selection since type "Tag_KeyOutput" has no subfields.

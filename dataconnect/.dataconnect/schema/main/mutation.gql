@@ -1,0 +1,552 @@
+extend type Mutation {
+  """
+  ✨ Insert a single `DiaryEntry` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  diaryEntry_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: DiaryEntry_Data!
+  ): DiaryEntry_KeyOutput! @fdc_generated(from: "DiaryEntry", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `DiaryEntryTag` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  diaryEntryTag_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: DiaryEntryTag_Data!
+  ): DiaryEntryTag_KeyOutput! @fdc_generated(from: "DiaryEntryTag", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Mood` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  mood_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Mood_Data!
+  ): Mood_KeyOutput! @fdc_generated(from: "Mood", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Tag` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  tag_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Tag_Data!
+  ): Tag_KeyOutput! @fdc_generated(from: "Tag", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `User` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: User_Data!
+  ): User_KeyOutput! @fdc_generated(from: "User", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `DiaryEntry` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  diaryEntry_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [DiaryEntry_Data!]!
+  ): [DiaryEntry_KeyOutput!]! @fdc_generated(from: "DiaryEntry", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `DiaryEntryTag` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  diaryEntryTag_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [DiaryEntryTag_Data!]!
+  ): [DiaryEntryTag_KeyOutput!]! @fdc_generated(from: "DiaryEntryTag", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Mood` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  mood_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Mood_Data!]!
+  ): [Mood_KeyOutput!]! @fdc_generated(from: "Mood", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Tag` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  tag_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Tag_Data!]!
+  ): [Tag_KeyOutput!]! @fdc_generated(from: "Tag", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `User` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [User_Data!]!
+  ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `DiaryEntry` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DiaryEntry`.
+  """
+  diaryEntry_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: DiaryEntry_Data!
+  ): DiaryEntry_KeyOutput! @fdc_generated(from: "DiaryEntry", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `DiaryEntryTag` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DiaryEntryTag`.
+  """
+  diaryEntryTag_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: DiaryEntryTag_Data!
+  ): DiaryEntryTag_KeyOutput! @fdc_generated(from: "DiaryEntryTag", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Mood` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Mood`.
+  """
+  mood_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Mood_Data!
+  ): Mood_KeyOutput! @fdc_generated(from: "Mood", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Tag` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Tag`.
+  """
+  tag_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Tag_Data!
+  ): Tag_KeyOutput! @fdc_generated(from: "Tag", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `User` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
+  """
+  user_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: User_Data!
+  ): User_KeyOutput! @fdc_generated(from: "User", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `DiaryEntry` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DiaryEntry`.
+  """
+  diaryEntry_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [DiaryEntry_Data!]!
+  ): [DiaryEntry_KeyOutput!]! @fdc_generated(from: "DiaryEntry", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `DiaryEntryTag` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `DiaryEntryTag`.
+  """
+  diaryEntryTag_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [DiaryEntryTag_Data!]!
+  ): [DiaryEntryTag_KeyOutput!]! @fdc_generated(from: "DiaryEntryTag", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Mood` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Mood`.
+  """
+  mood_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Mood_Data!]!
+  ): [Mood_KeyOutput!]! @fdc_generated(from: "Mood", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Tag` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Tag`.
+  """
+  tag_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Tag_Data!]!
+  ): [Tag_KeyOutput!]! @fdc_generated(from: "Tag", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `User` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
+  """
+  user_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [User_Data!]!
+  ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `DiaryEntry` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `DiaryEntry` or `null` if not found.
+  """
+  diaryEntry_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: DiaryEntry_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DiaryEntry_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: DiaryEntry_Data!
+  ): DiaryEntry_KeyOutput @fdc_generated(from: "DiaryEntry", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `DiaryEntryTag` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `DiaryEntryTag` or `null` if not found.
+  """
+  diaryEntryTag_update(
+    """
+    The key used to identify the object.
+    """
+    key: DiaryEntryTag_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DiaryEntryTag_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: DiaryEntryTag_Data!
+  ): DiaryEntryTag_KeyOutput @fdc_generated(from: "DiaryEntryTag", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Mood` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Mood` or `null` if not found.
+  """
+  mood_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Mood_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Mood_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Mood_Data!
+  ): Mood_KeyOutput @fdc_generated(from: "Mood", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Tag` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Tag` or `null` if not found.
+  """
+  tag_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Tag_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Tag_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Tag_Data!
+  ): Tag_KeyOutput @fdc_generated(from: "Tag", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `User` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `User` or `null` if not found.
+  """
+  user_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: User_Data!
+  ): User_KeyOutput @fdc_generated(from: "User", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `DiaryEntry` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  diaryEntry_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: DiaryEntry_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: DiaryEntry_Data!
+  ): Int! @fdc_generated(from: "DiaryEntry", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `DiaryEntryTag` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  diaryEntryTag_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: DiaryEntryTag_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: DiaryEntryTag_Data!
+  ): Int! @fdc_generated(from: "DiaryEntryTag", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Mood` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  mood_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Mood_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Mood_Data!
+  ): Int! @fdc_generated(from: "Mood", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Tag` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  tag_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Tag_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Tag_Data!
+  ): Int! @fdc_generated(from: "Tag", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `User` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  user_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: User_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: User_Data!
+  ): Int! @fdc_generated(from: "User", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `DiaryEntry` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  diaryEntry_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: DiaryEntry_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DiaryEntry_FirstRow
+  ): DiaryEntry_KeyOutput @fdc_generated(from: "DiaryEntry", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `DiaryEntryTag` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  diaryEntryTag_delete(
+    """
+    The key used to identify the object.
+    """
+    key: DiaryEntryTag_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: DiaryEntryTag_FirstRow
+  ): DiaryEntryTag_KeyOutput @fdc_generated(from: "DiaryEntryTag", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Mood` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  mood_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Mood_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Mood_FirstRow
+  ): Mood_KeyOutput @fdc_generated(from: "Mood", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Tag` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  tag_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Tag_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Tag_FirstRow
+  ): Tag_KeyOutput @fdc_generated(from: "Tag", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `User` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  user_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+  ): User_KeyOutput @fdc_generated(from: "User", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `DiaryEntry` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  diaryEntry_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: DiaryEntry_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntry", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `DiaryEntryTag` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  diaryEntryTag_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: DiaryEntryTag_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "DiaryEntryTag", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Mood` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  mood_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Mood_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Mood", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Tag` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  tag_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Tag_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Tag", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `User` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  user_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: User_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "User", purpose: DELETE_MULTIPLE)
+}

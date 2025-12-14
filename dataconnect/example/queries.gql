@@ -1,0 +1,45 @@
+mutation CreateDiaryEntry(
+  $moodId: UUID!
+  $userId: UUID!
+  $createdAt: Timestamp!
+  $entryTimestamp: Timestamp!
+  $recordedAudioUrl: String!
+  $transcribedText: String!
+) @auth(level: USER) {
+  diaryEntry_insert(
+    data: {
+      moodId: $moodId
+      userId: $userId
+      createdAt: $createdAt
+      entryTimestamp: $entryTimestamp
+      recordedAudioUrl: $recordedAudioUrl
+      transcribedText: $transcribedText
+    }
+  ) {
+    id
+  }
+}
+
+query GetDiaryEntriesForUser($userId: UUID!) @auth(level: USER) {
+  diaryEntries(where: { userId: { eq: $userId } }) {
+    id
+    moodId
+    createdAt
+    entryTimestamp
+    recordedAudioUrl
+    transcribedText
+  }
+}
+
+mutation CreateTag($userId: UUID!, $name: String!) @auth(level: USER) {
+  tag_insert(data: { userId: $userId, name: $name, createdAt_expr: "request.time" }) {
+    id
+  }
+}
+
+query ListTagsForUser($userId: UUID!) @auth(level: USER) {
+  tags(where: { userId: { eq: $userId } }) {
+    id
+    name
+  }
+}
