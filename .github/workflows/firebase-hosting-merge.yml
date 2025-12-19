@@ -9,12 +9,35 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    steps:on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Build client
+        run: |
+          cd client
+          npm ci
+          npm run build
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: skills-connect-957cb
+
       - uses: actions/checkout@v4
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
-  with:
+        with:
     repoToken: ${{ secrets.GITHUB_TOKEN }}
     firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
     projectId: skills-connect-957cb
-
+    channelId: live
