@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -19,9 +20,9 @@ jobs:
           cache: npm
           cache-dependency-path: client/package-lock.json
 
-      - name: Build client
-        working-directory: client
+      - name: Install dependencies and build client
         run: |
+          cd client
           npm ci
           npm run build
 
@@ -29,6 +30,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SKILLS_CONNECT_957CB }}
           projectId: skills-connect-957cb
           channelId: live
