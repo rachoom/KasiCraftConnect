@@ -22,21 +22,34 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./client
-        run: npm ci
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci
+          echo "✓ Dependencies installed"
 
       - name: Build client
         working-directory: ./client
-        run: npm run build
+        run: |
+          echo "🔨 Building client application..."
+          npm run build
+          echo "✓ Build completed"
 
       - name: Verify build output
         run: |
-          echo "Checking if dist directory exists..."
+          echo "🔍 Verifying build output..."
+          echo "Repository root contents:"
+          ls -la
+          echo ""
+          echo "Client directory contents:"
           ls -la client/
+          echo ""
           if [ -d "client/dist" ]; then
             echo "✓ client/dist exists"
+            echo "client/dist contents:"
             ls -la client/dist/
           else
-            echo "✗ client/dist does not exist!"
+            echo "✗ ERROR: client/dist does not exist!"
+            echo "Build may have failed or output to different directory"
             exit 1
           fi
 
