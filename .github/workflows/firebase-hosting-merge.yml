@@ -28,6 +28,18 @@ jobs:
         working-directory: ./client
         run: npm run build
 
+      - name: Verify build output
+        run: |
+          echo "Checking if dist directory exists..."
+          ls -la client/
+          if [ -d "client/dist" ]; then
+            echo "✓ client/dist exists"
+            ls -la client/dist/
+          else
+            echo "✗ client/dist does not exist!"
+            exit 1
+          fi
+
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
